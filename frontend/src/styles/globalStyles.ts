@@ -1,9 +1,9 @@
 import { createGlobalStyle } from 'styled-components';
 import { v } from 'constants/variables';
-//import comfortaa from 'fonts/Comfortaa-Regular.ttf';
-//import lato from 'fonts/Lato-Regular.ttf';
-//import raleway from 'fonts/Raleway-Regular.ttf';
-//import proxima from 'fonts/Proximanova-Regular.ttf';
+import soria from 'fonts/Soria.ttf';
+import lato from 'fonts/Lato-Regular.ttf';
+import raleway from 'fonts/Raleway-Regular.ttf';
+import roboto from 'fonts/Roboto-Regular.ttf';
 import { lightTheme, darkTheme } from './theme';
 import { media } from 'utils/utility.js';
 
@@ -13,12 +13,12 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
 }
-/*
+
 @font-face {
-    font-family: 'Comfortaa';
+    font-family: 'Soria';
     font-weight: normal;
     font-style: normal;
-    src: url('${comfortaa}') format('truetype');
+    src: url('${soria}') format('truetype');
 }
 
 @font-face {
@@ -36,12 +36,12 @@ const GlobalStyle = createGlobalStyle`
 }
 
 @font-face {
-    font-family: 'Proxima';
+    font-family: 'Roboto';
     font-weight: normal;
     font-style: normal;
-    src: url('${proxima}') format('truetype');
+    src: url('${roboto}') format('truetype');
 }
-*/
+
 html {
     font-size: clamp(${v.base.fontSize}, 1vw + 8px, 18px);
 }
