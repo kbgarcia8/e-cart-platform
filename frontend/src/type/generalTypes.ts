@@ -5,3 +5,7 @@ export interface Theme {
     colors: Record<string,ColorString>;
 };
 
+export interface themeContextValue {
+    currentTheme: Theme;
+    toggleTheme: () => void;
+};
