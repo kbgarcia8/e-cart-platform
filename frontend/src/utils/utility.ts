@@ -22,4 +22,27 @@ export const isColor = (value: string): boolean => {
 export const asColor = (value: string): ColorString => {
     if (!isColor(value)) throw new Error(`Invalid color: ${value}`);
     return value as ColorString;
-}; 
+};
+
+interface CSSStyleDeclaration {
+    msOverflowStyle?: string;
+}
+
+export function getScrollbarWidth() {
+    const outer = document.createElement('div');
+    outer.style.visibility = 'hidden';
+    outer.style.overflow = 'scroll'; 
+    (outer.style as CSSStyleDeclaration).msOverflowStyle = 'scrollbar'; // Required for IE/Edge
+    outer.style.width = '100px'; 
+    outer.style.height = '100px';
+
+    document.body.appendChild(outer);
+
+    const clientWidth = outer.clientWidth;
+    
+    const offsetWidth = outer.offsetWidth;
+    
+    document.body.removeChild(outer);
+
+    return offsetWidth - clientWidth;
+}

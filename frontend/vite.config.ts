@@ -12,6 +12,7 @@ export default defineConfig({
   resolve: {
     alias: {
       assets: path.resolve(__dirname, 'src/assets'),
+      constants: path.resolve(__dirname, 'src/constants'),
       components: path.resolve(__dirname, 'src/components'),
       context: path.resolve(__dirname, 'src/context'),
       fonts: path.resolve(__dirname, 'src/fonts'),

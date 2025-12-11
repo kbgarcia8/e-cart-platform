@@ -10,9 +10,7 @@ const TesterLayout = ({
 }:AllNodeProps<React.ReactNode>) => {
     return(
         <Styled.TesterLayoutWrapper>
-            <Styled.Sidebar>
-                {sidebar}
-            </Styled.Sidebar>
+            <Styled.Sidebar>{sidebar}</Styled.Sidebar>
             <Styled.Header>{header}</Styled.Header>
             <Styled.Main>
                 <Outlet />
