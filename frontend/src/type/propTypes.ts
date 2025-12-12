@@ -1,3 +1,5 @@
+import type { Theme } from "./generalTypes";
+
 export type AllNodeProps<T extends React.ReactNode> = {
     [key: string]: T;
 };
@@ -67,4 +69,59 @@ export interface LabelProps {
     source?: string;
     svg?: React.ReactNode;
     className?: string;
+}
+
+export type NavbarProps = {
+    $anchorTheme?: Theme;
+    isSigning: boolean;
+    links: Array<{
+        name: string;
+        path: string;
+    }>
+}
+
+export type NotificationCardProps = {
+    notificationImage?: string;
+    notificationMessage?: string;
+    notificationType: string;
+    onClickNotificationClose: React.MouseEventHandler<HTMLButtonElement> | undefined;
+    hasCloseButton: boolean;
+    closeButtonText?: string;
+    className?: string
+}
+
+type AddressInfoProp = {
+    name: string;
+    number: number;
+    location: string;
+}
+
+export type OrderReceiptProps = {
+    shopLogo: string;
+    shopName: string;
+    shopAddress: string;
+    dateAndTime: string;
+    receiptHeader: string;
+    receiptDetails: {
+        cart: Array<{
+            name: string;
+            size: string;
+            quantity: number;
+            total: number;
+        }>,
+        transactionType: string;
+        address: AddressInfoProp;
+        payment: string;
+        subtotal: number;
+    };
+    className: string;
+}
+
+export type ProductCardProps = {
+    productImage: string;
+    productTitle: string;
+    productDescription: string;
+    prices: object;
+    className: string;
+    isDarkCard: boolean;
 }

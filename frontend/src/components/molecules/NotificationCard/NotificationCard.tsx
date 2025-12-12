@@ -1,23 +1,23 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { useTheme } from "../../../context/ThemeContext.js";
-import { notificationPalette, lightTheme } from "../../../styles/theme.js";
-import * as styled from "./NotificationCard.styles.js";
-import errorIcon from '../../../assets/error.png'
-import warningIcon from '../../../assets/warning.png'
-import successIcon from '../../../assets/success2.png'
-import infoIcon from '../../../assets/info.svg'
+import useTheme from "hooks/useTheme";
+import * as Styled from "./NotificationCard.styles.js";
+import errorIcon from 'assets/error.png'
+import warningIcon from 'assets/warning.png'
+import successIcon from 'assets/success2.png'
+import infoIcon from 'assets/info.svg'
+import type { NotificationCardProps } from "type/propTypes";
 
 const NotificationCard = ({
     notificationImage,
     notificationMessage,
     notificationType,
+    onClickNotificationClose,
     hasCloseButton,
     closeButtonText,
     className
-}) => {
+}:NotificationCardProps) => {
 
-    const { theme } = useTheme();
+    const { currentTheme } = useTheme();
 
     let defaultImage;
     let backgroundColor;
@@ -25,48 +25,40 @@ const NotificationCard = ({
 
     switch (notificationType) {
         case 'error':
-            defaultImage = errorIcon
-            backgroundColor = theme == lightTheme ? notificationPalette.errorDark : notificationPalette.errorLight
-            textColor = theme == lightTheme ? notificationPalette.errorLight : notificationPalette.errorDark
+            defaultImage = errorIcon;
+            backgroundColor = currentTheme.notificationPalette.errorBackground;
+            textColor = currentTheme.notificationPalette.errorText;
             break;
         case 'warning':
             defaultImage = warningIcon
-            backgroundColor = theme == lightTheme ? notificationPalette.warningDark : notificationPalette.warningLight
-            textColor = theme == lightTheme ? notificationPalette.warningLight : notificationPalette.warningDark
+            backgroundColor = currentTheme.notificationPalette.warningBackground;
+            textColor = currentTheme.notificationPalette.warningText;
             break;
             case 'success':
                 defaultImage = successIcon
-                backgroundColor = theme == lightTheme ? notificationPalette.successDark : notificationPalette.successLight
-                textColor = theme == lightTheme ? notificationPalette.successLight : notificationPalette.successDark
+                backgroundColor = currentTheme.notificationPalette.successBackground;
+                textColor = currentTheme.notificationPalette.successText;
                 break;
         default:
             defaultImage = infoIcon
-            backgroundColor = theme == lightTheme ? notificationPalette.infoDark : notificationPalette.infoLight
-            textColor = theme == lightTheme ? notificationPalette.infoLight : notificationPalette.infoDark
+            backgroundColor = currentTheme.notificationPalette.infoBackground;
+            textColor = currentTheme.notificationPalette.infoText;
     }
 
     return (
-        <styled.NotificationCardWrapper className={className} $borderColor={textColor} $backgroundColor={backgroundColor}>
-            <styled.NotificationImage src={notificationImage ? notificationImage : defaultImage} alt={`${className}-image`} />
-            <styled.NotifcationMessage $textColor={textColor}>{notificationMessage}</styled.NotifcationMessage>
+        <Styled.NotificationCardWrapper className={className} $borderColor={textColor} $backgroundColor={backgroundColor}>
+            <Styled.NotificationImage src={notificationImage ? notificationImage : defaultImage} alt={`${className}-image`} />
+            <Styled.NotifcationMessage $textColor={textColor}>{notificationMessage}</Styled.NotifcationMessage>
             {hasCloseButton && 
-            <styled.NotificationCloseButton 
-                onClick={() => console.log('testing')}
+            <Styled.NotificationCloseButton 
+                onClick={onClickNotificationClose}
                 id={`${className}-close-button`}
                 text={closeButtonText}
                 $textColor={textColor}
+                buttonType={'button'}
             />}
-        </styled.NotificationCardWrapper>
+        </Styled.NotificationCardWrapper>
     );
-}
-
-NotificationCard.propTypes = {
-    notificationImage: PropTypes.string,
-    notificationMessage: PropTypes.string,
-    notificationType: PropTypes.string.isRequired,
-    hasCloseButton: PropTypes.bool,
-    closeButtonText: PropTypes.string,
-    className: PropTypes.string
 }
 
 export default NotificationCard;

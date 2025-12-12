@@ -1,15 +1,11 @@
 import React from "react";
-import useTheme from "hooks/useTheme"
+import useTheme from "hooks/useTheme";
 import * as Styled from "./Navbar.styles";
+import type { NavbarProps } from "type/propTypes";
 
-const Navbar =({anchorTheme, isSigning}) => {
-    const { theme } = useTheme();
+const Navbar =({$anchorTheme, isSigning, links}:NavbarProps) => {
+    const { currentTheme } = useTheme();
 
-    const links = [
-        {name: "Home", path:"/"},
-        {name: "Testimonials", path:"/testimonials"},
-        {name: "Contact Us", path:"/contact"},
-    ];
     return(
         <>
         {!isSigning && 
@@ -19,7 +15,7 @@ const Navbar =({anchorTheme, isSigning}) => {
                         <Styled.NavbarLink key={`${link}-${index}`}>
                             <Styled.StyledLink
                                 to={link.path}
-                                $anchorTheme={anchorTheme ? anchorTheme : theme}
+                                $anchorTheme={$anchorTheme ? $anchorTheme : currentTheme}
                             >{link.name}</Styled.StyledLink>
                         </Styled.NavbarLink>
                     )}

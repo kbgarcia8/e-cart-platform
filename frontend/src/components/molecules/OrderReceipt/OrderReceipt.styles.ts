@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import { v } from '../../../styles/variables.js';
-import GenericListItem from '../../atoms/ListItem/index.js'
+import { v } from 'constants/variables';
+import GenericListItem from 'components/atoms/ListItem'
 
 export const OrderReceiptWrapper = styled.div`
     display: flex;
@@ -9,7 +9,7 @@ export const OrderReceiptWrapper = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    box-shadow: -${v.spacing.xxxsmall} ${v.spacing.xxxsmall} ${v.spacing.small} 0 ${({theme}) => theme.shadow};
+    box-shadow: -${v.spacing.xxxsmall} ${v.spacing.xxxsmall} ${v.spacing.small} 0 ${({theme}) => theme.colors.shadow};
     padding: ${v.spacing.xsmall};
     border-radius: ${v.borderRadius.small};
 `;
@@ -33,20 +33,20 @@ export const OrderSummaryHeaderSpan = styled.span`
     white-space: pre-wrap;
     padding: ${v.spacing.xxxsmall};
     margin: 0;
-    color: ${({theme}) => theme.textColor1};
+    color: ${({theme}) => theme.colors.textColor1};
 `;
 export const CurrentOrderHeader = styled.h5`
     width: 100%;
     display: flex;
     align-items: center;    
     padding: ${v.spacing.small};
-    border-bottom: ${v.borderThickness.light} dashed ${({theme}) => theme.borderColor1};
+    border-bottom: ${v.borderThickness.light} dashed ${({theme}) => theme.colors.borderColor1};
 `;
 export const CurrentOrderItemListing = styled.div`    
     width: 100%;
     height: 37.5%;
     overflow-y: auto;
-    color: ${({theme}) => theme.textColor1};
+    color: ${({theme}) => theme.colors.textColor1};
 `;
 export const ItemList = styled.ul`
     padding: ${v.spacing.small};
@@ -55,21 +55,21 @@ export const ItemList = styled.ul`
     justify-content: space-between;
     width: 100%;
     height: auto;
-    color: ${({theme}) => theme.textColor1};
+    color: ${({theme}) => theme.colors.textColor1};
 `;
 export const NoItemMessage = styled.span`
     font-size: ${v.fontSize.xsmall};
     font-family: ${v.fonts.tertiary}, ${v.fonts.fallback};
-    color: ${({theme}) => theme.textColor1};
+    color: ${({theme}) => theme.colors.textColor1};
 `;
 export const Item = styled(GenericListItem)`
     font-size: ${v.fontSize.small};
     font-family: ${v.fonts.secondary}, ${v.fonts.fallback};
-    color: ${({theme}) => theme.textColor1};
+    color: ${({theme}) => theme.colors.textColor1};
 `;
 export const CheckoutTotalDetails = styled.div`
-    border: ${v.borderThickness.light} dotted ${({theme}) => theme.borderColor1};
-    border-top: ${v.borderThickness.light} dashed ${({theme}) => theme.borderColor1};
+    border: ${v.borderThickness.light} dotted ${({theme}) => theme.colors.borderColor1};
+    border-top: ${v.borderThickness.light} dashed ${({theme}) => theme.colors.borderColor1};
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -77,7 +77,7 @@ export const CheckoutTotalDetails = styled.div`
     width: 100%;
     height: 30%;
     overflow-y: auto;
-    color: ${({theme}) => theme.textColor1};
+    color: ${({theme}) => theme.colors.textColor1};
 `;
 export const CheckoutTotalDetailsSpan = styled.span`
     font-size: ${v.fontSize.xsmall};
@@ -85,7 +85,7 @@ export const CheckoutTotalDetailsSpan = styled.span`
     white-space: pre-wrap;
     padding: ${v.spacing.xxsmall};
     width: 100%;
-    color: ${({theme}) => theme.textColor1};
+    color: ${({theme}) => theme.colors.textColor1};
 `;
 export const CheckoutTotalDetailsSpanMarker = styled(CheckoutTotalDetailsSpan)`
     font-weight: ${v.fontWeight.bold};

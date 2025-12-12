@@ -1,9 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { useTheme } from "../../../context/ThemeContext.js";
-import { palette } from "../../../styles/theme.js";
+import useTheme from "hooks/useTheme";
+import { palette } from "styles/currentTheme";
 import * as styled from "./ProductCard.styles.js";
-import CartIcon from "../../atoms/SVG/CartIcon.jsx";
+import CartIcon from "components/svgs/CartIcon.tsx";
+import type { ProductCardProps } from "type/propTypes";
 
 const ProductCard = ({
     productImage,
@@ -15,25 +15,25 @@ const ProductCard = ({
     handleAddToCartButton,
     className,
     isDarkCard
-}) => {
-    const { theme } = useTheme();
+}:ProductCardProps) => {
+    const { currentTheme } = useTheme();
     
     const commonThemeSwitch = {
-        cardShadowColor: theme.name == "lightTheme" ? palette.shadow1 : palette.shadow2
+        cardShadowColor: currentTheme.name == "lightTheme" ? palette.shadow1 : palette.shadow2
     }
 
     const lightCardThemeSwitch = {
-        cardBackgroundColor: theme.name == "lightTheme" ? palette.accent : palette.neutral5,
-        descriptionTextColor: theme.name == "lightTheme" ? palette.primary2 : palette.neutral3,
-        titleTextColor: theme.name == "lightTheme" ? palette.primary1 : palette.secondary1,
-        buttonColor: theme.name == "lightTheme" ? palette.neutral4 : palette.neutral5
+        cardBackgroundColor: currentTheme.name == "lightTheme" ? palette.accent : palette.neutral5,
+        descriptionTextColor: currentTheme.name == "lightTheme" ? palette.primary2 : palette.neutral3,
+        titleTextColor: currentTheme.name == "lightTheme" ? palette.primary1 : palette.secondary1,
+        buttonColor: currentTheme.name == "lightTheme" ? palette.neutral4 : palette.neutral5
     }
 
     const darkCardThemeSwitch = {
-        cardBackgroundColor: theme.name == "lightTheme" ? palette.neutral5 : palette.accent,
-        descriptionTextColor: theme.name == "lightTheme" ? palette.neutral3 : palette.primary2,
-        titleTextColor: theme.name == "lightTheme" ? palette.secondary1 : palette.primary1,
-        buttonColor: theme.name == "lightTheme" ? palette.neutral5 : palette.neutral4
+        cardBackgroundColor: currentTheme.name == "lightTheme" ? palette.neutral5 : palette.accent,
+        descriptionTextColor: currentTheme.name == "lightTheme" ? palette.neutral3 : palette.primary2,
+        titleTextColor: currentTheme.name == "lightTheme" ? palette.secondary1 : palette.primary1,
+        buttonColor: currentTheme.name == "lightTheme" ? palette.neutral5 : palette.neutral4
     }
 
     return (
@@ -75,15 +75,6 @@ const ProductCard = ({
             ))}
         </styled.ProductCardContainer>
     );
-}
-
-ProductCard.propTypes = {
-    productImage: PropTypes.string,
-    productTitle: PropTypes.string,
-    productDescription: PropTypes.string,
-    prices: PropTypes.object.isRequired,
-    className: PropTypes.string,
-    isDarkCard: PropTypes.bool
 }
 
 export default ProductCard;

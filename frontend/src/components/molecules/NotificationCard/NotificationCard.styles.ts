@@ -1,42 +1,36 @@
 import styled from 'styled-components';
-import GenericButton from '../../atoms/Button/index.js';
-import { v } from '../../../styles/variables.js';
+import Button from 'components/atoms/Button';
+import { v } from 'constants/variables';
+import type { ColorString } from 'type/generalTypes';
+import type { ButtonProps } from 'type/propTypes';
 
 export const NotificationImage = styled.img`
     width: 5%;
 `;
 
-export const NotifcationMessage = styled.span.attrs(props => ({
-    textColor: props.textColor
-}))`
+export const NotifcationMessage = styled.span<{$textColor: ColorString}>`
     display: flex;
     align-items: center;
     width: 100%;
     padding-left: ${v.spacing.medium};
     font-size: ${v.fontSize.small};
     font-family: ${v.fonts.tertiary};
-    color: ${(props) => props.$textColor};
+    color: ${({$textColor}) => $textColor};
 `;
 
-export const NotificationCloseButton = styled(GenericButton).attrs(props => ({
-    textColor: props.textColor,
-
-}))`
+export const NotificationCloseButton = styled(Button)<{$textColor: ColorString} & ButtonProps>`
     background-color: transparent;
     border: none;
     width: 7.5%;
     height: 2.5vmin;
-    color: ${(props) => props.$textColor};
-    && .button-icon-and-text span { //default styling for text inside button
+    color: ${({$textColor}) => $textColor};
+    && .button-icon-and-text span {
         font-size: ${v.fontSize.xsmall};
         font-weight: ${v.fontWeight.bolder};        
     }
 `;
 
-export const NotificationCardWrapper = styled.div.attrs(props => ({
-    borderColor: props.borderColor,
-    backgroundColor: props.backgroundColor
-}))`
+export const NotificationCardWrapper = styled.div<{$backgroundColor: ColorString, $borderColor: ColorString}>`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -44,14 +38,7 @@ export const NotificationCardWrapper = styled.div.attrs(props => ({
     margin: ${v.spacing.xxsmall};
     max-width: 100%;
     height: 20%;
-    background-color: ${(props) => props.$backgroundColor};
+    background-color: ${({$backgroundColor}) => $backgroundColor};
     border-radius: ${v.borderRadius.small};
-    border: 2px solid ${(props) => props.$borderColor};
+    border: 2px solid ${({$borderColor}) => $borderColor};
 `;
-
-export default {
-    NotificationImage,
-    NotifcationMessage,
-    NotificationCloseButton,
-    NotificationCardWrapper
-};

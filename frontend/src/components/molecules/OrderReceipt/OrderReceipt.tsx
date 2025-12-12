@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import * as styled from "./OrderReceipt.styles.js"
+import React, { type PropsWithChildren } from "react";
+import * as styled from "./OrderReceipt.styles"
+import type { OrderReceiptProps } from "type/propTypes";
 
 const OrderReceipt = ({
     shopLogo, 
@@ -11,7 +11,7 @@ const OrderReceipt = ({
     receiptDetails, //checkoutDetails
     className,
     children
-}) => {
+}:PropsWithChildren<OrderReceiptProps>) => {
     return (
         <styled.OrderReceiptWrapper className={className}>
             <styled.OrderSummaryLogoSpace className={'logo-space'}>
@@ -67,15 +67,5 @@ const OrderReceipt = ({
         </styled.OrderReceiptWrapper>
     )
 }
-
-OrderReceipt.propTypes = {
-    shopLogo: PropTypes.string,
-    shopName: PropTypes.string,
-    shopAddress: PropTypes.string,
-    dateAndTime: PropTypes.string,
-    receiptDetails: PropTypes.object,
-    className: PropTypes.string,
-    children: PropTypes.node
-};
 
 export default OrderReceipt;
