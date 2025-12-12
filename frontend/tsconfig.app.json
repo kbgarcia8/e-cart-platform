@@ -14,6 +14,7 @@
       "components/*": ["components/*"],
       "context/*": ["context/*"],
       "fonts/*": ["fonts/*"],
+      "hooks/*": ["hooks/*"],
       "styles/*": ["styles/*"],
       "type/*": ["type/*"],
       "utils/*": ["utils/*"]
