@@ -1,6 +1,7 @@
 import React from "react";
+import type { SVGProps } from "type/propTypes";
 
-const HomeIcon = (props:Record<string,string>) => (
+const HomeIcon = (props:SVGProps) => (
     <svg
         width="24"
         height="24"

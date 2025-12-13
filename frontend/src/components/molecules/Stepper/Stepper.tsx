@@ -1,37 +1,27 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { useTheme } from "../../../context/ThemeContext.js";
-import { palette, lightTheme } from "../../../styles/theme.js";
-import * as styled from "./Stepper.styles.js";
+import useTheme from "hooks/useTheme";
+import { palette, lightTheme } from "styles/theme";
+import * as Styled from "./Stepper.styles";
+import type { StepperProps } from "type/propTypes";
 
-const Stepper = ({ stepperState, increment, incrementButtonText, decrementButtonText, decrement, dataAttributes, className }) => {
 
-    const { theme } = useTheme();
+const Stepper = ({ stepperState, increment, incrementButtonText, decrementButtonText, decrement, dataAttributes, className }:StepperProps) => {
 
-    const themeSwitch = {
-            color: theme == lightTheme ? palette.neutral4 : palette.neutral3,
-            counterTextColor: theme == lightTheme ? palette.neutral5 : palette.neutral2,
-            buttonTextColor: theme == lightTheme ? palette.neutral2 : palette.neutral5,
+    const { currentTheme } = useTheme();
+
+    const currentThemeSwitch = {
+            color: currentTheme == lightTheme ? palette.neutral4 : palette.neutral3,
+            counterTextColor: currentTheme == lightTheme ? palette.neutral5 : palette.neutral2,
+            buttonTextColor: currentTheme == lightTheme ? palette.neutral2 : palette.neutral5,
         }
 
     return (
-        <styled.StepperContainer $color={themeSwitch.color} className={className}>
-            <styled.StepperButton $color={themeSwitch.color} $textColor={themeSwitch.buttonTextColor} onClick={decrement} text={decrementButtonText} dataAttributes={dataAttributes}/>
-            <styled.StepperState $color={themeSwitch.color} $textColor={themeSwitch.counterTextColor} className={"stepper-state"}>{stepperState}</styled.StepperState>
-            <styled.StepperButton $color={themeSwitch.color} $textColor={themeSwitch.buttonTextColor} onClick={increment}  text={incrementButtonText} dataAttributes={dataAttributes}/>
-        </styled.StepperContainer>
+        <Styled.StepperContainer $color={currentThemeSwitch.color} className={className}>
+            <Styled.StepperButton buttonType={'button'} $color={currentThemeSwitch.color} $textColor={currentThemeSwitch.buttonTextColor} onClick={decrement} text={decrementButtonText} dataAttributes={dataAttributes}/>
+            <Styled.StepperState $color={currentThemeSwitch.color} $textColor={currentThemeSwitch.counterTextColor} className={"stepper-state"}>{stepperState}</Styled.StepperState>
+            <Styled.StepperButton buttonType={'button'} $color={currentThemeSwitch.color} $textColor={currentThemeSwitch.buttonTextColor} onClick={increment}  text={incrementButtonText} dataAttributes={dataAttributes}/>
+        </Styled.StepperContainer>
     );
-}
-
-Stepper.propTypes = {
-    stepperState: PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.string
-    ]),
-    increment: PropTypes.func.isRequired,
-    incrementButtonText: PropTypes.string.isRequired,
-    decrement: PropTypes.func.isRequired,
-    decrementButtonText: PropTypes.string.isRequired
 }
 
 export default Stepper;

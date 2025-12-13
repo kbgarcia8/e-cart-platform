@@ -1,6 +1,7 @@
 import React from "react";
+import type { SVGProps } from "type/propTypes";
 
-const CardIcon = (props:Record<string,string>) => (
+const CardIcon = (props:SVGProps) => (
     <svg 
         xmlns="http://www.w3.org/2000/svg" 
         width="24" 

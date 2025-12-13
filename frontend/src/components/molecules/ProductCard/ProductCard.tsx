@@ -1,7 +1,7 @@
 import React from "react";
 import useTheme from "hooks/useTheme";
-import { palette } from "styles/currentTheme";
-import * as styled from "./ProductCard.styles.js";
+import { palette } from "styles/theme";
+import * as Styled from "./ProductCard.styles";
 import CartIcon from "components/svgs/CartIcon.tsx";
 import type { ProductCardProps } from "type/propTypes";
 
@@ -37,24 +37,25 @@ const ProductCard = ({
     }
 
     return (
-        <styled.ProductCardContainer 
+        <Styled.ProductCardContainer 
             className={className} 
             $cardBackgroundColor={isDarkCard ? darkCardThemeSwitch.cardBackgroundColor : lightCardThemeSwitch.cardBackgroundColor}
             $cardShadowColor={commonThemeSwitch.cardShadowColor}
         >
-            <styled.ProductImage src={productImage} alt={`${productTitle}-image`}/>
-            <styled.ProductInfoContainer>
-                <styled.ProductTitle 
-                    $textColor={isDarkCard ? darkCardThemeSwitch.titleTextColor : lightCardThemeSwitch.titleTextColor}>{productTitle}</styled.ProductTitle>
-                <styled.ProductDescription 
+            <Styled.ProductImage src={productImage} alt={`${productTitle}-image`}/>
+            <Styled.ProductInfoContainer>
+                <Styled.ProductTitle 
+                    $textColor={isDarkCard ? darkCardThemeSwitch.titleTextColor : lightCardThemeSwitch.titleTextColor}>{productTitle}</Styled.ProductTitle>
+                <Styled.ProductDescription 
                     $textColor={isDarkCard ? darkCardThemeSwitch.descriptionTextColor : lightCardThemeSwitch.descriptionTextColor}
                 >
                     {productDescription}
-                </styled.ProductDescription>                
-            </styled.ProductInfoContainer>
+                </Styled.ProductDescription>                
+            </Styled.ProductInfoContainer>
             {Object.keys(prices).map((size) => (
-                <styled.PriceContainer key={`${productTitle}-${size}`}>
-                    <styled.AddToCartButton 
+                <Styled.PriceContainer key={`${productTitle}-${size}`}>
+                    <Styled.AddToCartButton 
+                        id={`${productTitle}-${size}-add-to-cart`}
                         svg={<CartIcon/>}
                         $buttonColor={isDarkCard ? lightCardThemeSwitch.buttonColor : darkCardThemeSwitch.buttonColor}
                         dataAttributes={{
@@ -64,16 +65,17 @@ const ProductCard = ({
                             "data-index": dataIndex
                         }}
                         onClick={handleAddToCartButton}
+                        buttonType={"button"}
                     />
-                    <styled.ProductSize
+                    <Styled.ProductSize
                         $textColor={isDarkCard ? darkCardThemeSwitch.titleTextColor : lightCardThemeSwitch.titleTextColor}
-                    >{size}</styled.ProductSize>
-                    <styled.ProductPrice
+                    >{size}</Styled.ProductSize>
+                    <Styled.ProductPrice
                         $textColor={isDarkCard ? darkCardThemeSwitch.descriptionTextColor : lightCardThemeSwitch.descriptionTextColor}
-                    >{prices[size]}</styled.ProductPrice>
-                </styled.PriceContainer>
+                    >{prices[size]}</Styled.ProductPrice>
+                </Styled.PriceContainer>
             ))}
-        </styled.ProductCardContainer>
+        </Styled.ProductCardContainer>
     );
 }
 

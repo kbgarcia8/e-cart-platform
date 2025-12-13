@@ -1,6 +1,7 @@
 import React from "react";
+import type { SVGProps } from "type/propTypes";
 
-const CashIcon = (props:Record<string,string>) => (
+const CashIcon = (props:SVGProps) => (
     <svg 
         xmlns="http://www.w3.org/2000/svg" 
         width="24" 

@@ -1,8 +1,7 @@
 import { React, useMemo} from "react";
-import PropTypes from "prop-types";
-import { useTheme } from "../../../context/ThemeContext.js";
-import * as styled from "./TestimonialCard.styles.js"
-import StarRating from "../StarRating/index.js";
+import useTheme from "hooks/useTheme";
+import * as Styled from "./TestimonialCard.styles.js"
+import StarRating from "components/molecules/StarRating";
 
 const starsQuantiy = Array(5).fill(0)
 
@@ -12,39 +11,34 @@ const TestimonialCard = ({
     children
 }) => {
 
-    const {theme} = useTheme();
+    const {currentTheme} = useTheme();
 
     const starRatingColors = useMemo(() => {
         return {
-            filled: theme.warning,
-            blank: theme.shadow
+            filled: currentTheme.notificationPalette.warning,
+            blank: currentTheme.colors.shadow
         }
-    }, [theme])
+    }, [currentTheme])
 
     return (
-        <styled.TestimonialCardWrapper className={className}>
-            <styled.TestimoneePictureContainer>
-                <styled.TestimoneePicture src={testimonial.photo} alt={`${testimonial.name}-photo`}/>
-            </styled.TestimoneePictureContainer>
-            <styled.TestimonialCardUserName>{`${testimonial.user}`}</styled.TestimonialCardUserName>
-            <styled.StarRatingContainer>
+        <Styled.TestimonialCardWrapper className={className}>
+            <Styled.TestimoneePictureContainer>
+                <Styled.TestimoneePicture src={testimonial.photo} alt={`${testimonial.name}-photo`}/>
+            </Styled.TestimoneePictureContainer>
+            <Styled.TestimonialCardUserName>{`${testimonial.user}`}</Styled.TestimonialCardUserName>
+            <Styled.StarRatingContainer>
                 <StarRating
                     stars={starsQuantiy}
                     ratedColor={starRatingColors.filled}
                     noRateColor={starRatingColors.blank}
                     rating={testimonial.rating}
+                    withText={false}
                 />
-            </styled.StarRatingContainer>
-            <styled.TestimonialCardMessage>{`${testimonial.message}`}</styled.TestimonialCardMessage>            
+            </Styled.StarRatingContainer>
+            <Styled.TestimonialCardMessage>{`${testimonial.message}`}</Styled.TestimonialCardMessage>            
             {children}
-        </styled.TestimonialCardWrapper>
+        </Styled.TestimonialCardWrapper>
     )
 }
-
-TestimonialCard.propTypes = {
-    
-    className: PropTypes.string,
-    children: PropTypes.node
-};
 
 export default TestimonialCard;

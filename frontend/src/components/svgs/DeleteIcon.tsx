@@ -1,6 +1,7 @@
 import React from "react";
+import type { SVGProps } from "type/propTypes";
 
-const DeleteIcon = (props:Record<string,string>) => (
+const DeleteIcon = (props:SVGProps) => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24" 

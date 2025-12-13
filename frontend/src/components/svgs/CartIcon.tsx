@@ -1,6 +1,7 @@
 import React from "react";
+import type { SVGProps } from "type/propTypes";
 
-const CartIcon = (props:Record<string,string>) => (
+const CartIcon = (props:SVGProps) => (
     <svg
         width="24"
         height="24"

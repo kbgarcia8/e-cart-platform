@@ -1,6 +1,7 @@
 import React from "react";
+import type { SVGProps } from "type/propTypes";
 
-const EditIcon = (props:Record<string,string>) => (
+const EditIcon = (props:SVGProps) => (
     <svg 
         xmlns="http://www.w3.org/2000/svg" 
         width="24" 

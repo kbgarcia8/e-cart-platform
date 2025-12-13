@@ -1,6 +1,7 @@
 import React from "react";
+import type { SVGProps } from "type/propTypes";
 
-const MenuIcon = (props:Record<string,string>) => (
+const MenuIcon = (props:SVGProps) => (
     <svg
         width="24"
         height="24"

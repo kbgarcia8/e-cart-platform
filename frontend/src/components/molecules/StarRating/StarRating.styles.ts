@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { v } from '../../../styles/variables.js';
+import { v } from 'constants/variables';
 
 export const StarRatingWrapper = styled.div`
     display: flex;

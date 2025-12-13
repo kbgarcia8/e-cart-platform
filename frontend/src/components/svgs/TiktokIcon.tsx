@@ -1,6 +1,7 @@
 import React from "react";
+import type { SVGProps } from "type/propTypes";
 
-const TiktokIcon = (props:Record<string,string>) => (
+const TiktokIcon = (props:SVGProps) => (
     <svg 
         fill="#000000"
         viewBox="0 0 24 24"

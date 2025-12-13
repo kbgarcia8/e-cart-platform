@@ -1,6 +1,6 @@
 import React, { useId } from "react";
 
-const StarIcon = ({fillColor, blankColor, fill}:Record<string,string>) => {
+const StarIcon = ({fillColor, blankColor, fill, ...rest}:Record<string,string>) => {
     
     const gradientId = useId();
     return (
@@ -14,6 +14,7 @@ const StarIcon = ({fillColor, blankColor, fill}:Record<string,string>) => {
             strokeLinecap="round" 
             strokeLinejoin="round"     
             className="lucide lucide-star-icon lucide-star"
+            {...rest}
         >
             <defs>
                 <linearGradient id={gradientId} x1="0" x2="1" y1="0" y2="0">

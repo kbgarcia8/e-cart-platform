@@ -1,6 +1,7 @@
 import React from "react";
+import type { SVGProps } from "type/propTypes";
 
-const ClipboardIcon = (props:Record<string,string>) => (
+const ClipboardIcon = (props:SVGProps) => (
     <svg
         width="24"
         height="24"

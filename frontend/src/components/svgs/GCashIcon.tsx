@@ -1,6 +1,7 @@
 import React from "react";
+import type { SVGProps } from "type/propTypes";
 
-const GCashIcon = (props:Record<string,string>) => (
+const GCashIcon = (props:SVGProps) => (
     <svg 
         viewBox="0 0 192 192" 
         xmlns="http://www.w3.org/2000/svg" 

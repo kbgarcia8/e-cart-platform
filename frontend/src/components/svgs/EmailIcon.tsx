@@ -1,6 +1,7 @@
 import React from "react";
+import type { SVGProps } from "type/propTypes";
 
-const EmailIcon = (props:Record<string,string>) => (
+const EmailIcon = (props:SVGProps) => (
     <svg 
         xmlns="http://www.w3.org/2000/svg" 
         width="24" 

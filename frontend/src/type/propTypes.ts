@@ -4,6 +4,10 @@ export type AllNodeProps<T extends React.ReactNode> = {
     [key: string]: T;
 };
 
+export type SVGProps = Record<string, string|number|undefined>;
+
+type dataAttributesType = Record<string, string | number | boolean | undefined> | undefined;
+
 export type DividerProps = {
     dividerText?: string;
     className?: string;
@@ -15,11 +19,10 @@ export type ListItemProps = {
     className?: string;
 }
 
-type dataAttributesType = Record<string, string | number | boolean | undefined> | undefined;
 type ButtonType = 'button' | 'submit' | 'reset';
 export interface ButtonProps {
     onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
-    id: string;
+    id?: string;
     buttonType: ButtonType;
     source?: string;
     svg?: React.ReactNode;
@@ -114,14 +117,41 @@ export type OrderReceiptProps = {
         payment: string;
         subtotal: number;
     };
-    className: string;
+    className?: string;
 }
 
 export type ProductCardProps = {
     productImage: string;
     productTitle: string;
     productDescription: string;
-    prices: object;
-    className: string;
+    prices: {[key: string]: number};
+    dataCategory: string;
+    dataIndex: number;
+    handleAddToCartButton: React.MouseEventHandler<HTMLButtonElement>
+    className?: string;
     isDarkCard: boolean;
 }
+
+export type StarRatingProps = {
+    stars: Array<number>;
+    ratedColor: string;
+    noRateColor: string;
+    rating: string;
+    withText: boolean;
+    className?: string;
+};
+
+export type StepperProps = {
+    stepperState: number|string;
+    increment: React.MouseEventHandler<HTMLButtonElement>;
+    incrementButtonText: string;
+    decrement: React.MouseEventHandler<HTMLButtonElement>;
+    decrementButtonText: string;
+    dataAttributes: dataAttributesType;
+    className?: string;
+}
+
+export type TestimonialCardProps = {    
+    
+    className: string;
+};

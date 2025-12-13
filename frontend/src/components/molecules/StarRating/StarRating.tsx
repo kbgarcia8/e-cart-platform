@@ -1,8 +1,7 @@
 import {React, useState} from "react";
-import PropTypes from "prop-types";
 import * as styled from "./StarRating.styles.js"
-import StarIcon from "../../atoms/SVG/StarIcon.jsx";
-
+import StarIcon from "components/svgs/StarIcon";
+import type { StarRatingProps } from "type/propTypes";
 
 
 const StarRating = ({
@@ -12,7 +11,7 @@ const StarRating = ({
     rating,
     withText,
     className
-}) => {
+}:StarRatingProps) => {
 
     return (
         <styled.StarRatingWrapper className={className}>
@@ -21,17 +20,17 @@ const StarRating = ({
                 const [whole, decimal] = rating.split('.').map(Number);
 
                 if (index < whole) {
-                    return <StarIcon key={index} fill={ratedColor} />;
+                    return <StarIcon key={`${index}`} fill={ratedColor} />;
                 } else if (index === whole && decimal >= 5) {
                     return (
                     <StarIcon
-                        key={index}
+                        key={`${index}`}
                         fillColor={ratedColor}
                         blankColor={noRateColor}
                     />
                     );
                 } else {
-                    return <StarIcon key={index} fill={noRateColor} />;
+                    return <StarIcon key={`${index}`} fill={noRateColor} />;
                 }
             })}
             </styled.StarIconsContainer>
@@ -39,13 +38,5 @@ const StarRating = ({
         </styled.StarRatingWrapper>
     )
 }
-
-StarRating.propTypes = {
-    stars: PropTypes.array,
-    ratedColor: PropTypes.string,
-    noRateColor: PropTypes.string,
-    rating: PropTypes.string,
-    className: PropTypes.string
-};
 
 export default StarRating;
