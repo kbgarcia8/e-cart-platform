@@ -8,7 +8,7 @@ const OrderReceipt = ({
     shopAddress, 
     dateAndTime, 
     receiptHeader,
-    receiptDetails, //checkoutDetails
+    receiptDetails, 
     className,
     children
 }:PropsWithChildren<OrderReceiptProps>) => {

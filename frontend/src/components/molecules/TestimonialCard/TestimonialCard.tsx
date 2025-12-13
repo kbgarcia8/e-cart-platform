@@ -1,7 +1,8 @@
-import { React, useMemo} from "react";
+import React, { type PropsWithChildren } from "react";
 import useTheme from "hooks/useTheme";
-import * as Styled from "./TestimonialCard.styles.js"
+import * as Styled from "./TestimonialCard.styles"
 import StarRating from "components/molecules/StarRating";
+import type { TestimonialCardProps } from "type/propTypes";
 
 const starsQuantiy = Array(5).fill(0)
 
@@ -9,11 +10,11 @@ const TestimonialCard = ({
     testimonial,
     className,
     children
-}) => {
+}:PropsWithChildren<TestimonialCardProps>) => {
 
     const {currentTheme} = useTheme();
 
-    const starRatingColors = useMemo(() => {
+    const starRatingColors = React.useMemo(() => {
         return {
             filled: currentTheme.notificationPalette.warning,
             blank: currentTheme.colors.shadow

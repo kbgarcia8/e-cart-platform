@@ -1,4 +1,4 @@
-import {React, useState} from "react";
+import React from "react";
 import * as styled from "./StarRating.styles.js"
 import StarIcon from "components/svgs/StarIcon";
 import type { StarRatingProps } from "type/propTypes";

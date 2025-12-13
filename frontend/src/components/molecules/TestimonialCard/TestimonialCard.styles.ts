@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { v } from '../../../styles/variables.js';
+import { v } from 'constants/variables';
 
 export const TestimonialCardWrapper = styled.div`
     display: flex;
@@ -8,7 +8,7 @@ export const TestimonialCardWrapper = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    box-shadow: -${v.spacing.xxxsmall} ${v.spacing.xxxsmall} ${v.spacing.small} 0 ${({theme}) => theme.shadow};
+    box-shadow: -${v.spacing.xxxsmall} ${v.spacing.xxxsmall} ${v.spacing.small} 0 ${({theme}) => theme.colors.shadow};
     padding: ${v.spacing.xsmall};
     border-radius: ${v.borderRadius.small};
     margin-top: ${v.spacing.xxlarge};
@@ -39,7 +39,7 @@ export const TestimoneePicture = styled.img`
     height: 100%;
     object-fit: fill;
     border-radius: ${v.borderRadius.circle};
-    border: ${v.borderThickness.medium} solid ${({theme}) => theme.borderColor1};
+    border: ${v.borderThickness.medium} solid ${({theme}) => theme.colors.borderColor1};
 `;
 
 export const StarRatingContainer = styled.div`
