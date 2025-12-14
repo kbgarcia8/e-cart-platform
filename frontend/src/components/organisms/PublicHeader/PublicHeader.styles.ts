@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { v } from '../../../styles/variables.js'
-import GenericButton from '../../atoms/Button/index.js'
+import { v } from 'constants/variables'
+import Button from 'components/atoms/Button';
+import type { ButtonProps } from 'type/propTypes';
 
 export const MainHeaderWrapper = styled.div`
     display: flex;
@@ -8,8 +9,8 @@ export const MainHeaderWrapper = styled.div`
     justify-content: space-between;
     width: 100%;
     height: 100%;
-    background-color: ${({theme}) => theme.screenColor};
-    border-bottom: ${v.borderThickness.light} solid ${({theme}) => theme.borderColor1};
+    background-color: ${({theme}) => theme.colors.screenColor};
+    border-bottom: ${v.borderThickness.light} solid ${({theme}) => theme.colors.borderColor1};
 `;
 
 export const MainHeaderLogoSpace = styled.div`
@@ -18,7 +19,7 @@ export const MainHeaderLogoSpace = styled.div`
     justify-content: center;
     width: 10%;
     cursor: pointer;
-    background-color: ${({theme}) => theme.screenColor};
+    background-color: ${({theme}) => theme.colors.screenColor};
 `;
 
 export const MainHeaderLogo = styled.img`
@@ -35,35 +36,35 @@ export const ButtonWrapper = styled.div`
     margin: 0;
 `;
 
-export const LoginButton = styled(GenericButton)`
-    background-color: ${({theme}) => theme.backgroundColor1};
-    color: ${({theme}) => theme.textColor3};
-    border: ${v.borderThickness.light} solid ${({theme}) => theme.borderColor2};
+export const LoginButton = styled(Button)`
+    background-color: ${({theme}) => theme.colors.backgroundColor1};
+    color: ${({theme}) => theme.colors.textColor3};
+    border: ${v.borderThickness.light} solid ${({theme}) => theme.colors.borderColor2};
     width: 45%;
     border-radius: ${v.spacing.xxsmall};
 
     &:hover{
-        background-color: ${({theme}) => theme.backgroundColor2};
+        background-color: ${({theme}) => theme.colors.backgroundColor2};
     }
 
     &:active {
-        background-color: ${({theme}) => theme.backgroundColor1};
-        color: ${({theme}) => theme.textColor3};
+        background-color: ${({theme}) => theme.colors.backgroundColor1};
+        color: ${({theme}) => theme.colors.textColor3};
     }
 `;
 
 export const SignUpButton = styled(LoginButton)`
-    background-color: ${({theme}) => theme.backgroundColor3};
-    color: ${({theme}) => theme.textColor1};
-    border: 2px solid ${({theme}) => theme.textColor1};    
+    background-color: ${({theme}) => theme.colors.backgroundColor3};
+    color: ${({theme}) => theme.colors.textColor1};
+    border: 2px solid ${({theme}) => theme.colors.textColor1};    
 
     &:hover {
-        background-color: ${({theme}) => theme.backgroundColor4};
-        color: ${({theme}) => theme.screenColor};
+        background-color: ${({theme}) => theme.colors.backgroundColor4};
+        color: ${({theme}) => theme.colors.screenColor};
     }
 
     &:active {
-        background-color: ${({theme}) => theme.backgroundColor3};
-        color: ${({theme}) => theme.textColor1};
+        background-color: ${({theme}) => theme.colors.backgroundColor3};
+        color: ${({theme}) => theme.colors.textColor1};
     }
 `;

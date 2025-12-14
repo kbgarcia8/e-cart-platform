@@ -1,25 +1,31 @@
-import { React, useState } from "react";
-import headerLogo from '../../../assets/horizontal-logo.png'
+import React from "react";
+import headerLogo from 'assets/mock-logo.svg'
 import { useNavigate } from 'react-router-dom';
-import Navbar from "../../molecules/Navbar/index.js";
+import Navbar from "components/molecules/Navbar";
 import * as styled from "./PublicHeader.styles.js";
 
-const MainHeader =({}) => {
-    const navigate = useNavigate();
-    const [isSignedIn, setIsSignedIn] = useState(false);
+const links = [
+    {name: "Home", path: "/about"},
+    {name: "About Us", path: "/about"},
+    {name: "Testimonials", path: "/testimonials"}
+]
 
-    const handleLogoClick = (e) => {
+const PublicHeader =() => {
+    const navigate = useNavigate();
+    const [isSignedIn, setIsSignedIn] = React.useState<boolean>(false);
+
+    const handleLogoClick = () => {
         navigate('/');
         setIsSignedIn(false)
     }
 
-    const handleButtonNavigate = (e) => { 
-        const textToLink = {
+    const handleButtonNavigate = (e:React.MouseEvent<HTMLButtonElement>) => { 
+        const textToLink:Record<string, string> = {
             "Sign Up": "signup",
             "Login": "login",
             //"Dashboard": "dashboard" //tempoarary logged in
         }       
-        const buttonText = e.target.textContent
+        const buttonText = e.currentTarget.textContent
         navigate(`/${textToLink[buttonText]}`)
         setIsSignedIn(true)
     }
@@ -29,13 +35,13 @@ const MainHeader =({}) => {
             <styled.MainHeaderLogoSpace>
                 <styled.MainHeaderLogo onClick={handleLogoClick} src={headerLogo} />
             </styled.MainHeaderLogoSpace>
-                <Navbar isSigning={isSignedIn}/>
+                <Navbar isSigning={isSignedIn} links={links}/>
             <styled.ButtonWrapper>
-                <styled.SignUpButton text={"Sign Up"} onClick={handleButtonNavigate}/>
-                <styled.LoginButton text={"Login"} onClick={handleButtonNavigate}/>
+                <styled.SignUpButton buttonType={'button'} text={"Sign Up"} onClick={handleButtonNavigate}/>
+                <styled.LoginButton buttonType={'button'} text={"Login"} onClick={handleButtonNavigate}/>
             </styled.ButtonWrapper>
         </styled.MainHeaderWrapper>
     )
 }
 
-export default MainHeader;
+export default PublicHeader;

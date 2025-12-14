@@ -1,2 +1,2 @@
-import MainHeader from "./PublicHeader.js";
-export default MainHeader;
+import PublicHeader from "./PublicHeader";
+export default PublicHeader;
