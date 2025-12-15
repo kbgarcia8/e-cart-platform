@@ -48,4 +48,5 @@ export const ButtonText = styled.span`
     display: flex;
     align-items: center;
     justify-content: center;
+    max-width: 100%;
 `;

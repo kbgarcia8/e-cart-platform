@@ -22,6 +22,12 @@ export const Header = styled.header`
     grid-area: header;
     background-color: ${({ theme }) => theme.colors.backgroundSecondary};
     border-bottom: 2px solid ${({ theme }) => theme.colors.border};
+    ${media.mobile`
+        min-height: 7vh;
+    `}
+    ${media.desktop`
+        min-height: 5vh;
+    `}
 `;
 
 export const Main = styled.main`
@@ -29,6 +35,7 @@ export const Main = styled.main`
     grid-area: main;
     padding: 16px;
     background-color: ${({ theme }) => theme.colors.background};
+    min-height: 75vh;
 `;
 
 export const Footer = styled.footer`
@@ -36,4 +43,10 @@ export const Footer = styled.footer`
     grid-area: footer;
     background-color: ${({ theme }) => theme.colors.backgroundSecondary};
     border-top: 2px solid ${({ theme }) => theme.colors.border};
+    ${media.mobile`
+        min-height: 7vh;
+    `}
+    ${media.desktop`
+        min-height: 5vh;
+    `}
 `; 

@@ -80,7 +80,8 @@ export type NavbarProps = {
     links: Array<{
         name: string;
         path: string;
-    }>
+    }>;
+    className?: string;
 }
 
 export type NotificationCardProps = {

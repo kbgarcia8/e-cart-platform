@@ -3,13 +3,13 @@ import useTheme from "hooks/useTheme";
 import * as Styled from "./Navbar.styles";
 import type { NavbarProps } from "type/propTypes";
 
-const Navbar =({$anchorTheme, isSigning, links}:NavbarProps) => {
+const Navbar =({$anchorTheme, isSigning, links, className}:NavbarProps) => {
     const { currentTheme } = useTheme();
 
     return(
         <>
         {!isSigning && 
-            <Styled.Navbar>
+            <Styled.Navbar className={className}>
                 <Styled.NavbarLinks>
                     {links.map((link,index) => 
                         <Styled.NavbarLink key={`${link}-${index}`}>

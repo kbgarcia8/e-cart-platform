@@ -2,21 +2,27 @@ import styled from 'styled-components';
 import { v } from 'constants/variables'
 import { Link } from 'react-router-dom';
 import type { NavbarProps } from 'type/propTypes';
+import { media } from 'utils/utility';
 
 export const Navbar = styled.nav`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 70%;
+    width: 100%;
     height: 100%;
 `;
 
 export const NavbarLinks = styled.ul`
     display: flex;
     align-items: center;
-    justify-content: space-around;
     width: 100%;
     margin: 0;
+    ${media.mobile`
+        justify-content: space-evenly;
+    `}
+    ${media.tablet`
+        justify-content: space-around;
+    `}
 `;
 
 export const NavbarLink = styled.li`
@@ -26,8 +32,14 @@ export const NavbarLink = styled.li`
     cursor: pointer;
     font-family: ${v.fonts.secondary}, ${v.fonts.fallback};
     font-weight: ${v.fontWeight.bolder};
-    font-size: ${v.fontSize.medium};
     color: ${({theme}) => theme.colors.textColor1};
+    
+    ${media.mobile`
+        font-size: ${v.fontSize.xsmall};
+    `}
+    ${media.tablet`
+        font-size: ${v.fontSize.medium};
+    `}
 `;
 
 export const StyledLink = styled(Link)<Pick<NavbarProps, "$anchorTheme">>`
