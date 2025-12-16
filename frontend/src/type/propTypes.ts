@@ -162,3 +162,9 @@ export type TestimonialCardProps = {
     },
     className?: string;
 };
+
+export type SectionProps = {
+    title: string;
+    description: string;
+    className?: string;
+}

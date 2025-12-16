@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { v } from '../../../styles/variables.js';
+import { v } from 'constants/variables';
 import { Link } from 'react-router-dom';
 
 export const SidebarWrapper = styled.div`
@@ -9,7 +9,7 @@ export const SidebarWrapper = styled.div`
     justify-content: space-between;
     width: 100%;
     height: 100%;
-    border-right: ${v.borderThickness.light} solid ${({theme}) => theme.borderColor};
+    border-right: ${v.borderThickness.light} solid ${({theme}) => theme.colors.borderColor};
 `;
 
 export const SidebarLogoSpace = styled.div`
@@ -41,10 +41,10 @@ export const StyledLinkWithImage = styled(Link)`
     cursor: pointer;
     width: 100%;
     height: fit-content;
-    color: ${({theme}) => theme.backgroundColor1};
+    color: ${({theme}) => theme.colors.backgroundColor1};
     
     &:hover{
-        color: ${({theme}) => theme.backgroundColor3};
+        color: ${({theme}) => theme.colors.backgroundColor3};
     }
 
     & svg {

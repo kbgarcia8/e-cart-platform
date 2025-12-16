@@ -38,6 +38,11 @@ export const lightTheme:Theme = {
         hover: palette.primary2,
         active: palette.secondary2
     },
+    footerTheme: {
+        backgroundColor: palette.neutral5,
+        textColor: palette.secondary1,
+        shadowColor: palette.shadow1
+    },
     notificationPalette: {
         infoText: asColor('#C9E6F0'),
         infoBackground: asColor('#202234'),
@@ -70,6 +75,11 @@ export const darkTheme:Theme = {
         visited: palette.neutral1,
         hover: palette.primary3,
         active: palette.secondary1
+    },
+    footerTheme: {
+        backgroundColor: palette.accent,
+        textColor: palette.primary1,
+        shadowColor: palette.shadow2
     },
     notificationPalette: {
         infoText: asColor('#202234'),

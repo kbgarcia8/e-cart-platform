@@ -4,9 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import * as Styled from "./PublicHeader.styles.js";
 
 const links = [
-    {name: "Home", path: "/about"},
-    {name: "About Us", path: "/about"},
-    {name: "Testimonials", path: "/testimonials"}
+    {name: "Features", path: "/#features"},
+    {name: "About Us", path: "/#about"},
+    {name: "Testimonials", path: "/#testimonials"},
+    {name: "Contact Us", path: "/#contact"}
 ]
 
 const PublicHeader = ():React.ReactNode => {
@@ -14,7 +15,7 @@ const PublicHeader = ():React.ReactNode => {
     const [isSignedIn, setIsSignedIn] = React.useState<boolean>(false);
 
     const handleLogoClick = () => {
-        navigate('/');
+        navigate('/#landing');
         setIsSignedIn(false)
     }
 

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { v } from '../../../../styles/variables.js';
+import { v } from 'constants/variables';
 
-export const HomePageWrapper = styled.div`
+export const LandingPageWrapper = styled.div`
     padding: 0;
     display: flex;
     flex-direction: column;
@@ -23,12 +23,12 @@ export const AboutUsSpace = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    color: ${({theme}) => theme.textColor3};
+    color: ${({theme}) => theme.colors.textColor3};
 `;
 
 export const AboutUsHeader = styled.h1`
     width: 100%;
-    color: ${({theme}) => theme.textColor3};
+    color: ${({theme}) => theme.colors.textColor3};
 `;
 
 export const AboutUsArticle = styled.article`
@@ -37,7 +37,7 @@ export const AboutUsArticle = styled.article`
     font-family: ${v.fonts.primary}, ${v.fonts.fallback};
     font-size: ${v.fontSize.medium};
     font-weight: ${v.fontWeight.bold};
-    background-color: ${({theme}) => theme.shadow};
+    background-color: ${({theme}) => theme.colors.shadow};
     opacity: 75%;
     padding: ${v.spacing.small};
 `;
@@ -63,7 +63,7 @@ export const DescriptionSpace = styled.div`
     width: 100%;
     padding-block: ${v.spacing.large};
     padding-inline: ${v.spacing.small};
-    background-color: ${({theme}) => theme.textColor3};
+    background-color: ${({theme}) => theme.colors.textColor3};
 `;
 export const DescriptionHeader = styled.h1`
     width: 100%;
@@ -89,7 +89,7 @@ export const DescriptionSpaceFiller = styled(DescriptionSpace)`
     opacity: 0;
 `;
 export const ServicesSpace = styled.div`
-    background-color: ${({theme}) => theme.shadow};
+    background-color: ${({theme}) => theme.colors.shadow};
     padding: ${v.spacing.small};
     padding-block: 0;
     display: grid;
@@ -104,10 +104,10 @@ export const ServicesCard = styled.div`
     height: 55%;
     display: flex;
     flex-direction: column;
-    border: ${v.borderThickness.light} solid ${({theme}) => theme.borderColor1};
+    border: ${v.borderThickness.light} solid ${({theme}) => theme.colors.borderColor1};
     border-radius: ${v.borderRadius.medium};
     padding: ${v.spacing.xxsmall};
-    background-color: ${({theme}) => theme.backgroundColor3};
+    background-color: ${({theme}) => theme.colors.backgroundColor3};
 `;
 export const ServiceHeader = styled.h3`
     height: 25%;
@@ -140,11 +140,11 @@ export const SocialDetailsSpace = styled.div`
     justify-content: space-evenly;
     width: 100%;
     height: 50vh;
-    background-color: ${({theme}) => theme.screenColor};
+    background-color: ${({theme}) => theme.colors.screenColor};
 `;
 export const SocialDetailsHeader = styled.h4`
     width: 100%;
-    color: ${({theme}) => theme.textColor1};
+    color: ${({theme}) => theme.colors.textColor1};
 `;
 export const SocialDetailsSpanContainer = styled.div`
     width: 100%;
@@ -160,12 +160,12 @@ export const SocialDetailsSpan = styled.span`
     font-family: ${v.fonts.secondary}, ${v.fonts.fallback};
     white-space: pre;
     padding: ${v.spacing.xxsmall};
-    color: ${({theme}) => theme.name === "lightTheme" ? theme.textColor1 : theme.screenColor};
-    background-color: ${({theme}) => theme.textColor3};
+    color: ${({theme}) => theme.colors.name === "lightTheme" ? theme.colors.textColor1 : theme.colors.screenColor};
+    background-color: ${({theme}) => theme.colors.textColor3};
     margin-block: ${v.spacing.xxsmall};
 
     & svg {
-        color: ${({theme}) => theme.backgroundColor2};
+        color: ${({theme}) => theme.colors.backgroundColor2};
         margin-right: ${v.spacing.medium};
         width: 7.5%;
         height: 100%;

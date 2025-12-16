@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { media } from "utils/utility"
+import { media } from "utils/utility";
+import { v } from "constants/variables";
 
 export const TesterLayoutWrapper = styled.div`
     display: grid;
@@ -33,9 +34,10 @@ export const Header = styled.header`
 export const Main = styled.main`
     display: flex;
     grid-area: main;
-    padding: 16px;
+    padding: 0;
     background-color: ${({ theme }) => theme.colors.background};
     min-height: 75vh;
+    overflow-y: auto;
 `;
 
 export const Footer = styled.footer`
@@ -44,9 +46,6 @@ export const Footer = styled.footer`
     background-color: ${({ theme }) => theme.colors.backgroundSecondary};
     border-top: 2px solid ${({ theme }) => theme.colors.border};
     ${media.mobile`
-        min-height: 7vh;
-    `}
-    ${media.desktop`
         min-height: 5vh;
     `}
 `; 
