@@ -33,8 +33,11 @@ const LandingPage = () => {
 
     return(
         <Styled.LandingPageWrapper>
-            <Styled.MainSection id={"landing"} title={"Baked Goods and Treats at your doorstep"}>
-
+            <Styled.MainSection id={"landing"} title={"Baked goods, treats and snacks at your doorstep"}>
+                <Styled.MainSectionSpace>
+                    <Styled.ExploreMenuButton buttonType={"button"} text={"Explore Menu"} onClick={() => {console.log('View Public Menu')}}/>
+                    <Styled.ImageCarouselSpace></Styled.ImageCarouselSpace>
+                </Styled.MainSectionSpace>
             </Styled.MainSection>
         </Styled.LandingPageWrapper>
     )

@@ -28,6 +28,8 @@ export const v:Record<string, Record<string, string|number>> = {
         xlarge: '1.75rem',
         xxlarge: '2rem',
         xxxlarge: '2.25rem',
+        giga: '3rem',
+        mega: '3.5rem',
     },
     spacing: {
         xxxsmall: '0.25rem',
