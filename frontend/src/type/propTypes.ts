@@ -1,3 +1,4 @@
+import type React from "react";
 import type { Theme } from "./generalTypes";
 
 export type AllNodeProps<T extends React.ReactNode> = {
@@ -168,4 +169,16 @@ export type SectionProps = {
     description?: string;
     className?: string;
     id: string;
+}
+
+export type ImageCarouselProps = {
+    headerText?: string;
+    handlePreviousClick: React.ReactEventHandler<HTMLButtonElement>
+    images: {
+        id: number;
+        url: string;
+    }[];
+    currentImageIndex: number;
+    handleNextClick: React.ReactEventHandler<HTMLButtonElement>
+    className?: string;
 }

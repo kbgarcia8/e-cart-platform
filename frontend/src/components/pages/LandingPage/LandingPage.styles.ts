@@ -3,6 +3,7 @@ import { v } from 'constants/variables';
 import { media } from 'utils/utility';
 import Section from 'components/molecules/Section';
 import Button from 'components/atoms/Button/Button';
+import ImageCarousel from 'components/molecules/ImageCarousel';
 
 export const LandingPageWrapper = styled.div`
     padding: 0;
@@ -58,7 +59,7 @@ export const ExploreMenuButton = styled(Button)`
     `}
 `;
 
-export const ImageCarouselSpace = styled.div`
+export const MainSectionimageCarousel = styled(ImageCarousel)`
     flex: 4;
     width: 100%;
 `;
