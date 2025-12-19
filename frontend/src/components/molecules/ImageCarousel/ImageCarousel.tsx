@@ -6,8 +6,8 @@ const ImageCarousel = ({headerText, handlePreviousClick, images, currentImageInd
     return (
         <Styled.ImageCarouselWrapper className={className}>
             {headerText && <Styled.CarouselHeaderText>{headerText}</Styled.CarouselHeaderText>}
-            <Styled.ImageContainer className="image-container">
-                <Styled.NavButton className="nav-button left" text={"&gt;"} buttonType={"button"}  onClick={handlePreviousClick}/>
+            <Styled.ImageContainer>
+                {handlePreviousClick && <Styled.NavButton className="nav-button left" text={"<"} buttonType={"button"}  onClick={handlePreviousClick}/>}
                 {images.map((image , index) => (
                     <Styled.Image 
                         src={image.url} 
@@ -16,7 +16,7 @@ const ImageCarousel = ({headerText, handlePreviousClick, images, currentImageInd
                         key={image.id} 
                     />
                 ))}
-                <Styled.NavButton className="nav-button right" text={"&gt;"} buttonType={"button"} onClick={handleNextClick} />
+                {handleNextClick && <Styled.NavButton className="nav-button right" text={">"} buttonType={"button"} onClick={handleNextClick} />}
             </Styled.ImageContainer>
         </Styled.ImageCarouselWrapper>
     )

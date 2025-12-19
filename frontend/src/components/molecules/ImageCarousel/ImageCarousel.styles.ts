@@ -24,18 +24,19 @@ export const ImageContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    max-width: 100%;
+    max-width: 85%;
     margin: 0 auto;
-    overflow: hidden;
+    overglow: hidden;
     border-radius: ${v.borderRadius.medium};
     background-color: ${({theme})=>theme.colors.screenColor};
     box-shadow: 0 ${v.spacing.medium} ${v.spacing.large} ${({theme})=>theme.colors.shadow};
-    height: auto;
+    aspect-ratio: 4 / 3;
+    border 5px solid blue;
 `;
 
 export const Image = styled.img`
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
     width: 100%;
     border-radius: ${v.borderRadius.small};
     object-fit: cover;
