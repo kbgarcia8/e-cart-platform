@@ -173,12 +173,13 @@ export type SectionProps = {
 
 export type ImageCarouselProps = {
     headerText?: string;
-    handlePreviousClick: React.ReactEventHandler<HTMLButtonElement>
     images: {
         id: number;
         url: string;
     }[];
     currentImageIndex: number;
-    handleNextClick: React.ReactEventHandler<HTMLButtonElement>
     className?: string;
-}
+} & (
+    | {hasManualNavigation: true; handlePreviousClick?: React.ReactEventHandler<HTMLButtonElement>; handleNextClick?: React.ReactEventHandler<HTMLButtonElement>}
+    | {hasManualNavigation: false; handlePreviousClick?: never; handleNextClick?: React.ReactEventHandler<HTMLButtonElement>}
+)

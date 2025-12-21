@@ -24,7 +24,7 @@ export const ImageContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    max-width: 85%;
+    max-width: 90%;
     margin: 0 auto;
     overglow: hidden;
     border-radius: ${v.borderRadius.medium};
@@ -37,7 +37,6 @@ export const ImageContainer = styled.div`
 export const Image = styled.img`
     width: 100%;
     height: 100%;
-    width: 100%;
     border-radius: ${v.borderRadius.small};
     object-fit: cover;
     transition: opacity 0.5s ease, transform 0.5s ease;
@@ -84,6 +83,7 @@ export const NavButton = styled(Button)`
         padding: 0;
         line-height: 1;
         z-index: 1;
+        display: hidden
     }
 
     & .nav-button.left {

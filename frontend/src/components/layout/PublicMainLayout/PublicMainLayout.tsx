@@ -8,13 +8,13 @@ const PublicMainLayout = ({
     footer
 }:AllNodeProps<React.ReactNode>) => {
     return(
-        <Styled.TesterLayoutWrapper>
+        <Styled.PublicMainLayout>
             <Styled.Header>{header}</Styled.Header>
             <Styled.Main>
                 <Outlet />
             </Styled.Main>
             <Styled.Footer>{footer}</Styled.Footer>
-        </Styled.TesterLayoutWrapper>
+        </Styled.PublicMainLayout>
     )
 };
 

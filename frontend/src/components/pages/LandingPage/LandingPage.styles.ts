@@ -12,21 +12,21 @@ export const LandingPageWrapper = styled.div`
     align-items: center;
     justify-content: flex-start;
     width: 100%;
-    min-height: 100%;
 `;
 
 export const MainSection = styled(Section)`
     background-color: ${({theme}) => theme.colors.backgroundColor3};
     width: 100%;
-    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex: 2;
     
 
     ${media.mobile`
+        min-height: 85vh;
         & h2 {
-            flex: 1;
+            flex: 4;
             display: flex;
             border: 2px solid red;
             padding-top: ${v.spacing.large};
@@ -39,22 +39,17 @@ export const MainSection = styled(Section)`
     `}
 `;
 
-export const MainSectionSpace = styled.div`
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-`;
-
 export const ExploreMenuButton = styled(Button)`
     align-self: center;
-    flex: 1;
+    flex: 0.5;
+    border-radius: ${v.borderRadius.medium};
+    background-color: ${({theme}) => theme.colors.backgroundColor1};
     ${media.mobile`
         width: 50%;
         & .button-icon-text-space span{
             font-size: ${v.fontSize.medium};
             font-weight: ${v.fontWeight.bolder};
+            font-family: ${v.fonts.secondary}, ${v.fonts.fallback};
         }
     `}
 `;
@@ -62,4 +57,18 @@ export const ExploreMenuButton = styled(Button)`
 export const MainSectionimageCarousel = styled(ImageCarousel)`
     flex: 4;
     width: 100%;
+`;
+
+export const FeatureSection = styled(Section)`
+    background-color: ${({theme}) => theme.colors.backgroundColor4};
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+
+    ${media.mobile`
+        min-height: 85vh;
+    `}
 `;

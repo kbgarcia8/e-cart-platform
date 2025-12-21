@@ -62,11 +62,12 @@ const LandingPage = () => {
     return(
         <Styled.LandingPageWrapper>
             <Styled.MainSection id={"landing"} title={"Baked goods, treats and snacks at your doorstep"}>
-                <Styled.MainSectionSpace>
-                    <Styled.ExploreMenuButton buttonType={"button"} text={"Explore Menu"} onClick={() => {console.log('View Public Menu')}}/>
-                    <Styled.MainSectionimageCarousel handlePreviousClick={handlePreviousClick} currentImageIndex={currentImageIndex} images={mainSectionImages} handleNextClick={handleNextClick}/>
-                </Styled.MainSectionSpace>
+                <Styled.ExploreMenuButton buttonType={"button"} text={"Explore Menu"} onClick={() => {console.log('View Public Menu')}}/>
+                <Styled.MainSectionimageCarousel hasManualNavigation={false} currentImageIndex={currentImageIndex} images={mainSectionImages} handleNextClick={handleNextClick}/>
             </Styled.MainSection>
+            <Styled.FeatureSection id={"features"}>
+
+            </Styled.FeatureSection>
         </Styled.LandingPageWrapper>
     )
 }

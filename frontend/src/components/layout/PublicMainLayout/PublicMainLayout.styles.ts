@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { media } from "utils/utility";
 import { v } from "constants/variables";
 
-export const TesterLayoutWrapper = styled.div`
+export const PublicMainLayout = styled.div`
     display: grid;
     height: 100vh;
     width: 100vw;
