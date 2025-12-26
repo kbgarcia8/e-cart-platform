@@ -3,7 +3,6 @@ import { v } from "constants/variables";
 import Button from "components/atoms/Button";
 
 export const ImageCarouselWrapper = styled.div`
-    height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -24,14 +23,15 @@ export const ImageContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
     max-width: 90%;
+    min-width: 0;
     margin: 0 auto;
-    overglow: hidden;
+    overflow: hidden;
     border-radius: ${v.borderRadius.medium};
     background-color: ${({theme})=>theme.colors.screenColor};
     box-shadow: 0 ${v.spacing.medium} ${v.spacing.large} ${({theme})=>theme.colors.shadow};
     aspect-ratio: 4 / 3;
-    border 5px solid blue;
 `;
 
 export const Image = styled.img`
@@ -83,7 +83,6 @@ export const NavButton = styled(Button)`
         padding: 0;
         line-height: 1;
         z-index: 1;
-        display: hidden
     }
 
     & .nav-button.left {

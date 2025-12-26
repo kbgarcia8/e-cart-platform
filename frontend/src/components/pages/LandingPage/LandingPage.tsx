@@ -65,7 +65,7 @@ const LandingPage = () => {
                 <Styled.ExploreMenuButton buttonType={"button"} text={"Explore Menu"} onClick={() => {console.log('View Public Menu')}}/>
                 <Styled.MainSectionimageCarousel hasManualNavigation={false} currentImageIndex={currentImageIndex} images={mainSectionImages} handleNextClick={handleNextClick}/>
             </Styled.MainSection>
-            <Styled.FeatureSection id={"features"}>
+            <Styled.FeatureSection id={"features"} title={"Why Order from us?"}>
 
             </Styled.FeatureSection>
         </Styled.LandingPageWrapper>

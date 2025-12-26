@@ -17,16 +17,17 @@ export const LandingPageWrapper = styled.div`
 export const MainSection = styled(Section)`
     background-color: ${({theme}) => theme.colors.backgroundColor3};
     width: 100%;
+    min-width: 0;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
     flex: 2;
-    
 
     ${media.mobile`
-        min-height: 85vh;
+        min-height: 87.5vh;
         & h2 {
-            flex: 4;
+            flex: 2;
             display: flex;
             border: 2px solid red;
             padding-top: ${v.spacing.large};

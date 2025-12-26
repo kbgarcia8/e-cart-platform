@@ -46,6 +46,9 @@ export const Footer = styled.footer`
     background-color: ${({ theme }) => theme.colors.backgroundSecondary};
     border-top: 2px solid ${({ theme }) => theme.colors.border};
     ${media.mobile`
+        min-height: 7vh;
+    `}
+    ${media.desktop`
         min-height: 5vh;
     `}
 `; 
