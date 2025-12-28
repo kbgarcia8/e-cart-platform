@@ -38,6 +38,25 @@ const mainSectionImages = [
     {id: 6, url: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjA6CiRXXqj-anfuNscQaBK2-d-fHqgSFYe5tfQmrQ8-IpnqCMObuT9_DKyPrEeMmpwLjb9S33EazO1oBRehyphenhyphenU3DEktfbr7ze2TkMweKmp6Obiq5YVg4wwqQPzcANsZ8rgBleRpdp67gLlc/s1600/06102014+003.jpg'}
 ]
 
+const features = [
+    {
+        name: "Freshly Baked Goods and Homemade Spreads",
+        url: "https://www.yoonpak.com/wp-content/uploads/2024/06/baking-3.jpg"
+    },
+    {
+        name: "Door-to-door Delivery Service",
+        url: "https://www.spoton.com/blog/content/images/2021/06/The-Rising-Value-of-Food-Delivery.jpg"
+    },
+    {
+        name: "Earn points and redeem rewards",
+        url: "https://blogimage.vantagecircle.com/content/images/2022/03/How-To-Set-Up-A-Successful--Points-Based-Rewards-System-At-Work-.png"
+    },
+    {
+        name: "Accepts custom orders for events",
+        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShshOgPBeUVFwyicHPVp2qlVTO0lThGk83bQ&s"
+    }
+]
+
 const LandingPage = () => {
     const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
 
@@ -66,7 +85,13 @@ const LandingPage = () => {
                 <Styled.MainSectionimageCarousel hasManualNavigation={false} currentImageIndex={currentImageIndex} images={mainSectionImages} handleNextClick={handleNextClick}/>
             </Styled.MainSection>
             <Styled.FeatureSection id={"features"} title={"Why Order from us?"}>
-
+                <Styled.FeaturesContainer>
+                    {features.map((feature, index) => (
+                        <Styled.FeatureCard key={index} id={`feature-${index}`} $imageUrl={feature.url}>
+                            <Styled.FeatureHeader>{feature.name}</Styled.FeatureHeader>
+                        </Styled.FeatureCard>
+                    ))}
+                </Styled.FeaturesContainer>
             </Styled.FeatureSection>
         </Styled.LandingPageWrapper>
     )
