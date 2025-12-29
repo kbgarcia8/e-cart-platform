@@ -14,9 +14,8 @@ const PublicHeader = ():React.ReactNode => {
     const navigate = useNavigate();
     const [isSignedIn, setIsSignedIn] = React.useState<boolean>(false);
 
-    const handleLogoClick = () => {
-        navigate('/#landing');
-        setIsSignedIn(false)
+    const handleClick = () => {
+        setIsSignedIn(false);
     }
 
     const handleButtonNavigate = (e:React.MouseEvent<HTMLButtonElement>) => { 
@@ -26,15 +25,14 @@ const PublicHeader = ():React.ReactNode => {
         }       
         const buttonText = e.currentTarget.textContent
         navigate(`/${textToLink[buttonText]}`)
-        //setIsSignedIn(true)
     }
     
     return(
         <Styled.MainHeaderWrapper>
-            <Styled.MainHeaderLogoSpace>
-                <Styled.MainHeaderLogo onClick={handleLogoClick} src={headerLogo} />
+            <Styled.MainHeaderLogoSpace smooth to="#landing">
+                <Styled.MainHeaderLogo src={headerLogo} />
             </Styled.MainHeaderLogoSpace>
-                <Styled.PublicNavbar className={"public-navbar"} isSigning={isSignedIn} links={links}/>
+                <Styled.PublicNavbar className={"public-navbar"} isSigning={isSignedIn} isHashLinks={true} links={links}/>
             <Styled.ButtonWrapper>
                 <Styled.SignUpButton buttonType={'button'} text={"Sign Up"} onClick={handleButtonNavigate}/>
                 <Styled.LoginButton buttonType={'button'} text={"Login"} onClick={handleButtonNavigate}/>

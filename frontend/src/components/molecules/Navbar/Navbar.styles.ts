@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { v } from 'constants/variables'
 import { Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 import type { NavbarProps } from 'type/propTypes';
 import { media } from 'utils/utility';
 
@@ -43,6 +44,23 @@ export const NavbarLink = styled.li`
 `;
 
 export const StyledLink = styled(Link)<Pick<NavbarProps, "$anchorTheme">>`
+    text-decoration: none;
+    color: ${({$anchorTheme}) => $anchorTheme?.anchorTheme.link};
+    &:link{
+        color: ${({$anchorTheme}) => $anchorTheme?.anchorTheme.link};
+    }
+    &:visited{
+        color: ${({$anchorTheme}) => $anchorTheme?.anchorTheme.visited};
+    }
+    &:hover{
+        color: ${({$anchorTheme}) => $anchorTheme?.anchorTheme.hover};
+    }
+    &:active{
+        color: ${({$anchorTheme}) => $anchorTheme?.anchorTheme.active};
+    }
+`;
+
+export const StyledHashLink = styled(HashLink)<Pick<NavbarProps, "$anchorTheme">>`
     text-decoration: none;
     color: ${({$anchorTheme}) => $anchorTheme?.anchorTheme.link};
     &:link{

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { v } from 'constants/variables'
 import Button from 'components/atoms/Button';
 import Navbar from "components/molecules/Navbar";
+import { HashLink } from 'react-router-hash-link';
 import { media } from 'utils/utility';
 
 export const MainHeaderWrapper = styled.div`
@@ -15,7 +16,7 @@ export const MainHeaderWrapper = styled.div`
     padding-inline: ${v.spacing.xxxsmall}
 `;
 
-export const MainHeaderLogoSpace = styled.div`
+export const MainHeaderLogoSpace = styled(HashLink)`
     display: flex;
     align-items: center;
     justify-content: center;

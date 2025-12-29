@@ -135,4 +135,61 @@ export const FeatureHeader = styled.h3`
     margin-bottom: ${v.spacing.small};
     color: ${({theme}) => theme.colors.textColor3};
     text-shadow: ${v.spacing.xxsmall} ${v.spacing.xxsmall} ${v.spacing.xsmall} ${({theme}) => theme.colors.textColor1};
+    line-height: ${v.spacing.large};
+`;
+
+export const MenuPreviewSection = styled(Section)`
+    background-color: ${({theme}) => theme.colors.backgroundColor3};
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 2;
+
+    ${media.mobile`
+        min-height: 87.5vh;
+        & h2 {
+            flex: 1;
+            display: flex;
+            padding-top: ${v.spacing.large};
+            align-items: center;
+            color: ${({theme}) => theme.colors.textColor3};
+            text-shadow: ${v.spacing.xxsmall} ${v.spacing.xxsmall} ${v.spacing.xsmall} ${({theme}) => theme.notificationPalette.errorBackground};
+            font-size: ${v.fontSize.giga};
+            line-height: ${v.spacing.xlarge};
+        }
+    `}
+`;
+
+export const ProductsPreviewContainer = styled.div`
+    border: 2px solid red;
+    flex: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    padding: ${v.spacing.large};
+    gap: ${v.spacing.large};
+
+    ${media.mobile`
+        flex-direction: column;
+    `}
+`;
+
+export const SeeMoreProductsButton = styled(Button)`
+    align-self: flex-end;
+    flex: 0.25;
+    border-radius: ${v.borderRadius.medium};
+    background-color: ${({theme}) => theme.colors.backgroundColor1};
+    ${media.mobile`
+        width: 50%;
+        & .button-icon-text-space span{
+            font-size: ${v.fontSize.medium};
+            font-weight: ${v.fontWeight.bolder};
+            font-family: ${v.fonts.secondary}, ${v.fonts.fallback};
+        }
+    `}
 `;

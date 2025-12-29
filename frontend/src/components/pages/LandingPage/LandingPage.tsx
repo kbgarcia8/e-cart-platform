@@ -54,6 +54,10 @@ const features = [
     {
         name: "Accepts custom orders for events",
         url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShshOgPBeUVFwyicHPVp2qlVTO0lThGk83bQ&s"
+    },
+    {
+        name: "Discount and Happy Hour Promos",
+        url: "https://cbx-prod.b-cdn.net/COLOURBOX54687374.jpg?width=800&height=800&quality=70"
     }
 ]
 
@@ -93,6 +97,12 @@ const LandingPage = () => {
                     ))}
                 </Styled.FeaturesContainer>
             </Styled.FeatureSection>
+            <Styled.MenuPreviewSection id={"services"} title={"Some of our Products"}>
+                <Styled.ProductsPreviewContainer>
+                    
+                </Styled.ProductsPreviewContainer>
+                <Styled.SeeMoreProductsButton buttonType={"button"} text={"See More"} onClick={() => {console.log('View More Products')}}/>
+            </Styled.MenuPreviewSection>
         </Styled.LandingPageWrapper>
     )
 }
