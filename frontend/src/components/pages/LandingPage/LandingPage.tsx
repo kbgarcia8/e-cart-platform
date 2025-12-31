@@ -61,6 +61,10 @@ const features = [
     }
 ]
 
+const productPreviews = [
+    
+]
+
 const LandingPage = () => {
     const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
 
