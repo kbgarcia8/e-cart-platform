@@ -4,6 +4,7 @@ import { media } from 'utils/utility';
 import Section from 'components/molecules/Section';
 import Button from 'components/atoms/Button/Button';
 import ImageCarousel from 'components/molecules/ImageCarousel';
+import ProductPreviewCard from 'components/molecules/ProductPreviewCard';
 
 export const LandingPageWrapper = styled.div`
     padding: 0;
@@ -192,4 +193,8 @@ export const SeeMoreProductsButton = styled(Button)`
             font-family: ${v.fonts.secondary}, ${v.fonts.fallback};
         }
     `}
+`;
+
+export const PublicProductPreviewCard = styled(ProductPreviewCard)`
+
 `;

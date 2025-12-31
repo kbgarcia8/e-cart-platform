@@ -1,6 +1,4 @@
 import React from "react";
-import useTheme from "hooks/useTheme";
-import { palette } from "styles/theme";
 import * as Styled from "./ProductCard.styles";
 import CartIcon from "components/svgs/CartIcon.tsx";
 import type { ProductCardProps } from "type/propTypes";
@@ -13,8 +11,7 @@ const ProductCard = ({
     dataCategory,
     dataIndex,
     handleAddToCartButton,
-    className,
-    isDarkCard
+    className
 }:ProductCardProps) => {
 
     return (

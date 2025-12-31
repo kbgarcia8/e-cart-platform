@@ -132,7 +132,16 @@ export type ProductCardProps = {
     dataIndex: number;
     handleAddToCartButton: React.MouseEventHandler<HTMLButtonElement>
     className?: string;
-    isDarkCard: boolean;
+}
+
+export type ProductPreviewCardProps = {
+    productImage: string;
+    productName: string;
+    basePrice: number;
+    dataCategory: string;
+    dataProductId: number;
+    handleProductPreviewButton?: React.MouseEventHandler<HTMLButtonElement>
+    className?: string;
 }
 
 export type StarRatingProps = {

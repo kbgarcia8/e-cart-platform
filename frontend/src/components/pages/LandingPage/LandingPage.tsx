@@ -62,7 +62,27 @@ const features = [
 ]
 
 const productPreviews = [
-    
+    {
+        image: "https://www.tasteofhome.com/wp-content/uploads/2025/04/Cassava-Cake_EXPS_TOHcom25_278348_MD_P2_03_27_7b.jpg",
+        name: "Cassava Cake",
+        basePrice: 200,
+        category: "Cake",
+        productId: 5
+    },
+    {
+        image: "https://images.yummy.ph/yummy/uploads/2023/12/lechonbellyrecipe-1.jpg",
+        name: "Pork Belly Roll",
+        basePrice: 400,
+        category: "Mains",
+        productId: 3
+    },
+    {
+        image: "https://flouredframe.com/wp-content/uploads/2019/12/vegan-leche-flan-ft-image-1200x1200-1-500x500.jpg",
+        name: "Leche Flan",
+        basePrice: 120,
+        category: "Desserts",
+        productId: 7
+    }
 ]
 
 const LandingPage = () => {
@@ -103,7 +123,15 @@ const LandingPage = () => {
             </Styled.FeatureSection>
             <Styled.MenuPreviewSection id={"services"} title={"Some of our Products"}>
                 <Styled.ProductsPreviewContainer>
-                    
+                    {productPreviews.map((product) => (
+                        <Styled.PublicProductPreviewCard
+                            productImage={product.image}
+                            productName={product.name}
+                            basePrice={product.basePrice}
+                            dataCategory={product.category}
+                            dataProductId={product.productId}
+                        />
+                    ))}
                 </Styled.ProductsPreviewContainer>
                 <Styled.SeeMoreProductsButton buttonType={"button"} text={"See More"} onClick={() => {console.log('View More Products')}}/>
             </Styled.MenuPreviewSection>
