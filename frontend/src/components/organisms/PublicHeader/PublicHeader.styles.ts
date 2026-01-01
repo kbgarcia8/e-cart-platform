@@ -21,41 +21,52 @@ export const MainHeaderLogoSpace = styled(HashLink)`
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border: 2px solid red;
     background-color: ${({theme}) => theme.colors.screenColor};
     height: auto;
     ${media.mobile`
-        width: 12.5%;
+        flex: 0 0 12.5%;
+        max-width: 12.5%;
     `}
     ${media.desktop`
-        width: 10%;
+        flex: 0 0 10%;
+        max-width: 10%;
     `}
 `;
 
 export const MainHeaderLogo = styled.img`
     width: 100%;
-    height: 100%;
+    height: auto;
     border-radius: ${v.borderRadius.circle};
 `;
 
+export const NavbarWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    
+    ${media.mobile`
+        flex: 0 0 87.5%;
+        max-width: 87.5%;
+    `}
+    ${media.desktop`
+        flex: 0 0 90%;
+        max-width: 90%;
+    `}
+`;
+
 export const PublicNavbar = styled(Navbar)`
-    &.public-navbar{
-        width: 70%;
-    }
+    flex: 2;
 `;
 
 export const ButtonWrapper = styled.div`
+    flex: 2;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
     height: 100%;
     margin: 0;
-    ${media.mobile`
-        width: 25%;
-    `}
-    ${media.tablet`
-        width: 20%;
-    `}
+    padding-top: ${v.spacing.xsmall};
+    padding-inline: ${v.spacing.xxlarge};
 `;
 
 export const LoginButton = styled(Button)`
@@ -77,7 +88,7 @@ export const LoginButton = styled(Button)`
     ${media.mobile`
         padding: 0;
         & span {
-            font-size: calc(${v.fontSize.xxxsmall} + 0.15rem);
+            font-size: calc(${v.fontSize.xxsmall} + 0.15rem);
             width: 100%;
         }
     `}

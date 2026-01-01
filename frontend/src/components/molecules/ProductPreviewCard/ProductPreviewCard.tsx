@@ -1,7 +1,7 @@
 import React from "react";
 import * as Styled from "./ProductPreviewCard.styles";
-import CartIcon from "components/svgs/CartIcon.tsx";
 import type { ProductPreviewCardProps } from "type/propTypes";
+import { IoBag } from "react-icons/io5";
 
 const ProductPreviewCard = ({
     productImage,
@@ -16,13 +16,12 @@ const ProductPreviewCard = ({
     return (
         <Styled.ProductPreviewCardContainer className={className}>
             <Styled.ProductImage src={productImage} alt={`${productName}-image`}/>
-            <Styled.ProductInfoContainer>
-                <Styled.ProductTitle>{productName}</Styled.ProductTitle>                
-            </Styled.ProductInfoContainer>
+            <Styled.ProductTitle>{productName}</Styled.ProductTitle>                
             <Styled.PriceContainer>
+                <Styled.ProductBasePrice>P {basePrice}</Styled.ProductBasePrice>
                 <Styled.AddToCartButton 
                     id={`${productName}-product-preview`}
-                    svg={<CartIcon/>}
+                    svg={<IoBag/>}
                     dataAttributes={{
                         "data-name": productName,
                         "data-category": dataCategory,
@@ -31,7 +30,6 @@ const ProductPreviewCard = ({
                     onClick={handleProductPreviewButton}
                     buttonType={"button"}
                 />
-                <Styled.ProductBasePrice>{basePrice}</Styled.ProductBasePrice>
             </Styled.PriceContainer>
         </Styled.ProductPreviewCardContainer>
     );

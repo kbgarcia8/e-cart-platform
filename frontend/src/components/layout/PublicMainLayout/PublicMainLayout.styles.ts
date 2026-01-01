@@ -36,7 +36,8 @@ export const Main = styled.main`
     grid-area: main;
     padding: 0;
     background-color: ${({ theme }) => theme.colors.background};
-    min-height: 75vh;
+    min-height: 0;
+    flex: 1;
     overflow-y: auto;
 `;
 

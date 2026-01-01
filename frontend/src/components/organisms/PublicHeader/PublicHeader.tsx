@@ -32,11 +32,13 @@ const PublicHeader = ():React.ReactNode => {
             <Styled.MainHeaderLogoSpace smooth to="#landing">
                 <Styled.MainHeaderLogo src={headerLogo} />
             </Styled.MainHeaderLogoSpace>
+            <Styled.NavbarWrapper>
                 <Styled.PublicNavbar className={"public-navbar"} isSigning={isSignedIn} isHashLinks={true} links={links}/>
-            <Styled.ButtonWrapper>
-                <Styled.SignUpButton buttonType={'button'} text={"Sign Up"} onClick={handleButtonNavigate}/>
-                <Styled.LoginButton buttonType={'button'} text={"Login"} onClick={handleButtonNavigate}/>
-            </Styled.ButtonWrapper>
+                <Styled.ButtonWrapper>
+                    <Styled.SignUpButton buttonType={'button'} text={"Sign Up"} onClick={handleButtonNavigate}/>
+                    <Styled.LoginButton buttonType={'button'} text={"Login"} onClick={handleButtonNavigate}/>
+                </Styled.ButtonWrapper>
+            </Styled.NavbarWrapper>
         </Styled.MainHeaderWrapper>
     )
 }

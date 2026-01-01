@@ -23,11 +23,11 @@ export const MainSection = styled(Section)`
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 2;
+    flex: none;
 
     ${media.mobile`
         min-height: 87.5vh;
-        & h2 {
+        &>h2 {
             flex: 2;
             display: flex;
             padding-top: ${v.spacing.large};
@@ -56,7 +56,7 @@ export const ExploreMenuButton = styled(Button)`
 `;
 
 export const MainSectionimageCarousel = styled(ImageCarousel)`
-    flex: 4;
+    flex: 3;
     width: 100%;
 `;
 
@@ -67,11 +67,11 @@ export const FeatureSection = styled(Section)`
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 1;
+    flex: none;
 
     ${media.mobile`
         min-height: 85vh;
-        & h2 {
+        &>h2 {
             flex: 1;
             display: flex;
             padding-top: ${v.spacing.large};
@@ -147,11 +147,11 @@ export const MenuPreviewSection = styled(Section)`
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 2;
+    flex: none;
 
     ${media.mobile`
         min-height: 87.5vh;
-        & h2 {
+        &>h2 {
             flex: 1;
             display: flex;
             padding-top: ${v.spacing.large};
@@ -165,18 +165,24 @@ export const MenuPreviewSection = styled(Section)`
 `;
 
 export const ProductsPreviewContainer = styled.div`
-    border: 2px solid red;
-    flex: 3;
+    box-shadow: 0 4px 8px 0 ${({theme})=> theme.colors.shadow};
+    flex: 2.5;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: auto;
+    flex-wrap: nowrap;
+    max-width: 100%;
+    min-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
     padding: ${v.spacing.large};
+    margin-bottom: ${v.spacing.small};
     gap: ${v.spacing.large};
 
+    & > * {
+        flex: 0 0 auto;
+    }
+
     ${media.mobile`
-        flex-direction: column;
+        -webkit-overflow-scrolling: touch;
     `}
 `;
 
@@ -196,5 +202,5 @@ export const SeeMoreProductsButton = styled(Button)`
 `;
 
 export const PublicProductPreviewCard = styled(ProductPreviewCard)`
-
+    flex: 1;
 `;
