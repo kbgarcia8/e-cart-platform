@@ -21,6 +21,10 @@ export type ListItemProps = {
 }
 
 type ButtonType = 'button' | 'submit' | 'reset';
+export type ButtonVariants = 'primary' | 'secondary' | 'ghost' | 'bnw';
+export type ButtonSizes = 'small' | 'medium' | 'large';
+export type ButtonRaidus = 'square' | 'roundedsquare' | 'squircle' | 'pill' | 'circle'
+
 export interface ButtonProps {
     onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
     id?: string;
@@ -31,6 +35,9 @@ export interface ButtonProps {
     text?: string;
     className?: string;
     pattern?: string | number | undefined;
+    $variant?: ButtonVariants;
+    $size?: ButtonSizes;
+    $radius?: ButtonRaidus;
     dataAttributes?: dataAttributesType;
 }
 declare const InputTypes: readonly ["text", "password", "email", "number", "tel", "url", "search", "date", "file", "hidden"];

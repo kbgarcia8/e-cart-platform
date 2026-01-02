@@ -1,49 +1,154 @@
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import { v } from 'constants/variables';
+import { media } from 'utils/utility';
 
-export const DefaultButton = styled.button`
+
+const VARIANTS = {
+  primary: css`
+    background-color: ${({theme})=> theme.colors.backgroundColor1};
+    color: ${({theme})=> theme.colors.textColor3};
+    border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.borderColor2};
+
+    &:hover {
+        background-color: ${({theme})=> theme.colors.backgroundColor2};
+        border: ${v.borderThickness.light}solid ${({theme})=> theme.colors.textColor3};
+    }
+    
+    &:disabled{
+        opacity: 0.5;
+        background-color: ${({theme})=> theme.notificationPalette.infoText};
+        color: ${({theme})=> theme.colors.shadow};
+        border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.shadow};
+    }
+  `,
+  secondary: css`
+    background-color: ${({theme})=> theme.colors.backgroundColor4};
+    color: ${({theme})=> theme.colors.textColor3};
+    border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.botderColor1};
+
+    &:hover {
+        background-color: ${({theme})=> theme.colors.backgroundColor4};
+        border: ${v.borderThickness.light}solid ${({theme})=> theme.colors.botderColor2};
+    }
+
+    &:disabled{
+        opacity: 0.5;
+        background-color: ${({theme})=> theme.notificationPalette.warningText};
+        color: ${({theme})=> theme.colors.shadow};
+        border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.shadow};
+    }
+  `,
+  ghost: css`
+    background-color: transparent;
+    color: ${({theme})=> theme.colors.textColor3};
+    border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.textColor3};
+
+    &:hover {
+        background-color: ${({theme})=> theme.colors.textColor2};
+        border: ${v.borderThickness.light}solid ${({theme})=> theme.colors.backgroundColor3};
+    }
+
+    &:disabled{
+        opacity: 0.5;
+        background-color: ${({theme})=> theme.notificationPalette.shadow};
+        color: ${({theme})=> theme.colors.shadow};
+        border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.shadow};
+    }
+  `,
+  bnw: css`
+    background-color: ${({theme}) => theme.colors.borderColor1};
+    color: ${({theme})=> theme.colors.borderColor2};
+    border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.borderColor2};
+
+    &:hover {
+        background-color: ${({theme})=> theme.colors.textColor2};
+        border: ${v.borderThickness.light}solid ${({theme})=> theme.colors.textColor1};
+    }
+
+    &:disabled{
+        opacity: 0.5;
+        background-color: ${({theme})=> theme.notificationPalette.shadow};
+        color: ${({theme})=> theme.colors.shadow};
+        border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.shadow};
+    }
+  `
+};
+
+const SIZES = {
+    small: css`
+        ${media.mobile`
+            font-size: ${v.fontSize.xsmall};
+            font-weight: ${v.fontWeight.bolder};
+        `}
+    `,
+    medium: css`
+        ${media.mobile`
+            font-size: ${v.fontSize.xsmall};
+            font-weight: ${v.fontWeight.bold};
+        `}
+    `,
+    large: css`
+        ${media.mobile`
+            font-size: ${v.fontSize.medium};
+            font-weight: ${v.fontWeight.medium};
+        `}
+    `,
+};
+
+const RADIUS = {
+    square: css`border-radius: ${v.borderRadius.xsmall};`,
+    roundedsquare: css`border-radius: ${v.borderRadius.medium};`,
+    squircle: css`border-radius: ${v.borderRadius.large};`,
+    pill: css`border-radius: ${v.borderRadius.xlarge};`,
+    circle: css`border-radius: ${v.borderRadius.circle};`
+};
+
+
+export const DefaultButton = styled.button<{
+        $variant?: keyof typeof VARIANTS,
+        $radius?: keyof typeof RADIUS,
+    }>`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: ${({theme})=> theme.colors.blue || 'blue'};
-    color: ${({theme})=> theme.colors.bg || 'white'};
-    border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.text || 'black'};
-    border-radius: ${v.borderRadius.xlarge};
     padding: ${v.spacing.xxxsmall} ${v.spacing.small};
     margin: 0.125rem;
     width: auto;
     cursor: pointer;
     transition: background-color 0.2s ease, border-color 0.2s ease;
-
-    &:hover {
-        background-color: lightblue;
-        border: ${v.borderThickness.light} solid gray;
-    }
-
-    & .button-icon-text-space {
-        max-width: 100%;
-    }
+    ${({ $variant }) => VARIANTS[$variant || 'primary']}
+    ${({ $radius }) => RADIUS[$radius || 'square']}
     
     & .button-icon-text-space svg {
-        max-width: 100%;
+        display: block;
+        flex: 1;
     }
 `;
 
-export const ButtonTextAndIconSpace = styled.div`
+export const ButtonTextAndIconSpace = styled.div<{ $hasIcon: boolean; $hasText: boolean }>`
     width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+
+    ${({ $hasIcon, $hasText }) =>
+        $hasIcon && $hasText
+            ? css``
+            : css`
+                & > * {
+                    flex: 1;
+                }
+            `}
 `;
 
 export const ButtonIcon = styled.img`
-    maxwidth: 100%;
+    flex: 1;
 `;
 
-export const ButtonText = styled.span`
-    font-size: ${v.fontSize.xsmall};
-    font-weight: ${v.fontWeight.medium};
+export const ButtonText = styled.span<{ $size?: keyof typeof SIZES }>`
+    flex: 2;
+    ${({ $size }) => SIZES[$size || 'small']}
     font-family: ${v.fonts.tertiary}, ${v.fonts.fallback};
     display: flex;
     align-items: center;

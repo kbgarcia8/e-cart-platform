@@ -11,7 +11,10 @@ const Button = ({
     alt = "alt-button-icon", 
     text = "",
     className = "",
-    dataAttributes = {}
+    dataAttributes = {},
+    $variant,
+    $radius,
+    $size
 }:ButtonProps) => {
 
     return (
@@ -21,10 +24,12 @@ const Button = ({
             type={buttonType}
             className={className}
             {...dataAttributes}
+            $variant={$variant}
+            $radius={$radius}
         >
-            <Styled.ButtonTextAndIconSpace className={"button-icon-text-space"}>
-                {source ? <Styled.ButtonIcon src={source} alt={alt} /> : svg ? svg : ''}
-                {text && <Styled.ButtonText id={id} >{text}</Styled.ButtonText>}
+            <Styled.ButtonTextAndIconSpace className={"button-icon-text-space"} $hasIcon={Boolean(source || svg)} $hasText={Boolean(text)}>
+                {source ? <Styled.ButtonIcon src={source} alt={alt} /> : svg ? svg : null}
+                {text && <Styled.ButtonText $size={$size} id={id} >{text}</Styled.ButtonText>}
             </Styled.ButtonTextAndIconSpace>
         </Styled.DefaultButton>
     )
