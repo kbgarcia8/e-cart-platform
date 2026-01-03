@@ -1,7 +1,10 @@
 import React from "react";
 import { DividerContainer, DividerLine, DividerText } from "./Divider.styles.js";
-import type { DividerProps } from "type/propTypes";
 
+type DividerProps = {
+    dividerText?: string;
+    className?: string;
+}
 
 const Divider = ({ dividerText, className }:DividerProps) => {
     

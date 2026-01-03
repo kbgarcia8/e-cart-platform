@@ -1,6 +1,6 @@
 import React from "react";
 import * as Styled from "./Button.styles";
-import type { ButtonProps } from "type/propTypes";
+import type { ButtonProps } from "./Button.types";
 
 const Button = ({
     onClick,
@@ -12,7 +12,7 @@ const Button = ({
     text = "",
     className = "",
     dataAttributes = {},
-    $variant,
+    $color,
     $radius,
     $size
 }:ButtonProps) => {
@@ -24,7 +24,7 @@ const Button = ({
             type={buttonType}
             className={className}
             {...dataAttributes}
-            $variant={$variant}
+            $color={$color}
             $radius={$radius}
         >
             <Styled.ButtonTextAndIconSpace className={"button-icon-text-space"} $hasIcon={Boolean(source || svg)} $hasText={Boolean(text)}>

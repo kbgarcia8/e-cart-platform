@@ -1,11 +1,11 @@
 import React from "react";
 import useTheme from "hooks/useTheme";
-import * as Styled from "./NotificationCard.styles.js";
+import * as Styled from "./NotificationCard.styles";
 import errorIcon from 'assets/error.png'
 import warningIcon from 'assets/warning.png'
 import successIcon from 'assets/success2.png'
 import infoIcon from 'assets/info.svg'
-import type { NotificationCardProps } from "type/propTypes";
+import type { NotificationCardProps } from "./NotificationCard.types";
 
 const NotificationCard = ({
     notificationImage,

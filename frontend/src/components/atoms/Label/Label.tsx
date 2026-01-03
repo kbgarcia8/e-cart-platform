@@ -1,6 +1,6 @@
 import React from "react";
 import * as Styled from "./Label.styles";
-import type { LabelProps } from "type/propTypes";
+import type { LabelProps } from "./Label.types";
 
 const Label = ({
     htmlFor, 

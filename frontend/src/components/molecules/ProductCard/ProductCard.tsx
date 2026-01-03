@@ -1,7 +1,7 @@
 import React from "react";
 import * as Styled from "./ProductCard.styles";
 import CartIcon from "components/svgs/CartIcon.tsx";
-import type { ProductCardProps } from "type/propTypes";
+import type { ProductCardProps } from "./ProductCard.types";
 
 const ProductCard = ({
     productImage,

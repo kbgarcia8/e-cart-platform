@@ -1,6 +1,6 @@
 import React, { type PropsWithChildren } from "react";
 import * as Styled from "./OrderReceipt.styles"
-import type { OrderReceiptProps } from "type/propTypes";
+import type { OrderReceiptProps } from "./OrderReceipt.types";
 
 const OrderReceipt = ({
     shopLogo, 

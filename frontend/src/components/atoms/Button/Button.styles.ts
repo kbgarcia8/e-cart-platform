@@ -3,75 +3,75 @@ import { v } from 'constants/variables';
 import { media } from 'utils/utility';
 
 
-const VARIANTS = {
-  primary: css`
-    background-color: ${({theme})=> theme.colors.backgroundColor1};
-    color: ${({theme})=> theme.colors.textColor3};
-    border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.borderColor2};
+const COLORS = {
+    primary: css`
+        background-color: ${({theme})=> theme.colors.backgroundColor1};
+        color: ${({theme})=> theme.colors.textColor3};
+        border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.borderColor2};
 
-    &:hover {
-        background-color: ${({theme})=> theme.colors.backgroundColor2};
-        border: ${v.borderThickness.light}solid ${({theme})=> theme.colors.textColor3};
-    }
-    
-    &:disabled{
-        opacity: 0.5;
-        background-color: ${({theme})=> theme.notificationPalette.infoText};
-        color: ${({theme})=> theme.colors.shadow};
-        border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.shadow};
-    }
-  `,
-  secondary: css`
-    background-color: ${({theme})=> theme.colors.backgroundColor4};
-    color: ${({theme})=> theme.colors.textColor3};
-    border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.botderColor1};
-
-    &:hover {
+        &:hover {
+            background-color: ${({theme})=> theme.colors.backgroundColor2};
+            border: ${v.borderThickness.light}solid ${({theme})=> theme.colors.textColor3};
+        }
+        
+        &:disabled{
+            opacity: 0.5;
+            background-color: ${({theme})=> theme.notificationPalette.infoText};
+            color: ${({theme})=> theme.colors.shadow};
+            border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.shadow};
+        }
+    `,
+    secondary: css`
         background-color: ${({theme})=> theme.colors.backgroundColor4};
-        border: ${v.borderThickness.light}solid ${({theme})=> theme.colors.botderColor2};
-    }
+        color: ${({theme})=> theme.colors.textColor3};
+        border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.botderColor1};
 
-    &:disabled{
-        opacity: 0.5;
-        background-color: ${({theme})=> theme.notificationPalette.warningText};
-        color: ${({theme})=> theme.colors.shadow};
-        border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.shadow};
-    }
-  `,
-  ghost: css`
-    background-color: transparent;
-    color: ${({theme})=> theme.colors.textColor3};
-    border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.textColor3};
+        &:hover {
+            background-color: ${({theme})=> theme.colors.backgroundColor4};
+            border: ${v.borderThickness.light}solid ${({theme})=> theme.colors.botderColor2};
+        }
 
-    &:hover {
-        background-color: ${({theme})=> theme.colors.textColor2};
-        border: ${v.borderThickness.light}solid ${({theme})=> theme.colors.backgroundColor3};
-    }
+        &:disabled{
+            opacity: 0.5;
+            background-color: ${({theme})=> theme.notificationPalette.warningText};
+            color: ${({theme})=> theme.colors.shadow};
+            border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.shadow};
+        }
+    `,
+    ghost: css`
+        background-color: transparent;
+        color: ${({theme})=> theme.colors.textColor3};
+        border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.textColor3};
 
-    &:disabled{
-        opacity: 0.5;
-        background-color: ${({theme})=> theme.notificationPalette.shadow};
-        color: ${({theme})=> theme.colors.shadow};
-        border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.shadow};
-    }
-  `,
-  bnw: css`
-    background-color: ${({theme}) => theme.colors.borderColor1};
-    color: ${({theme})=> theme.colors.borderColor2};
-    border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.borderColor2};
+        &:hover {
+            background-color: ${({theme})=> theme.colors.textColor2};
+            border: ${v.borderThickness.light}solid ${({theme})=> theme.colors.backgroundColor3};
+        }
 
-    &:hover {
-        background-color: ${({theme})=> theme.colors.textColor2};
-        border: ${v.borderThickness.light}solid ${({theme})=> theme.colors.textColor1};
-    }
+        &:disabled{
+            opacity: 0.5;
+            background-color: ${({theme})=> theme.notificationPalette.shadow};
+            color: ${({theme})=> theme.colors.shadow};
+            border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.shadow};
+        }
+    `,
+    bnw: css`
+        background-color: ${({theme}) => theme.colors.borderColor1};
+        color: ${({theme})=> theme.colors.borderColor2};
+        border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.borderColor2};
 
-    &:disabled{
-        opacity: 0.5;
-        background-color: ${({theme})=> theme.notificationPalette.shadow};
-        color: ${({theme})=> theme.colors.shadow};
-        border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.shadow};
-    }
-  `
+        &:hover {
+            background-color: ${({theme})=> theme.colors.textColor2};
+            border: ${v.borderThickness.light}solid ${({theme})=> theme.colors.textColor1};
+        }
+
+        &:disabled{
+            opacity: 0.5;
+            background-color: ${({theme})=> theme.notificationPalette.shadow};
+            color: ${({theme})=> theme.colors.shadow};
+            border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.shadow};
+        }
+    `
 };
 
 const SIZES = {
@@ -105,7 +105,7 @@ const RADIUS = {
 
 
 export const DefaultButton = styled.button<{
-        $variant?: keyof typeof VARIANTS,
+        $color?: keyof typeof COLORS,
         $radius?: keyof typeof RADIUS,
     }>`
     display: flex;
@@ -116,7 +116,7 @@ export const DefaultButton = styled.button<{
     width: auto;
     cursor: pointer;
     transition: background-color 0.2s ease, border-color 0.2s ease;
-    ${({ $variant }) => VARIANTS[$variant || 'primary']}
+    ${({ $color }) => COLORS[$color || 'primary']}
     ${({ $radius }) => RADIUS[$radius || 'square']}
     
     & .button-icon-text-space svg {
@@ -144,6 +144,7 @@ export const ButtonTextAndIconSpace = styled.div<{ $hasIcon: boolean; $hasText: 
 
 export const ButtonIcon = styled.img`
     flex: 1;
+    max-width: 100%;
 `;
 
 export const ButtonText = styled.span<{ $size?: keyof typeof SIZES }>`

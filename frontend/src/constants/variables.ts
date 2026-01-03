@@ -69,8 +69,8 @@ export const v:Record<string, Record<string, string|number>> = {
     breakpoints: {
         mobile: '320px', //Small iPhone SE & Medium: iPhone 12-15
         tablet: '768px', //iPad 
-        desktop: '992px', //Macbook 13" (1280x800)
-        largeDesktop: '1200px',
-        largerDesktop: '1400px'
+        laptop: '1024px', //Macbook 13" (1280x800)
+        desktop: '1440px',
+        largeDesktop: '1920px'
     }
 };

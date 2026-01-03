@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 import * as Styled from "./Inputs.styles";
-import type { InputProps, GeneralInput } from "type/propTypes";
+import type { InputProps, GeneralInput } from "./Inputs.types";
 
 const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(( props, ref) => {
     const { type, id, onChange, isRequired, dataAttributes={}, disabled, className, name } = props;

@@ -1,7 +1,7 @@
 import React from "react";
 import useTheme from "hooks/useTheme";
 import * as Styled from "./Navbar.styles";
-import type { NavbarProps } from "type/propTypes";
+import type { NavbarProps } from "./Navbar.types";
 
 const Navbar =({$anchorTheme, isSigning, isHashLinks, links, className}:NavbarProps) => {
     const { currentTheme } = useTheme();

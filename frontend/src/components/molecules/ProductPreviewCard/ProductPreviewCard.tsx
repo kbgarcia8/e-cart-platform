@@ -1,6 +1,6 @@
 import React from "react";
 import * as Styled from "./ProductPreviewCard.styles";
-import type { ProductPreviewCardProps } from "type/propTypes";
+import type { ProductPreviewCardProps } from "./ProductPreviewCard.types";
 import { IoBag } from "react-icons/io5";
 
 const ProductPreviewCard = ({

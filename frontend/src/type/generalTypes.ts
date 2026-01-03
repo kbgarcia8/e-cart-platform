@@ -15,3 +15,5 @@ export interface themeContextValue {
     currentTheme: Theme;
     toggleTheme: () => void;
 };
+
+export type dataAttributesType = Record<string, string | number | boolean | undefined> | undefined;
