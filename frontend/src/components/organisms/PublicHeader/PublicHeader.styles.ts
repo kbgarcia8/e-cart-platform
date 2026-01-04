@@ -52,10 +52,11 @@ export const NavbarWrapper = styled.div`
         flex: 0 0 90%;
         max-width: 90%;
     `}
-`;
 
-export const PublicNavbar = styled(Navbar)`
-    flex: 2;
+    & > nav {
+        flex: 2;
+        border: 2px solid red;
+    }
 `;
 
 export const ButtonWrapper = styled.div`
@@ -67,53 +68,8 @@ export const ButtonWrapper = styled.div`
     margin: 0;
     padding-top: ${v.spacing.xsmall};
     padding-inline: ${v.spacing.xxlarge};
-`;
 
-export const LoginButton = styled(Button)`
-    flex: 1;
-    background-color: ${({theme}) => theme.colors.backgroundColor1};
-    color: ${({theme}) => theme.colors.textColor3};
-    border: ${v.borderThickness.light} solid ${({theme}) => theme.colors.borderColor2};
-    border-radius: ${v.spacing.xxsmall};
-
-    &:hover{
-        background-color: ${({theme}) => theme.colors.backgroundColor2};
-    }
-
-    &:active {
-        background-color: ${({theme}) => theme.colors.backgroundColor1};
-        color: ${({theme}) => theme.colors.textColor3};
-    }
-
-    ${media.mobile`
-        padding: 0;
-        & span {
-            font-size: calc(${v.fontSize.xxsmall} + 0.15rem);
-            width: 100%;
-        }
-    `}
-    ${media.tablet`
-        padding: ${v.spacing.xxxsmall} ${v.spacing.small};
-        & span {
-            font-size: ${v.fontSize.xsmall};
-            width: 100%;
-        }
-    `}
-`;
-
-export const SignUpButton = styled(LoginButton)`
-    flex: 1;
-    background-color: ${({theme}) => theme.colors.backgroundColor3};
-    color: ${({theme}) => theme.colors.textColor1};
-    border: 2px solid ${({theme}) => theme.colors.textColor1};    
-
-    &:hover {
-        background-color: ${({theme}) => theme.colors.backgroundColor4};
-        color: ${({theme}) => theme.colors.screenColor};
-    }
-
-    &:active {
-        background-color: ${({theme}) => theme.colors.backgroundColor3};
-        color: ${({theme}) => theme.colors.textColor1};
+    & > * {
+        flex: 1;
     }
 `;

@@ -8,7 +8,7 @@ export type ButtonRaidus = 'square' | 'roundedsquare' | 'squircle' | 'pill' | 'c
 export interface ButtonProps {
     onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
     id?: string;
-    buttonType: ButtonType;
+    buttonType?: ButtonType;
     source?: string;
     svg?: React.ReactNode;
     alt?: string;

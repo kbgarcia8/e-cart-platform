@@ -2,7 +2,7 @@ import React, { type PropsWithChildren } from "react";
 import useTheme from "hooks/useTheme";
 import * as Styled from "./TestimonialCard.styles"
 import StarRating from "components/molecules/StarRating";
-import type { TestimonialCardProps } from "type/propTypes";
+import type { TestimonialCardProps } from "./TestimonialCard.types";
 
 const starsQuantiy = Array(5).fill(0)
 

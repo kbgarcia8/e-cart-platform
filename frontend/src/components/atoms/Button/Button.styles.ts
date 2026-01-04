@@ -11,28 +11,27 @@ const COLORS = {
 
         &:hover {
             background-color: ${({theme})=> theme.colors.backgroundColor2};
-            border: ${v.borderThickness.light}solid ${({theme})=> theme.colors.textColor3};
+            border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.textColor3};
         }
         
         &:disabled{
-            opacity: 0.5;
             background-color: ${({theme})=> theme.notificationPalette.infoText};
             color: ${({theme})=> theme.colors.shadow};
             border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.shadow};
+            cursor: not-allowed;
         }
     `,
     secondary: css`
         background-color: ${({theme})=> theme.colors.backgroundColor4};
-        color: ${({theme})=> theme.colors.textColor3};
-        border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.botderColor1};
+        color: ${({theme})=> theme.colors.textColor1};
+        border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.borderColor1};
 
         &:hover {
             background-color: ${({theme})=> theme.colors.backgroundColor4};
-            border: ${v.borderThickness.light}solid ${({theme})=> theme.colors.botderColor2};
+            border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.borderColor2};
         }
 
         &:disabled{
-            opacity: 0.5;
             background-color: ${({theme})=> theme.notificationPalette.warningText};
             color: ${({theme})=> theme.colors.shadow};
             border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.shadow};
@@ -45,11 +44,10 @@ const COLORS = {
 
         &:hover {
             background-color: ${({theme})=> theme.colors.textColor2};
-            border: ${v.borderThickness.light}solid ${({theme})=> theme.colors.backgroundColor3};
+            border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.backgroundColor3};
         }
 
         &:disabled{
-            opacity: 0.5;
             background-color: ${({theme})=> theme.notificationPalette.shadow};
             color: ${({theme})=> theme.colors.shadow};
             border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.shadow};
@@ -62,11 +60,10 @@ const COLORS = {
 
         &:hover {
             background-color: ${({theme})=> theme.colors.textColor2};
-            border: ${v.borderThickness.light}solid ${({theme})=> theme.colors.textColor1};
+            border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.textColor1};
         }
 
         &:disabled{
-            opacity: 0.5;
             background-color: ${({theme})=> theme.notificationPalette.shadow};
             color: ${({theme})=> theme.colors.shadow};
             border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.shadow};
@@ -122,6 +119,11 @@ export const DefaultButton = styled.button<{
     & .button-icon-text-space svg {
         display: block;
         flex: 1;
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
     }
 `;
 

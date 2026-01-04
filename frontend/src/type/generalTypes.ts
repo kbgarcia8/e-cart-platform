@@ -17,3 +17,9 @@ export interface themeContextValue {
 };
 
 export type dataAttributesType = Record<string, string | number | boolean | undefined> | undefined;
+
+export type AllNodeProps<T extends React.ReactNode> = {
+    [key: string]: T;
+};
+
+export type SVGProps = Record<string, string|number|undefined>;

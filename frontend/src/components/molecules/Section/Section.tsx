@@ -1,6 +1,12 @@
 import React, { type PropsWithChildren } from "react";
 import * as Styled from './Section.styles.js';
-import type { SectionProps } from "type/propTypes";
+
+type SectionProps = {
+    title?: string;
+    description?: string;
+    className?: string;
+    id: string;
+}
 
 const Section = ({className, id, title, description, children}:PropsWithChildren<SectionProps>) => {
     return(

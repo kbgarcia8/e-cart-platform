@@ -1,7 +1,7 @@
 import React from "react";
-import * as styled from "./StarRating.styles.js"
+import * as styled from "./StarRating.styles"
 import StarIcon from "components/svgs/StarIcon";
-import type { StarRatingProps } from "type/propTypes";
+import type { StarRatingProps } from "./StarRating.types";
 
 
 const StarRating = ({

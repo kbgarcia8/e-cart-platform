@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Button from 'components/atoms/Button';
 import type { ColorString } from 'type/generalTypes';
-import type { ButtonProps } from 'type/propTypes';
+import type { ButtonProps } from 'components/atoms/Button/Button.types';
 
 export const StepperButton = styled(Button)<{$color: ColorString, $textColor: ColorString} & ButtonProps>`
     border-radius: 0;

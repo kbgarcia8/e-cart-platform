@@ -1,7 +1,10 @@
 import React from "react";
 import headerLogo from 'assets/mock-logo.svg'
 import { useNavigate } from 'react-router-dom';
-import * as Styled from "./PublicHeader.styles.js";
+import * as Styled from "./PublicHeader.styles";
+import Button from "components/atoms/Button";
+import Navbar from "components/molecules/Navbar";
+
 
 const links = [
     {name: "Features", path: "/#features"},
@@ -33,10 +36,10 @@ const PublicHeader = ():React.ReactNode => {
                 <Styled.MainHeaderLogo src={headerLogo} />
             </Styled.MainHeaderLogoSpace>
             <Styled.NavbarWrapper>
-                <Styled.PublicNavbar className={"public-navbar"} isSigning={isSignedIn} isHashLinks={true} links={links}/>
+                <Navbar className={"public-navbar"} isSigning={isSignedIn} isHashLinks={true} links={links}/>
                 <Styled.ButtonWrapper>
-                    <Styled.SignUpButton buttonType={'button'} text={"Sign Up"} onClick={handleButtonNavigate}/>
-                    <Styled.LoginButton buttonType={'button'} text={"Login"} onClick={handleButtonNavigate}/>
+                    <Button text={"Sign Up"} onClick={handleButtonNavigate} $color={"secondary"} $size={"small"} $radius={"roundedsquare"}/>
+                    <Button text={"Login"} onClick={handleButtonNavigate} $color={"primary"} $size={"small"} $radius={"roundedsquare"}/>
                 </Styled.ButtonWrapper>
             </Styled.NavbarWrapper>
         </Styled.MainHeaderWrapper>
