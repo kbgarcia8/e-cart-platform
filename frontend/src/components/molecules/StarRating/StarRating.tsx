@@ -18,7 +18,6 @@ const StarRating = ({
             <styled.StarIconsContainer>
             {stars.map((_, index) => {
                 const [whole, decimal] = rating.split('.').map(Number);
-
                 if (index < whole) {
                     return <StarIcon key={`${index}`} fill={ratedColor} />;
                 } else if (index === whole && decimal >= 5) {

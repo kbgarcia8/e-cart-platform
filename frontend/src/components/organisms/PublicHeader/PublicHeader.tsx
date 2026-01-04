@@ -38,8 +38,8 @@ const PublicHeader = ():React.ReactNode => {
             <Styled.NavbarWrapper>
                 <Navbar className={"public-navbar"} isSigning={isSignedIn} isHashLinks={true} links={links}/>
                 <Styled.ButtonWrapper>
-                    <Button text={"Sign Up"} onClick={handleButtonNavigate} $color={"secondary"} $size={"small"} $radius={"roundedsquare"}/>
-                    <Button text={"Login"} onClick={handleButtonNavigate} $color={"primary"} $size={"small"} $radius={"roundedsquare"}/>
+                    <Button text={"Sign Up"} onClick={handleButtonNavigate} $color={"secondary"} $radius={"roundedsquare"}/>
+                    <Button text={"Login"} onClick={handleButtonNavigate} $radius={"roundedsquare"}/>
                 </Styled.ButtonWrapper>
             </Styled.NavbarWrapper>
         </Styled.MainHeaderWrapper>

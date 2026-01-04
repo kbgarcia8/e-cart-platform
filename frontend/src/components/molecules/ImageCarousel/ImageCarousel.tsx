@@ -1,6 +1,6 @@
 import React from "react";
 import * as Styled from './ImageCarousel.styles';
-import type { ImageCarouselProps } from "type/propTypes";
+import type { ImageCarouselProps } from "./ImageCarousel.types";
 
 const ImageCarousel = ({headerText, handlePreviousClick, images, currentImageIndex, hasManualNavigation, handleNextClick, className}:ImageCarouselProps) => {
     return (

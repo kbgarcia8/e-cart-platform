@@ -1,5 +1,7 @@
 import React from "react";
-import * as Styled from "./LandingPage.styles"
+import * as Styled from "./LandingPage.styles";
+import Button from "components/atoms/Button";
+import Section from "components/molecules/Section";
 import FacebookIcon from "components/svgs/FacebookIcon.tsx";
 import InstagramIcon from "components/svgs/InstagramIcon.tsx";
 import XIcon from "components/svgs/XIcon.tsx";
@@ -122,10 +124,14 @@ const LandingPage = () => {
     
     return(
         <Styled.LandingPageWrapper>
-            <Styled.MainSection id={"landing"} title={"Baked goods, treats and snacks at your doorstep"}>
-                <Styled.ExploreMenuButton buttonType={"button"} text={"Explore Menu"} onClick={() => {console.log('View Public Menu')}}/>
-                <Styled.MainSectionimageCarousel hasManualNavigation={false} currentImageIndex={currentImageIndex} images={mainSectionImages} handleNextClick={handleNextClick}/>
-            </Styled.MainSection>
+            <Styled.MainSectionWrapper>
+                <Section id={"landing"} title={"Baked goods, treats and snacks at your doorstep"}>
+                    <Styled.ExploreMenuButtonWrapper>
+                        <Button $size={"large"} $radius={"roundedsquare"} text={"Explore Menu"} onClick={() => {console.log('View Public Menu')}}/>
+                    </Styled.ExploreMenuButtonWrapper>
+                    <Styled.MainSectionimageCarousel hasManualNavigation={false} currentImageIndex={currentImageIndex} images={mainSectionImages} handleNextClick={handleNextClick}/>
+                </Section>
+            </Styled.MainSectionWrapper>
             <Styled.FeatureSection id={"features"} title={"Why Order from us?"}>
                 <Styled.FeaturesContainer>
                     {features.map((feature, index) => (

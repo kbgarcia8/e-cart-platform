@@ -15,44 +15,18 @@ export const LandingPageWrapper = styled.div`
     width: 100%;
 `;
 
-export const MainSection = styled(Section)`
-    background-color: ${({theme}) => theme.colors.backgroundColor3};
-    width: 100%;
-    min-width: 0;
-    overflow: hidden;
+export const MainSectionWrapper = styled.div`
     display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: none;
-
-    ${media.mobile`
-        min-height: 87.5vh;
-        &>h2 {
-            flex: 2;
-            display: flex;
-            padding-top: ${v.spacing.large};
-            align-items: center;
-            color: ${({theme}) => theme.colors.textColor3};
-            text-shadow: ${v.spacing.xxsmall} ${v.spacing.xxsmall} ${v.spacing.xsmall} ${({theme}) => theme.notificationPalette.errorBackground};
-            font-size: ${v.fontSize.giga};
-            line-height: ${v.spacing.xlarge};
-        }
-    `}
+    background-color: ${({theme}) => theme.colors.backgroundColor3};
+    min-height: 100%;
 `;
 
-export const ExploreMenuButton = styled(Button)`
-    align-self: center;
+export const ExploreMenuButtonWrapper = styled.div`
     flex: 0.5;
+    display: flex;
+    align-self: center;
     border-radius: ${v.borderRadius.medium};
     background-color: ${({theme}) => theme.colors.backgroundColor1};
-    ${media.mobile`
-        width: 50%;
-        & .button-icon-text-space span{
-            font-size: ${v.fontSize.medium};
-            font-weight: ${v.fontWeight.bolder};
-            font-family: ${v.fonts.secondary}, ${v.fonts.fallback};
-        }
-    `}
 `;
 
 export const MainSectionimageCarousel = styled(ImageCarousel)`
@@ -152,14 +126,7 @@ export const MenuPreviewSection = styled(Section)`
     ${media.mobile`
         min-height: 87.5vh;
         &>h2 {
-            flex: 1;
-            display: flex;
-            padding-top: ${v.spacing.large};
-            align-items: center;
-            color: ${({theme}) => theme.colors.textColor3};
-            text-shadow: ${v.spacing.xxsmall} ${v.spacing.xxsmall} ${v.spacing.xsmall} ${({theme}) => theme.notificationPalette.errorBackground};
-            font-size: ${v.fontSize.giga};
-            line-height: ${v.spacing.xlarge};
+            
         }
     `}
 `;

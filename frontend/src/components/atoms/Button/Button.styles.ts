@@ -109,8 +109,7 @@ export const DefaultButton = styled.button<{
     align-items: center;
     justify-content: center;
     padding: ${v.spacing.xxxsmall} ${v.spacing.small};
-    margin: 0.125rem;
-    width: auto;
+    flex: 1;
     cursor: pointer;
     transition: background-color 0.2s ease, border-color 0.2s ease;
     ${({ $color }) => COLORS[$color || 'primary']}

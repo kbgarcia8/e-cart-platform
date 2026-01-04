@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 import { v } from 'constants/variables'
-import Button from 'components/atoms/Button';
-import Navbar from "components/molecules/Navbar";
 import { HashLink } from 'react-router-hash-link';
 import { media } from 'utils/utility';
 
@@ -55,7 +53,6 @@ export const NavbarWrapper = styled.div`
 
     & > nav {
         flex: 2;
-        border: 2px solid red;
     }
 `;
 
@@ -69,7 +66,8 @@ export const ButtonWrapper = styled.div`
     padding-top: ${v.spacing.xsmall};
     padding-inline: ${v.spacing.xxlarge};
 
-    & > * {
+    & > button {
         flex: 1;
+        margin-inline: 0.25rem;
     }
 `;
