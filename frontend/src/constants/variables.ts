@@ -2,7 +2,7 @@ export const v:Record<string, Record<string, string|number>> = {
     base: {
         fontSize: '14px',
         spacing: '24px',
-        lineHeight: '1.25rem',
+        lineHeight: '1.2',
     },
     fonts: {
         primary: 'Comfortaa',

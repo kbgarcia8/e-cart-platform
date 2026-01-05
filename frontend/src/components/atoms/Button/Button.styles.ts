@@ -3,7 +3,7 @@ import { v } from 'constants/variables';
 import { media } from 'utils/utility';
 
 
-const COLORS = {
+export const COLORS = {
     primary: css`
         background-color: ${({theme})=> theme.colors.backgroundColor1};
         color: ${({theme})=> theme.colors.textColor3};
@@ -71,7 +71,7 @@ const COLORS = {
     `
 };
 
-const SIZES = {
+export const  SIZES = {
     small: css`
         ${media.mobile`
             font-size: ${v.fontSize.xsmall};
@@ -92,7 +92,7 @@ const SIZES = {
     `,
 };
 
-const RADIUS = {
+export const RADIUS = {
     square: css`border-radius: ${v.borderRadius.xsmall};`,
     roundedsquare: css`border-radius: ${v.borderRadius.medium};`,
     squircle: css`border-radius: ${v.borderRadius.large};`,

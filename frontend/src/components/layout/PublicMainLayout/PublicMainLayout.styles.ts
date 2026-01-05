@@ -7,14 +7,14 @@ export const PublicMainLayout = styled.div`
     height: 100vh;
     width: 100vw;
     border: 5px solid ${({ theme }) => theme.colors.primary};
-    
+
     ${media.mobile`
         grid-template-areas:
-        "header"
-        "main"
-        "footer";
+            "header"
+            "main"
+            "footer";
         grid-template-rows: auto 1fr auto;
-        grid-template-columns: 1fr;    
+        grid-template-columns: 1fr;
     `}
 `;
 
@@ -24,10 +24,10 @@ export const Header = styled.header`
     background-color: ${({ theme }) => theme.colors.backgroundSecondary};
     border-bottom: 2px solid ${({ theme }) => theme.colors.border};
     ${media.mobile`
-        min-height: 7vh;
+        min-height: 7svh;
     `}
     ${media.desktop`
-        min-height: 5vh;
+        min-height: 5svh;
     `}
 `;
 
@@ -36,8 +36,7 @@ export const Main = styled.main`
     grid-area: main;
     padding: 0;
     background-color: ${({ theme }) => theme.colors.background};
-    min-height: 0;
-    flex: 1;
+    height: 100%;
     overflow-y: auto;
 `;
 
@@ -46,10 +45,11 @@ export const Footer = styled.footer`
     grid-area: footer;
     background-color: ${({ theme }) => theme.colors.backgroundSecondary};
     border-top: 2px solid ${({ theme }) => theme.colors.border};
+    
     ${media.mobile`
-        min-height: 7vh;
+        min-height: 7svh;
     `}
     ${media.desktop`
-        min-height: 5vh;
+        min-height: 5svh;
     `}
 `; 

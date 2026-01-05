@@ -2,6 +2,7 @@ import React from "react";
 import * as Styled from "./LandingPage.styles";
 import Button from "components/atoms/Button";
 import Section from "components/molecules/Section";
+import { v } from "constants/variables";
 import FacebookIcon from "components/svgs/FacebookIcon.tsx";
 import InstagramIcon from "components/svgs/InstagramIcon.tsx";
 import XIcon from "components/svgs/XIcon.tsx";
@@ -125,36 +126,40 @@ const LandingPage = () => {
     return(
         <Styled.LandingPageWrapper>
             <Styled.MainSectionWrapper>
-                <Section id={"landing"} title={"Baked goods, treats and snacks at your doorstep"}>
+                <Section id={"landing"} className={"main-section"} title={"Baked goods, treats and snacks at your doorstep"} $titleColor={"secondary"} $titleSize={"giga"} $titleBottomMargin={`${v.spacing.xlarge}`}>
                     <Styled.ExploreMenuButtonWrapper>
                         <Button $size={"large"} $radius={"roundedsquare"} text={"Explore Menu"} onClick={() => {console.log('View Public Menu')}}/>
                     </Styled.ExploreMenuButtonWrapper>
                     <Styled.MainSectionimageCarousel hasManualNavigation={false} currentImageIndex={currentImageIndex} images={mainSectionImages} handleNextClick={handleNextClick}/>
                 </Section>
             </Styled.MainSectionWrapper>
-            <Styled.FeatureSection id={"features"} title={"Why Order from us?"}>
-                <Styled.FeaturesContainer>
-                    {features.map((feature, index) => (
-                        <Styled.FeatureCard key={index} id={`feature-${index}`} $imageUrl={feature.url}>
-                            <Styled.FeatureHeader>{feature.name}</Styled.FeatureHeader>
-                        </Styled.FeatureCard>
-                    ))}
-                </Styled.FeaturesContainer>
-            </Styled.FeatureSection>
-            <Styled.MenuPreviewSection id={"services"} title={"Some of our Products"}>
-                <Styled.ProductsPreviewContainer>
-                    {productPreviews.map((product) => (
-                        <Styled.PublicProductPreviewCard
-                            productImage={product.image}
-                            productName={product.name}
-                            basePrice={product.basePrice}
-                            dataCategory={product.category}
-                            dataProductId={product.productId}
-                        />
-                    ))}
-                </Styled.ProductsPreviewContainer>
-                <Styled.SeeMoreProductsButton buttonType={"button"} text={"See More"} onClick={() => {console.log('View More Products')}}/>
-            </Styled.MenuPreviewSection>
+            <Styled.FeatureSectionWrapper>
+                <Section id={"features"} title={"Why Order from us?"} $titleColor={"teritiary"} $titleBottomMargin={"0"}>
+                    <Styled.FeaturesContainer>
+                        {features.map((feature, index) => (
+                            <Styled.FeatureCard key={index} id={`feature-${index}`} $imageUrl={feature.url}>
+                                <Styled.FeatureHeader>{feature.name}</Styled.FeatureHeader>
+                            </Styled.FeatureCard>
+                        ))}
+                    </Styled.FeaturesContainer>
+                </Section>
+            </Styled.FeatureSectionWrapper>
+            <Styled.MenuPreviewSectionWrapper>
+                <Section id={"services"} title={"Some of our Products"} $titleColor={"secondary"} $titleSize={"giga"}>
+                    <Styled.ProductsPreviewContainer>
+                        {productPreviews.map((product) => (
+                            <Styled.PublicProductPreviewCard
+                                productImage={product.image}
+                                productName={product.name}
+                                basePrice={product.basePrice}
+                                dataCategory={product.category}
+                                dataProductId={product.productId}
+                            />
+                        ))}
+                    </Styled.ProductsPreviewContainer>
+                    <Styled.SeeMoreProductsButton buttonType={"button"} text={"See More"} onClick={() => {console.log('View More Products')}}/>
+                </Section>
+            </Styled.MenuPreviewSectionWrapper>
         </Styled.LandingPageWrapper>
     )
 }

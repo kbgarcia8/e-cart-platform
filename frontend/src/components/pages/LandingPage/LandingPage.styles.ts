@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { v } from 'constants/variables';
 import { media } from 'utils/utility';
-import Section from 'components/molecules/Section';
 import Button from 'components/atoms/Button/Button';
 import ImageCarousel from 'components/molecules/ImageCarousel';
 import ProductPreviewCard from 'components/molecules/ProductPreviewCard';
@@ -18,55 +17,37 @@ export const LandingPageWrapper = styled.div`
 export const MainSectionWrapper = styled.div`
     display: flex;
     background-color: ${({theme}) => theme.colors.backgroundColor3};
-    min-height: 100%;
+    max-width: 100%;
 `;
 
 export const ExploreMenuButtonWrapper = styled.div`
-    flex: 0.5;
+    height: 7.5svh;
     display: flex;
     align-self: center;
     border-radius: ${v.borderRadius.medium};
     background-color: ${({theme}) => theme.colors.backgroundColor1};
+    margin-bottom: ${v.spacing.xxlarge};
 `;
 
 export const MainSectionimageCarousel = styled(ImageCarousel)`
-    flex: 3;
     width: 100%;
 `;
 
-export const FeatureSection = styled(Section)`
-    background-color: ${({theme}) => theme.colors.backgroundColor4};
-    width: 100%;
-    height: 100%;
+export const FeatureSectionWrapper = styled.div`
     display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: none;
-
-    ${media.mobile`
-        min-height: 85vh;
-        &>h2 {
-            flex: 1;
-            display: flex;
-            padding-top: ${v.spacing.large};
-            align-items: center;
-            color: ${({theme}) => theme.colors.textColor2};
-            text-shadow: ${v.spacing.xxxsmall} ${v.spacing.xxxsmall} ${v.spacing.xsmall} ${({theme}) => theme.colors.textColor3};
-            font-size: calc(${v.fontSize.xxxlarge} + 0.2rem);
-            line-height: ${v.spacing.xlarge};
-        }
-    `}
+    background-color: ${({theme}) => theme.colors.backgroundColor4};
+    max-width: 100%;
+    width: 100%;
 `;
 
 export const FeaturesContainer = styled.div`
-    flex: 2;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: auto;
     padding: ${v.spacing.large};
-    gap: ${v.spacing.large};
+    gap: ${v.spacing.medium};
 
     ${media.mobile`
         flex-direction: column;
@@ -113,22 +94,10 @@ export const FeatureHeader = styled.h3`
     line-height: ${v.spacing.large};
 `;
 
-export const MenuPreviewSection = styled(Section)`
-    background-color: ${({theme}) => theme.colors.backgroundColor3};
-    width: 100%;
-    min-width: 0;
-    overflow: hidden;
+export const MenuPreviewSectionWrapper = styled.div`
     display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: none;
-
-    ${media.mobile`
-        min-height: 87.5vh;
-        &>h2 {
-            
-        }
-    `}
+    background-color: ${({theme}) => theme.colors.backgroundColor3};
+    max-width: 100%;
 `;
 
 export const ProductsPreviewContainer = styled.div`

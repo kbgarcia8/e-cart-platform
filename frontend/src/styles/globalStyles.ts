@@ -94,7 +94,7 @@ h3 {
 }
 h4 {
     ${media.mobile`
-        font-size: ${v.fontSize.xsmall};
+        font-size: ${v.fontSize.small};
         margin-bottom: ${v.spacing.xxsmall};
     `}
     ${media.tablet`

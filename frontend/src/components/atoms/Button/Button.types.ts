@@ -1,4 +1,5 @@
 import type { dataAttributesType } from "type/generalTypes";
+import { COLORS, SIZES, RADIUS } from "./Button.styles";
 
 type ButtonType = 'button' | 'submit' | 'reset';
 export type ButtonColors = 'primary' | 'secondary' | 'ghost' | 'bnw';
@@ -15,8 +16,8 @@ export interface ButtonProps {
     text?: string;
     className?: string;
     pattern?: string | number | undefined;
-    $color?: ButtonColors;
-    $size?: ButtonSizes;
-    $radius?: ButtonRaidus;
+    $color?: keyof typeof COLORS;
+    $size?: keyof typeof SIZES;
+    $radius?: keyof typeof RADIUS;
     dataAttributes?: dataAttributesType;
 }
