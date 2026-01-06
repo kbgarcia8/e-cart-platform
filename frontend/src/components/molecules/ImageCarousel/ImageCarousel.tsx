@@ -2,11 +2,10 @@ import React from "react";
 import * as Styled from './ImageCarousel.styles';
 import type { ImageCarouselProps } from "./ImageCarousel.types";
 
-const ImageCarousel = ({headerText, handlePreviousClick, images, currentImageIndex, hasManualNavigation, handleNextClick, className}:ImageCarouselProps) => {
+const ImageCarousel = ({handlePreviousClick, images, currentImageIndex, hasManualNavigation, handleNextClick, radius, className}:ImageCarouselProps) => {
     return (
         <Styled.ImageCarouselWrapper className={className}>
-            {headerText && <Styled.CarouselHeaderText>{headerText}</Styled.CarouselHeaderText>}
-            <Styled.ImageContainer>
+            <Styled.ImageContainer $radius={radius}>
                 {handlePreviousClick && <Styled.NavButton className="nav-button left" text={"<"} buttonType={"button"}  onClick={handlePreviousClick}/>}
                 {images.map((image , index) => (
                     <Styled.Image 

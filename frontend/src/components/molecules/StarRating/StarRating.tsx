@@ -19,17 +19,17 @@ const StarRating = ({
             {stars.map((_, index) => {
                 const [whole, decimal] = rating.split('.').map(Number);
                 if (index < whole) {
-                    return <StarIcon key={`${index}`} fill={ratedColor} />;
+                    return <StarIcon key={`${index}`} fill={ratedColor || 'yellow'} />;
                 } else if (index === whole && decimal >= 5) {
                     return (
                     <StarIcon
                         key={`${index}`}
-                        fillColor={ratedColor}
-                        blankColor={noRateColor}
+                        fillColor={ratedColor || 'yellow'}
+                        blankColor={noRateColor || 'gray'}
                     />
                     );
                 } else {
-                    return <StarIcon key={`${index}`} fill={noRateColor} />;
+                    return <StarIcon key={`${index}`} fill={noRateColor || 'gray'} />;
                 }
             })}
             </styled.StarIconsContainer>

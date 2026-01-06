@@ -21,16 +21,21 @@ export const MainSectionWrapper = styled.div`
 `;
 
 export const ExploreMenuButtonWrapper = styled.div`
-    height: 7.5svh;
     display: flex;
     align-self: center;
     border-radius: ${v.borderRadius.medium};
     background-color: ${({theme}) => theme.colors.backgroundColor1};
-    margin-bottom: ${v.spacing.xxlarge};
+    margin-block: ${v.spacing.xlarge};
+
+    ${media.mobile`
+        height: 7.5svh;
+    `}
 `;
 
-export const MainSectionimageCarousel = styled(ImageCarousel)`
+export const MainSectionImageCarouselWrapper = styled.div`
     width: 100%;
+    margin-top: ${v.spacing.medium};
+    margin-bottom: ${v.spacing.large};
 `;
 
 export const FeatureSectionWrapper = styled.div`
@@ -45,9 +50,9 @@ export const FeaturesContainer = styled.div`
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: auto;
+    border: 2px solid red;
     padding: ${v.spacing.large};
-    gap: ${v.spacing.medium};
+    gap: ${v.spacing.xlarge};
 
     ${media.mobile`
         flex-direction: column;
@@ -87,17 +92,15 @@ export const FeatureCard = styled.div<{ $imageUrl: string }>`
 `;
 
 export const FeatureHeader = styled.h3`
-    font-size: ${v.fontSize.large};
-    margin-bottom: ${v.spacing.small};
     color: ${({theme}) => theme.colors.textColor3};
     text-shadow: ${v.spacing.xxsmall} ${v.spacing.xxsmall} ${v.spacing.xsmall} ${({theme}) => theme.colors.textColor1};
-    line-height: ${v.spacing.large};
 `;
 
 export const MenuPreviewSectionWrapper = styled.div`
     display: flex;
     background-color: ${({theme}) => theme.colors.backgroundColor3};
     max-width: 100%;
+    width: 100%;
 `;
 
 export const ProductsPreviewContainer = styled.div`
@@ -118,25 +121,39 @@ export const ProductsPreviewContainer = styled.div`
     }
 
     ${media.mobile`
-        -webkit-overflow-scrolling: touch;
+        --webkit-overflow-scrolling: touch;
+        margin-block: ${v.spacing.xlarge};
     `}
 `;
 
-export const SeeMoreProductsButton = styled(Button)`
+export const SeeMoreProductsButtonWrapper = styled.div`
     align-self: flex-end;
     flex: 0.25;
+    display: flex;
     border-radius: ${v.borderRadius.medium};
     background-color: ${({theme}) => theme.colors.backgroundColor1};
-    ${media.mobile`
-        width: 50%;
-        & .button-icon-text-space span{
-            font-size: ${v.fontSize.medium};
-            font-weight: ${v.fontWeight.bolder};
-            font-family: ${v.fonts.secondary}, ${v.fonts.fallback};
-        }
-    `}
+    width: 50%;
+    margin-top: ${v.spacing.medium};
 `;
 
-export const PublicProductPreviewCard = styled(ProductPreviewCard)`
+export const TestimonialSectionWrapper = styled.div`
+    display: flex;
+    background-color: ${({theme}) => theme.colors.backgroundColor4};
+    max-width: 100%;
+    width: 100%;
+`;
+
+export const TestimonialsContainer = styled.div`
     flex: 1;
+    display: flex;
+    flex-wrap: nowrap;
+    max-width: 100%;
+    min-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border: 2px solid blue;
+    
+    ${media.mobile`
+        gap: ${v.spacing.medium};
+    `}
 `;

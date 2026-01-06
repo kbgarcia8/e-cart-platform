@@ -75,7 +75,7 @@ export const  SIZES = {
     small: css`
         ${media.mobile`
             font-size: ${v.fontSize.xsmall};
-            font-weight: ${v.fontWeight.bolder};
+            font-weight: ${v.fontWeight.medium};
         `}
     `,
     medium: css`
@@ -87,7 +87,7 @@ export const  SIZES = {
     large: css`
         ${media.mobile`
             font-size: ${v.fontSize.medium};
-            font-weight: ${v.fontWeight.medium};
+            font-weight: ${v.fontWeight.bolder};
         `}
     `,
 };

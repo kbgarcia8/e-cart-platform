@@ -2,11 +2,11 @@ import React from "react";
 import * as Styled from "./LandingPage.styles";
 import Button from "components/atoms/Button";
 import Section from "components/molecules/Section";
+import ImageCarousel from "components/molecules/ImageCarousel";
+import ProductPreviewCard from "components/molecules/ProductPreviewCard";
+import TestimonialCard from "components/molecules/TestimonialCard";
 import { v } from "constants/variables";
-import FacebookIcon from "components/svgs/FacebookIcon.tsx";
-import InstagramIcon from "components/svgs/InstagramIcon.tsx";
-import XIcon from "components/svgs/XIcon.tsx";
-import TiktokIcon from "components/svgs/TiktokIcon.tsx";
+import useTheme from "hooks/useTheme";
 
 
 const services = [
@@ -102,7 +102,29 @@ const productPreviews = [
     }
 ]
 
+const temporaryTestimonies = [
+    {
+        user: "Elizabeth Doe",
+        photo: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg",
+        rating: "4.5",
+        message: "The product quality exceeded my expectations, and the entire checkout process was seamless. Delivery was fast, and customer support was responsive and helpful. This platform has become my go-to for online shopping."
+    },
+    {
+        user: "Jessica Stewart",
+        photo: "https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg",
+        rating: "3.0",
+        message: "From browsing to checkout, the entire experience was seamless. The platform is intuitive, the product descriptions are accurate, and delivery was faster than expected. What really stood out was the customer support—responsive, helpful, and genuinely focused on resolving my concerns."
+    },
+    {
+        user: "Mark Hanes",
+        photo: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg",
+        rating: "5.0",
+        message: "I’ve used several e-commerce platforms, but this one sets a higher standard. The product quality exceeded my expectations, and the order tracking kept me informed every step of the way. It’s clear that both the technology and the service were built with the customer in mind."
+    }
+]
+
 const LandingPage = () => {
+    const {currentTheme} = useTheme();
     const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
 
     const handlePreviousClick = React.useCallback(() => {
@@ -123,18 +145,27 @@ const LandingPage = () => {
         return () => clearTimeout(timer);
     }, [currentImageIndex, handleNextClick]);
     
+    const starRatingColors = React.useMemo(() => {
+        return {
+            filled: currentTheme.notificationPalette.warningBackground,
+            blank: currentTheme.colors.shadow
+        }
+    }, [currentTheme])
+    
     return(
         <Styled.LandingPageWrapper>
             <Styled.MainSectionWrapper>
-                <Section id={"landing"} className={"main-section"} title={"Baked goods, treats and snacks at your doorstep"} $titleColor={"secondary"} $titleSize={"giga"} $titleBottomMargin={`${v.spacing.xlarge}`}>
+                <Section id={"landing"} className={"main-section"} title={"Baked goods, treats and snacks at your doorstep"} titleColor={"secondary"} titleSize={"giga"} titleBottomMargin={`${v.spacing.xlarge}`}>
                     <Styled.ExploreMenuButtonWrapper>
-                        <Button $size={"large"} $radius={"roundedsquare"} text={"Explore Menu"} onClick={() => {console.log('View Public Menu')}}/>
+                        <Button size={"large"} radius={"roundedsquare"} text={"Explore Menu"} onClick={() => {console.log('View Public Menu')}}/>
                     </Styled.ExploreMenuButtonWrapper>
-                    <Styled.MainSectionimageCarousel hasManualNavigation={false} currentImageIndex={currentImageIndex} images={mainSectionImages} handleNextClick={handleNextClick}/>
+                    <Styled.MainSectionImageCarouselWrapper>
+                        <ImageCarousel hasManualNavigation={false} currentImageIndex={currentImageIndex} images={mainSectionImages} handleNextClick={handleNextClick} radius={"roundedsquare"}/>
+                    </Styled.MainSectionImageCarouselWrapper>
                 </Section>
             </Styled.MainSectionWrapper>
             <Styled.FeatureSectionWrapper>
-                <Section id={"features"} title={"Why Order from us?"} $titleColor={"teritiary"} $titleBottomMargin={"0"}>
+                <Section id={"features"} title={"Why Order from us?"} titleColor={"teritiary"} titleBottomMargin={"0"}>
                     <Styled.FeaturesContainer>
                         {features.map((feature, index) => (
                             <Styled.FeatureCard key={index} id={`feature-${index}`} $imageUrl={feature.url}>
@@ -145,10 +176,11 @@ const LandingPage = () => {
                 </Section>
             </Styled.FeatureSectionWrapper>
             <Styled.MenuPreviewSectionWrapper>
-                <Section id={"services"} title={"Some of our Products"} $titleColor={"secondary"} $titleSize={"giga"}>
+                <Section id={"services"} title={"Some of our Products"} titleColor={"secondary"} titleSize={"giga"}>
                     <Styled.ProductsPreviewContainer>
-                        {productPreviews.map((product) => (
-                            <Styled.PublicProductPreviewCard
+                        {productPreviews.map((product,index) => (
+                            <ProductPreviewCard
+                                key={`${product.name}-${index}`}
                                 productImage={product.image}
                                 productName={product.name}
                                 basePrice={product.basePrice}
@@ -157,9 +189,27 @@ const LandingPage = () => {
                             />
                         ))}
                     </Styled.ProductsPreviewContainer>
-                    <Styled.SeeMoreProductsButton buttonType={"button"} text={"See More"} onClick={() => {console.log('View More Products')}}/>
+                    <Styled.SeeMoreProductsButtonWrapper>
+                        <Button size={"large"} radius={"roundedsquare"}  text={"See More"} onClick={() => {console.log('View More Products')}}/>
+                    </Styled.SeeMoreProductsButtonWrapper>
                 </Section>
             </Styled.MenuPreviewSectionWrapper>
+            <Styled.TestimonialSectionWrapper>
+                <Section id={"testimonials"} title={"Client Testimonials"} titleColor={"secondary"} titleSize={"bigger"}>
+                    <Styled.TestimonialsContainer>
+                        {temporaryTestimonies.map((testimony, index) => (
+                            <TestimonialCard
+                                key={`${testimony.user}-${index}-testimony`}
+                                testimonial={testimony}
+                                cardRadius="roundedsquare"
+                                nameColor="light"
+                                messageColor="teritiary"
+                            />
+                        ))
+                        }
+                    </Styled.TestimonialsContainer>
+                </Section>
+            </Styled.TestimonialSectionWrapper>
         </Styled.LandingPageWrapper>
     )
 }

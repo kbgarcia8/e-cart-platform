@@ -12,9 +12,9 @@ const Button = ({
     text = "",
     className = "",
     dataAttributes = {},
-    $color,
-    $radius,
-    $size
+    color,
+    radius,
+    size
 }:ButtonProps) => {
 
     return (
@@ -24,12 +24,12 @@ const Button = ({
             type={buttonType}
             className={className}
             {...dataAttributes}
-            $color={$color}
-            $radius={$radius}
+            $color={color}
+            $radius={radius}
         >
             <Styled.ButtonTextAndIconSpace className={"button-icon-text-space"} $hasIcon={Boolean(source || svg)} $hasText={Boolean(text)}>
                 {source ? <Styled.ButtonIcon src={source} alt={alt} /> : svg ? svg : null}
-                {text && <Styled.ButtonText $size={$size} id={id} >{text}</Styled.ButtonText>}
+                {text && <Styled.ButtonText $size={size} id={id} >{text}</Styled.ButtonText>}
             </Styled.ButtonTextAndIconSpace>
         </Styled.DefaultButton>
     )

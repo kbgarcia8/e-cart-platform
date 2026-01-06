@@ -1,6 +1,14 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { v } from "constants/variables";
 import Button from "components/atoms/Button";
+
+export const RADIUS = {
+    square: css`border-radius: ${v.borderRadius.xsmall};`,
+    roundedsquare: css`border-radius: ${v.borderRadius.medium};`,
+    squircle: css`border-radius: ${v.borderRadius.large};`,
+    pill: css`border-radius: ${v.borderRadius.xlarge};`,
+    circle: css`border-radius: ${v.borderRadius.circle};`
+};
 
 export const ImageCarouselWrapper = styled.div`
     width: 100%;
@@ -12,13 +20,7 @@ export const ImageCarouselWrapper = styled.div`
     text-align: center;
 `;
 
-export const CarouselHeaderText = styled.h2`
-    font-size: ${v.fontSize.large};
-    color: ${({theme}) => theme.colors.textColor1};
-    margin-bottom: ${v.spacing.small};
-`;
-
-export const ImageContainer = styled.div`
+export const ImageContainer = styled.div<{$radius?: keyof typeof RADIUS}>`
     position: relative;
     display: flex;
     align-items: center;
@@ -28,16 +30,15 @@ export const ImageContainer = styled.div`
     min-width: 0;
     margin: 0 auto;
     overflow: hidden;
-    border-radius: ${v.borderRadius.medium};
     background-color: ${({theme})=>theme.colors.screenColor};
     box-shadow: 0 ${v.spacing.medium} ${v.spacing.large} ${({theme})=>theme.colors.shadow};
     aspect-ratio: 4 / 3;
+    ${({$radius}) => RADIUS[$radius || 'square']}
 `;
 
 export const Image = styled.img`
     width: 100%;
     height: 100%;
-    border-radius: ${v.borderRadius.small};
     object-fit: cover;
     transition: opacity 0.5s ease, transform 0.5s ease;
 
