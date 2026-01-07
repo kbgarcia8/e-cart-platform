@@ -72,24 +72,36 @@ export const COLORS = {
 };
 
 export const  SIZES = {
-    small: css`
+    smaller: css`
         ${media.mobile`
             font-size: ${v.fontSize.xsmall};
+            font-weight: ${v.fontWeight.regular};
+        `}
+    `,
+    small: css`
+        ${media.mobile`
+            font-size: ${v.fontSize.small};
             font-weight: ${v.fontWeight.medium};
         `}
     `,
     medium: css`
         ${media.mobile`
-            font-size: ${v.fontSize.xsmall};
+            font-size: ${v.fontSize.medium};
             font-weight: ${v.fontWeight.bold};
         `}
     `,
     large: css`
         ${media.mobile`
-            font-size: ${v.fontSize.medium};
+            font-size: ${v.fontSize.large};
             font-weight: ${v.fontWeight.bolder};
         `}
     `,
+    larger: css`
+        ${media.mobile`
+            font-size: ${v.fontSize.xlarge};
+            font-weight: ${v.fontWeight.bolder};
+        `}
+    `
 };
 
 export const RADIUS = {

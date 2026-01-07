@@ -74,7 +74,6 @@ export const TestimonialCardWrapper = styled.div<{
     justify-content: center;    
     box-shadow: 0 4px 8px 0 ${({theme})=> theme.colors.shadow};
     padding: ${v.spacing.medium};
-    margin-block: ${v.spacing.large};
     ${({$cardColor})=> CARDCOLORS[$cardColor || 'primary']}
     ${({$cardRadius})=> RADIUS[$cardRadius || 'square']}
 `;

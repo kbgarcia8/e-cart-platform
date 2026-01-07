@@ -10,6 +10,7 @@ const links = [
     {name: "Features", path: "/#features"},
     {name: "Products", path: "/#products"},
     {name: "Testimonials", path: "/#testimonials"},
+    {name: "FAQs", path: "/#faqs"},
     {name: "Contact Us", path: "/#contact"}
 ]
 

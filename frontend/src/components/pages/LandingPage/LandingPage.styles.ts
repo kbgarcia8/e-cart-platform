@@ -33,7 +33,7 @@ export const ExploreMenuButtonWrapper = styled.div`
 export const MainSectionImageCarouselWrapper = styled.div`
     width: 100%;
     margin-top: ${v.spacing.medium};
-    margin-bottom: ${v.spacing.large};
+    margin-bottom: ${v.spacing.xlarge};
 `;
 
 export const FeatureSectionWrapper = styled.div`
@@ -97,7 +97,6 @@ export const FeatureHeader = styled.h3`
 export const MenuPreviewSectionWrapper = styled.div`
     display: flex;
     background-color: ${({theme}) => theme.colors.backgroundColor3};
-    max-width: 100%;
     width: 100%;
     padding-block: ${v.spacing.medium};
 `;
@@ -107,8 +106,7 @@ export const ProductsPreviewContainer = styled.div`
     flex: 2.5;
     display: flex;
     flex-wrap: nowrap;
-    max-width: 100%;
-    min-width: 100%;
+    width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
     padding: ${v.spacing.large};
@@ -127,19 +125,20 @@ export const ProductsPreviewContainer = styled.div`
 
 export const SeeMoreProductsButtonWrapper = styled.div`
     align-self: flex-end;
-    flex: 0.25;
+    flex: 0.5;
     display: flex;
     border-radius: ${v.borderRadius.medium};
     background-color: ${({theme}) => theme.colors.backgroundColor1};
     width: 50%;
     margin-top: ${v.spacing.medium};
+    margin-bottom: ${v.spacing.small};
 `;
 
 export const TestimonialSectionWrapper = styled.div`
     display: flex;
     background-color: ${({theme}) => theme.colors.backgroundColor4};
-    max-width: 100%;
     width: 100%;
+    padding: ${v.spacing.small};
 `;
 
 export const TestimonialsContainer = styled.div`
@@ -152,10 +151,39 @@ export const TestimonialsContainer = styled.div`
         display: grid;
         grid-auto-flow: row;
         grid-auto-rows: 30rem;
-        gap: ${v.spacing.medium};
+        gap: ${v.spacing.large};
+        margin-top: ${v.spacing.medium};
     `}
     ${media.tablet`
         display: flex;
         flex-wrap: wrap;    
     `}
+`;
+
+export const FAQSectionWrapper = styled.div`
+    display: flex;
+    background-color: ${({theme}) => theme.colors.backgroundColor3};
+    width: 100%;
+    padding: ${v.spacing.small};
+`;
+
+export const FAQsContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: ${v.spacing.large};
+    gap: ${v.spacing.xlarge};
+    margin-block: ${v.spacing.medium};
+
+    ${media.mobile`
+        flex-direction: column;
+    `}
+`;
+
+export const ContactSectionWrapper = styled.div`
+    display: flex;
+    background-color: ${({theme}) => theme.colors.backgroundColor4};
+    width: 100%;
+    padding: ${v.spacing.small};
 `;

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { v } from 'constants/variables'
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
-import type { NavbarProps } from 'type/propTypes';
+import type { NavbarProps } from './Navbar.types';
 import { media } from 'utils/utility';
 
 export const Navbar = styled.nav`
@@ -36,7 +36,7 @@ export const NavbarLink = styled.li`
     color: ${({theme}) => theme.colors.textColor1};
     
     ${media.mobile`
-        font-size: ${v.fontSize.xsmall};
+        font-size: calc(${v.fontSize.xsmall} + 0.1rem);
     `}
     ${media.tablet`
         font-size: ${v.fontSize.medium};

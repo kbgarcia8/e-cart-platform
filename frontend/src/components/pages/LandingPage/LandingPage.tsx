@@ -196,7 +196,7 @@ const LandingPage = () => {
                         ))}
                     </Styled.ProductsPreviewContainer>
                     <Styled.SeeMoreProductsButtonWrapper>
-                        <Button size={"large"} radius={"roundedsquare"}  text={"See More"} onClick={() => {console.log('View More Products')}}/>
+                        <Button size={"larger"} radius={"roundedsquare"}  text={"See More"} onClick={() => {console.log('View More Products')}}/>
                     </Styled.SeeMoreProductsButtonWrapper>
                 </Section>
             </Styled.MenuPreviewSectionWrapper>
@@ -207,6 +207,8 @@ const LandingPage = () => {
                             <TestimonialCard
                                 key={`${testimony.user}-${index}-testimony`}
                                 testimonial={testimony}
+                                ratedColor={starRatingColors.filled}
+                                noRateColor={starRatingColors.blank}
                                 cardRadius="roundedsquare"
                                 nameColor="light"
                                 messageColor="teritiary"
@@ -216,6 +218,16 @@ const LandingPage = () => {
                     </Styled.TestimonialsContainer>
                 </Section>
             </Styled.TestimonialSectionWrapper>
+            <Styled.FAQSectionWrapper>
+                <Section id={"faqs"} title={"FAQs"} titleColor={"bnw"} titleSize={"giga"}>
+                    <Styled.FAQsContainer>
+                        
+                    </Styled.FAQsContainer>
+                </Section>
+            </Styled.FAQSectionWrapper>
+            <Styled.ContactSectionWrapper>
+                <Section id={"faqs"} title={"Contact Us"} titleColor={"secondary"} titleSize={"giga"}></Section>
+            </Styled.ContactSectionWrapper>
         </Styled.LandingPageWrapper>
     )
 }
