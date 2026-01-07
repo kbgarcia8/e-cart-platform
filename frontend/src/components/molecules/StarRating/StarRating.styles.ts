@@ -16,7 +16,7 @@ export const StarIconsContainer = styled.div`
 
     & svg{
         height: 100%;
-        width: 7.5%;
+        width: 100%;
     }
 `
 export const StarRatingText = styled.span`

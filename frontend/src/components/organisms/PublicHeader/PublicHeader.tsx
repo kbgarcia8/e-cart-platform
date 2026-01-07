@@ -8,7 +8,7 @@ import Navbar from "components/molecules/Navbar";
 
 const links = [
     {name: "Features", path: "/#features"},
-    {name: "About Us", path: "/#about"},
+    {name: "Products", path: "/#products"},
     {name: "Testimonials", path: "/#testimonials"},
     {name: "Contact Us", path: "/#contact"}
 ]

@@ -1,19 +1,15 @@
 import React from "react";
-import { DividerContainer, DividerLine, DividerText } from "./Divider.styles.js";
+import * as Styled from "./Divider.styles";
+import type { DividerProps } from "./Divider.types";
 
-type DividerProps = {
-    dividerText?: string;
-    className?: string;
-}
-
-const Divider = ({ dividerText, className }:DividerProps) => {
+const Divider = ({ dividerText, lineColor, thickness, textColor, textSize, className }:DividerProps) => {
     
     return(
-        <DividerContainer className={className}>
-            <DividerLine>
-                {dividerText && <DividerText>{dividerText}</DividerText>}
-            </DividerLine>
-        </DividerContainer>
+        <Styled.DividerContainer className={className}>
+            <Styled.DividerLine $lineColor={lineColor} $thickness={thickness}>
+                {dividerText && <Styled.DividerText $textColor={textColor} $textSize={textSize}>{dividerText}</Styled.DividerText>}
+            </Styled.DividerLine>
+        </Styled.DividerContainer>
     );
 }
 

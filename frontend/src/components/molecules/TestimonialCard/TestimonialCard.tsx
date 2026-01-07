@@ -21,19 +21,23 @@ const TestimonialCard = ({
 
     return (
         <Styled.TestimonialCardWrapper $cardRadius={cardRadius} $cardColor={cardColor} className={className}>
-            <Styled.TestimoneePictureContainer>
-                <Styled.TestimoneePicture src={testimonial.photo} alt={`${testimonial.user}-photo`}/>
-            </Styled.TestimoneePictureContainer>
-            <Styled.TestimonialCardUserName $nameColor={nameColor}>{`${testimonial.user}`}</Styled.TestimonialCardUserName>
-            <Styled.StarRatingContainer>
-                <StarRating
-                    stars={starsQuantiy}
-                    ratedColor={ratedColor}
-                    noRateColor={noRateColor}
-                    rating={testimonial.rating}
-                    withText={false}
-                />
-            </Styled.StarRatingContainer>
+            <Styled.TestimonialCardInfoContainer>
+                <Styled.TestimoneePictureContainer>
+                    <Styled.TestimoneePicture src={testimonial.photo} alt={`${testimonial.user}-photo`}/>
+                </Styled.TestimoneePictureContainer>
+                <Styled.TestimonialCardNameAndRatingContainer>
+                    <Styled.TestimonialCardUserName $nameColor={nameColor}>{`${testimonial.user}`}</Styled.TestimonialCardUserName>
+                    <Styled.StarRatingContainer>
+                        <StarRating
+                            stars={starsQuantiy}
+                            ratedColor={ratedColor}
+                            noRateColor={noRateColor}
+                            rating={testimonial.rating}
+                            withText={false}
+                        />
+                    </Styled.StarRatingContainer>
+                </Styled.TestimonialCardNameAndRatingContainer>
+            </Styled.TestimonialCardInfoContainer>
             <Styled.TestimonialCardMessage $messageColor={messageColor}>{`${testimonial.message}`}</Styled.TestimonialCardMessage>
             {children}
         </Styled.TestimonialCardWrapper>

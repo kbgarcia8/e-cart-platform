@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 import { v } from 'constants/variables';
 import { media } from 'utils/utility';
-import Button from 'components/atoms/Button/Button';
-import ImageCarousel from 'components/molecules/ImageCarousel';
-import ProductPreviewCard from 'components/molecules/ProductPreviewCard';
 
 export const LandingPageWrapper = styled.div`
     padding: 0;
@@ -18,6 +15,7 @@ export const MainSectionWrapper = styled.div`
     display: flex;
     background-color: ${({theme}) => theme.colors.backgroundColor3};
     max-width: 100%;
+    padding-block: ${v.spacing.medium};
 `;
 
 export const ExploreMenuButtonWrapper = styled.div`
@@ -25,7 +23,7 @@ export const ExploreMenuButtonWrapper = styled.div`
     align-self: center;
     border-radius: ${v.borderRadius.medium};
     background-color: ${({theme}) => theme.colors.backgroundColor1};
-    margin-block: ${v.spacing.xlarge};
+    margin-block: ${v.spacing.xxlarge};
 
     ${media.mobile`
         height: 7.5svh;
@@ -50,9 +48,9 @@ export const FeaturesContainer = styled.div`
     align-items: center;
     justify-content: center;
     width: 100%;
-    border: 2px solid red;
     padding: ${v.spacing.large};
     gap: ${v.spacing.xlarge};
+    margin-block: ${v.spacing.medium};
 
     ${media.mobile`
         flex-direction: column;
@@ -101,6 +99,7 @@ export const MenuPreviewSectionWrapper = styled.div`
     background-color: ${({theme}) => theme.colors.backgroundColor3};
     max-width: 100%;
     width: 100%;
+    padding-block: ${v.spacing.medium};
 `;
 
 export const ProductsPreviewContainer = styled.div`
@@ -113,7 +112,7 @@ export const ProductsPreviewContainer = styled.div`
     overflow-x: auto;
     overflow-y: hidden;
     padding: ${v.spacing.large};
-    margin-bottom: ${v.spacing.small};
+    
     gap: ${v.spacing.large};
 
     & > * {
@@ -122,7 +121,7 @@ export const ProductsPreviewContainer = styled.div`
 
     ${media.mobile`
         --webkit-overflow-scrolling: touch;
-        margin-block: ${v.spacing.xlarge};
+        margin-block: ${v.spacing.xxlarge};
     `}
 `;
 
@@ -145,15 +144,18 @@ export const TestimonialSectionWrapper = styled.div`
 
 export const TestimonialsContainer = styled.div`
     flex: 1;
-    display: flex;
-    flex-wrap: nowrap;
-    max-width: 100%;
-    min-width: 100%;
+    width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
-    border: 2px solid blue;
     
     ${media.mobile`
+        display: grid;
+        grid-auto-flow: row;
+        grid-auto-rows: 30rem;
         gap: ${v.spacing.medium};
+    `}
+    ${media.tablet`
+        display: flex;
+        flex-wrap: wrap;    
     `}
 `;

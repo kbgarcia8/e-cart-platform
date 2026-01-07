@@ -19,7 +19,7 @@ export const TITLESIZE = {
         `}
     `,
     none: css``
-}
+};
 
 export const DESCRIPTIONSIZE = {
     upsize: css`
@@ -38,7 +38,7 @@ export const DESCRIPTIONSIZE = {
         `}
     `,
     none: css``
-}
+};
 
 export const TITLECOLORS = {
     primary: css`

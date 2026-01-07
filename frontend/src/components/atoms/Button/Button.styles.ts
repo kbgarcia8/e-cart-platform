@@ -116,8 +116,9 @@ export const DefaultButton = styled.button<{
     ${({ $radius }) => RADIUS[$radius || 'square']}
     
     & .button-icon-text-space svg {
-        display: block;
-        flex: 1;
+        width: 100%;
+        height: auto;
+        max-height: 100%;
     }
 
     &:disabled {

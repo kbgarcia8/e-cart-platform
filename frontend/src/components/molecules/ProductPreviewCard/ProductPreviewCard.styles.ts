@@ -1,9 +1,56 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import GenericButton from 'components/atoms/Button';
 import { v } from 'constants/variables';
 import { media } from 'utils/utility';
 
-export const ProductPreviewCardContainer = styled.div`
+export const RADIUS = {
+    square: css`border-radius: ${v.borderRadius.xsmall};`,
+    roundedsquare: css`border-radius: ${v.borderRadius.medium};`,
+    squircle: css`border-radius: ${v.borderRadius.large};`,
+    pill: css`border-radius: ${v.borderRadius.xlarge};`,
+    circle: css`border-radius: ${v.borderRadius.circle};`
+};
+
+export const CARDCOLORS = {
+    primary: css`
+        background-color: ${({theme})=> theme.colors.backgroundColor1};
+    `,
+    secondary: css`
+        background-color: ${({theme})=> theme.colors.backgroundColor3};
+    `,
+    teritiary: css`
+        background-color: ${({theme}) => theme.colors.textColor3};
+    `,
+    dark: css`
+        background-color: ${({theme}) => theme.colors.textColor1};
+    `,
+    light: css`
+        background-color: ${({theme}) => theme.colors.screenColor};
+    `
+};
+
+export const TEXTCOLORS = {
+    primary: css`
+        color: ${({theme})=> theme.colors.backgroundColor1};
+    `,
+    secondary: css`
+        color: ${({theme})=> theme.colors.backgroundColor3};
+    `,
+    teritiary: css`
+        color: ${({theme}) => theme.colors.textColor3};
+    `,
+    dark: css`
+        color: ${({theme}) => theme.colors.textColor1};
+    `,
+    light: css`
+        color: ${({theme}) => theme.colors.screenColor};
+    `
+};
+
+export const ProductPreviewCardContainer = styled.div<{
+    $cardRadius?: keyof typeof RADIUS;
+    $cardColor?: keyof typeof CARDCOLORS;
+}>`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -11,21 +58,30 @@ export const ProductPreviewCardContainer = styled.div`
     width: 75%;
     min-width: 75%;
     max-width: 75%;
-    border-radius: ${v.borderRadius.medium};
+    ${({$cardRadius})=> RADIUS[$cardRadius || 'square']}
     box-shadow: 0 4px 8px 0 ${({theme})=> theme.colors.shadow};
-    background-color: ${({theme})=> theme.colors.backgroundColor1};
+    ${({$cardColor})=> CARDCOLORS[$cardColor || 'dark']}
     padding: ${v.spacing.medium};
 `;
 
-export const ProductImage = styled.img`
-    flex: 2;
+export const ProductImageContainer = styled.div<{ $imageRadius?: keyof typeof RADIUS }>`
     width: 100%;
-    object-fit: cover;
-    border-radius: ${v.borderRadius.medium};
+    overflow: hidden;
+    ${({$imageRadius})=> RADIUS[$imageRadius || 'square']}
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+
+    ${media.mobile`
+        flex: 0 0 15rem;
+    `}
 `;
 
-export const ProductTitle = styled.h2`
+export const ProductImage = styled.img`
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+`;
+
+export const ProductTitle = styled.h2<{$titleColor?: keyof typeof TEXTCOLORS;}>`
     flex: 0.5;
     display: flex;
     align-items: center;
@@ -36,7 +92,7 @@ export const ProductTitle = styled.h2`
     padding: 0.25rem;
     font-weight: ${v.fontWeight.bolder};
     font-family: ${v.fonts.secondary}, ${v.fonts.fallback};
-    color: ${({theme}) => theme.colors.textColor3};
+    ${({$titleColor})=> TEXTCOLORS[$titleColor || 'dark']}
     margin-top: ${v.spacing.xxxsmall};
     
     ${media.mobile`
@@ -52,30 +108,16 @@ export const PriceContainer = styled.div`
     padding-inline: ${v.spacing.medium};
 `;
 
-export const AddToCartButton = styled(GenericButton)`
-    margin: ${v.spacing.xxxsmall};
-    padding: ${v.spacing.xxxsmall};
-    border-radius: ${v.borderRadius.medium};
-    height: 100%;
+export const AddToCartButtonWrapper = styled.div`
     flex: 0.75;
-    background-color: transparent;
-    border: 0.05rem solid ${({theme})=> theme.colors.backgroundColor3};
-    color: ${({theme})=> theme.colors.backgroundColor3};
-
-    & .button-icon-text-space {
-        height: 50%;
-    }
-    
-    & .button-icon-text-space svg {
-        width: 100%;
-        height: 100%;
-    }
+    display: flex;
+    height: 100%;
 `;
 
-export const ProductBasePrice = styled.span`
+export const ProductBasePrice = styled.span<{$priceColor?: keyof typeof TEXTCOLORS}>`
     flex: 2;
     font-size: ${v.fontSize.medium};
-    color: ${({theme}) => theme.colors.textColor3};
     font-weight: ${v.fontWeight.bold};
     font-family: ${v.fonts.secondary}, ${v.fonts.fallback};
+    ${({$priceColor})=> TEXTCOLORS[$priceColor || 'dark']}
 `;

@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import GenericButton from 'components/atoms/Button';
 import { v } from 'constants/variables';
-import type { ColorString } from 'type/generalTypes';
-import type { ButtonProps } from 'type/propTypes';
 
 export const ProductImage = styled.img`
     width: 100%;

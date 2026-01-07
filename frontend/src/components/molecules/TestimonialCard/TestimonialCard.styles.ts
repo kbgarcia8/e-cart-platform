@@ -68,44 +68,55 @@ export const TestimonialCardWrapper = styled.div<{
     $cardColor?: keyof typeof CARDCOLORS,
     $cardRadius?: keyof typeof RADIUS
 }>`
-    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;    
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
     box-shadow: 0 4px 8px 0 ${({theme})=> theme.colors.shadow};
     padding: ${v.spacing.medium};
-    border: 2px solid red;
-    margin-block: ${v.spacing.xxlarge};
+    margin-block: ${v.spacing.large};
     ${({$cardColor})=> CARDCOLORS[$cardColor || 'primary']}
     ${({$cardRadius})=> RADIUS[$cardRadius || 'square']}
 `;
-export const TestimoneePictureContainer = styled.div`
-    flex: 2;
+
+export const TestimonialCardInfoContainer = styled.div`
+    flex: 0 0 auto;
+    min-height: 5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    margin-block: ${v.spacing.medium};
+`;
+
+export const TestimoneePictureContainer = styled.div`
+    aspect-ratio: 1/1;
+    flex: 0 0 7.5rem;
+    overflow: hidden;
+    border-radius: ${v.borderRadius.circle};
+    border: ${v.borderThickness.medium} solid ${({theme}) => theme.colors.borderColor1};
+    margin-inline: ${v.spacing.small};
 `;
 
 export const TestimoneePicture = styled.img`
-    flex: 1;
     width: 100%;
     height: 100%;
-    aspect-ratio: 4/3;
-    border-radius: ${v.borderRadius.circle};
-    border: ${v.borderThickness.medium} solid ${({theme}) => theme.colors.borderColor1};
+    object-fit: cover;
+`;
+
+export const TestimonialCardNameAndRatingContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
 `;
 
 export const TestimonialCardUserName = styled.span<{$nameColor?: keyof typeof NAMECOLORS}>`
     flex: 1;
+    max-width: 100%;
     width: 100%;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     font-family: ${v.fonts.tertiary}, ${v.fonts.fallback};
     font-weight: ${v.fontWeight.bold};
     ${({$nameColor})=> NAMECOLORS[$nameColor || 'primary']}
@@ -120,6 +131,7 @@ export const StarRatingContainer = styled.div`
     flex: 1;
     display: flex;
     width: 100%;
+    
     justify-content: center;
     align-items: center;
 `;
@@ -128,14 +140,14 @@ export const TestimonialCardMessage = styled.p<{$messageColor?: keyof typeof MES
     flex: 2.5;
     max-width: 100%;
     width: 100%;
-    display: flex;
-    flex-wrap: nowrap;
+    display: block;
+    overflow: hidden;
     overflow-y: hidden;
     font-weight: ${v.fontWeight.bold};
     padding: ${v.spacing.xsmall};
     ${({$messageColor})=> MESSAGECOLORS[$messageColor || 'primary']}
 
     ${media.mobile`
-        font-size: calc(${v.fontSize.small} + 0.1rem);
+        font-size: calc(${v.fontSize.medium} + 0.1rem);
     `}
 `;

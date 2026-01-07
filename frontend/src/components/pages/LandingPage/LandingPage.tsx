@@ -176,7 +176,7 @@ const LandingPage = () => {
                 </Section>
             </Styled.FeatureSectionWrapper>
             <Styled.MenuPreviewSectionWrapper>
-                <Section id={"services"} title={"Some of our Products"} titleColor={"secondary"} titleSize={"giga"}>
+                <Section id={"products"} title={"Some of our Products"} titleColor={"secondary"} titleSize={"giga"}>
                     <Styled.ProductsPreviewContainer>
                         {productPreviews.map((product,index) => (
                             <ProductPreviewCard
@@ -186,6 +186,12 @@ const LandingPage = () => {
                                 basePrice={product.basePrice}
                                 dataCategory={product.category}
                                 dataProductId={product.productId}
+                                cardRadius={"roundedsquare"}
+                                cardColor={"primary"}
+                                imageRadius={"roundedsquare"}
+                                titleColor={"teritiary"}
+                                priceColor={"teritiary"}
+                                buttonRadius={"roundedsquare"}
                             />
                         ))}
                     </Styled.ProductsPreviewContainer>
