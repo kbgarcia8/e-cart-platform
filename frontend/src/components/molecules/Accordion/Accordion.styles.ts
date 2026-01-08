@@ -1,6 +1,17 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { v } from "constants/variables";
 import { media } from "utils/utility";
+
+const expandPanel = keyframes`
+    from {
+        max-height: 0;
+        opacity: 0;
+    }
+    to {
+        max-height: 20rem;
+        opacity: 1;
+    }
+`;
 
 export const INDICATORCOLORS = {
     primary: css`
@@ -102,11 +113,14 @@ export const HeaderButtonWrapper = styled.div<{
 export const AccordionPanel = styled.div<{ $panelColor?: keyof typeof PANELCOLORS}>`
     display: none;
     padding: ${v.spacing.small};
-    transition: display 0.5s ease-out;
-    ${({$panelColor})=> PANELCOLORS[$panelColor || 'bnw']}
+    ${({ $panelColor }) => PANELCOLORS[$panelColor || 'bnw']}
 
     &.active {
         display: block;
+    }
+
+    &.active p {
+        animation: ${expandPanel} 0.3s ease-out forwards;
     }
 `;
 
@@ -114,6 +128,9 @@ export const AccordionPanelContent = styled.p`
     overflow-wrap: break-word;
     white-space: pre-line;
     width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
 
     ${media.mobile`
         font-weight: ${v.fontWeight.bolder};
