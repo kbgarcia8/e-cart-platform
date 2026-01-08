@@ -1,21 +1,34 @@
 import styled, { css } from "styled-components";
 import { v } from "constants/variables";
-import type { AccordionProps } from "./Accordion.types";
 import { media } from "utils/utility";
 
 export const AccordionWrapper = styled.div`
     max-width: 100%;
     width: 100%;
-    display: flex;
-    flex-direction: column;
+    
+
+    ${media.mobile`
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-auto-rows: 1fr;
+
+    `}
+    ${media.tablet`
+        display: flex;
+        flex-direction: column;
+    `}
 `;
 
 export const HeaderButtonWrapper = styled.div<{
     $indicatorString?: string;
     $indicatorSVGURL?: string;
 }>`
-    flex: 0 0 1;
+    display: flex;
+    border: 2px solid red;
+    flex: 1;
     width: 100%;
+    height: 100%;
+
     &::after {
         ${({ $indicatorString, $indicatorSVGURL }) => {
             if (!$indicatorString && !$indicatorSVGURL) {
@@ -27,13 +40,15 @@ export const HeaderButtonWrapper = styled.div<{
             }
             return css`content: url(${$indicatorSVGURL});`;
         }}
+        background-color: inherit;
+        color: inherit;
         position: relative;
-        right: ${v.spacing.small};
+        right: 5%;
         top: 50%;
         transform: translateY(-50%);
 
-        font-size: ${v.fontSize.large};
-        font-weight: ${v.fontWeight.bold};
+        font-size: ${v.fontSize.xlarge};
+        font-weight: ${v.fontWeight.bolder};
         pointer-events: none;
     }
     &.active::after {
@@ -51,7 +66,7 @@ export const HeaderButtonWrapper = styled.div<{
 `;
 
 export const AccordionPanel = styled.div`
-    flex: 0 0 2;
+    flex: 2;
     display: none;
 
     &.active {
