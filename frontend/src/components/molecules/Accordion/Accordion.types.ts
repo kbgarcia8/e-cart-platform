@@ -3,13 +3,14 @@ import { COLORS, RADIUS } from "components/atoms/Button/Button.styles";
 
 export type AccordionProps = {
     items: {
-        headerText: string;
+        header: string;
         content: string;
     }[],
+    activePanel: number|null;
     buttonColor?: keyof typeof COLORS;
     buttonRadius?: keyof typeof RADIUS;
     indicatorString?: string;
-    indicatorSVGURL?: SVGProps<SVGSVGElement>;
+    indicatorSVGURL?: string;
     handleActivatePanel: MouseEventHandler<HTMLButtonElement>;
     className?: string;
 }

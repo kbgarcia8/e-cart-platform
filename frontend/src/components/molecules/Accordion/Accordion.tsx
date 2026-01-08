@@ -5,9 +5,11 @@ import Button from "components/atoms/Button";
 
 const Accordion = ({ 
     items,
+    activePanel,
     buttonColor,
     buttonRadius,
-    indicator,
+    indicatorString,
+    indicatorSVGURL,
     handleActivatePanel,
     className 
 }:AccordionProps)  => {
@@ -15,10 +17,10 @@ const Accordion = ({
         <Styled.AccordionWrapper className={className}>
             {items.map((item, index) => (
                 <>
-                    <Styled.HeaderButtonWrapper $indicator={indicator}>
-                        <Button radius={buttonRadius} color={buttonColor} text={item.headerText} onClick={handleActivatePanel} dataAttributes={{'data-index': index}}/>
+                    <Styled.HeaderButtonWrapper className={index === activePanel ? "active" : ""} $indicatorString={indicatorString} $indicatorSVGURL={indicatorSVGURL}>
+                        <Button size={"large"} radius={buttonRadius} color={buttonColor} text={item.header} onClick={handleActivatePanel} dataAttributes={{'data-index': index}}/>
                     </Styled.HeaderButtonWrapper>
-                    <Styled.AccordionPanel>
+                    <Styled.AccordionPanel className={index === activePanel ? "active" : ""}>
                         <Styled.AccordionPanelContent>{item.content}</Styled.AccordionPanelContent>
                     </Styled.AccordionPanel>
                 </>

@@ -5,32 +5,9 @@ import Section from "components/molecules/Section";
 import ImageCarousel from "components/molecules/ImageCarousel";
 import ProductPreviewCard from "components/molecules/ProductPreviewCard";
 import TestimonialCard from "components/molecules/TestimonialCard";
+import Accordion from "components/molecules/Accordion";
 import { v } from "constants/variables";
 import useTheme from "hooks/useTheme";
-
-
-const services = [
-    {
-        name: "Online Transaction",
-        icon: "https://cdn-icons-png.freepik.com/512/11027/11027115.png?ga=GA1.1.404857351.1712593838",
-        description: "Enjoy seamless ordering with our user-friendly online platform—browse the menu, place your order, and pay digitally for a hassle-free café experience."
-    },
-    {
-        name: "Reward Points",
-        icon: "https://cdn-icons-png.freepik.com/512/1900/1900385.png?ga=GA1.1.404857351.1712593838",
-        description: "Every order earns you points! Redeem them for exciting discounts, freebies, or exclusive treats. Loyalty definitely tastes better at Kain at Kape."
-    },
-    {
-        name: "Event & Space Rental",
-        icon: "https://cdn-icons-png.freepik.com/512/16490/16490234.png?ga=GA1.1.404857351.1712593838",
-        description: "Planning a small celebration, meeting, or cozy gathering? Our warm and welcoming space is available for private rentals—perfect for making moments memorable."
-    },
-    {
-        name: "Pet Friendly",
-        icon: "https://cdn-icons-png.freepik.com/512/489/489399.png?ga=GA1.1.404857351.1712593838",
-        description: "Fur babies are family too! Bring them along and relax in our designated pet-friendly area, complete with comfort and care for you and your companion."
-    }
-]
 
 const mainSectionImages = [
     {id: 1, url: 'https://www.simplyrecipes.com/thmb/2g1IOS6TYdG_bmyg0hyf0b6RKGY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Simply-Recipes-Oatmeal-Raisin-Cookies-LEAD-15-2251dafb1a554aafaedf42e797bf2fd0.jpg'},
@@ -121,11 +98,35 @@ const temporaryTestimonies = [
         rating: "5.0",
         message: "I’ve used several e-commerce platforms, but this one sets a higher standard. The product quality exceeded my expectations, and the order tracking kept me informed every step of the way. It’s clear that both the technology and the service were built with the customer in mind."
     }
+];
+
+const FAQItems = [
+    {
+        header: "Do you have a physical store?",
+        content: "Yes, we have a physical store for those who wish for pick-up transaction. We are located at xxxxxxxx"
+    },
+    {
+        header: "Do I need an account to place an order?",
+        content: "You can browse products without an account. However, creating an account allows you to place orders faster, track your purchases, save addresses, earn points and view your order history."
+    },
+    {
+        header: "How do I add items to my cart?",
+        content: "Simply select a product and click Add to Cart. You can review or update your cart at any time before proceeding to checkout."
+    },
+    {
+        header: "What payment methods are supported?",
+        content: "We support secure online payments, including debit cards transfer/QRPh. All transactions are encrypted and processed securely."
+    },
+    {
+        header: "What is your return and refund policy?",
+        content: "If you are not satisfied with your purchase, you may request a return within the allowed return period. Refunds are processed according to our return policy and payment provider timelines."
+    },
 ]
 
 const LandingPage = () => {
     const {currentTheme} = useTheme();
     const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+    const [activePanel, setActivePanel] = React.useState<number | null>(null);
 
     const handlePreviousClick = React.useCallback(() => {
         setCurrentImageIndex(
@@ -150,7 +151,15 @@ const LandingPage = () => {
             filled: currentTheme.notificationPalette.warningBackground,
             blank: currentTheme.colors.shadow
         }
-    }, [currentTheme])
+    }, [currentTheme]);
+
+    const handleActivatePanel = React.useCallback((e:React.MouseEvent<HTMLButtonElement>) => {
+        const { index } = e.currentTarget?.dataset;
+        const activeIndex = Number(index);
+
+        setActivePanel((prevIndex) => prevIndex !== activeIndex ? activeIndex : null);
+
+    }, [activePanel]);
     
     return(
         <Styled.LandingPageWrapper>
@@ -221,7 +230,7 @@ const LandingPage = () => {
             <Styled.FAQSectionWrapper>
                 <Section id={"faqs"} title={"FAQs"} titleColor={"bnw"} titleSize={"giga"}>
                     <Styled.FAQsContainer>
-                        
+                        <Accordion items={FAQItems} handleActivatePanel={handleActivatePanel} activePanel={activePanel} />
                     </Styled.FAQsContainer>
                 </Section>
             </Styled.FAQSectionWrapper>
