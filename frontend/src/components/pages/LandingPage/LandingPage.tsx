@@ -107,7 +107,11 @@ const FAQItems = [
     },
     {
         header: "Do I need an account to place an order?",
-        content: "You can browse products without an account. However, creating an account allows you to place orders faster, track your purchases, save addresses, earn points and view your order history."
+        content: "You can browse products without an account. \n\nHowever, creating an account allows you to place orders faster, track your purchases, save addresses, earn points and view your order history."
+    },
+    {
+        header: "How long does delivery take?",
+        content: "Delivery typically takes 1–3 business days for orders within Metro Manila and Laguna after order confirmation. \n\nFor deliveries outside Metro Manila and Laguna (within Luzon only), delivery may take 3–7 business days, depending on your location and the courier’s service area."
     },
     {
         header: "How do I add items to my cart?",
@@ -115,11 +119,19 @@ const FAQItems = [
     },
     {
         header: "What payment methods are supported?",
-        content: "We support secure online payments, including debit cards transfer/QRPh. All transactions are encrypted and processed securely."
+        content: "We support secure online payments, including debit cards transfer/QRPh. \n\nAll transactions are encrypted and processed securely."
     },
     {
         header: "What is your return and refund policy?",
-        content: "If you are not satisfied with your purchase, you may request a return within the allowed return period. Refunds are processed according to our return policy and payment provider timelines."
+        content: "If you are not satisfied with your purchase, you may request a return within the allowed return period. \nRefunds are processed according to our return policy and payment provider timelines."
+    },
+    {
+        header: "Are your products homemade?",
+        content: "Yes. All our products are homemade and prepared in small batches to ensure freshness, quality, and great taste. \n\nWe carefully select our ingredients and follow proper food-handling practices to deliver products you can trust and enjoy."
+    },
+    {
+        header: "Do you cater bulk orders?",
+        content: "Yes, we do accept bulk orders for events, celebrations, and special occasions. Advance notice is required to allow sufficient preparation time, and minimum order quantities may apply. \n\nFor bulk orders, please contact us directly so we can discuss your requirements, pricing, and delivery schedule."
     },
 ]
 
@@ -128,11 +140,13 @@ const LandingPage = () => {
     const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
     const [activePanel, setActivePanel] = React.useState<number | null>(null);
 
+    /*
     const handlePreviousClick = React.useCallback(() => {
         setCurrentImageIndex(
             currentImageIndex === 0 ? mainSectionImages.length - 1 : currentImageIndex - 1
         );
     }, [currentImageIndex]);
+    */
 
     const handleNextClick = React.useCallback(() => {
         setCurrentImageIndex((currentImageIndex + 1) % mainSectionImages.length);
@@ -154,12 +168,12 @@ const LandingPage = () => {
     }, [currentTheme]);
 
     const handleActivatePanel = React.useCallback((e:React.MouseEvent<HTMLButtonElement>) => {
-        const { index } = e.currentTarget?.dataset;
+        const { index } = e.currentTarget.dataset;
         const activeIndex = Number(index);
 
         setActivePanel((prevIndex) => prevIndex !== activeIndex ? activeIndex : null);
 
-    }, [activePanel]);
+    }, [setActivePanel]);
     
     return(
         <Styled.LandingPageWrapper>
@@ -230,7 +244,7 @@ const LandingPage = () => {
             <Styled.FAQSectionWrapper>
                 <Section id={"faqs"} title={"FAQs"} titleColor={"bnw"} titleSize={"giga"}>
                     <Styled.FAQsContainer>
-                        <Accordion items={FAQItems} handleActivatePanel={handleActivatePanel} activePanel={activePanel} />
+                        <Accordion items={FAQItems} handleActivatePanel={handleActivatePanel} activePanel={activePanel} indicatorColor={"primary"}/>
                     </Styled.FAQsContainer>
                 </Section>
             </Styled.FAQSectionWrapper>

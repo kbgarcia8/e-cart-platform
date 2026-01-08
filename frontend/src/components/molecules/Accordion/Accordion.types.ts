@@ -1,5 +1,6 @@
-import type { MouseEventHandler, SVGProps } from "react";
+import type { MouseEventHandler } from "react";
 import { COLORS, RADIUS } from "components/atoms/Button/Button.styles";
+import { INDICATORCOLORS, PANELCOLORS } from "./Accordion.styles";
 
 export type AccordionProps = {
     items: {
@@ -9,8 +10,10 @@ export type AccordionProps = {
     activePanel: number|null;
     buttonColor?: keyof typeof COLORS;
     buttonRadius?: keyof typeof RADIUS;
+    indicatorColor?: keyof typeof INDICATORCOLORS;
     indicatorString?: string;
     indicatorSVGURL?: string;
+    panelColor?: keyof typeof PANELCOLORS;
     handleActivatePanel: MouseEventHandler<HTMLButtonElement>;
     className?: string;
 }

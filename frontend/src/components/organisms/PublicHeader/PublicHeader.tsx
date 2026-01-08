@@ -18,9 +18,11 @@ const PublicHeader = ():React.ReactNode => {
     const navigate = useNavigate();
     const [isSignedIn, setIsSignedIn] = React.useState<boolean>(false);
 
+    /*
     const handleClick = () => {
         setIsSignedIn(false);
     }
+    */
 
     const handleButtonNavigate = (e:React.MouseEvent<HTMLButtonElement>) => { 
         const textToLink:Record<string, string> = {

@@ -172,9 +172,8 @@ export const FAQsContainer = styled.div`
     align-items: center;
     justify-content: center;
     width: 100%;
-    padding: ${v.spacing.large};
-    gap: ${v.spacing.xlarge};
-    margin-block: ${v.spacing.medium};
+    padding: ${v.spacing.medium};
+    margin-block: ${v.spacing.xlarge};
 
     ${media.mobile`
         flex-direction: column;

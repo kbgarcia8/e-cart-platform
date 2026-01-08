@@ -8,8 +8,10 @@ const Accordion = ({
     activePanel,
     buttonColor,
     buttonRadius,
+    indicatorColor,
     indicatorString,
     indicatorSVGURL,
+    panelColor,
     handleActivatePanel,
     className 
 }:AccordionProps)  => {
@@ -17,10 +19,10 @@ const Accordion = ({
         <Styled.AccordionWrapper className={className}>
             {items.map((item, index) => (
                 <>
-                    <Styled.HeaderButtonWrapper className={index === activePanel ? "active" : ""} $indicatorString={indicatorString} $indicatorSVGURL={indicatorSVGURL}>
+                    <Styled.HeaderButtonWrapper className={index === activePanel ? "active" : ""} $indicatorColor={indicatorColor} $indicatorString={indicatorString} $indicatorSVGURL={indicatorSVGURL}>
                         <Button size={"large"} radius={buttonRadius} color={buttonColor} text={item.header} onClick={handleActivatePanel} dataAttributes={{'data-index': index}}/>
                     </Styled.HeaderButtonWrapper>
-                    <Styled.AccordionPanel className={index === activePanel ? "active" : ""}>
+                    <Styled.AccordionPanel className={index === activePanel ? "active" : ""} $panelColor={panelColor}>
                         <Styled.AccordionPanelContent>{item.content}</Styled.AccordionPanelContent>
                     </Styled.AccordionPanel>
                 </>
