@@ -8,6 +8,10 @@ import TestimonialCard from "components/molecules/TestimonialCard";
 import Accordion from "components/molecules/Accordion";
 import { v } from "constants/variables";
 import useTheme from "hooks/useTheme";
+import { TfiEmail } from "react-icons/tfi";
+import { CiMobile3 } from "react-icons/ci";
+import { FaFacebookF, FaInstagram } from "react-icons/fa";
+import { SiGooglemaps } from "react-icons/si";
 
 const mainSectionImages = [
     {id: 1, url: 'https://www.simplyrecipes.com/thmb/2g1IOS6TYdG_bmyg0hyf0b6RKGY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Simply-Recipes-Oatmeal-Raisin-Cookies-LEAD-15-2251dafb1a554aafaedf42e797bf2fd0.jpg'},
@@ -133,7 +137,14 @@ const FAQItems = [
         header: "Do you cater bulk orders?",
         content: "Yes, we do accept bulk orders for events, celebrations, and special occasions. Advance notice is required to allow sufficient preparation time, and minimum order quantities may apply. \n\nFor bulk orders, please contact us directly so we can discuss your requirements, pricing, and delivery schedule."
     },
-]
+];
+
+const contacts = [
+    {icon: <TfiEmail/>, name: 'Email', content: 'kbgarcia8@gmail.com', link: 'mailto:kbgarcia8@gmail.com'},
+    {icon: <CiMobile3/>, name: 'Mobile', content: '+(63)936-474-3812', link: ''},
+    {icon: <FaFacebookF/>, name: 'Facebook', content: 'Karl Brian Garcia', link: 'https://facebook.com/karl.b.garcia.9'},
+    {icon: <FaInstagram/>, name: 'Instagram', content: 'kbgarcia8', link: 'https://github.com/kbgarcia8'}
+];
 
 const LandingPage = () => {
     const {currentTheme} = useTheme();
@@ -250,6 +261,28 @@ const LandingPage = () => {
             </Styled.FAQSectionWrapper>
             <Styled.ContactSectionWrapper>
                 <Section id={"faqs"} title={"Contact Us"} titleColor={"secondary"} titleSize={"giga"}></Section>
+                <Styled.ContactSpace>
+                    {contacts.map((contact,index) => (
+                        <Styled.ContactContainer key={`${contact.name}-${index}`} to={contact.link}>
+                            <Styled.IconContainer>
+                                {contact.icon}
+                            </Styled.IconContainer>
+                            <Styled.InformationContainer>
+                                <Styled.InformationTitle>{contact.name}</Styled.InformationTitle>
+                                <Styled.Information>{contact.content}</Styled.Information>
+                            </Styled.InformationContainer>
+                        </Styled.ContactContainer>
+                    ))}
+                </Styled.ContactSpace>
+                <Styled.LocationInformationSpace>
+                    <Styled.LocationInformationHeader>{"Location"}</Styled.LocationInformationHeader>
+                    <Styled.LocationInformation>
+                        <Styled.PinIconContainter>
+                            <SiGooglemaps/>
+                        </Styled.PinIconContainter>
+                        <Styled.Location>{"Alabang, Filinvest \n 0987 Central Park, City, State, ZIP \n Philippines"}</Styled.Location>
+                    </Styled.LocationInformation>
+                </Styled.LocationInformationSpace>
             </Styled.ContactSectionWrapper>
         </Styled.LandingPageWrapper>
     )
