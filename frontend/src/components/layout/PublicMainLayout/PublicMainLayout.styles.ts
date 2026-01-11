@@ -4,9 +4,8 @@ import { v } from "constants/variables";
 
 export const PublicMainLayout = styled.div`
     display: grid;
-    height: 100vh;
-    width: 100vw;
-    border: 5px solid ${({ theme }) => theme.colors.primary};
+    min-height: 100svh;   /* modern viewport-safe */
+    width: 100%;
 
     ${media.mobile`
         grid-template-areas:
@@ -21,10 +20,10 @@ export const PublicMainLayout = styled.div`
 export const Header = styled.header`
     display: flex;
     grid-area: header;
-    background-color: ${({ theme }) => theme.colors.backgroundSecondary};
-    border-bottom: 2px solid ${({ theme }) => theme.colors.border};
+    background-color: ${({ theme }) => theme.colors.backgroundColor1};
+    
     ${media.mobile`
-        min-height: 7svh;
+        min-height: 10svh;
     `}
     ${media.desktop`
         min-height: 5svh;
@@ -35,7 +34,7 @@ export const Main = styled.main`
     display: flex;
     grid-area: main;
     padding: 0;
-    background-color: ${({ theme }) => theme.colors.background};
+    background-color: ${({ theme }) => theme.colors.screenColor};
     height: 100%;
     overflow-y: auto;
 `;
@@ -43,11 +42,11 @@ export const Main = styled.main`
 export const Footer = styled.footer`
     display: flex;
     grid-area: footer;
-    background-color: ${({ theme }) => theme.colors.backgroundSecondary};
+    background-color: ${({ theme }) => theme.colors.backgroundColor2};
     border-top: 2px solid ${({ theme }) => theme.colors.border};
     
     ${media.mobile`
-        min-height: 7svh;
+        min-height: 10svh;
     `}
     ${media.desktop`
         min-height: 5svh;

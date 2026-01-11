@@ -1,4 +1,4 @@
-import React, { type PropsWithChildren } from "react";
+import React from "react";
 import * as Styled from "./OrderReceipt.styles"
 import type { OrderReceiptProps } from "./OrderReceipt.types";
 
@@ -11,7 +11,7 @@ const OrderReceipt = ({
     receiptDetails, 
     className,
     children
-}:PropsWithChildren<OrderReceiptProps>) => {
+}:React.PropsWithChildren<OrderReceiptProps>) => {
     return (
         <Styled.OrderReceiptWrapper className={className}>
             <Styled.OrderSummaryLogoSpace className={'logo-space'}>

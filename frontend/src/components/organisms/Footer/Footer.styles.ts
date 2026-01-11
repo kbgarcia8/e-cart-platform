@@ -13,15 +13,28 @@ export const FooterWrapper = styled.div`
     background-color: ${({theme}) => theme.footerTheme.backgroundColor};
     padding: ${v.spacing.medium};
 `;
+
+export const NavbarWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    color: ${({theme}) => theme.colors.screenColor};
+    width: 100%;
+    border: 2px solid red;
+    margin-block: ${v.spacing.xsmall};
+`;
+
 export const FooterMessage = styled.span`
+    flex: 1;
     font-family: ${v.fonts.secondary}, ${v.fonts.fallback};
     width 100%;
     text-align: center;
+
     color: ${({theme}) => theme.footerTheme.textColor};
     ${media.mobile`
-        font-size: ${v.fontSize.xsmall};
+        font-size: ${v.fontSize.small};
     `}
     ${media.tablet`
-        font-size: ${v.fontSize.small};
+        font-size: ${v.fontSize.medium};
     `}
 `;

@@ -67,7 +67,7 @@ export const AccordionWrapper = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    row-gap: ${v.spacing.medium};
+    row-gap: ${v.spacing.large};
 `;
 
 export const HeaderButtonWrapper = styled.div<{

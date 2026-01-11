@@ -1,4 +1,3 @@
-import React from "react";
 import * as Styled from './ImageCarousel.styles';
 import type { ImageCarouselProps } from "./ImageCarousel.types";
 

@@ -20,7 +20,7 @@ const mainSectionImages = [
     {id: 4, url: 'https://www.pinoycookingrecipes.com/uploads/7/6/7/8/7678114/watermark-2019-04-24-14-44-59_orig.jpg'},
     {id: 5, url: 'https://www.marthastewart.com/thmb/S9xVtnWSHldvxPHKOxEq0bALG-k=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/MSL-338686-spaghetti-carbonara-hero-3x2-69999-560b45d1dd9f4741b717176eff024839.jpeg'},
     {id: 6, url: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjA6CiRXXqj-anfuNscQaBK2-d-fHqgSFYe5tfQmrQ8-IpnqCMObuT9_DKyPrEeMmpwLjb9S33EazO1oBRehyphenhyphenU3DEktfbr7ze2TkMweKmp6Obiq5YVg4wwqQPzcANsZ8rgBleRpdp67gLlc/s1600/06102014+003.jpg'}
-]
+];
 
 const features = [
     {
@@ -43,7 +43,7 @@ const features = [
         name: "Discount and Happy Hour Promos",
         url: "https://cbx-prod.b-cdn.net/COLOURBOX54687374.jpg?width=800&height=800&quality=70"
     }
-]
+];
 
 const productPreviews = [
     {
@@ -81,7 +81,7 @@ const productPreviews = [
         category: "Desserts",
         productId: 11
     }
-]
+];
 
 const temporaryTestimonies = [
     {
@@ -143,7 +143,7 @@ const contacts = [
     {icon: <TfiEmail/>, name: 'Email', content: 'deliverandpickup@ecartplatform.com', link: 'mailto:kbgarcia8@gmail.com'},
     {icon: <CiMobile3/>, name: 'Mobile', content: '+(63)936-123-4576', link: ''},
     {icon: <FaFacebookF/>, name: 'Facebook', content: 'E-cart Platform: Delivery and Pick-up', link: 'https://facebook.com/karl.b.garcia.9'},
-    {icon: <FaInstagram/>, name: 'Instagram', content: '@ecart-platfom', link: 'https://github.com/kbgarcia8'}
+    {icon: <FaInstagram/>, name: 'Instagram', content: '@ecart-platfom', link: 'https://www.instagram.com/imjustkeybi'}
 ];
 
 const LandingPage = () => {

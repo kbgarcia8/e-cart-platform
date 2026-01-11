@@ -1,4 +1,3 @@
-import React from "react";
 import  * as Styled from "./CartItem.styles";
 import { useOutletContext } from "react-router-dom";
 import DeleteIcon from "components/svgs/DeleteIcon.tsx";

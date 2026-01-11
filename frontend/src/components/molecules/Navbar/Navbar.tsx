@@ -1,9 +1,8 @@
-import React from "react";
 import useTheme from "hooks/useTheme";
 import * as Styled from "./Navbar.styles";
 import type { NavbarProps } from "./Navbar.types";
 
-const Navbar =({$anchorTheme, isSigning, isHashLinks, links, className}:NavbarProps) => {
+const Navbar =({textColor, $anchorTheme, isSigning, isHashLinks, links, className}:NavbarProps) => {
     const { currentTheme } = useTheme();
 
     return(
@@ -18,10 +17,12 @@ const Navbar =({$anchorTheme, isSigning, isHashLinks, links, className}:NavbarPr
                                 smooth
                                 to={link.path}
                                 $anchorTheme={$anchorTheme ? $anchorTheme : currentTheme}
+                                $textColor={textColor}
                             >{link.name}</Styled.StyledHashLink>
                             :<Styled.StyledLink
                                 to={link.path}
                                 $anchorTheme={$anchorTheme ? $anchorTheme : currentTheme}
+                                $textColor={textColor}
                             >{link.name}</Styled.StyledLink>
                             }
                         </Styled.NavbarLink>

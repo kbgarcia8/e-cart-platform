@@ -1,4 +1,3 @@
-import React from "react";
 import * as Styled from "./Divider.styles";
 import type { DividerProps } from "./Divider.types";
 

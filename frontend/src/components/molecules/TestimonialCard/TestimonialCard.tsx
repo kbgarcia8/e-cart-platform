@@ -1,4 +1,4 @@
-import React, { type PropsWithChildren } from "react";
+import React from "react";
 import * as Styled from "./TestimonialCard.styles"
 import StarRating from "components/molecules/StarRating";
 import type { TestimonialCardProps } from "./TestimonialCard.types";
@@ -15,7 +15,7 @@ const TestimonialCard = ({
     messageColor,
     className,
     children
-}:PropsWithChildren<TestimonialCardProps>) => {
+}:React.PropsWithChildren<TestimonialCardProps>) => {
 
     
 

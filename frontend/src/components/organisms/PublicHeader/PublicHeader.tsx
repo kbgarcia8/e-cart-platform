@@ -12,7 +12,7 @@ const links = [
     {name: "Testimonials", path: "/#testimonials"},
     {name: "FAQs", path: "/#faqs"},
     {name: "Contact Us", path: "/#contact"}
-]
+];
 
 const PublicHeader = ():React.ReactNode => {
     const navigate = useNavigate();
@@ -39,7 +39,7 @@ const PublicHeader = ():React.ReactNode => {
                 <Styled.MainHeaderLogo src={headerLogo} />
             </Styled.MainHeaderLogoSpace>
             <Styled.NavbarWrapper>
-                <Navbar className={"public-navbar"} isSigning={isSignedIn} isHashLinks={true} links={links}/>
+                <Navbar textColor={"teritiary"} className={"public-header-navbar"} isSigning={isSignedIn} isHashLinks={true} links={links}/>
                 <Styled.ButtonWrapper>
                     <Button text={"Sign Up"} onClick={handleButtonNavigate} color={"secondary"} radius={"roundedsquare"}/>
                     <Button text={"Login"} onClick={handleButtonNavigate} radius={"roundedsquare"}/>

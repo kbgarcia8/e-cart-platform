@@ -33,7 +33,6 @@ export const lightTheme:Theme = {
         shadow: palette.shadow1
     },
     anchorTheme: {
-        link: palette.neutral5,
         visited: palette.neutral5,
         hover: palette.primary2,
         active: palette.secondary2

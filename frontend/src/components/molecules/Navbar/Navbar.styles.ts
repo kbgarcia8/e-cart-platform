@@ -1,9 +1,27 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { v } from 'constants/variables'
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import type { NavbarProps } from './Navbar.types';
 import { media } from 'utils/utility';
+
+export const TEXTCOLORS = {
+    primary: css`
+        color: ${({theme})=> theme.colors.backgroundColor1};
+    `,
+    secondary: css`
+        color: ${({theme})=> theme.colors.backgroundColor3};
+    `,
+    teritiary: css`
+        color: ${({theme}) => theme.colors.textColor3};
+    `,
+    dark: css`
+        color: ${({theme}) => theme.colors.textColor1};
+    `,
+    light: css`
+        color: ${({theme}) => theme.colors.screenColor};
+    `
+};
 
 export const Navbar = styled.nav`
     display: flex;
@@ -18,6 +36,7 @@ export const NavbarLinks = styled.ul`
     align-items: center;
     width: 100%;
     margin: 0;
+
     ${media.mobile`
         justify-content: space-evenly;
     `}
@@ -26,14 +45,13 @@ export const NavbarLinks = styled.ul`
     `}
 `;
 
-export const NavbarLink = styled.li`
+export const NavbarLink = styled.li<{ $textColor?: keyof typeof TEXTCOLORS }>`
     display: flex;
     align-items: center;
     list-style-type: none;
     cursor: pointer;
     font-family: ${v.fonts.secondary}, ${v.fonts.fallback};
     font-weight: ${v.fontWeight.bolder};
-    color: ${({theme}) => theme.colors.textColor1};
     
     ${media.mobile`
         font-size: calc(${v.fontSize.xsmall} + 0.1rem);
@@ -43,14 +61,15 @@ export const NavbarLink = styled.li`
     `}
 `;
 
-export const StyledLink = styled(Link)<Pick<NavbarProps, "$anchorTheme">>`
+export const StyledLink = styled(Link)<Pick<NavbarProps, "$anchorTheme"> & {$textColor?: keyof typeof TEXTCOLORS}>`
     text-decoration: none;
-    color: ${({$anchorTheme}) => $anchorTheme?.anchorTheme.link};
+    ${({$textColor})=> TEXTCOLORS[$textColor || 'primary']}
+
     &:link{
-        color: ${({$anchorTheme}) => $anchorTheme?.anchorTheme.link};
+        ${({$textColor})=> TEXTCOLORS[$textColor || 'primary']}
     }
     &:visited{
-        color: ${({$anchorTheme}) => $anchorTheme?.anchorTheme.visited};
+        ${({$textColor})=> TEXTCOLORS[$textColor || 'primary']}
     }
     &:hover{
         color: ${({$anchorTheme}) => $anchorTheme?.anchorTheme.hover};
@@ -60,14 +79,14 @@ export const StyledLink = styled(Link)<Pick<NavbarProps, "$anchorTheme">>`
     }
 `;
 
-export const StyledHashLink = styled(HashLink)<Pick<NavbarProps, "$anchorTheme">>`
+export const StyledHashLink = styled(HashLink)<Pick<NavbarProps, "$anchorTheme"> & {$textColor?: keyof typeof TEXTCOLORS}>`
     text-decoration: none;
-    color: ${({$anchorTheme}) => $anchorTheme?.anchorTheme.link};
+    ${({$textColor})=> TEXTCOLORS[$textColor || 'primary']}
     &:link{
-        color: ${({$anchorTheme}) => $anchorTheme?.anchorTheme.link};
+        ${({$textColor})=> TEXTCOLORS[$textColor || 'primary']}
     }
     &:visited{
-        color: ${({$anchorTheme}) => $anchorTheme?.anchorTheme.visited};
+        ${({$textColor})=> TEXTCOLORS[$textColor || 'primary']}
     }
     &:hover{
         color: ${({$anchorTheme}) => $anchorTheme?.anchorTheme.hover};

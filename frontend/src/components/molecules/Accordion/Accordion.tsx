@@ -1,4 +1,3 @@
-import React from "react";
 import * as Styled from './Accordion.styles';
 import type { AccordionProps } from "./Accordion.types";
 import Button from "components/atoms/Button";

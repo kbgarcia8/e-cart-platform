@@ -1,4 +1,3 @@
-import React from "react";
 import * as Styled from "./ProductPreviewCard.styles";
 import type { ProductPreviewCardProps } from "./ProductPreviewCard.types";
 import Button from "components/atoms/Button";

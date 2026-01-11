@@ -1,4 +1,3 @@
-import React from "react";
 import useTheme from "hooks/useTheme";
 import { palette, lightTheme } from "styles/theme";
 import * as Styled from "./Stepper.styles";

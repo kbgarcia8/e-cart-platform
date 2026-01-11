@@ -1,4 +1,4 @@
-import React, { type PropsWithChildren } from "react";
+import React from "react";
 import GenericListItem from "./ListItem.styles";
 
 type ListItemProps = {
@@ -12,7 +12,7 @@ export const ListItem = ({
     dataAttributes,
     className,
     children
-}:PropsWithChildren<ListItemProps>) => {
+}:React.PropsWithChildren<ListItemProps>) => {
     return(
         <>
             <GenericListItem

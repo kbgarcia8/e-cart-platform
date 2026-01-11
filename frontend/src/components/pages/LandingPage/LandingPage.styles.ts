@@ -15,8 +15,8 @@ export const LandingPageWrapper = styled.div`
 export const MainSectionWrapper = styled.div`
     display: flex;
     background-color: ${({theme}) => theme.colors.backgroundColor3};
-    max-width: 100%;
-    padding-block: ${v.spacing.medium};
+    width: 100%;
+    padding-block: calc(${v.spacing.large} + 0.1rem);
 `;
 
 export const ExploreMenuButtonWrapper = styled.div`
@@ -50,8 +50,8 @@ export const FeaturesContainer = styled.div`
     justify-content: center;
     width: 100%;
     padding: ${v.spacing.large};
-    gap: ${v.spacing.xlarge};
-    margin-block: ${v.spacing.medium};
+    gap: ${v.spacing.xxlarge};
+    margin-block: ${v.spacing.xlarge};
 
     ${media.mobile`
         flex-direction: column;
@@ -99,19 +99,19 @@ export const MenuPreviewSectionWrapper = styled.div`
     display: flex;
     background-color: ${({theme}) => theme.colors.backgroundColor3};
     width: 100%;
-    padding-block: ${v.spacing.medium};
+    padding-block: ${v.spacing.xxxlarge};
 `;
 
 export const ProductsPreviewContainer = styled.div`
     box-shadow: 0 4px 8px 0 ${({theme})=> theme.colors.shadow};
-    flex: 2.5;
+    flex: 5;
     display: flex;
     flex-wrap: nowrap;
     width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
     padding: ${v.spacing.large};
-    
+    margin-block: ${v.spacing.xxlarge};
     gap: ${v.spacing.large};
 
     & > * {
@@ -126,7 +126,7 @@ export const ProductsPreviewContainer = styled.div`
 
 export const SeeMoreProductsButtonWrapper = styled.div`
     align-self: flex-end;
-    flex: 0.5;
+    flex: 1;
     display: flex;
     border-radius: ${v.borderRadius.medium};
     background-color: ${({theme}) => theme.colors.backgroundColor1};
@@ -165,7 +165,7 @@ export const FAQSectionWrapper = styled.div`
     display: flex;
     background-color: ${({theme}) => theme.colors.backgroundColor3};
     width: 100%;
-    padding: ${v.spacing.small};
+    padding-block: ${v.spacing.large};
 `;
 
 export const FAQsContainer = styled.div`
@@ -186,13 +186,18 @@ export const ContactSectionWrapper = styled.div`
     background-color: ${({theme}) => theme.colors.backgroundColor4};
     width: 100%;
     padding: ${v.spacing.small};
+    padding-block: ${v.spacing.large};
 `;
 
 export const ContactSpace = styled.div`
     width: 100%;
     display: grid;
+    margin-bottom: ${v.spacing.large};
+    margin-top: ${v.spacing.xlarge};
+    
+
     ${media.mobile`
-        gap: ${v.spacing.small};
+        gap: ${v.spacing.large};
         grid-auto-flow: row;
         grid-auto-rows: 5rem;
     `}
@@ -258,6 +263,8 @@ export const Information = styled(InformationTitle)`
 
 export const LocationInformationSpace = styled.div`
     padding: ${v.spacing.medium};
+    margin-bottom: ${v.spacing.large};
+    margin-top: ${v.spacing.xxlarge};
 
     & svg {
         color: ${({theme}) => theme.colors.textColor3};
@@ -289,8 +296,6 @@ export const PinIconContainter = styled.div`
     align-items: center;
     justify-content: center;
     width: 10%;
-
-
 `;
 
 export const Location = styled.p`

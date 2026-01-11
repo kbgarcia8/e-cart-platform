@@ -8,10 +8,9 @@ export const MainHeaderWrapper = styled.div`
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: auto;
-    background-color: ${({theme}) => theme.colors.screenColor};
+    height: 100%;
     border-bottom: ${v.borderThickness.light} solid ${({theme}) => theme.colors.borderColor1};
-    padding-inline: ${v.spacing.xxxsmall}
+    padding-inline: ${v.spacing.small}
 `;
 
 export const MainHeaderLogoSpace = styled(HashLink)`
@@ -21,6 +20,9 @@ export const MainHeaderLogoSpace = styled(HashLink)`
     cursor: pointer;
     background-color: ${({theme}) => theme.colors.screenColor};
     height: auto;
+    border-radius: ${v.borderRadius.circle};
+    overflow: hidden;
+
     ${media.mobile`
         flex: 0 0 12.5%;
         max-width: 12.5%;
@@ -34,13 +36,14 @@ export const MainHeaderLogoSpace = styled(HashLink)`
 export const MainHeaderLogo = styled.img`
     width: 100%;
     height: auto;
-    border-radius: ${v.borderRadius.circle};
+    
 `;
 
 export const NavbarWrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    color: ${({theme}) => theme.colors.screenColor};
     
     ${media.mobile`
         flex: 0 0 87.5%;
