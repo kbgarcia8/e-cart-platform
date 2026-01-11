@@ -192,15 +192,14 @@ export const ContactSpace = styled.div`
     width: 100%;
     display: grid;
     ${media.mobile`
-        height: 75%;
         gap: ${v.spacing.small};
-        grid-template-rows: repeat(5, 20%);
+        grid-auto-flow: row;
+        grid-auto-rows: 5rem;
     `}
     ${media.tablet`
-        height: 100%;
         gap: ${v.spacing.medium};
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(3, 25%);
+        grid-auto-flow: row;
+        grid-auto-rows: 10rem;
     `}
 `;
 
@@ -208,15 +207,14 @@ export const ContactContainer = styled(Link)`
     cursor: pointer;
     display: flex;
     align-items: center;
-    height: 100%;
     width: 100%;
     padding: ${v.spacing.small};
-    color: ${({theme}) => theme.colors.textColor1};
+    color: ${({theme}) => theme.colors.textColor3};
     text-decoration: none;
 `;
 
 export const IconContainer = styled.div`
-    width: 15%;
+    width: 25%;
     height: 100%;
     display: flex;
     align-content: center;
@@ -229,7 +227,6 @@ export const IconContainer = styled.div`
 
 export const InformationContainer = styled.div`
     width: 75%;
-    height: 100%;
     margin-left: ${v.spacing.small};
     padding: ${v.spacing.xxsmall};
     display: flex;
@@ -238,41 +235,73 @@ export const InformationContainer = styled.div`
     justify-content: center;
 `;
 
-export const InformationTitle = styled.p`
+export const InformationTitle = styled.span`
     display: flex;
     align-items: center;
     height: 50%;
     width: 100%;
     font-weight: ${v.fontWeight.bolder};
-    font-size: ${v.fontSize.medium};
     font-family: ${v.fonts.tertiary};
     margin: 0;
+
+    ${media.mobile`
+        font-size: ${v.fontSize.medium};
+    `}
 `;
 
 export const Information = styled(InformationTitle)`
     padding-top: ${v.spacing.xxsmall};
     font-family: ${v.fonts.primary};
-    font-weight: ${v.fontWeight.light};
-    font-size: ${v.fontSize.small};
+    font-weight: ${v.fontWeight.regular};
+    font-size: calc(${v.fontSize.small} + 0.1rem);
 `;
 
 export const LocationInformationSpace = styled.div`
+    padding: ${v.spacing.medium};
 
+    & svg {
+        color: ${({theme}) => theme.colors.textColor3};
+        width: 100%;
+        height: 100%;
+    }
 `;
 
 export const LocationInformationHeader = styled.p`
-
+    color: ${({theme}) => theme.colors.textColor3};
+    text-decoration: underline;
+    margin: 0;
+    
+    ${media.mobile`
+        font-size: ${v.fontSize.large};
+        font-weight: ${v.fontWeight.bolder};
+    `}
 `;
 
-export const LocationInformation = styled.div`
-    
+export const LocationInformation = styled(Link)`
+    display: flex;
+    width: 100%;
+    text-decoration: none;
 `;
 
 export const PinIconContainter = styled.div`
     color: ${({theme}) => theme.colors.textColor1};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 10%;
+
+
 `;
 
 export const Location = styled.p`
     overflow-wrap: break-word;
     white-space: pre-line;
+    padding: ${v.spacing.small};
+    padding-left: ${v.spacing.large};
+    color: ${({theme}) => theme.colors.textColor3};
+
+    ${media.mobile`
+        font-size: calc(${v.fontSize.small} + 0.1rem);
+        font-weight: ${v.fontWeight.bold};
+    `}
 `;

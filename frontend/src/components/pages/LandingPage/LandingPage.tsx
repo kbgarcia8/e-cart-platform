@@ -140,10 +140,10 @@ const FAQItems = [
 ];
 
 const contacts = [
-    {icon: <TfiEmail/>, name: 'Email', content: 'kbgarcia8@gmail.com', link: 'mailto:kbgarcia8@gmail.com'},
-    {icon: <CiMobile3/>, name: 'Mobile', content: '+(63)936-474-3812', link: ''},
-    {icon: <FaFacebookF/>, name: 'Facebook', content: 'Karl Brian Garcia', link: 'https://facebook.com/karl.b.garcia.9'},
-    {icon: <FaInstagram/>, name: 'Instagram', content: 'kbgarcia8', link: 'https://github.com/kbgarcia8'}
+    {icon: <TfiEmail/>, name: 'Email', content: 'deliverandpickup@ecartplatform.com', link: 'mailto:kbgarcia8@gmail.com'},
+    {icon: <CiMobile3/>, name: 'Mobile', content: '+(63)936-123-4576', link: ''},
+    {icon: <FaFacebookF/>, name: 'Facebook', content: 'E-cart Platform: Delivery and Pick-up', link: 'https://facebook.com/karl.b.garcia.9'},
+    {icon: <FaInstagram/>, name: 'Instagram', content: '@ecart-platfom', link: 'https://github.com/kbgarcia8'}
 ];
 
 const LandingPage = () => {
@@ -260,8 +260,8 @@ const LandingPage = () => {
                 </Section>
             </Styled.FAQSectionWrapper>
             <Styled.ContactSectionWrapper>
-                <Section id={"faqs"} title={"Contact Us"} titleColor={"secondary"} titleSize={"giga"}></Section>
-                <Styled.ContactSpace>
+                <Section id={"contact"} title={"Contact Us"} titleColor={"secondary"} titleSize={"giga"}>
+                    <Styled.ContactSpace>
                     {contacts.map((contact,index) => (
                         <Styled.ContactContainer key={`${contact.name}-${index}`} to={contact.link}>
                             <Styled.IconContainer>
@@ -276,13 +276,14 @@ const LandingPage = () => {
                 </Styled.ContactSpace>
                 <Styled.LocationInformationSpace>
                     <Styled.LocationInformationHeader>{"Location"}</Styled.LocationInformationHeader>
-                    <Styled.LocationInformation>
+                    <Styled.LocationInformation to={"https://maps.app.goo.gl/zLXgPSeUjucwjY7DA"}>
                         <Styled.PinIconContainter>
                             <SiGooglemaps/>
                         </Styled.PinIconContainter>
-                        <Styled.Location>{"Alabang, Filinvest \n 0987 Central Park, City, State, ZIP \n Philippines"}</Styled.Location>
+                        <Styled.Location>{"Pila, Laguna \n 0987 Central Park, City, State, ZIP \n Philippines"}</Styled.Location>
                     </Styled.LocationInformation>
                 </Styled.LocationInformationSpace>
+                </Section>
             </Styled.ContactSectionWrapper>
         </Styled.LandingPageWrapper>
     )
