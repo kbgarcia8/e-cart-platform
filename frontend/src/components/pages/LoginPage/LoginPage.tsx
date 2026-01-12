@@ -2,15 +2,62 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 //import { useAuth } from "../../../../context/UserAuthContext.jsx";
+import type { FieldsetShape, inputEntryShape, LabeledCheckboxOrRadio, LabeledTextLike } from '@kbgarcia8/react-dynamic-form';
 import * as Styled from './LoginPage.styles';
 
+const loginFormInputArray:inputEntryShape<false,LabeledTextLike>[] = [
+  {
+    type: "text" as const,
+    id: "login-username-email",
+    isRequired: true,
+    disabled: false,
+    name: "login",
+    value: '',
+    $labelFlexDirection: "column" as const,
+    labelClass: "loginform-label",
+    inputClass: "loginform-input",
+    isEditable: false as const,
+    textLabel: 'Username or Email'
+  },
+  {
+    type: "password" as const,
+    id: "educational-info",
+    isRequired: true,
+    disabled: false,
+    name: "login",
+    value: '',
+    $labelFlexDirection: "column" as const,
+    labelClass: "loginform-label",
+    inputClass: "loginform-input",
+    isEditable: false as const,
+    textLabel: 'Password',
+  }
+]
+
 const LoginPage =({}) => {
-    /*
-    const { logIn, googleSignIn, userProfile } = useAuth();
     let navigate = useNavigate();
+    const initialized = React.useRef(false)
 
     const loginEmailRef = React.useRef(null);
     const loginPasswordRef = React.useRef(null);
+
+    const [loginFromValues, setLoginFromValues] = React.useState<inputEntryShape<false,LabeledTextLike>[] | null>(null)
+
+    const handleLoginFormChange = () => {
+
+    }
+
+    const loginFormInputs = loginFormInputArray.map((input,index) => )
+
+    React.useEffect(() =>{
+        if(!initialized.current) {
+            setFormInputsValues(educationalInformationInputs)
+            initialized.current = true
+        }
+    },[fieldsets,educationalInformationInputs])
+    /*
+    const { logIn, googleSignIn, userProfile } = useAuth();
+   
 
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -131,7 +178,22 @@ const LoginPage =({}) => {
             <Styled.LoginPageHeader>
                 Welcome to Kain at Kape Website! Login your account to continue.
             </Styled.LoginPageHeader>
-
+            <Styled.FormSpace>
+                <Styled.LoginForm
+                    className={'without-fieldsets'}
+                    fieldsets={null}
+                    formInputs={loginInputsValues || []}
+                    id="education"
+                    isExpandable={false}
+                    inputClass={'education-form-input'}
+                    labelClass={'education-form-label'}
+                    labelAndInputContainerClass={'education-form-label-n-input-container'}
+                    hasSubmit
+                    submitText={'Login'}
+                    handleSubmit={handleSubmit}
+                    handleSubmitForm={handleSubmitForm}
+                />
+            </Styled.FormSpace>
             <Styled.SignUpMessageSpace>
                 <Styled.SignUpMessage>
                     Don't have an account yet? <Styled.SignUpLink  to={`../signup`}>{"Sign Up"}</Styled.SignUpLink> 
