@@ -1,8 +1,9 @@
 import type { Theme } from "type/generalTypes";
-import { TEXTCOLORS } from './Navbar.styles'
+import { TEXTCOLORS, TEXTSIZES } from './Navbar.styles'
 
 export type NavbarProps = {
     textColor?: keyof typeof TEXTCOLORS;
+    textSize?: keyof typeof TEXTSIZES;
     $anchorTheme?: Theme;
     isSigning: boolean;
     isHashLinks?: boolean;

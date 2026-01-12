@@ -20,7 +20,6 @@ export const NavbarWrapper = styled.div`
     justify-content: space-evenly;
     color: ${({theme}) => theme.colors.screenColor};
     width: 100%;
-    border: 2px solid red;
     margin-block: ${v.spacing.xsmall};
 `;
 

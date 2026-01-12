@@ -37,9 +37,9 @@ const PublicHeader = ():React.ReactNode => {
         <Styled.MainHeaderWrapper>
             <Styled.MainHeaderLogoSpace smooth to="#landing">
                 <Styled.MainHeaderLogo src={headerLogo} />
-            </Styled.MainHeaderLogoSpace>
+            </Styled.MainHeaderLogoSpace> 
             <Styled.NavbarWrapper>
-                <Navbar textColor={"teritiary"} className={"public-header-navbar"} isSigning={isSignedIn} isHashLinks={true} links={links}/>
+                <Navbar textColor={"teritiary"} textSize={"small"} className={"public-header-navbar"} isSigning={isSignedIn} isHashLinks={true} links={links}/>
                 <Styled.ButtonWrapper>
                     <Button text={"Sign Up"} onClick={handleButtonNavigate} color={"secondary"} radius={"roundedsquare"}/>
                     <Button text={"Login"} onClick={handleButtonNavigate} radius={"roundedsquare"}/>

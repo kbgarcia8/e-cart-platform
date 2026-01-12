@@ -1,21 +1,21 @@
-import {React, useState, useEffect, useRef} from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useAuth } from "../../../../context/UserAuthContext.jsx";
-import GoogleButton from 'react-google-button';
-import * as styled from './LoginPage.styles.js'
+//import { useAuth } from "../../../../context/UserAuthContext.jsx";
+import * as Styled from './LoginPage.styles';
 
 const LoginPage =({}) => {
+    /*
     const { logIn, googleSignIn, userProfile } = useAuth();
     let navigate = useNavigate();
 
-    const loginEmailRef = useRef(null);
-    const loginPasswordRef = useRef(null);
+    const loginEmailRef = React.useRef(null);
+    const loginPasswordRef = React.useRef(null);
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = React.useState("");
+    const [password, setPassword] = React.useState("");
 
-    const [inputValues, setInputValues] = useState({
+    const [inputValues, setInputValues] = React.useState({
         email: "",
         password: "",
     });
@@ -32,7 +32,7 @@ const LoginPage =({}) => {
     };
     
     // Debounce effect → Only update state if user stops typing for 1000ms
-    useEffect(() => {
+    React.useEffect(() => {
     const timeout = setTimeout(() => {
         setEmail(loginEmailRef.current);
     }, 1000);
@@ -40,7 +40,7 @@ const LoginPage =({}) => {
     return () => clearTimeout(timeout);
     }, [inputValues.email]);
 
-    useEffect(() => {
+    React.useEffect(() => {
         const timeout = setTimeout(() => {
             setPassword(loginPasswordRef.current);
         }, 1000);
@@ -124,29 +124,20 @@ const LoginPage =({}) => {
           alert(error.message);
         }
     };
+    */
 
     return(
-        <styled.LoginPageWrapper>
-            <styled.LoginPageHeader>
+        <Styled.LoginPageWrapper>
+            <Styled.LoginPageHeader>
                 Welcome to Kain at Kape Website! Login your account to continue.
-            </styled.LoginPageHeader>
-            <styled.LoginForm
-                fieldHeight={"50vh"}
-                id={"main-login-form"}
-                formInputs={loginPageInputs}
-                labelClassName={"login-inputs-label"}
-                inputClassName={"login-inputs"}
-                hasSubmit
-                submitText={"Login"}
-                handleSubmit={handleLoginSubmit}
-                children={GoogleLoginButton()}
-            />
-            <styled.SignUpMessageSpace>
-                <styled.SignUpMessage>
-                    Don't have an account yet? <styled.SignUpLink  to={`../signup`}>{"Sign Up"}</styled.SignUpLink> 
-                </styled.SignUpMessage>
-            </styled.SignUpMessageSpace>
-        </styled.LoginPageWrapper>
+            </Styled.LoginPageHeader>
+
+            <Styled.SignUpMessageSpace>
+                <Styled.SignUpMessage>
+                    Don't have an account yet? <Styled.SignUpLink  to={`../signup`}>{"Sign Up"}</Styled.SignUpLink> 
+                </Styled.SignUpMessage>
+            </Styled.SignUpMessageSpace>
+        </Styled.LoginPageWrapper>
     )
 }
 

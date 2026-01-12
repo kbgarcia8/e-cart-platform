@@ -23,6 +23,39 @@ export const TEXTCOLORS = {
     `
 };
 
+export const  TEXTSIZES = {
+    smaller: css`
+        ${media.mobile`
+            font-size: ${v.fontSize.xsmall};
+            font-weight: ${v.fontWeight.regular};
+        `}
+    `,
+    small: css`
+        ${media.mobile`
+            font-size: ${v.fontSize.small};
+            font-weight: ${v.fontWeight.medium};
+        `}
+    `,
+    medium: css`
+        ${media.mobile`
+            font-size: ${v.fontSize.medium};
+            font-weight: ${v.fontWeight.bold};
+        `}
+    `,
+    large: css`
+        ${media.mobile`
+            font-size: ${v.fontSize.large};
+            font-weight: ${v.fontWeight.bolder};
+        `}
+    `,
+    larger: css`
+        ${media.mobile`
+            font-size: ${v.fontSize.xlarge};
+            font-weight: ${v.fontWeight.bolder};
+        `}
+    `
+};
+
 export const Navbar = styled.nav`
     display: flex;
     align-items: center;
@@ -45,20 +78,13 @@ export const NavbarLinks = styled.ul`
     `}
 `;
 
-export const NavbarLink = styled.li<{ $textColor?: keyof typeof TEXTCOLORS }>`
+export const NavbarLink = styled.li<{ $textSize?: keyof typeof TEXTSIZES }>`
     display: flex;
     align-items: center;
     list-style-type: none;
     cursor: pointer;
     font-family: ${v.fonts.secondary}, ${v.fonts.fallback};
-    font-weight: ${v.fontWeight.bolder};
-    
-    ${media.mobile`
-        font-size: calc(${v.fontSize.xsmall} + 0.1rem);
-    `}
-    ${media.tablet`
-        font-size: ${v.fontSize.medium};
-    `}
+    ${({$textSize})=> TEXTSIZES[$textSize || 'small']}
 `;
 
 export const StyledLink = styled(Link)<Pick<NavbarProps, "$anchorTheme"> & {$textColor?: keyof typeof TEXTCOLORS}>`
