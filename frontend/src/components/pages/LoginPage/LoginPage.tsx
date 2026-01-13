@@ -6,32 +6,32 @@ import type { FieldsetShape, inputEntryShape, LabeledCheckboxOrRadio, LabeledTex
 import * as Styled from './LoginPage.styles';
 
 const loginFormInputArray:inputEntryShape<false,LabeledTextLike>[] = [
-  {
-    type: "text" as const,
-    id: "login-username-email",
-    isRequired: true,
-    disabled: false,
-    name: "username",
-    value: '',
-    $labelFlexDirection: "column" as const,
-    labelClass: "loginform-label",
-    inputClass: "loginform-input",
-    isEditable: false as const,
-    textLabel: 'Username or Email'
-  },
-  {
-    type: "password" as const,
-    id: "login-password",
-    isRequired: true,
-    disabled: false,
-    name: "password",
-    value: '',
-    $labelFlexDirection: "column" as const,
-    labelClass: "loginform-label",
-    inputClass: "loginform-input",
-    isEditable: false as const,
-    textLabel: 'Password',
-  }
+    {
+        type: "text" as const,
+        id: "login-username-email",
+        isRequired: true,
+        disabled: false,
+        name: "username",
+        value: '',
+        $labelFlexDirection: "column" as const,
+        labelClass: "loginform-label",
+        inputClass: "loginform-input",
+        isEditable: false as const,
+        textLabel: 'Username or Email'
+    },
+    {
+        type: "password" as const,
+        id: "login-password",
+        isRequired: true,
+        disabled: false,
+        name: "password",
+        value: '',
+        $labelFlexDirection: "column" as const,
+        labelClass: "loginform-label",
+        inputClass: "loginform-input",
+        isEditable: false as const,
+        textLabel: 'Password',
+    }
 ];
 
 const LoginPage =({}) => {
