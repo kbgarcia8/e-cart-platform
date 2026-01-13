@@ -11,7 +11,7 @@ const loginFormInputArray:inputEntryShape<false,LabeledTextLike>[] = [
     id: "login-username-email",
     isRequired: true,
     disabled: false,
-    name: "login",
+    name: "username",
     value: '',
     $labelFlexDirection: "column" as const,
     labelClass: "loginform-label",
@@ -21,10 +21,10 @@ const loginFormInputArray:inputEntryShape<false,LabeledTextLike>[] = [
   },
   {
     type: "password" as const,
-    id: "educational-info",
+    id: "login-password",
     isRequired: true,
     disabled: false,
-    name: "login",
+    name: "password",
     value: '',
     $labelFlexDirection: "column" as const,
     labelClass: "loginform-label",
@@ -32,146 +32,38 @@ const loginFormInputArray:inputEntryShape<false,LabeledTextLike>[] = [
     isEditable: false as const,
     textLabel: 'Password',
   }
-]
+];
 
 const LoginPage =({}) => {
     let navigate = useNavigate();
     const initialized = React.useRef(false)
 
-    const loginEmailRef = React.useRef(null);
-    const loginPasswordRef = React.useRef(null);
-
     const [loginFromValues, setLoginFromValues] = React.useState<inputEntryShape<false,LabeledTextLike>[] | null>(null)
 
-    const handleLoginFormChange = () => {
+    const handleLoginFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        
+    };
 
-    }
+    const handleFormSubmit = () => {
+        console.log('form submitted')
+    };
 
-    const loginFormInputs = loginFormInputArray.map((input,index) => )
+    const loginFormInputs = loginFormInputArray.map((input) => (
+        {...input,
+            onChange: handleLoginFormChange,
+            dataAttributes: {
+                "data-key": `${input.name}`
+            }
+        }
+    ))
 
     React.useEffect(() =>{
         if(!initialized.current) {
-            setFormInputsValues(educationalInformationInputs)
+            setLoginFromValues(loginFormInputs)
             initialized.current = true
         }
-    },[fieldsets,educationalInformationInputs])
-    /*
-    const { logIn, googleSignIn, userProfile } = useAuth();
-   
-
-    const [email, setEmail] = React.useState("");
-    const [password, setPassword] = React.useState("");
-
-    const [inputValues, setInputValues] = React.useState({
-        email: "",
-        password: "",
-    });
-
-    const handleEmailLoginChange = (e) => {
-        const { input } = e.currentTarget.dataset;
-        loginEmailRef.current = e.target.value;
-        setInputValues((prevInputValues) => ({...prevInputValues, [`${input.toLowerCase()}`]: loginEmailRef.current}))
-    };
-    const handlePasswordLoginChange = (e) => {
-        const { input } = e.currentTarget.dataset;
-        loginPasswordRef.current = e.target.value;
-        setInputValues((prevInputValues) => ({...prevInputValues, [`${input.toLowerCase()}`]: loginPasswordRef.current}))
-    };
+    },[])
     
-    // Debounce effect → Only update state if user stops typing for 1000ms
-    React.useEffect(() => {
-    const timeout = setTimeout(() => {
-        setEmail(loginEmailRef.current);
-    }, 1000);
-    
-    return () => clearTimeout(timeout);
-    }, [inputValues.email]);
-
-    React.useEffect(() => {
-        const timeout = setTimeout(() => {
-            setPassword(loginPasswordRef.current);
-        }, 1000);
-        
-        return () => clearTimeout(timeout);
-    }, [inputValues.password]);
-
-    const loginPageInputHeaders = [
-        {
-            label: "Email",
-            type: "email",
-            refType: loginEmailRef,
-            handlechange: handleEmailLoginChange
-        }, 
-        {
-            label: "Password",
-            type: "password",
-            refType: loginPasswordRef,
-            handlechange: handlePasswordLoginChange
-        }
-    ];
-
-    const loginPageInputs = loginPageInputHeaders.map((loginInput) => ({
-            labelText: `${loginInput.label}\n`,
-            labelDirection: "column",
-            id: `login-${loginInput.label}-input`,
-            placeholderText: `Your ${loginInput.label}`,
-            editable: false,
-            mainOnChange: loginInput.handlechange, 
-            type: loginInput.type,
-            isRequired: true,
-            ref: loginInput.refType,
-            dataAttributes: {
-                "data-input": `${loginInput.label}`
-            }
-    }))
-
-    const GoogleLoginButton = () => (
-        <GoogleButton
-            className="g-btn"
-            type="dark"
-            onClick={handleGoogleSignIn}
-        />
-    )
-    //for submit of non-google login credentials
-    const handleLoginSubmit = async (e) => {
-        e.preventDefault();
-        const currentEmail = inputValues.email;
-        const currentPassword = inputValues.password;
-
-        try {
-            const {userCredential, profileIncomplete} = await toast.promise(
-                 logIn(currentEmail, currentPassword),                
-                {
-                    loading: 'Logging in...',
-                    success: 'User Login successful',
-                    error: (err) => err.message || 'Login failed'
-                }
-            )
-            await new Promise((resolve) => setTimeout(resolve, 500));
-            if(profileIncomplete) {
-                navigate("../dashboard/settings");
-            } else if (!profileIncomplete) {
-                navigate("../dashboard")
-            }
-
-            loginEmailRef.current = "";
-            loginPasswordRef.current = "";
-    
-        } catch (error) {
-            toast.error(error.message);//custom message for every error.code just like in Sign Up
-        }
-    }    
-
-    const handleGoogleSignIn = async (e) => {
-        e.preventDefault();
-        try {
-          await googleSignIn();
-          userProfile === null? navigate("../dashboard/settings") : navigate("../dashboard");
-        } catch (error) {
-          alert(error.message);
-        }
-    };
-    */
 
     return(
         <Styled.LoginPageWrapper>
@@ -182,16 +74,15 @@ const LoginPage =({}) => {
                 <Styled.LoginForm
                     className={'without-fieldsets'}
                     fieldsets={null}
-                    formInputs={loginInputsValues || []}
-                    id="education"
+                    formInputs={loginFromValues || []}
+                    id="login"
                     isExpandable={false}
-                    inputClass={'education-form-input'}
-                    labelClass={'education-form-label'}
-                    labelAndInputContainerClass={'education-form-label-n-input-container'}
+                    inputClass={'login-form-input'}
+                    labelClass={'login-form-label'}
+                    labelAndInputContainerClass={'login-form-label-n-input-container'}
                     hasSubmit
                     submitText={'Login'}
-                    handleSubmit={handleSubmit}
-                    handleSubmitForm={handleSubmitForm}
+                    handleSubmitForm={handleFormSubmit}
                 />
             </Styled.FormSpace>
             <Styled.SignUpMessageSpace>

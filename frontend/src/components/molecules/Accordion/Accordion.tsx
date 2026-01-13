@@ -18,7 +18,7 @@ const Accordion = ({
         <Styled.AccordionWrapper className={className}>
             {items.map((item, index) => (
                 <>
-                    <Styled.HeaderButtonWrapper className={index === activePanel ? "active" : ""} $indicatorColor={indicatorColor} $indicatorString={indicatorString} $indicatorSVGURL={indicatorSVGURL}>
+                    <Styled.HeaderButtonWrapper key={`${item.header}-${index}`} className={index === activePanel ? "active" : ""} $indicatorColor={indicatorColor} $indicatorString={indicatorString} $indicatorSVGURL={indicatorSVGURL}>
                         <Button size={"large"} radius={buttonRadius} color={buttonColor} text={item.header} onClick={handleActivatePanel} dataAttributes={{'data-index': index}}/>
                     </Styled.HeaderButtonWrapper>
                     <Styled.AccordionPanel className={index === activePanel ? "active" : ""} $panelColor={panelColor}>
