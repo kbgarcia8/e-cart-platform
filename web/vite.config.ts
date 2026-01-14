@@ -11,15 +11,8 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      assets: path.resolve(__dirname, 'src/shared/assets'),
-      constants: path.resolve(__dirname, 'src/shared/constants'),
-      context: path.resolve(__dirname, 'src/shared/context'),
-      fonts: path.resolve(__dirname, 'src/shared/fonts'),
-      hooks: path.resolve(__dirname, 'src/shared/hooks'),
-      styles: path.resolve(__dirname, 'src/shared/styles'),
-      type: path.resolve(__dirname, 'src/shared/type'),
-      ui: path.resolve(__dirname, 'src/shared/ui'),
-      utils: path.resolve(__dirname, 'src/shared/utils')
+      modules: path.resolve(__dirname, 'src/modules'),
+      shared: path.resolve(__dirname, 'src/shared')
     }
   }
 })

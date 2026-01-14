@@ -8,16 +8,10 @@
     "module": "ESNext",
     "types": ["vite/client"],
     "skipLibCheck": true,
-    "baseUrl": "./src/shared",
+    "baseUrl": "./src",
     "paths": {
-      "assets/*": ["assets/*"],
-      "context/*": ["context/*"],
-      "fonts/*": ["fonts/*"],
-      "hooks/*": ["hooks/*"],
-      "styles/*": ["styles/*"],
-      "type/*": ["type/*"],
-      "ui/*": ["ui/*"],
-      "utils/*": ["utils/*"]
+      "modules/*": ["modules/*"],
+      "shared/*": ["shared/*"]
     },
 
     /* Bundler mode */
