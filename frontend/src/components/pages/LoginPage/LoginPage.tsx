@@ -38,9 +38,23 @@ const LoginPage =({}) => {
     let navigate = useNavigate();
     const initialized = React.useRef(false)
 
-    const [loginFromValues, setLoginFromValues] = React.useState<inputEntryShape<false,LabeledTextLike>[] | null>(null)
+    const [loginFormValues, setLoginFormValues] = React.useState<inputEntryShape<false,LabeledTextLike>[] | null>(null)
 
     const handleLoginFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { key } = e.currentTarget.dataset;
+        const value = e.currentTarget.value;
+
+        setLoginFormValues((prevLoginFormValues) =>(
+            prevLoginFormValues
+            ? prevLoginFormValues.map((input) => 
+                input.name === key
+                ? {...input,
+                    value: value
+                }
+                : input
+            )
+            : prevLoginFormValues
+        ))
         
     };
 
@@ -59,7 +73,7 @@ const LoginPage =({}) => {
 
     React.useEffect(() =>{
         if(!initialized.current) {
-            setLoginFromValues(loginFormInputs)
+            setLoginFormValues(loginFormInputs)
             initialized.current = true
         }
     },[])
@@ -74,13 +88,12 @@ const LoginPage =({}) => {
                 <Styled.LoginForm
                     className={'without-fieldsets'}
                     fieldsets={null}
-                    formInputs={loginFromValues || []}
+                    formInputs={loginFormValues || []}
                     id="login"
                     isExpandable={false}
                     inputClass={'login-form-input'}
                     labelClass={'login-form-label'}
                     labelAndInputContainerClass={'login-form-label-n-input-container'}
-                    hasSubmit
                     submitText={'Login'}
                     handleSubmitForm={handleFormSubmit}
                 />

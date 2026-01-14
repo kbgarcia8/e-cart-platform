@@ -7,6 +7,7 @@ import Navbar from "components/molecules/Navbar";
 
 
 const links = [
+    {name: "Home", path: "/#landing"},
     {name: "Features", path: "/#features"},
     {name: "Products", path: "/#products"},
     {name: "Testimonials", path: "/#testimonials"},
@@ -39,7 +40,7 @@ const PublicHeader = ():React.ReactNode => {
                 <Styled.MainHeaderLogo src={headerLogo} />
             </Styled.MainHeaderLogoSpace> 
             <Styled.NavbarWrapper>
-                <Navbar textColor={"teritiary"} textSize={"small"} className={"public-header-navbar"} isSigning={isSignedIn} isHashLinks={true} links={links}/>
+                <Navbar textColor={"teritiary"} textSize={"smaller"} className={"public-header-navbar"} isSigning={isSignedIn} isHashLinks={true} links={links}/>
                 <Styled.ButtonWrapper>
                     <Button text={"Sign Up"} onClick={handleButtonNavigate} color={"secondary"} radius={"roundedsquare"}/>
                     <Button text={"Login"} onClick={handleButtonNavigate} radius={"roundedsquare"}/>

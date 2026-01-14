@@ -48,25 +48,8 @@ export const LoginForm = styled(DynamicForm)`
     & legend {
         font-weight: 700;
     }
-
-    & .address-field-label-n-input-container {
-        width: 75%;
-        padding: 0.5rem;
-        flex-direction: row;
-        justify-content: space-between;
-    }
-
-    & .add-input-button-space{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-        
-    & .add-input-entry {
-        width: 12.5%;
-    }
     
-    & .education-form-label-n-input-container {
+    & .login-form-label-n-input-container {
         width: 75%;
         padding: 0.5rem;
         justify-content: space-between;
