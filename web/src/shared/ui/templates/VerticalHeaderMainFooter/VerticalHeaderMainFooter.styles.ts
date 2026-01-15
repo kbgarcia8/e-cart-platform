@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { media } from "utils/utility";
-import { v } from "constants/variables";
+import { media } from "shared/utils/utility";
+import { v } from "shared/constants/variables";
 
 export const PublicMainLayout = styled.div`
     display: grid;

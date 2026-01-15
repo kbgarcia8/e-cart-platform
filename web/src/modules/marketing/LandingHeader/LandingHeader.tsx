@@ -1,9 +1,9 @@
 import React from "react";
 import headerLogo from 'assets/mock-logo.svg'
 import { useNavigate } from 'react-router-dom';
-import * as Styled from "./PublicHeader.styles";
-import Button from "components/atoms/Button";
-import Navbar from "components/molecules/Navbar";
+import * as Styled from "./LandingHeader.styles";
+import Button from "shared/ui/atoms/Button";
+import Navbar from "shared/ui/molecules/Navbar";
 
 
 const links = [
@@ -15,7 +15,7 @@ const links = [
     {name: "Contact Us", path: "/#contact"}
 ];
 
-const PublicHeader = ():React.ReactNode => {
+const LandingHeader = ():React.ReactNode => {
     const navigate = useNavigate();
     const [isSignedIn, setIsSignedIn] = React.useState<boolean>(false);
 
@@ -35,10 +35,10 @@ const PublicHeader = ():React.ReactNode => {
     }
     
     return(
-        <Styled.MainHeaderWrapper>
-            <Styled.MainHeaderLogoSpace smooth to="#landing">
-                <Styled.MainHeaderLogo src={headerLogo} />
-            </Styled.MainHeaderLogoSpace> 
+        <Styled.LandingHeaderWrapper>
+            <Styled.LandingHeaderLogoSpace smooth to="#landing">
+                <Styled.LandingHeaderLogo src={headerLogo} />
+            </Styled.LandingHeaderLogoSpace> 
             <Styled.NavbarWrapper>
                 <Navbar textColor={"teritiary"} textSize={"smaller"} className={"public-header-navbar"} isSigning={isSignedIn} isHashLinks={true} links={links}/>
                 <Styled.ButtonWrapper>
@@ -46,8 +46,8 @@ const PublicHeader = ():React.ReactNode => {
                     <Button text={"Login"} onClick={handleButtonNavigate} radius={"roundedsquare"}/>
                 </Styled.ButtonWrapper>
             </Styled.NavbarWrapper>
-        </Styled.MainHeaderWrapper>
+        </Styled.LandingHeaderWrapper>
     )
 }
 
-export default PublicHeader;
+export default LandingHeader;

@@ -3,7 +3,7 @@ import { v } from 'shared/constants/variables';
 import { media } from 'shared/utils/utility';
 import { Link } from 'react-router-dom';
 
-export const LandingPageWrapper = styled.div`
+export const LandingMainWrapper = styled.div`
     padding: 0;
     display: flex;
     flex-direction: column;

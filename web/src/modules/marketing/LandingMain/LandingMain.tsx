@@ -1,5 +1,5 @@
 import React from "react";
-import * as Styled from "./LandingPage.styles";
+import * as Styled from "./LandingMain.styles";
 import Button from "shared/ui/atoms/Button";
 import Section from "shared/ui/molecules/Section";
 import ImageCarousel from "shared/ui/molecules/ImageCarousel";
@@ -146,7 +146,7 @@ const contacts = [
     {icon: <FaInstagram/>, name: 'Instagram', content: '@ecart-platfom', link: 'https://www.instagram.com/imjustkeybi'}
 ];
 
-const LandingPage = () => {
+const LandingMain = () => {
     const {currentTheme} = useTheme();
     const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
     const [activePanel, setActivePanel] = React.useState<number | null>(null);
@@ -187,7 +187,7 @@ const LandingPage = () => {
     }, [setActivePanel]);
     
     return(
-        <Styled.LandingPageWrapper>
+        <Styled.LandingMainWrapper>
             <Styled.MainSectionWrapper>
                 <Section id={"landing"} className={"main-section"} title={"Baked goods, treats and snacks at your doorstep"} titleColor={"secondary"} titleSize={"giga"} titleBottomMargin={`${v.spacing.xlarge}`}>
                     <Styled.ExploreMenuButtonWrapper>
@@ -285,8 +285,8 @@ const LandingPage = () => {
                 </Styled.LocationInformationSpace>
                 </Section>
             </Styled.ContactSectionWrapper>
-        </Styled.LandingPageWrapper>
+        </Styled.LandingMainWrapper>
     )
 }
 
-export default LandingPage;
+export default LandingMain;

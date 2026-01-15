@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { v } from 'constants/variables';
-import { media } from 'utils/utility';
+import { v } from 'shared/constants/variables';
+import { media } from 'shared/utils/utility';
 
-export const FooterWrapper = styled.div`
+export const LandingFooterWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -23,7 +23,7 @@ export const NavbarWrapper = styled.div`
     margin-block: ${v.spacing.xsmall};
 `;
 
-export const FooterMessage = styled.span`
+export const LandingFooterMessage = styled.span`
     flex: 1;
     font-family: ${v.fonts.secondary}, ${v.fonts.fallback};
     width 100%;

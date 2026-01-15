@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { v } from 'constants/variables'
+import { v } from 'shared/constants/variables'
 import { HashLink } from 'react-router-hash-link';
-import { media } from 'utils/utility';
+import { media } from 'shared/utils/utility';
 
-export const MainHeaderWrapper = styled.div`
+export const LandingHeaderWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -13,7 +13,7 @@ export const MainHeaderWrapper = styled.div`
     padding-inline: ${v.spacing.small}
 `;
 
-export const MainHeaderLogoSpace = styled(HashLink)`
+export const LandingHeaderLogoSpace = styled(HashLink)`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -33,7 +33,7 @@ export const MainHeaderLogoSpace = styled(HashLink)`
     `}
 `;
 
-export const MainHeaderLogo = styled.img`
+export const LandingHeaderLogo = styled.img`
     width: 100%;
     height: auto;
     

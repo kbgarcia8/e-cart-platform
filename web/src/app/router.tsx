@@ -1,19 +1,12 @@
-/* Layout */
-//import TesterLayout from 'components/layout/TesterLayout'
-//import PublicMainLayout from "components/layout/PublicMainLayout";
-//import PublicHeader from "components/organisms/PublicHeader";
-//import Footer from "components/organisms/Footer";
-import LandingPage from "modules/marketing/LandingPage";
-//import LoginPage from "components/pages/LoginPage";
+import VerticalHeaderMainFooter from "shared/ui/templates/VerticalHeaderMainFooter";
+import LandingHeader from "modules/marketing/LandingHeader";
+import LandingFooter from "modules/marketing/LandingFooter";
+import LandingMain from "modules/marketing/LandingMain";
+
 
 const routes = [
     {
-        path: "/",
-        //element: <PublicMainLayout header={<PublicHeader/>} footer={<Footer/>}/>,
-        children: [
-            {index: true, element: <LandingPage/>},
-            //{path: "/login", element: <LoginPage/>}
-        ]
+        path: "/", element: <VerticalHeaderMainFooter header={<LandingHeader/>} main={<LandingMain/>} footer={<LandingFooter/>}/>,
     }
 ]
 

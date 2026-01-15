@@ -1,5 +1,5 @@
-import * as Styled from "./Footer.styles";
-import Navbar from "components/molecules/Navbar";
+import * as Styled from "./LandingFooter.styles";
+import Navbar from "shared/ui/molecules/Navbar";
 
 const links = [
     {name: "Home", path: "/#landing"},
@@ -10,18 +10,18 @@ const links = [
     {name: "Contact Us", path: "/#contact"}
 ];
 
-const Footer =() => {
+const LandingFooter =() => {
     
     return(
-        <Styled.FooterWrapper>
+        <Styled.LandingFooterWrapper>
             <Styled.NavbarWrapper>
                 <Navbar textColor={"teritiary"} textSize={"small"} className={"public-header-navbar"} isSigning={false} isHashLinks={true} links={links}/>
             </Styled.NavbarWrapper>
-            <Styled.FooterMessage>
+            <Styled.LandingFooterMessage>
                 © Copyright 2025 Customer_Name. All Rights Reserved. Website designed and created by Customer_Name Team.
-            </Styled.FooterMessage>
-        </Styled.FooterWrapper>
+            </Styled.LandingFooterMessage>
+        </Styled.LandingFooterWrapper>
     )
 }
 
-export default Footer;
+export default LandingFooter;
