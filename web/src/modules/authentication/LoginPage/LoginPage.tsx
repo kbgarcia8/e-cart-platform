@@ -34,8 +34,8 @@ const loginFormInputArray:inputEntryShape<false,LabeledTextLike>[] = [
     }
 ];
 
-const LoginPage =({}) => {
-    let navigate = useNavigate();
+const LoginPage =() => {
+    const navigate = useNavigate();
     const initialized = React.useRef(false)
 
     const [loginFormValues, setLoginFormValues] = React.useState<inputEntryShape<false,LabeledTextLike>[] | null>(null)
