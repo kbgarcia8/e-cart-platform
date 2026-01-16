@@ -1,4 +1,4 @@
-import type { Theme } from "type/generalTypes";
+import type { Theme } from "shared/type/generalTypes";
 import { TEXTCOLORS, TEXTSIZES } from './Navbar.styles'
 
 export type NavbarProps = {
