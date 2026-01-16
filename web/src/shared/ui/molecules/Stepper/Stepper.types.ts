@@ -1,4 +1,4 @@
-import type { dataAttributesType } from "type/generalTypes";
+import type { dataAttributesType } from "shared/type/generalTypes";
 
 export type StepperProps = {
     stepperState: number|string;

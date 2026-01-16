@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components';
-import GenericButton from 'components/atoms/Button';
-import { v } from 'constants/variables';
-import { media } from 'utils/utility';
+import { v } from 'shared/constants/variables';
+import { media } from 'shared/utils/utility';
 
 export const RADIUS = {
     square: css`border-radius: ${v.borderRadius.xsmall};`,

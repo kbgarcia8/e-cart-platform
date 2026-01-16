@@ -1,4 +1,4 @@
-import React, { type PropsWithChildren } from "react";
+import React from "react";
 import * as Styled from './Section.styles';
 import type { SectionProps } from "./Section.types";
 

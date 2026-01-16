@@ -1,5 +1,5 @@
 import type { MouseEventHandler } from "react";
-import { COLORS, RADIUS } from "components/atoms/Button/Button.styles";
+import { COLORS, RADIUS } from "shared/ui/atoms/Button/Button.styles";
 import { INDICATORCOLORS, PANELCOLORS } from "./Accordion.styles";
 
 export type AccordionProps = {

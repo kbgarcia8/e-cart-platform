@@ -1,11 +1,16 @@
 import * as Styled from './ImageCarousel.styles';
 import type { ImageCarouselProps } from "./ImageCarousel.types";
+import Button from 'shared/ui/atoms/Button';
 
 const ImageCarousel = ({handlePreviousClick, images, currentImageIndex, hasManualNavigation, handleNextClick, radius, className}:ImageCarouselProps) => {
     return (
         <Styled.ImageCarouselWrapper className={className}>
             <Styled.ImageContainer $radius={radius}>
-                {handlePreviousClick && <Styled.NavButton className="nav-button left" text={"<"} buttonType={"button"}  onClick={handlePreviousClick}/>}
+                {(handlePreviousClick && hasManualNavigation) && 
+                    <Styled.NavButtonWrapperLeft>
+                        <Button className={"nav-button left"} text={"<"} buttonType={"button"}  onClick={handlePreviousClick}/>
+                    </Styled.NavButtonWrapperLeft>
+                }
                 {images.map((image , index) => (
                     <Styled.Image 
                         src={image.url} 
@@ -14,7 +19,11 @@ const ImageCarousel = ({handlePreviousClick, images, currentImageIndex, hasManua
                         key={image.id}
                     />
                 ))}
-                {(handleNextClick && hasManualNavigation) && <Styled.NavButton className="nav-button right" text={">"} buttonType={"button"} onClick={handleNextClick} />}
+                {(handleNextClick && hasManualNavigation) && 
+                    <Styled.NavButtonWrapperRight>
+                        <Button className={"nav-button right"} text={">"} buttonType={"button"} onClick={handleNextClick} />
+                    </Styled.NavButtonWrapperRight>
+                }
             </Styled.ImageContainer>
         </Styled.ImageCarouselWrapper>
     )

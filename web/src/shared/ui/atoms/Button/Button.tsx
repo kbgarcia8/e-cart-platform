@@ -16,6 +16,23 @@ const Button = ({
     radius,
     size
 }:ButtonProps) => {
+    if(buttonType === 'submit') {
+        return (
+            <Styled.DefaultButton
+                id={id}
+                type={'submit'}
+                className={className}
+                {...dataAttributes}
+                $color={color}
+                $radius={radius}
+            >
+                <Styled.ButtonTextAndIconSpace className={"button-icon-text-space"} $hasIcon={Boolean(source || svg)} $hasText={Boolean(text)}>
+                    {source ? <Styled.ButtonIcon src={source} alt={alt} /> : svg ? svg : null}
+                    {text && <Styled.ButtonText $size={size} id={id} >{text}</Styled.ButtonText>}
+                </Styled.ButtonTextAndIconSpace>
+            </Styled.DefaultButton>
+        )
+    }
 
     return (
         <Styled.DefaultButton

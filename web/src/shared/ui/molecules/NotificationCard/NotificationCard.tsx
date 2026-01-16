@@ -1,4 +1,4 @@
-import useTheme from "hooks/useTheme";
+import useTheme from "shared/hooks/useTheme";
 import * as Styled from "./NotificationCard.styles";
 import errorIcon from 'assets/error.png'
 import warningIcon from 'assets/warning.png'

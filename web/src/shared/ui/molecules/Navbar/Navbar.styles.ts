@@ -1,9 +1,9 @@
 import styled, { css } from 'styled-components';
-import { v } from 'constants/variables'
+import { v } from 'shared/constants/variables'
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import type { NavbarProps } from './Navbar.types';
-import { media } from 'utils/utility';
+import { media } from 'shared/utils/utility';
 
 export const TEXTCOLORS = {
     primary: css`

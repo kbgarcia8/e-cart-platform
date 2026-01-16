@@ -1,6 +1,6 @@
 import * as Styled from "./ProductPreviewCard.styles";
 import type { ProductPreviewCardProps } from "./ProductPreviewCard.types";
-import Button from "components/atoms/Button";
+import Button from "shared/ui/atoms/Button";
 import { IoBag } from "react-icons/io5";
 
 const ProductPreviewCard = ({
@@ -31,6 +31,7 @@ const ProductPreviewCard = ({
                 <Styled.AddToCartButtonWrapper>
                     <Button 
                         id={`${productName}-product-preview`}
+                        buttonType={"button"}
                         svg={<IoBag/>}
                         dataAttributes={{
                             "data-name": productName,

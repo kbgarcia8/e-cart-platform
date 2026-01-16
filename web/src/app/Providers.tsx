@@ -1,6 +1,6 @@
 import React from 'react';
-import { ThemeContextProvider } from 'context/ThemeContextWrapper';
-import GlobalStyle from 'styles/globalStyles';
+import { ThemeContextProvider } from 'shared/context/ThemeContextWrapper';
+import GlobalStyle from 'shared/styles/globalStyles';
 import { RouterProvider } from 'react-router-dom';
 import { createBrowserRouter } from 'react-router-dom';
 import routes from './router';

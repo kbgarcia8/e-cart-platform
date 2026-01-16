@@ -1,5 +1,5 @@
-import useTheme from "hooks/useTheme";
-import { palette, lightTheme } from "styles/theme";
+import useTheme from "shared/hooks/useTheme";
+import { palette, lightTheme } from "shared/styles/theme";
 import * as Styled from "./Stepper.styles";
 import type { StepperProps } from "./Stepper.types";
 

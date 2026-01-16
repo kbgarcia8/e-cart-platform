@@ -1,6 +1,6 @@
 import React from "react";
 import * as Styled from "./TestimonialCard.styles"
-import StarRating from "components/molecules/StarRating";
+import StarRating from "modules/marketing/molecules/StarRating"
 import type { TestimonialCardProps } from "./TestimonialCard.types";
 
 const starsQuantiy = Array(5).fill(0)
@@ -16,8 +16,6 @@ const TestimonialCard = ({
     className,
     children
 }:React.PropsWithChildren<TestimonialCardProps>) => {
-
-    
 
     return (
         <Styled.TestimonialCardWrapper $cardRadius={cardRadius} $cardColor={cardColor} className={className}>

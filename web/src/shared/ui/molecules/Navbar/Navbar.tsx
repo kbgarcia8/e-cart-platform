@@ -1,4 +1,4 @@
-import useTheme from "hooks/useTheme";
+import useTheme from "shared/hooks/useTheme";
 import * as Styled from "./Navbar.styles";
 import type { NavbarProps } from "./Navbar.types";
 

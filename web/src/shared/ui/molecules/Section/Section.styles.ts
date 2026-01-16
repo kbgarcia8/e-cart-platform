@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
-import { v } from "constants/variables";
-import { media } from "utils/utility";
+import { v } from "shared/constants/variables";
+import { media } from "shared/utils/utility";
 
 export const TITLESIZE = {
     bigger: css`

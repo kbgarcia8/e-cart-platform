@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { v } from 'constants/variables';
+import { v } from 'shared/constants/variables';
 
 export const DefaultInput = styled.input`
     display: flex;

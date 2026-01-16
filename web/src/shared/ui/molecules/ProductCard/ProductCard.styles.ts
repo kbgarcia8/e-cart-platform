@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import GenericButton from 'components/atoms/Button';
-import { v } from 'constants/variables';
+import GenericButton from 'shared/ui/atoms/Button';
+import { v } from 'shared/constants/variables';
 
 export const ProductImage = styled.img`
     width: 100%;

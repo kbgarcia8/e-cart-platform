@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import Button from 'components/atoms/Button';
-import { v } from 'constants/variables';
-import type { ColorString } from 'type/generalTypes';
-import type { ButtonProps } from 'type/propTypes';
+import Button from 'shared/ui/atoms/Button';
+import { v } from 'shared/constants/variables';
+import type { ColorString } from 'shared/type/generalTypes';
+import type { ButtonProps } from 'shared/ui/atoms/Button/Button.types';
 
 export const NotificationImage = styled.img`
     width: 5%;

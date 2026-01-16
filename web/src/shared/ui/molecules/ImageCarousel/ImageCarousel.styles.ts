@@ -1,6 +1,5 @@
 import styled, { css } from "styled-components";
-import { v } from "constants/variables";
-import Button from "components/atoms/Button";
+import { v } from "shared/constants/variables";
 
 export const RADIUS = {
     square: css`border-radius: ${v.borderRadius.xsmall};`,
@@ -62,8 +61,7 @@ export const Image = styled.img`
         }
     }
 `;
-export const NavButton = styled(Button)`
-    & .nav-button {
+export const NavButtonWrapperLeft = styled.div`
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
@@ -84,18 +82,15 @@ export const NavButton = styled(Button)`
         padding: 0;
         line-height: 1;
         z-index: 1;
-    }
-
-    & .nav-button.left {
         left: 1rem;
-    }
-
-    & .nav-button.right {
-        right: 1rem;
-    }
 
     & .nav-button:hover {
         background-color: rgba(255, 255, 255, 0.6);
         opacity: 1;
     }
+`;
+
+export const NavButtonWrapperRight = styled(NavButtonWrapperLeft)`
+    right: 1rem;
+    left: 0;
 `;

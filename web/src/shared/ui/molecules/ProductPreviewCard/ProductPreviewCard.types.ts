@@ -1,5 +1,5 @@
 import { RADIUS, CARDCOLORS, TEXTCOLORS } from './ProductPreviewCard.styles';
-import { COLORS } from 'components/atoms/Button/Button.styles';
+import { COLORS } from 'shared/ui/atoms/Button/Button.styles';
 
 export type ProductPreviewCardProps = {
     productImage: string;

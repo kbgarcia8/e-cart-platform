@@ -1,4 +1,4 @@
-import type { dataAttributesType } from "type/generalTypes";
+import type { dataAttributesType } from "shared/type/generalTypes";
 
 declare const InputTypes: readonly ["text", "password", "email", "number", "tel", "url", "search", "date", "file", "hidden"];
 export interface BaseInput {

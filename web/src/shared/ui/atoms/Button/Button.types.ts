@@ -1,12 +1,18 @@
-import type { dataAttributesType } from "type/generalTypes";
+import type { dataAttributesType } from "shared/type/generalTypes";
 import { COLORS, SIZES, RADIUS } from "./Button.styles";
 
-type ButtonType = 'button' | 'submit' | 'reset';
-
-export interface ButtonProps {
+interface hasOnClickButton { 
+    buttonType: 'button' | 'reset';
     onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
+}
+
+interface hasNoOnClickButton { 
+    buttonType: 'submit';
+    onClick?: never;
+}
+
+export interface GeneralButtonProps {
     id?: string;
-    buttonType?: ButtonType;
     source?: string;
     svg?: React.ReactNode;
     alt?: string;
@@ -18,3 +24,8 @@ export interface ButtonProps {
     radius?: keyof typeof RADIUS;
     dataAttributes?: dataAttributesType;
 }
+
+export type ButtonTypeButton = GeneralButtonProps & hasOnClickButton;
+export type SubmitOrResetTypeButton = GeneralButtonProps & hasNoOnClickButton;
+
+export type ButtonProps = ButtonTypeButton | SubmitOrResetTypeButton;
