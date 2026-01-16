@@ -1,8 +1,8 @@
 import {useState, type PropsWithChildren} from "react";
-import { lightTheme, darkTheme } from "styles/theme";
+import { lightTheme, darkTheme } from "shared/styles/theme";
 import {ThemeProvider as StyledThemeProvider} from 'styled-components';
 import ThemeContext from "./ThemeContext";
-import type { Theme } from "type/generalTypes";
+import type { Theme } from "shared/type/generalTypes";
 
 export const ThemeContextProvider = ({
     children,

@@ -1,5 +1,5 @@
 import * as styled from "./StarRating.styles"
-import StarIcon from "components/svgs/StarIcon";
+import StarIcon from "shared/ui/svgs/StarIcon";
 import type { StarRatingProps } from "./StarRating.types";
 
 

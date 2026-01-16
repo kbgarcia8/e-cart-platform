@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../../../context/UserAuthContext";
 import sidebarLogo from '../../../assets/pic-only-logo.png'
-import HomeIcon from "components/svgs/HomeIcon.tsx";
-import MenuIcon from "components/svgs/MenuIcon.tsx";
-import CartIcon from "components/svgs/CartIcon.tsx";
-import ClipboardIcon from "components/svgs/ClipboardIcon.tsx";
-import TimerIcon from "components/svgs/TimerIcon.tsx";
-import SettingsIcon from "components/svgs/SettingsIcon.tsx";
-import LogoutIcon from "components/svgs/LogoutIcon.tsx";
+import HomeIcon from "shared/ui/svgs/HomeIcon";
+import MenuIcon from "shared/ui/svgs/MenuIcon";
+import CartIcon from "shared/ui/svgs/CartIcon";
+import ClipboardIcon from "shared/ui/svgs/ClipboardIcon";
+import TimerIcon from "shared/ui/svgs/TimerIcon";
+import SettingsIcon from "shared/ui/svgs/SettingsIcon";
+import LogoutIcon from "shared/ui/svgs/LogoutIcon";
 import * as styled from "./Sidebar.styles";
 
 const Sidebar =({}) => {

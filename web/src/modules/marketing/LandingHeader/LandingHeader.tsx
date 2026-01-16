@@ -1,5 +1,5 @@
 import React from "react";
-import headerLogo from 'assets/mock-logo.svg'
+import headerLogo from 'shared/assets/mock-logo.svg'
 import { useNavigate } from 'react-router-dom';
 import * as Styled from "./LandingHeader.styles";
 import Button from "shared/ui/atoms/Button";
@@ -42,8 +42,8 @@ const LandingHeader = ():React.ReactNode => {
             <Styled.NavbarWrapper>
                 <Navbar textColor={"teritiary"} textSize={"smaller"} className={"public-header-navbar"} isSigning={isSignedIn} isHashLinks={true} links={links}/>
                 <Styled.ButtonWrapper>
-                    <Button text={"Sign Up"} onClick={handleButtonNavigate} color={"secondary"} radius={"roundedsquare"}/>
-                    <Button text={"Login"} onClick={handleButtonNavigate} radius={"roundedsquare"}/>
+                    <Button buttonType={"button"} text={"Sign Up"} onClick={handleButtonNavigate} color={"secondary"} radius={"roundedsquare"}/>
+                    <Button buttonType={"button"} text={"Login"} onClick={handleButtonNavigate} radius={"roundedsquare"}/>
                 </Styled.ButtonWrapper>
             </Styled.NavbarWrapper>
         </Styled.LandingHeaderWrapper>

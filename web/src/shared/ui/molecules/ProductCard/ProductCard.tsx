@@ -1,5 +1,5 @@
 import * as Styled from "./ProductCard.styles";
-import CartIcon from "components/svgs/CartIcon.tsx";
+import CartIcon from "shared/ui/svgs/CartIcon";
 import type { ProductCardProps } from "./ProductCard.types";
 
 const ProductCard = ({

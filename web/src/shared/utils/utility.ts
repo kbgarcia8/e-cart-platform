@@ -1,6 +1,6 @@
-import { v } from 'constants/variables'
+import { v } from 'shared/constants/variables'
 import { css } from 'styled-components'
-import type { ColorString } from 'type/generalTypes';
+import type { ColorString } from 'shared/type/generalTypes';
 
 type MediaFn = (...args: Parameters<typeof css>) => ReturnType<typeof css>;
 

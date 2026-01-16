@@ -4,7 +4,7 @@ import Button from "shared/ui/atoms/Button";
 import Section from "shared/ui/molecules/Section";
 import ImageCarousel from "shared/ui/molecules/ImageCarousel";
 import ProductPreviewCard from "shared/ui/molecules/ProductPreviewCard";
-import TestimonialCard from "shared/ui/molecules/TestimonialCard";
+import TestimonialCard from "modules/marketing/molecules/TestimonialCard";
 import Accordion from "shared/ui/molecules/Accordion";
 import { v } from "shared/constants/variables";
 import useTheme from "shared/hooks/useTheme";
@@ -191,7 +191,7 @@ const LandingMain = () => {
             <Styled.MainSectionWrapper>
                 <Section id={"landing"} className={"main-section"} title={"Baked goods, treats and snacks at your doorstep"} titleColor={"secondary"} titleSize={"giga"} titleBottomMargin={`${v.spacing.xlarge}`}>
                     <Styled.ExploreMenuButtonWrapper>
-                        <Button size={"large"} radius={"roundedsquare"} text={"Explore Menu"} onClick={() => {console.log('View Public Menu')}}/>
+                        <Button buttonType={"button"} size={"large"} radius={"roundedsquare"} text={"Explore Menu"} onClick={() => {console.log('View Public Menu')}}/>
                     </Styled.ExploreMenuButtonWrapper>
                     <Styled.MainSectionImageCarouselWrapper>
                         <ImageCarousel hasManualNavigation={false} currentImageIndex={currentImageIndex} images={mainSectionImages} handleNextClick={handleNextClick} radius={"roundedsquare"}/>
@@ -230,7 +230,7 @@ const LandingMain = () => {
                         ))}
                     </Styled.ProductsPreviewContainer>
                     <Styled.SeeMoreProductsButtonWrapper>
-                        <Button size={"larger"} radius={"roundedsquare"}  text={"See More"} onClick={() => {console.log('View More Products')}}/>
+                        <Button buttonType={"button"} size={"larger"} radius={"roundedsquare"}  text={"See More"} onClick={() => {console.log('View More Products')}}/>
                     </Styled.SeeMoreProductsButtonWrapper>
                 </Section>
             </Styled.MenuPreviewSectionWrapper>

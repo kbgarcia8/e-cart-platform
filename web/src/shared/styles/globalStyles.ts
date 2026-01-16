@@ -1,11 +1,11 @@
 import { createGlobalStyle } from 'styled-components';
-import { v } from 'constants/variables';
-import soria from 'fonts/Soria.ttf';
-import lato from 'fonts/Lato-Regular.ttf';
-import raleway from 'fonts/Raleway-Regular.ttf';
-import roboto from 'fonts/Roboto-Regular.ttf';
+import { v } from 'shared/constants/variables';
+import soria from 'shared/fonts/Soria.ttf';
+import lato from 'shared/fonts/Lato-Regular.ttf';
+import raleway from 'shared/fonts/Raleway-Regular.ttf';
+import roboto from 'shared/fonts/Roboto-Regular.ttf';
 import { lightTheme, darkTheme } from './theme';
-import { media } from 'utils/utility.js';
+import { media } from 'shared/utils/utility';
 
 const GlobalStyle = createGlobalStyle`
 *, *::before, *::after {

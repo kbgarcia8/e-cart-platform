@@ -1,6 +1,6 @@
 import  * as Styled from "./CartItem.styles";
 import { useOutletContext } from "react-router-dom";
-import DeleteIcon from "components/svgs/DeleteIcon.tsx";
+import DeleteIcon from "shared/ui/svgs/DeleteIcon";
 
 const CartItem = ({
     itemImage,

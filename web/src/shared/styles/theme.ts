@@ -1,5 +1,5 @@
-import { asColor } from "utils/utility"
-import type { Theme, ColorString } from "type/generalTypes"
+import { asColor } from "shared/utils/utility"
+import type { Theme, ColorString } from "shared/type/generalTypes"
 
 export const palette:Record<string,ColorString> = {
     primary1: asColor('#202234'),
