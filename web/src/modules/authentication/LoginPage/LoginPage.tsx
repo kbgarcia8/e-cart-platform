@@ -59,7 +59,7 @@ const LoginPage =() => {
         setLoginInputValues((prevLoginInputValues) =>(
             prevLoginInputValues
             ? prevLoginInputValues.map((input) => 
-                input.name === key
+                input.name == key
                 ? {...input,
                     value: value
                 }
@@ -69,15 +69,14 @@ const LoginPage =() => {
         ))
 
         setLoginFormValues((prevLoginFormValues) =>
-            Object.hasOwn(prevLoginFormValues, `${key}`)
-            ? {...prevLoginFormValues,
+            prevLoginFormValues ?
+            {...prevLoginFormValues,
                 key: value
-            }
-            : prevLoginFormValues
+            } : prevLoginFormValues
         )
-        
     }, []);
-
+    
+    
     const loginFormInputs = loginFormInputArray.map((input) => (
         {...input,
             onChange: handleLoginFormChange,

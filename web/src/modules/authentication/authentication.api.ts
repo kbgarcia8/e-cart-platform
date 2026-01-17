@@ -1,26 +1,29 @@
 import type { LoginFormData, SignupFormData, AuthResponse } from "./authentication.types";
 
 export async function loginApi(loginData: LoginFormData): Promise<AuthResponse> {
-    const res = await fetch("/api/auth/login", {
+    const response = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(loginData),
         credentials: "include"
     })
 
-    if (!res.ok) throw new Error("Login failed")
-        return res.json()
+    if (!response.ok) throw new Error("Login failed")
+        return response.json();
     }
 
     export async function signupApi(signupData: SignupFormData): Promise<AuthResponse> {
-    const res = await fetch("/api/auth/signup", {
+    const response = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(signupData),
         credentials: "include"
-    })
+    });
 
-    if (!res.ok) throw new Error("Signup failed")
+    if (!response.ok) {
+        const errorData = response.json();
+        throw errorData;
+    }
     
-    return res.json()
+    return response.json();
 }
