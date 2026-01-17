@@ -1,8 +1,8 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useCallback, useEffect, useRef} from "react";
 import { toast } from "react-toastify";
-//import { useAuth } from "../../../../context/UserAuthContext.jsx";
-import type { FieldsetShape, inputEntryShape, LabeledCheckboxOrRadio, LabeledTextLike } from '@kbgarcia8/react-dynamic-form';
+import { useLogin } from "../authentication.hooks";
+import type { LoginFormData } from "../authentication.types";
+import type {inputEntryShape, LabeledTextLike } from '@kbgarcia8/react-dynamic-form';
 import * as Styled from './LoginPage.styles';
 
 const loginFormInputArray:inputEntryShape<false,LabeledTextLike>[] = [
@@ -35,32 +35,48 @@ const loginFormInputArray:inputEntryShape<false,LabeledTextLike>[] = [
 ];
 
 const LoginPage =() => {
-    const navigate = useNavigate();
-    const initialized = React.useRef(false)
+    const initialized = useRef(false);
 
-    const [loginFormValues, setLoginFormValues] = React.useState<inputEntryShape<false,LabeledTextLike>[] | null>(null)
+    const { login, loading, error } = useLogin();
+    const initialFormValues = {
+        username: '',
+        password: ''
+    };
 
-    const handleLoginFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    useEffect(() => {
+    if (error) {
+            toast.error(error);
+        }
+    }, [error]);
+
+    const [loginInputValues, setLoginInputValues] = useState<inputEntryShape<false,LabeledTextLike>[] | null>(null);
+    const [loginFormValues, setLoginFormValues] = useState<LoginFormData>(initialFormValues);
+
+    const handleLoginFormChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const { key } = e.currentTarget.dataset;
         const value = e.currentTarget.value;
 
-        setLoginFormValues((prevLoginFormValues) =>(
-            prevLoginFormValues
-            ? prevLoginFormValues.map((input) => 
+        setLoginInputValues((prevLoginInputValues) =>(
+            prevLoginInputValues
+            ? prevLoginInputValues.map((input) => 
                 input.name === key
                 ? {...input,
                     value: value
                 }
                 : input
             )
-            : prevLoginFormValues
+            : prevLoginInputValues
         ))
-        
-    };
 
-    const handleFormSubmit = () => {
-        console.log('form submitted')
-    };
+        setLoginFormValues((prevLoginFormValues) =>
+            Object.hasOwn(prevLoginFormValues, `${key}`)
+            ? {...prevLoginFormValues,
+                key: value
+            }
+            : prevLoginFormValues
+        )
+        
+    }, []);
 
     const loginFormInputs = loginFormInputArray.map((input) => (
         {...input,
@@ -69,14 +85,18 @@ const LoginPage =() => {
                 "data-key": `${input.name}`
             }
         }
-    ))
+    ));
 
-    React.useEffect(() =>{
+    useEffect(() =>{
         if(!initialized.current) {
-            setLoginFormValues(loginFormInputs)
-            initialized.current = true
+            setLoginInputValues(loginFormInputs);
+            initialized.current = true;
         }
-    },[])
+    },[loginFormInputs]);
+
+    const handleFormSubmit = useCallback( async () => {
+        await login(loginFormValues)
+    }, [login, loginFormValues]);
     
 
     return(
@@ -88,7 +108,7 @@ const LoginPage =() => {
                 <Styled.LoginForm
                     className={'without-fieldsets'}
                     fieldsets={null}
-                    formInputs={loginFormValues || []}
+                    formInputs={loginInputValues || []}
                     id="login"
                     isExpandable={false}
                     inputClass={'login-form-input'}
@@ -100,7 +120,7 @@ const LoginPage =() => {
             </Styled.FormSpace>
             <Styled.SignUpMessageSpace>
                 <Styled.SignUpMessage>
-                    Don't have an account yet? <Styled.SignUpLink  to={`../signup`}>{"Sign Up"}</Styled.SignUpLink> 
+                    Don't have an account yet? <Styled.SignUpLink  to={`/signup`}>{"Sign Up"}</Styled.SignUpLink> 
                 </Styled.SignUpMessage>
             </Styled.SignUpMessageSpace>
         </Styled.LoginPageWrapper>
