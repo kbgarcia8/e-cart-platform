@@ -3,17 +3,16 @@ import { v } from 'shared/constants/variables';
 import { Link } from "react-router-dom";
 import { DynamicForm } from '@kbgarcia8/react-dynamic-form';
 
-export const LoginPageWrapper = styled.div`
+export const SignupPageWrapper = styled.div`
     padding: ${v.spacing.large};
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
     width: 100%;
-    background-color: ${({theme}) => theme.colors.backgroundColor3};
 `;
 
-export const LoginPageHeader =  styled.h2`
+export const SignupPageHeader =  styled.h2`
     width: 100%;
     text-align: center;
 `;
@@ -22,7 +21,7 @@ export const FormSpace = styled.div`
     display: flex;
 `;
 
-export const LoginForm = styled(DynamicForm)`
+export const SignupForm = styled(DynamicForm)`
     background-color: ${({theme})=> theme.colors.bg};
     color: ${({theme})=> theme.colors.text};
     
@@ -52,18 +51,18 @@ export const LoginForm = styled(DynamicForm)`
     }
 `;
 
-export const SignUpMessageSpace = styled.div`
+export const LoginMessageSpace = styled.div`
     width: 100%;
     align-items: center;
     justify-content: center;
     display: flex;
 `;
-export const SignUpMessage = styled.span`
+export const LoginMessage = styled.span`
     font-size: ${v.fontSize.small};
     font-family: ${v.fonts.tertiary}, ${v.fonts.fallback};
     color: ${({theme}) => theme.colors.textColor1};
 `;
-export const SignUpLink = styled(Link)`
+export const LoginLink = styled(Link)`
     text-decoration: none;
     color: ${({theme}) => theme.colors.backgroundColor1};
     font-weight: bold;

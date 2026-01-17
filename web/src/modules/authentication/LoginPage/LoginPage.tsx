@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef} from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useLogin } from "../authentication.hooks";
 import type { LoginFormData } from "../authentication.types";
@@ -7,17 +7,17 @@ import * as Styled from './LoginPage.styles';
 
 const loginFormInputArray:inputEntryShape<false,LabeledTextLike>[] = [
     {
-        type: "text" as const,
+        type: "email" as const,
         id: "login-username-email",
         isRequired: true,
         disabled: false,
-        name: "username",
+        name: "email",
         value: '',
         $labelFlexDirection: "column" as const,
         labelClass: "loginform-label",
         inputClass: "loginform-input",
         isEditable: false as const,
-        textLabel: 'Username or Email'
+        textLabel: 'Email'
     },
     {
         type: "password" as const,
@@ -35,11 +35,10 @@ const loginFormInputArray:inputEntryShape<false,LabeledTextLike>[] = [
 ];
 
 const LoginPage =() => {
-    const initialized = useRef(false);
 
     const { login, loading, error } = useLogin();
     const initialFormValues = {
-        username: '',
+        email: '',
         password: ''
     };
 
@@ -49,49 +48,28 @@ const LoginPage =() => {
         }
     }, [error]);
 
-    const [loginInputValues, setLoginInputValues] = useState<inputEntryShape<false,LabeledTextLike>[] | null>(null);
     const [loginFormValues, setLoginFormValues] = useState<LoginFormData>(initialFormValues);
 
     const handleLoginFormChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        const { key } = e.currentTarget.dataset;
+        const datakey = e.currentTarget.dataset.key as keyof LoginFormData;
         const value = e.currentTarget.value;
 
-        setLoginInputValues((prevLoginInputValues) =>(
-            prevLoginInputValues
-            ? prevLoginInputValues.map((input) => 
-                input.name == key
-                ? {...input,
-                    value: value
-                }
-                : input
-            )
-            : prevLoginInputValues
-        ))
-
-        setLoginFormValues((prevLoginFormValues) =>
-            prevLoginFormValues ?
-            {...prevLoginFormValues,
-                key: value
-            } : prevLoginFormValues
-        )
+        setLoginFormValues((prevLoginFormValues) => ({
+            ...prevLoginFormValues,
+            [datakey]: value
+            }))
     }, []);
     
     
     const loginFormInputs = loginFormInputArray.map((input) => (
         {...input,
+            value: loginFormValues[input.name as keyof LoginFormData],
             onChange: handleLoginFormChange,
             dataAttributes: {
                 "data-key": `${input.name}`
             }
         }
     ));
-
-    useEffect(() =>{
-        if(!initialized.current) {
-            setLoginInputValues(loginFormInputs);
-            initialized.current = true;
-        }
-    },[loginFormInputs]);
 
     const handleFormSubmit = useCallback( async () => {
         await login(loginFormValues)
@@ -101,13 +79,13 @@ const LoginPage =() => {
     return(
         <Styled.LoginPageWrapper>
             <Styled.LoginPageHeader>
-                Welcome to Kain at Kape Website! Login your account to continue.
+                Welcome to E-cart Platform! Login your account to continue.
             </Styled.LoginPageHeader>
             <Styled.FormSpace>
                 <Styled.LoginForm
                     className={'without-fieldsets'}
                     fieldsets={null}
-                    formInputs={loginInputValues || []}
+                    formInputs={loginFormInputs || []}
                     id="login"
                     isExpandable={false}
                     inputClass={'login-form-input'}
