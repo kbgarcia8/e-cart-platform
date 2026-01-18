@@ -6,8 +6,13 @@
   "scripts": {
     "build": "tsc",
     "start": "npm run build && node dist/index.js",
-    "dev": "nodemon src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon src/app.ts",
+    "prisma:setup": "npx prisma init --datasource-provider postgresql --output src/schema/generated/prisma",
+    "prisma:merge": "npx prismerge -i src/prisma/prismerge.json",
+    "prisma:generate": "prisma generate --schema=./src/prisma/schema/main.prisma",
+    "prisma:migrate": "npx prisma migrate dev --name init --schema ./src/prisma/schema/main.prisma",
+    "prisma:pull": "npx prisma db pull --schema ./src/prisma/schema/main.prisma",
+    "prisma:studio": "npx prisma studio --schema ./src/prisma/schema/main.prisma"
   },
   "keywords": [],
   "author": "",
@@ -24,11 +29,15 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "@prisma-utils/prismerge": "^1.7.0",
+    "@prisma/adapter-pg": "^7.2.0",
+    "@prisma/client": "^7.2.0",
     "@types/cookie-parser": "^1.4.10",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
-    "morgan": "^1.10.1"
+    "morgan": "^1.10.1",
+    "prisma": "^7.2.0"
   }
 }
