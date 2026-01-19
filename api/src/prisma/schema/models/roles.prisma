@@ -1,7 +1,7 @@
 enum Role {
-  USER
-  GUEST
-  ADMIN
+  User
+  Guest
+  Admin
 
   @@schema("ecart")
 }

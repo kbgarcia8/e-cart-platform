@@ -1,0 +1,4 @@
+model Orders {
+    id Int @id @default(autoincrement())
+    payment PaymentMethod @default(Cash)
+}

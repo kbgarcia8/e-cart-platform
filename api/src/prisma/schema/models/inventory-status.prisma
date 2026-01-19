@@ -1,0 +1,6 @@
+enum InventoryStatus {
+    Available
+    Low_On_stock
+    Not_Available
+    For_Delivery
+}
