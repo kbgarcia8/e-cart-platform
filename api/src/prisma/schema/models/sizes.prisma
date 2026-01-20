@@ -1,0 +1,7 @@
+enum Sizes {
+    Small
+    Medium
+    Large
+    Solo
+    For_Share
+}

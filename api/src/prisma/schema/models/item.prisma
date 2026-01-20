@@ -3,4 +3,6 @@ model Item {
     name    String  @db.VarChar(50)
     cart    Cart    @relation(fields: [cartId], references: [id])
     quantity Int
+    size Sizes
+    price Int
 }
