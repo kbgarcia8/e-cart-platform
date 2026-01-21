@@ -3,4 +3,6 @@ enum InventoryStatus {
     Low_On_stock
     Not_Available
     For_Delivery
+
+    @@schema("ecart")
 }

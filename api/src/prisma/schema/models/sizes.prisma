@@ -4,4 +4,6 @@ enum Sizes {
     Large
     Solo
     For_Share
+
+    @@schema("ecart")
 }

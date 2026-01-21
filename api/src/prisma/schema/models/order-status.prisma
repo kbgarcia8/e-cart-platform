@@ -1,10 +1,10 @@
 enum OrderStatus {
-  Confirming_Order
-  Preparing
-  Ready_For_Pickup
-  For_Delivery
-  Done
-  Cancelled
+    Confirming_Order
+    Preparing
+    Ready_For_Pickup
+    For_Delivery
+    Done
+    Cancelled
 
-  @@schema("ecart")
+    @@schema("ecart")
 }

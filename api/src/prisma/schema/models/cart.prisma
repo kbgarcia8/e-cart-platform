@@ -2,5 +2,7 @@ model Cart {
     id Int @id @default(autoincrement())
     owner User @relation(fields: [ownerId], references: [id])
     ownerId Int
-    items Item[]
+    cartItems CartItem[]
+
+    @@schema("ecart")
 }

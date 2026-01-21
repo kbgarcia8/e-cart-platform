@@ -1,8 +1,10 @@
-model Item {
+model Product {
     id      Int     @id @default(autoincrement())
     name    String  @db.VarChar(50)
-    cart    Cart    @relation(fields: [cartId], references: [id])
-    quantity Int
     size Sizes
     price Int
+    cartItems CartItem[]
+    inventory Inventory?
+
+    @@schema("ecart")
 }

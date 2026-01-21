@@ -1,0 +1,112 @@
+model CartItem {
+    id Int @id @default(autoincrement())
+    cart Cart @relation(fields: [cartId], references: [id])
+    cartId Int
+    product @relation(fields: [productId], references: [id])
+    productId Int
+    quantity Int
+    
+    @@schema("ecart")
+}
+model Cart {
+    id Int @id @default(autoincrement())
+    owner User @relation(fields: [ownerId], references: [id])
+    ownerId Int
+    cartItems CartItem[]
+    
+    @@schema("ecart")
+}
+enum InventoryStatus {
+    Available
+    Low_On_stock
+    Not_Available
+    For_Delivery
+    
+    @@schema("ecart")
+}
+model Inventory {
+    id      Int     @id @default(autoincrement())
+    name    String  @db.VarChar(50)
+    quantity Int
+    status InventoryStatus default(Available)
+    
+    product @relation(fields: [productId], references: [id])
+    productId Int @unique
+
+    @@schema("ecart")
+}
+enum OrderStatus {
+  Confirming_Order
+  Preparing
+  Ready_For_Pickup
+  For_Delivery
+  Done
+  Cancelled
+
+  @@schema("ecart")
+}
+model Orders {
+    id Int @id @default(autoincrement())
+    payment PaymentMethod @default(Cash)
+    
+    cart    Cart    @relation(fields: [cartId], references: [id])
+    cartId Int
+
+    checkoutTime    DateTime   @default(now())
+    status OrderStatus
+    
+    @@schema("ecart")
+}
+enum PaymentMethod {
+    Cash
+    E_Wallet
+    Debit_Or_Credit
+    
+    @@schema("ecart")
+}
+model Product {
+    id      Int     @id @default(autoincrement())
+    name    String  @db.VarChar(50)
+    size Sizes
+    price Int
+    cartItems CartItem[]
+    inventory Inventory?
+    
+    @@schema("ecart")
+}
+enum Role {
+  User
+  Guest
+  Admin
+
+  @@schema("ecart")
+}
+model Session {
+    id      String      @id 
+    sid     String      @unique
+    data    String
+    expiresAt   DateTime
+
+    @@schema("ecart")
+}
+enum Sizes {
+    Small
+    Medium
+    Large
+    Solo
+    For_Share
+    
+    @@schema("ecart")
+}
+model User {
+    id          Int     @id @default(autoincrement())
+    firstName   String  @db.VarChar(50)
+    lastName    String  @db.VarChar(100)
+    username    String? @unique @db.VarChar(30)
+    email       String @unique @db.VarChar(254)
+    password    String @db.VarChar(72)
+    role        Role @default(User)
+    created_at  DateTime @default(now())
+
+    @@schema("ecart")
+}

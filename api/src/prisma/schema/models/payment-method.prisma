@@ -2,4 +2,6 @@ enum PaymentMethod {
     Cash
     E_Wallet
     Debit_Or_Credit
+
+    @@schema("ecart")
 }

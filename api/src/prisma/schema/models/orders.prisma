@@ -1,7 +1,12 @@
 model Orders {
     id Int @id @default(autoincrement())
     payment PaymentMethod @default(Cash)
+    
     cart    Cart    @relation(fields: [cartId], references: [id])
+    cartId Int
+
     checkoutTime    DateTime   @default(now())
     status OrderStatus
-}
+
+    @@schema("ecart")
+}   
