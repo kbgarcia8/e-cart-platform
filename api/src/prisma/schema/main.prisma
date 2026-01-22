@@ -17,7 +17,7 @@ generator client {
 
 datasource ecart {
   provider = "postgresql"
-  schemas  = ["auth", "public", "inventory", "orders"]
+  schemas  = ["auth", "inventory", "orders", "public"]
 }
 
 model CartItem {
