@@ -4,5 +4,5 @@ enum InventoryStatus {
     Not_Available
     For_Delivery
 
-    @@schema("ecart")
+    @@schema("inventory")
 }

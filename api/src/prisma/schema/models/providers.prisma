@@ -1,0 +1,7 @@
+enum Providers {
+    Local
+    Facebook
+    Gmail
+
+    @@schema("auth")
+}

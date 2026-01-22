@@ -3,5 +3,5 @@ enum PaymentMethod {
     E_Wallet
     Debit_Or_Credit
 
-    @@schema("ecart")
+    @@schema("orders")
 }

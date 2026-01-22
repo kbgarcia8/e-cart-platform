@@ -1,0 +1,12 @@
+model UserProfile {
+    firstName   String  @ecart.VarChar(50)
+    lastName    String  @ecart.VarChar(100)
+    username    String? @unique @ecart.VarChar(30)
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId String
+    
+    @@id([userId])
+
+    @@schema("auth")
+}

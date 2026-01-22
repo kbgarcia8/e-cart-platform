@@ -1,8 +1,9 @@
 model Cart {
     id Int @id @default(autoincrement())
-    owner User @relation(fields: [ownerId], references: [id])
-    ownerId Int
+    
+    owner User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+    ownerId String
     cartItems CartItem[]
 
-    @@schema("ecart")
+    @@schema("public")
 }

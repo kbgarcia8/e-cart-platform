@@ -6,5 +6,5 @@ enum OrderStatus {
     Done
     Cancelled
 
-    @@schema("ecart")
+    @@schema("orders")
 }

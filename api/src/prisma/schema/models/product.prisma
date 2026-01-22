@@ -1,10 +1,10 @@
 model Product {
     id      Int     @id @default(autoincrement())
-    name    String  @db.VarChar(50)
+    name    String  @ecart.VarChar(50)
     size Sizes
     price Int
     cartItems CartItem[]
     inventory Inventory?
 
-    @@schema("ecart")
+    @@schema("public")
 }

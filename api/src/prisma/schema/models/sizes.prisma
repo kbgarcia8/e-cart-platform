@@ -5,5 +5,5 @@ enum Sizes {
     Solo
     For_Share
 
-    @@schema("ecart")
+    @@schema("inventory")
 }

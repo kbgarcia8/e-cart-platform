@@ -4,5 +4,5 @@ model Session {
     data    String
     expiresAt   DateTime
 
-    @@schema("ecart")
+    @@schema("auth")
 }

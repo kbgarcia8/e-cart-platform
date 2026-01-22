@@ -1,11 +1,11 @@
 model Inventory {
     id      Int     @id @default(autoincrement())
-    name    String  @db.VarChar(50)
+    name    String  @ecart.VarChar(50)
     quantity Int
     status InventoryStatus @default(Available)
     
-    product Product @relation(fields: [productId], references: [id])
+    product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
     productId Int @unique
 
-    @@schema("ecart")
+    @@schema("inventory")
 }
