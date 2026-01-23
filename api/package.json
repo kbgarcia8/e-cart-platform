@@ -9,10 +9,10 @@
     "dev": "nodemon src/app.ts",
     "prisma:setup": "npx prisma init --datasource-provider postgresql --output src/schema/generated/prisma",
     "prisma:merge": "npx prismerge -i src/prisma/prismerge.json",
+    "prisma:migrate": "npx prisma migrate dev --schema=./src/prisma/schema/main.prisma",
     "prisma:generate": "prisma generate --schema=./src/prisma/schema/main.prisma",
-    "prisma:migrate": "npx prisma migrate dev --name init --schema ./src/prisma/schema/main.prisma",
-    "prisma:pull": "npx prisma db pull --schema ./src/prisma/schema/main.prisma",
-    "prisma:studio": "npx prisma studio --schema ./src/prisma/schema/main.prisma"
+    "prisma:pull": "npx prisma db pull --schema=./src/prisma/schema/main.prisma",
+    "prisma:studio": "npx prisma studio --schema=./src/prisma/schema/main.prisma"
   },
   "keywords": [],
   "author": "",

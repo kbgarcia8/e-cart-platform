@@ -130,13 +130,12 @@ enum Sizes {
   @@schema("inventory")
 }
 model User {
-  id           String            @id @default(uuid())
-  email        String            @unique @ecart.VarChar(254)
-  role         Role              @default(Member)
-  created_at   DateTime          @default(now())
-  credentials  UserCredentials[]
-  carts        Cart[]
-  userProfiles UserProfile[]
+  id          String            @id @default(uuid())
+  email       String            @unique @ecart.VarChar(254)
+  role        Role              @default(Member)
+  created_at  DateTime          @default(now())
+  credentials UserCredentials[]
+  carts       Cart[]
 
   @@schema("auth")
 }
@@ -152,16 +151,5 @@ model UserCredentials {
   userId String
 
   @@unique([provider, providerId])
-  @@schema("auth")
-}
-model UserProfile {
-  firstName String  @ecart.VarChar(50)
-  lastName  String  @ecart.VarChar(100)
-  username  String? @unique @ecart.VarChar(30)
-
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
-
-  @@id([userId])
   @@schema("auth")
 }
