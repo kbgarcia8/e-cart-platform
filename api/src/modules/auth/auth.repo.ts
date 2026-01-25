@@ -1,10 +1,10 @@
 import { PrismaClient, Role, Providers } from "prisma/schema/generated/prisma/index";
 import { PrismaError } from "shared/errors/errors";
-import type { UserCreateLocal, AuthResponse } from "./auth.types";
+import type { UserCreateLocal, UserCreatedReturn } from "./auth.types";
 
 const prisma = new PrismaClient();
 
-export async function createUserByLocal(userdata:UserCreateLocal):Promise<void> {
+export async function createUserByLocal(userdata:UserCreateLocal):Promise<UserCreatedReturn> {
     try {
         const data = {
             email: userdata.email,
@@ -12,9 +12,9 @@ export async function createUserByLocal(userdata:UserCreateLocal):Promise<void> 
             isVerified: false,
             profile: {
                 create: {
-                    firstName: '',
-                    lastName: '',
-                    username: ''
+                    firstName: userdata.firstname ?? '',
+                    lastName: userdata.lastname ?? '',
+                    username: userdata.username
                 }
             },
             credentials: {
@@ -28,6 +28,8 @@ export async function createUserByLocal(userdata:UserCreateLocal):Promise<void> 
 
         const newUser = await prisma.user.create({ data });
         console.log("User created successfully!");
+        return newUser;
+
     } catch (error){
         console.error("Prisma Database error in createUser:", error);
         if (error instanceof Error) {

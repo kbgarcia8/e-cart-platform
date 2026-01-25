@@ -1,14 +1,14 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
-import { useSignup } from "../authentication.hooks";
-import type { SignupFormData } from "../authentication.types";
+import { useSignup } from "../auth.hooks";
+import type { SignupFormData } from "../auth.types";
 import type {inputEntryShape, LabeledTextLike } from '@kbgarcia8/react-dynamic-form';
 import * as Styled from './SignupPage.styles';
 
 const signupFormInputArray:inputEntryShape<false,LabeledTextLike>[] = [
     {
         type: "email" as const,
-        id: "signup-username-email",
+        id: "signup-email",
         isRequired: true,
         disabled: false,
         name: "email",
@@ -18,6 +18,45 @@ const signupFormInputArray:inputEntryShape<false,LabeledTextLike>[] = [
         inputClass: "signupform-input",
         isEditable: false as const,
         textLabel: 'Email'
+    },
+    {
+        type: "text" as const,
+        id: "signup-firstname",
+        isRequired: true,
+        disabled: false,
+        name: "firstname",
+        value: '',
+        $labelFlexDirection: "column" as const,
+        labelClass: "signupform-label",
+        inputClass: "signupform-input",
+        isEditable: false as const,
+        textLabel: 'First Name'
+    },
+    {
+        type: "text" as const,
+        id: "signup-lastname",
+        isRequired: true,
+        disabled: false,
+        name: "lastname",
+        value: '',
+        $labelFlexDirection: "column" as const,
+        labelClass: "signupform-label",
+        inputClass: "signupform-input",
+        isEditable: false as const,
+        textLabel: 'Last Name'
+    },
+    {
+        type: "text" as const,
+        id: "signup-username",
+        isRequired: true,
+        disabled: false,
+        name: "username",
+        value: '',
+        $labelFlexDirection: "column" as const,
+        labelClass: "signupform-label",
+        inputClass: "signupform-input",
+        isEditable: false as const,
+        textLabel: 'Username'
     },
     {
         type: "password" as const,
@@ -52,6 +91,8 @@ const SignupPage =() => {
     const { signup, loading, error } = useSignup();
     const initialFormValues = {
         email: '',
+        firstname: '',
+        lastname: '',
         password: '',
         confirmpassword: ''
     };
@@ -105,7 +146,7 @@ const SignupPage =() => {
                     inputClass={'signup-form-input'}
                     labelClass={'signup-form-label'}
                     labelAndInputContainerClass={'signup-form-label-n-input-container'}
-                    submitText={'Signup'}
+                    submitText={'Signup with Email'}
                     handleSubmitForm={handleFormSubmit}
                 />
             </Styled.FormSpace>

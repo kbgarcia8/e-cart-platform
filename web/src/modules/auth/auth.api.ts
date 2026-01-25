@@ -1,4 +1,4 @@
-import type { LoginFormData, SignupFormData, AuthResponse } from "./authentication.types";
+import type { LoginFormData, SignupFormData, AuthResponse } from "./auth.types";
 
 export async function loginApi(loginData: LoginFormData): Promise<AuthResponse> {
     const response = await fetch("/api/auth/login", {

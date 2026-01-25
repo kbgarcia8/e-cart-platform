@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
-import { useLogin } from "../authentication.hooks";
-import type { LoginFormData } from "../authentication.types";
+import { useLogin } from "../auth.hooks";
+import type { LoginFormData } from "../auth.types";
 import type {inputEntryShape, LabeledTextLike } from '@kbgarcia8/react-dynamic-form';
 import * as Styled from './LoginPage.styles';
 

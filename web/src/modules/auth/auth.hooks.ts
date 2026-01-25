@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginApi, signupApi } from "./authentication.api";
-import type { LoginFormData, SignupFormData } from "./authentication.types";
+import { loginApi, signupApi } from "./auth.api";
+import type { LoginFormData, SignupFormData } from "./auth.types";
 
 export function useLogin() {
     const navigate = useNavigate();
