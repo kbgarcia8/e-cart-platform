@@ -1,4 +1,4 @@
-import { PrismaClient, Role } from "prisma/schema/generated/prisma/index";
+import { PrismaClient, Role, Providers } from "prisma/schema/generated/prisma/index";
 import { PrismaError } from "shared/errors/errors";
 import type { UserCreateLocal, AuthResponse } from "./auth.types";
 
@@ -8,13 +8,22 @@ export async function createUserByLocal(userdata:UserCreateLocal):Promise<void> 
     try {
         const data = {
             email: userdata.email,
-            password: userdata.password,
             role: userdata.role ?? Role.Member,
-            isVerified: false
-        } as UserCreateLocal
-        
-        if (userdata.role !== undefined) {
-            userdata.role = userdata.role;
+            isVerified: false,
+            profile: {
+                create: {
+                    firstName: '',
+                    lastName: '',
+                    username: ''
+                }
+            },
+            credentials: {
+                create: [{
+                    provider: Providers.Local,
+                    passwordHash: userdata.password,
+                    providerId: null
+                }]
+            }
         }
 
         const newUser = await prisma.user.create({ data });

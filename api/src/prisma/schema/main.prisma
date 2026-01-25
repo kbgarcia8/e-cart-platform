@@ -130,11 +130,13 @@ enum Sizes {
   @@schema("inventory")
 }
 model User {
-  id          String            @id @default(uuid())
-  email       String            @unique @ecart.VarChar(254)
-  role        Role              @default(Member)
-  isVerified  Boolean           @default(false)
-  created_at  DateTime          @default(now())
+  id         String   @id @default(uuid())
+  email      String   @unique @ecart.VarChar(254)
+  role       Role     @default(Member)
+  isVerified Boolean  @default(false)
+  created_at DateTime @default(now())
+
+  profile     UserProfile?
   credentials UserCredentials[]
   carts       Cart[]
 
@@ -143,7 +145,7 @@ model User {
 model UserCredentials {
   id           String    @id @default(uuid())
   provider     Providers
-  providerId   String //unique id from facebook/google
+  providerId   String? //unique id from facebook/google
   passwordHash String    @ecart.VarChar(72) //make null if provider is not local
   //accessToken String? //future use
   //futureTokenn String? //future use
@@ -152,5 +154,16 @@ model UserCredentials {
   userId String
 
   @@unique([provider, providerId])
+  @@schema("auth")
+}
+model UserProfile {
+  firstName String  @ecart.VarChar(50)
+  lastName  String  @ecart.VarChar(100)
+  username  String? @unique @ecart.VarChar(30)
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  @@id([userId])
   @@schema("auth")
 }
