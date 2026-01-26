@@ -1,4 +1,4 @@
-import type { LoginFormData, SignupFormData, AuthResponse } from "./auth.types";
+import type { LoginFormData, SignUpData, AuthResponse } from "./auth.types";
 
 export async function loginApi(loginData: LoginFormData): Promise<AuthResponse> {
     const response = await fetch("/api/auth/login", {
@@ -12,17 +12,17 @@ export async function loginApi(loginData: LoginFormData): Promise<AuthResponse> 
         return response.json();
     }
 
-    export async function signupApi(signupData: SignupFormData): Promise<AuthResponse> {
+export async function signupApi(SignUpData: SignUpData): Promise<AuthResponse> {
     const response = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(signupData),
+        body: JSON.stringify(SignUpData),
         credentials: "include"
     });
 
     if (!response.ok) {
-        const errorData = response.json();
-        throw errorData;
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Signup failed");
     }
     
     return response.json();

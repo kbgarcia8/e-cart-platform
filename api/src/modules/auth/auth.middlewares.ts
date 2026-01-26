@@ -30,7 +30,7 @@ export const signupValidator = [
     check('confirmpassword')
         .notEmpty().withMessage('Please confirm password!').bail()
         .custom((value, { req }) => {
-            if (value !== req.body['registerPassword']) {
+            if (value !== req.body['confirmpassword']) {
                 throw new ExpressValError("Password do not match", 400, "EXPRESS_VAL_ERROR_PASSWORD_NOT_MATCH", {
                     detail: "Password during signup does not match!",
                 });

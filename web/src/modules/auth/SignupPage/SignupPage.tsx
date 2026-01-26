@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useSignup } from "../auth.hooks";
-import type { SignupFormData } from "../auth.types";
+import type { SignUpData } from "../auth.types";
 import type {inputEntryShape, LabeledTextLike } from '@kbgarcia8/react-dynamic-form';
 import * as Styled from './SignupPage.styles';
 
@@ -94,6 +94,7 @@ const SignupPage =() => {
         firstname: '',
         lastname: '',
         password: '',
+        username: '',
         confirmpassword: ''
     };
 
@@ -103,10 +104,10 @@ const SignupPage =() => {
         }
     }, [error]);
 
-    const [signupFormValues, setSignupFormValues] = useState<SignupFormData>(initialFormValues);
+    const [signupFormValues, setSignupFormValues] = useState<SignUpData>(initialFormValues);
 
     const handleSignupFormChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        const datakey = e.currentTarget.dataset.key as keyof SignupFormData;
+        const datakey = e.currentTarget.dataset.key as keyof SignUpData;
         const value = e.currentTarget.value;
 
         setSignupFormValues((prevSignupFormValues) => ({
@@ -118,7 +119,7 @@ const SignupPage =() => {
     
     const signupFormInputs = signupFormInputArray.map((input) => (
         {...input,
-            value: signupFormValues[input.name as keyof SignupFormData],
+            value: String(signupFormValues[input.name as keyof SignUpData]),
             onChange: handleSignupFormChange,
             dataAttributes: {
                 "data-key": `${input.name}`
@@ -127,7 +128,11 @@ const SignupPage =() => {
     ));
 
     const handleFormSubmit = useCallback( async () => {
-        await signup(signupFormValues)
+        try {
+            await signup(signupFormValues);
+        } catch (error) {
+            toast.error(error instanceof Error ? error.message : "Something went wrong");
+        }
     }, [signup, signupFormValues]);
     
 

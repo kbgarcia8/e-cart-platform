@@ -1,6 +1,10 @@
-import { Router } from "express";
+import { Router, RequestHandler } from "express";
 import { signupValidator } from "./auth.middlewares";
+import { signupPost } from "./auth.controllers";
+import { ValidationChain } from "express-validator";
 
-const userRouter = Router();
+const authRouter = Router();
 
-userRouter.post('/signup', signupValidator)
+authRouter.post('/signup', signupValidator, signupPost);
+
+export default authRouter;
