@@ -14,7 +14,7 @@ export async function createUserByLocal(userdata:UserCreateLocal):Promise<UserCr
                 create: {
                     firstName: userdata.firstname ?? '',
                     lastName: userdata.lastname ?? '',
-                    username: userdata.username
+                    username: userdata.username as string
                 }
             },
             credentials: {
