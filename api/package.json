@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "npm run build && node dist/index.js",
-    "dev": "nodemon src/app.ts",
+    "dev": "ts-node -r tsconfig-paths/register src/app.ts",
     "prisma:setup": "npx prisma init --datasource-provider postgresql --output src/schema/generated/prisma",
     "prisma:merge": "npx prismerge -i src/prisma/prismerge.json",
     "prisma:migrate": "npx prisma migrate dev --schema=./src/prisma/schema/main.prisma",
@@ -35,8 +35,9 @@
     "express-validator": "^7.3.1",
     "nodemon": "^3.1.11",
     "ts-loader": "^9.5.4",
-    "ts-node": "^1.7.1",
+    "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.3"
   },
   "dependencies": {

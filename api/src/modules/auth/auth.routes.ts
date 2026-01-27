@@ -1,10 +1,9 @@
 import { Router, RequestHandler } from "express";
 import { signupValidator } from "./auth.middlewares";
-import { signupPost } from "./auth.controllers";
-import { ValidationChain } from "express-validator";
+import { signupLocalPost } from "./auth.controllers";
 
 const authRouter = Router();
 
-authRouter.post('/signup', signupValidator, signupPost);
+authRouter.post('/signup/local', signupValidator, signupLocalPost);
 
 export default authRouter;

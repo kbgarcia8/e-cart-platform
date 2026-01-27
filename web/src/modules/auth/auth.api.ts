@@ -8,12 +8,12 @@ export async function loginApi(loginData: LoginFormData): Promise<AuthResponse> 
         credentials: "include"
     })
 
-    if (!response.ok) throw new Error("Login failed")
-        return response.json();
-    }
+    if (!response.ok) throw new Error("Login failed");
+    return response.json();
+}
 
 export async function signupApi(SignUpData: SignUpData): Promise<AuthResponse> {
-    const response = await fetch("/api/auth/signup", {
+    const response = await fetch("/api/auth/signup/local", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(SignUpData),

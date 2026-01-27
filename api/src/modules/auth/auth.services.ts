@@ -1,14 +1,16 @@
 import * as repo from './auth.repo';
-import type { SignUpData } from './auth.types';
+import type { UserCreateData } from './auth.types';
 
-export async function signup(data:SignUpData) {
-    const user = await repo.createUserByLocal(data);
+export async function signup(data:UserCreateData) {
+    const user = await repo.createUser(data);
 
     return {
         user: {
             id: user.id,
             email: user.email,
-            isVerified: user.isVerified
+            role: user.role,
+            isVerified: user.isVerified,
+            created_at: user.created_at
         }
     }
 };

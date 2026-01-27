@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 import * as authService from "./auth.services";
 import type { SignupRequestDTO } from "./auth.types";
 
-export const signupPost = async (req: Request, res: Response):Promise<void> =>{
+export const signupLocalPost = async (req: Request, res: Response):Promise<void> =>{
         const validatorErrors = validationResult(req);
         if (!validatorErrors.isEmpty()) {
             res.status(400).json(validatorErrors.array());
@@ -19,7 +19,9 @@ export const signupPost = async (req: Request, res: Response):Promise<void> =>{
             lastname: lastname,
             username: username,
             email: email,
-            password: hashedPassword,
+            passwordHash: hashedPassword,
+            provider: "Local" as const,
+            providerId: null
         }
 
         const finalUsername = (username?.trim() || email.split('@')[0]) as string;

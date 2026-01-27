@@ -27,9 +27,9 @@ export class AuthError extends AppError {
 }
 //For express validator errors
 export class ExpressValError extends AppError {
-  constructor(message = "Express Validator Error", statusCode = 400, code = "EXPRESS_VAL_ERROR", details: { detail: Record<string, string> | string | null } | null = null){
-    super(message, statusCode, code, details);
-  }
+    constructor(message = "Express Validator Error", statusCode = 400, code = "EXPRESS_VAL_ERROR", details: { detail: Record<string, string> | string | null } | null = null){
+        super(message, statusCode, code, details);
+    }
 }
 //For multer file upload errors
 export class FileUploadError extends AppError {

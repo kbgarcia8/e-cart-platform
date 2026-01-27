@@ -48,7 +48,7 @@ const signupFormInputArray:inputEntryShape<false,LabeledTextLike>[] = [
     {
         type: "text" as const,
         id: "signup-username",
-        isRequired: true,
+        isRequired: false,
         disabled: false,
         name: "username",
         value: '',
@@ -127,11 +127,13 @@ const SignupPage =() => {
         }
     ));
 
-    const handleFormSubmit = useCallback( async () => {
+    const handleFormSubmit = useCallback( async (e:React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
         try {
             await signup(signupFormValues);
+            toast.success("User created successfully!");
         } catch (error) {
-            toast.error(error instanceof Error ? error.message : "Something went wrong");
+            toast.error(error instanceof Error ? error.message : "Something went wrong!");
         }
     }, [signup, signupFormValues]);
     

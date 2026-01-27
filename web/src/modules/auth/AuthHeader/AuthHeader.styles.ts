@@ -30,7 +30,6 @@ export const BackIconContainer = styled.div`
     width: 15%;
     height: 100%;
     cursor: pointer;
-    border: 2px solid red;
 
     & svg {
         width: 100%;

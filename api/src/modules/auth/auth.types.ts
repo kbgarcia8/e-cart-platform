@@ -1,4 +1,4 @@
-import { Role } from "prisma/schema/generated/prisma";
+import { Role, Providers } from "prisma/schema/generated/prisma";
 
 type UserProfile = {
     firstname: string;
@@ -15,16 +15,33 @@ export type SignupRequestDTO = {
     confirmpassword: string;
 };
 
-export type UserCreateLocal = {
+type LocalCredentials = {
+    provider: "Local";
+    passwordHash: string;
+    providerId: null;
+};
+
+type OAuthCredentials = {
+    provider: "Facebook" | "Gmail";
+    passwordHash: null;
+    providerId: string;
+};
+
+type UserCredentials = LocalCredentials | OAuthCredentials;
+
+export type UserCreateData = {
     email: string;
-    password: string;
     role?: Role;
     isVerified?: boolean;
-} & UserProfile
+} & UserProfile & UserCredentials
 
-export type SignUpData = UserCreateLocal
-
-export type UserCreatedReturn = { email: string; id: string; role: Role; isVerified: boolean; created_at: Date; }
+export type UserCreatedReturn = { 
+    id: string; 
+    email: string; 
+    role: Role; 
+    isVerified: boolean; 
+    created_at: Date;
+}
 
 // ! Below this comment are yet to be edited
 

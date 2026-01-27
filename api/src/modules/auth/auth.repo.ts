@@ -1,10 +1,10 @@
 import { PrismaClient, Role, Providers } from "prisma/schema/generated/prisma/index";
 import { PrismaError } from "shared/errors/errors";
-import type { UserCreateLocal, UserCreatedReturn } from "./auth.types";
+import type { UserCreateData, UserCreatedReturn } from "./auth.types";
 
 const prisma = new PrismaClient();
 
-export async function createUserByLocal(userdata:UserCreateLocal):Promise<UserCreatedReturn> {
+export async function createUser(userdata:UserCreateData):Promise<UserCreatedReturn> {
     try {
         const data = {
             email: userdata.email,
@@ -19,14 +19,24 @@ export async function createUserByLocal(userdata:UserCreateLocal):Promise<UserCr
             },
             credentials: {
                 create: [{
-                    provider: Providers.Local,
-                    passwordHash: userdata.password,
-                    providerId: null
+                    provider: userdata.provider as Providers,
+                    passwordHash: userdata.passwordHash,
+                    providerId: userdata.providerId
                 }]
             }
         }
 
-        const newUser = await prisma.user.create({ data });
+        const newUser = await prisma.user.create({
+            data,
+            //? select here are data to be returned after create
+            select: {
+                id: true,
+                email: true,
+                role: true,
+                isVerified: true,
+                created_at: true,
+            },
+        });
         console.log("User created successfully!");
         return newUser;
 

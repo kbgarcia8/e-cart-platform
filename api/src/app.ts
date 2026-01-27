@@ -2,8 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import cors from "cors";
 // PASSPORT
-import passport from 'passport';
-import "modules/auth/passport/index";
+import passport from "modules/auth/passport";
 //ROUTES
 import authRouter from 'modules/auth/auth.routes';
 //CUSTOM ERRORS
