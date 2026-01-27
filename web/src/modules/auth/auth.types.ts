@@ -12,17 +12,19 @@ type UserProfile = {
     username?: string;
 }
 
-export type UserCreateLocal = {
+export type UserCreateData = {
     email: string;
-    password: string;
-    confirmpassword: string;
     role?: Role;
     isVerified?: boolean;
 } & UserProfile
 
-export type SignUpData = UserCreateLocal
-
-export type UserCreatedReturn = { email: string; id: string; role: Role; isVerified: boolean; created_at: Date; }
+export type UserCreatedReturn = { 
+    id: string; 
+    email: string; 
+    role: Role; 
+    isVerified: boolean; 
+    created_at: Date;
+}
 
 // ! Below this comment are yet to be edited
 

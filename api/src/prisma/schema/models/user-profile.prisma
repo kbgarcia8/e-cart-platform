@@ -1,7 +1,7 @@
 model UserProfile {
-    firstName   String  @ecart.VarChar(50)
-    lastName    String  @ecart.VarChar(100)
-    username    String? @unique @ecart.VarChar(30)
+    firstName   String  @db.VarChar(50)
+    lastName    String  @db.VarChar(100)
+    username    String? @unique @db.VarChar(30)
 
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId String

@@ -15,7 +15,7 @@ generator client {
   output   = "./generated/prisma"
 }
 
-datasource ecart {
+datasource db {
   provider = "postgresql"
   schemas  = ["auth", "inventory", "orders", "public"]
 }
@@ -50,7 +50,7 @@ enum InventoryStatus {
 }
 model Inventory {
   id       Int             @id @default(autoincrement())
-  name     String          @ecart.VarChar(50)
+  name     String          @db.VarChar(50)
   quantity Int
   status   InventoryStatus @default(Available)
 
@@ -97,7 +97,7 @@ enum PaymentMethod {
 }
 model Product {
   id        Int        @id @default(autoincrement())
-  name      String     @ecart.VarChar(50)
+  name      String     @db.VarChar(50)
   size      Sizes
   price     Int
   cartItems CartItem[]
@@ -131,7 +131,7 @@ enum Sizes {
 }
 model User {
   id         String   @id @default(uuid())
-  email      String   @unique @ecart.VarChar(254)
+  email      String   @unique @db.VarChar(254)
   role       Role     @default(Member)
   isVerified Boolean  @default(false)
   created_at DateTime @default(now())
@@ -146,7 +146,7 @@ model UserCredentials {
   id           String    @id @default(uuid())
   provider     Providers
   providerId   String? //unique id from facebook/google
-  passwordHash String?   @ecart.VarChar(72) //make null if provider is not local
+  passwordHash String?   @db.VarChar(72) //make null if provider is not local
   //accessToken String? //future use
   //futureTokenn String? //future use
 
@@ -157,9 +157,9 @@ model UserCredentials {
   @@schema("auth")
 }
 model UserProfile {
-  firstName String  @ecart.VarChar(50)
-  lastName  String  @ecart.VarChar(100)
-  username  String? @unique @ecart.VarChar(30)
+  firstName String  @db.VarChar(50)
+  lastName  String  @db.VarChar(100)
+  username  String? @unique @db.VarChar(30)
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String

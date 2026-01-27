@@ -1,6 +1,6 @@
 model Product {
     id      Int     @id @default(autoincrement())
-    name    String  @ecart.VarChar(50)
+    name    String  @db.VarChar(50)
     size Sizes
     price Int
     cartItems CartItem[]

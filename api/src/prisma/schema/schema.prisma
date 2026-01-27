@@ -9,7 +9,7 @@ generator client {
   output   = "./generated/prisma"
 }
 
-datasource ecart {
+datasource db {
   provider = "postgresql"
   schemas  = ["auth", "inventory", "orders", "public"]
 }

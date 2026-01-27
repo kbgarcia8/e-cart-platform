@@ -25,3 +25,4 @@ dist-ssr
 
 src/prisma/schema/generated
 .env
+ca.pem

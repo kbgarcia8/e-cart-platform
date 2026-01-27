@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useSignup } from "../auth.hooks";
-import type { SignUpData } from "../auth.types";
+import type { UserCreateData } from "../auth.types";
 import type {inputEntryShape, LabeledTextLike } from '@kbgarcia8/react-dynamic-form';
 import * as Styled from './SignupPage.styles';
 
@@ -104,10 +104,10 @@ const SignupPage =() => {
         }
     }, [error]);
 
-    const [signupFormValues, setSignupFormValues] = useState<SignUpData>(initialFormValues);
+    const [signupFormValues, setSignupFormValues] = useState<UserCreateData>(initialFormValues);
 
     const handleSignupFormChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        const datakey = e.currentTarget.dataset.key as keyof SignUpData;
+        const datakey = e.currentTarget.dataset.key as keyof UserCreateData;
         const value = e.currentTarget.value;
 
         setSignupFormValues((prevSignupFormValues) => ({
@@ -119,7 +119,7 @@ const SignupPage =() => {
     
     const signupFormInputs = signupFormInputArray.map((input) => (
         {...input,
-            value: String(signupFormValues[input.name as keyof SignUpData]),
+            value: String(signupFormValues[input.name as keyof UserCreateData]),
             onChange: handleSignupFormChange,
             dataAttributes: {
                 "data-key": `${input.name}`
@@ -127,7 +127,7 @@ const SignupPage =() => {
         }
     ));
 
-    const handleFormSubmit = useCallback( async (e:React.MouseEvent<HTMLButtonElement>) => {
+    const handleSubmitForm = useCallback( async (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             await signup(signupFormValues);
@@ -154,7 +154,7 @@ const SignupPage =() => {
                     labelClass={'signup-form-label'}
                     labelAndInputContainerClass={'signup-form-label-n-input-container'}
                     submitText={'Signup with Email'}
-                    handleSubmitForm={handleFormSubmit}
+                    handleSubmitForm={handleSubmitForm}
                 />
             </Styled.FormSpace>
             <Styled.LoginMessageSpace>

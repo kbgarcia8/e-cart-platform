@@ -1,6 +1,6 @@
 import passport from "passport";
-import "./local.strategy";
-import "./google.strategy";
-import "./facebook.strategy";
+import "./local.passport";
+import "./google.passport";
+import "./facebook.passport";
 
 export default passport;

@@ -1,8 +1,15 @@
+import "dotenv/config";
+import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient, Role, Providers } from "prisma/schema/generated/prisma/index";
 import { PrismaError } from "shared/errors/errors";
 import type { UserCreateData, UserCreatedReturn } from "./auth.types";
 
-const prisma = new PrismaClient();
+const adapter = new PrismaPg({
+    connectionString: process.env.DATABASE_URL!,
+    ssl: { rejectUnauthorized: false }, //for access denied error due to SSL/TSL
+});
+
+const prisma = new PrismaClient({ adapter });
 
 export async function createUser(userdata:UserCreateData):Promise<UserCreatedReturn> {
     try {
@@ -18,11 +25,11 @@ export async function createUser(userdata:UserCreateData):Promise<UserCreatedRet
                 }
             },
             credentials: {
-                create: [{
+                create: {
                     provider: userdata.provider as Providers,
                     passwordHash: userdata.passwordHash,
                     providerId: userdata.providerId
-                }]
+                }
             }
         }
 

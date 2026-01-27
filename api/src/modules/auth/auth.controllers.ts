@@ -7,6 +7,7 @@ import type { SignupRequestDTO } from "./auth.types";
 export const signupLocalPost = async (req: Request, res: Response):Promise<void> =>{
         const validatorErrors = validationResult(req);
         if (!validatorErrors.isEmpty()) {
+            console.log('debug111') //Continue debug for error to reach UI
             res.status(400).json(validatorErrors.array());
             return;
         }
