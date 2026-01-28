@@ -1,7 +1,7 @@
 import passport from "passport";
 import "dotenv/config";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-
+/*
 passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLE_CLIENT_ID!,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
@@ -13,3 +13,4 @@ passport.use(new GoogleStrategy({
         return cb(null, profile);
     }
 ))
+*/

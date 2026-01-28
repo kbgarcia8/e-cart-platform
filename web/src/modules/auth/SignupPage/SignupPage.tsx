@@ -98,11 +98,7 @@ const SignupPage =() => {
         confirmpassword: ''
     };
 
-    useEffect(() => {
-    if (error) {
-            toast.error(error);
-        }
-    }, [error]);
+    //console.log(error)
 
     const [signupFormValues, setSignupFormValues] = useState<UserCreateData>(initialFormValues);
 

@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginApi, signupApi } from "./auth.api";
-import type { LoginFormData, SignUpData } from "./auth.types";
+import type { LoginFormData, UserCreateData } from "./auth.types";
 
 export function useLogin() {
     const navigate = useNavigate();
@@ -36,20 +36,24 @@ export function useSignup() {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
 
-    const signup = useCallback(async (SignUpData: SignUpData) => {
+    const signup = useCallback(async (SignUpData: UserCreateData) => {
         setLoading(true)
         setError(null)
         try {
-            const response = await signupApi(SignUpData)
-
+            const response = await signupApi(SignUpData);
+            console.log(response);
             if (response) {
                 navigate("/login");
             }
-        } catch (error) {
-            if(error instanceof Error) {
-                const message = error?.message || "Something went wrong";
+        } catch (err) {
+            
+            if(err instanceof Error) {
+                
+                const message = err?.message || "Something went wrong";
                 setError(message);
-                throw error;
+                //console.log(error);
+                //console.log(err);
+                throw err;
             }
         } finally {
             setLoading(false)

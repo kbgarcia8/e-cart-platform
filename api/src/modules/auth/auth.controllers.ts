@@ -7,8 +7,17 @@ import type { SignupRequestDTO } from "./auth.types";
 export const signupLocalPost = async (req: Request, res: Response):Promise<void> =>{
         const validatorErrors = validationResult(req);
         if (!validatorErrors.isEmpty()) {
-            console.log('debug111') //Continue debug for error to reach UI
-            res.status(400).json(validatorErrors.array());
+            //console.log('debug111') //Continue debug for error to reach UI
+            
+            const errors = validatorErrors.array();
+            const errorMessages = errors.map((entry) => `- ${entry.msg}`).join("\n");
+
+            res.status(400).json({
+                statusCode: 400,
+                success: false,
+                message: errorMessages,
+                errors: errors.map(e => e.msg)
+            });
             return;
         }
 

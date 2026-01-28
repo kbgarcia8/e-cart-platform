@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch -r tsconfig-paths/register src/server.ts",
-    "build": "tsc",
-    "start": "node -r tsconfig-paths/register dist/server.js",
+    "dev": "npx tsx watch -r tsconfig-paths/register src/server.ts",
+    "build": "npx tsc",
+    "start": "npx tsx -r tsconfig-paths/register dist/server.js",
     "prisma:setup": "npx prisma init --datasource-provider postgresql --output src/schema/generated/prisma",
     "prisma:merge": "npx prismerge -i src/prisma/prismerge.json",
     "prisma:migrate": "npx prisma migrate dev --schema=./src/prisma/schema/main.prisma",
@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "@prisma-utils/prismerge": "^1.7.0",
-    "@prisma/adapter-pg": "^7.2.0",
+    "@prisma/adapter-pg": "^7.3.0",
     "@prisma/client": "^7.2.0",
     "@types/express": "^5.0.6",
     "cookie-parser": "^1.4.7",

@@ -6,7 +6,7 @@ const authRouter = Router();
 
 //authRouter.post('/signup/local', signupValidator, signupLocalPost);
 authRouter.post('/signup/local', (req:Request, _res:Response, next:NextFunction) => {
-  console.log("Signup body:", req.body);
+  //console.log("Signup body:", req.body);
   next();
 }, signupValidator, signupLocalPost);
 

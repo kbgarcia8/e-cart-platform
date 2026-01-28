@@ -1,10 +1,9 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, css } from 'styled-components';
 import { v } from 'shared/constants/variables';
 import soria from 'shared/fonts/Soria.ttf';
 import lato from 'shared/fonts/Lato-Regular.ttf';
 import raleway from 'shared/fonts/Raleway-Regular.ttf';
 import roboto from 'shared/fonts/Roboto-Regular.ttf';
-import { lightTheme, darkTheme } from './theme';
 import { media } from 'shared/utils/utility';
 
 const GlobalStyle = createGlobalStyle`
@@ -161,44 +160,26 @@ u {
         padding: ${v.spacing.small};
         font-family: ${v.fonts.secondary}, ${v.fonts.fallback};
     }
-    
-    ${({ theme }) => theme.colors.name === 'light' && `
-        .Toastify__toast--success {
-            background-color: ${darkTheme.colors.success};
-            color: ${lightTheme.colors.success};
-        }
-        .Toastify__toast--error {
-            background-color: ${darkTheme.colors.error};
-            color: ${lightTheme.colors.error};
-        }
-        .Toastify__toast--warning {
-            background-color: ${darkTheme.colors.warning};
-            color: ${lightTheme.colors.warning};
-        }
-        .Toastify__toast--info {
-            background-color: ${darkTheme.colors.information};
-            color: ${lightTheme.colors.information};
-        }
-    `}
-
-    ${({ theme }) => theme.colors.name === 'dark' && `
-        .Toastify__toast--success {
-            background-color: ${lightTheme.colors.success};
-            color: ${darkTheme.colors.success};
-        }
-        .Toastify__toast--error {
-            background-color: ${lightTheme.colors.error};
-            color: ${darkTheme.colors.error};
-        }
-        .Toastify__toast--warning {
-            background-color: ${lightTheme.colors.warning};
-            color: ${darkTheme.colors.warning};
-        }
-        .Toastify__toast--info {
-            background-color: ${lightTheme.colors.information};
-            color: ${darkTheme.colors.information};
-        }
-    `}
+    ${({ theme }) => 
+        css`
+            .Toastify__toast--success {
+                background-color: ${theme.notificationPalette.successText};
+                color: ${theme.notificationPalette.successBackground};
+            }
+            .Toastify__toast--error {
+                background-color: ${theme.notificationPalette.errorBackground};
+                color: ${theme.notificationPalette.errorText};
+            }
+            .Toastify__toast--warning {
+                background-color: ${theme.notificationPalette.warningBackground};
+                color: ${theme.notificationPalette.warningText};
+            }
+            .Toastify__toast--info {
+                background-color: ${theme.notificationPalette.infoBackground};
+                color: ${theme.notificationPalette.infoText};
+            }
+        `
+    }
 `;
 
 export default GlobalStyle;

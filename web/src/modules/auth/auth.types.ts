@@ -40,7 +40,10 @@ export type AuthUser = {
 }
 
 
-export type AuthResponse = {
-    user: AuthUser
-    token: string
-}
+export type AuthResponse<T> = {
+    statusCode: number;
+    success: boolean;
+    message: string;
+    data?: T;
+    errors?: string[];
+};

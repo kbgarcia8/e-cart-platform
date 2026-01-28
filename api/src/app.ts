@@ -20,7 +20,6 @@ app.use(cors({
 //? Parse URL-encoded bodies (from HTML forms or POST requests with content-type application/x-www-form-urlencoded)
 //? `extended: true` allows nested objects like user[name]=Alice → { user: { name: "Alice" } }
 app.use(express.urlencoded({ extended: true }));
-
 //? Parse incoming JSON payloads (application/json) so you can access data via req.body
 app.use(express.json());
 
