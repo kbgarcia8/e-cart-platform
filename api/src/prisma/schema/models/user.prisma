@@ -4,9 +4,11 @@ model User {
     role        Role @default(Member)
     isVerified Boolean @default(false)
     created_at  DateTime @default(now())
+    updated_at DateTime @updatedAt
 
     profile UserProfile?
     credentials UserCredentials[]
+    verificationTokens VerificationToken[]
 
     @@schema("auth")
 }

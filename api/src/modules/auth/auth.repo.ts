@@ -3,6 +3,8 @@ import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient, Role, Providers } from "prisma/schema/generated/prisma/index";
 import { PrismaError } from "shared/errors/errors";
 import type { UserCreateData, UserCreatedReturn } from "./auth.types";
+import crypto from 'crypto';
+import { sendVerificationEmail } from "./auth.utils";
 
 const adapter = new PrismaPg({
     connectionString: process.env.DATABASE_URL!,
@@ -44,6 +46,9 @@ export async function createUser(userdata:UserCreateData):Promise<UserCreatedRet
                 created_at: true,
             },
         });
+
+        //Generate token and call sendVerificationEmail, CONTINUE HERE
+
         console.log("User created successfully!");
         return newUser;
 

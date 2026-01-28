@@ -16,7 +16,8 @@
         "src/prisma/schema/models/sizes.prisma",
         "src/prisma/schema/models/user.prisma",
         "src/prisma/schema/models/user-credentials.prisma",
-        "src/prisma/schema/models/user-profile.prisma"
+        "src/prisma/schema/models/user-profile.prisma",
+        "src/prisma/schema/models/verification-token.prisma"
         ],
         "output": "src/prisma/schema/main.prisma"
     }

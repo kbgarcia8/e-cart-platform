@@ -135,10 +135,12 @@ model User {
   role       Role     @default(Member)
   isVerified Boolean  @default(false)
   created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
-  profile     UserProfile?
-  credentials UserCredentials[]
-  carts       Cart[]
+  profile            UserProfile?
+  credentials        UserCredentials[]
+  verificationTokens VerificationToken[]
+  carts              Cart[]
 
   @@schema("auth")
 }
@@ -165,5 +167,14 @@ model UserProfile {
   userId String
 
   @@id([userId])
+  @@schema("auth")
+}
+model VerificationToken {
+  id        String   @id @default(uuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id])
+
   @@schema("auth")
 }
