@@ -12,7 +12,7 @@
     "prisma:migrate": "npx prisma migrate dev --schema=./src/prisma/schema/main.prisma",
     "prisma:generate": "prisma generate --schema=./src/prisma/schema/main.prisma",
     "prisma:pull": "npx prisma db pull --schema=./src/prisma/schema/main.prisma",
-    "prisma:studio": "npx prisma studio --schema=./src/prisma/schema/main.prisma"
+    "prisma:studio": "npx prisma studio --url=\"$DATABASE_URL\""
   },
   "keywords": [],
   "author": "",
