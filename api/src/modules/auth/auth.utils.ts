@@ -9,13 +9,15 @@ const transporter = nodemailer.createTransport({
 });
 
 export const sendVerificationEmail = async (email: string, token: string) => {
-  const verificationLink = `${process.env.API_BASE_URL}/api/auth/verify?token=${token}`; // Your frontend verification URL
+  const verificationLink = `${process.env.API_BASE_URL}/auth/verify?token=${token}`; //? Your backend verification endpoint
 
     const mailOptions = {
         from: process.env.EMAIL_USER,
         to: email,
         subject: 'Verify Your Email Address',
-        html: `<p>Please click the link below to verify your email address:<br><a href="${verificationLink}">Verify Email</a></p>`,
+        html: `<p>Please click the link below to verify your email address to use E-cart Platform:<br><a href="${verificationLink}">Verify Email</a></p>`,
+        //html can be upgraded into TSX just use renderToStaticMarkup from react-dom-server to convert before supplying here
+        //Create tsx in shared same level as api and web
     };
 
     await transporter.sendMail(mailOptions);

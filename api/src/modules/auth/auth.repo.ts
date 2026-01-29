@@ -2,7 +2,7 @@ import "dotenv/config";
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient, Role, Providers } from "prisma/schema/generated/prisma/index";
 import { PrismaError } from "shared/errors/errors";
-import type { UserCreateData, UserCreatedReturn } from "./auth.types";
+import type { UserCreateData, UserCreatedReturn, FindVerificationToken } from "./auth.types";
 import crypto from 'crypto';
 import { sendVerificationEmail } from "./auth.utils";
 
@@ -46,10 +46,21 @@ export async function createUser(userdata:UserCreateData):Promise<UserCreatedRet
                 created_at: true,
             },
         });
-
-        //Generate token and call sendVerificationEmail, CONTINUE HERE
-
         console.log("User created successfully!");
+        //Generate token and call sendVerificationEmail, CONTINUE HERE
+        const token = crypto.randomBytes(32).toString('hex');
+        const expirationDate = new Date();
+        expirationDate.setHours(expirationDate.getHours() + 1); //? Token valid for 1 hour
+
+        await prisma.verificationToken.create({
+            data: {
+            token,
+            userId: newUser.id,
+            expiresAt: expirationDate,
+            },
+        });
+        await sendVerificationEmail(userdata.email, token);
+        console.log("Email Verification send to Email");
         return newUser;
 
     } catch (error){
@@ -70,4 +81,16 @@ export async function createUser(userdata:UserCreateData):Promise<UserCreatedRet
             { detail: { message: "Unknown error" } }
         );
     }   
+};
+
+export async function findVerificationToken(token: string):Promise<FindVerificationToken> {
+    try {
+        const verificationToken = await prisma.verificationToken.findUnique({
+            where: { token: token as string },
+            include: { user: true },
+        });
+    } catch (error) {
+        
+    }
+
 }

@@ -1,4 +1,4 @@
-import { Role, Providers } from "prisma/schema/generated/prisma";
+import { Role, Providers, User } from "prisma/schema/generated/prisma";
 
 type UserProfile = {
     firstname: string;
@@ -43,12 +43,15 @@ export type UserCreatedReturn = {
     created_at: Date;
 }
 
-// ! Below this comment are yet to be edited
-
-export type LoginFormData = {
-    email: string;
-    password: string;
+export type FindVerificationToken = {
+    id: string; 
+    token: string; 
+    expiresAt: Date; 
+    userId: string;
+    user: User;
 }
+
+// ! Below this comment are yet to be edited
 
 export type AuthUser = {
     id: string

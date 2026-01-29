@@ -42,4 +42,10 @@ export const signupLocalPost = async (req: Request, res: Response):Promise<void>
         
         const result = await authService.signup(userdata);
         res.status(200).json(result);
+};
+
+export const verifyEmail = async (req: Request, res: Response):Promise<void> => {
+    const { token } = req.query;
+
+    const result = await authService.verifyEmail(token as string)
 }
