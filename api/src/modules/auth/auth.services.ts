@@ -3,7 +3,7 @@ import type { UserCreateData } from './auth.types';
 
 export async function signup(data:UserCreateData) {
     const user = await repo.createUser(data);
-
+    
     return {
         user: {
             id: user.id,

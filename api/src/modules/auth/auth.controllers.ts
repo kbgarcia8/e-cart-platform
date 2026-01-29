@@ -1,14 +1,12 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 import bcrypt from 'bcryptjs';
 import * as authService from "./auth.services";
 import type { SignupRequestDTO } from "./auth.types";
 
-export const signupLocalPost = async (req: Request, res: Response):Promise<void> =>{
+export const signupLocalPost = async (req: Request, res: Response, next:NextFunction):Promise<void> =>{
         const validatorErrors = validationResult(req);
         if (!validatorErrors.isEmpty()) {
-            //console.log('debug111') //Continue debug for error to reach UI
-            
             const errors = validatorErrors.array();
             const errorMessages = errors.map((entry) => `- ${entry.msg}`).join("\n");
 
@@ -39,9 +37,12 @@ export const signupLocalPost = async (req: Request, res: Response):Promise<void>
             ...userCreateData,
             username: finalUsername
         }
-        
-        const result = await authService.signup(userdata);
-        res.status(200).json(result);
+        try{
+            const result = await authService.signup(userdata);
+            res.status(200).json(result);
+        } catch(err){
+            next(err)
+        }
 };
 
 export const verifyEmail = async (req: Request, res: Response):Promise<void> => {
