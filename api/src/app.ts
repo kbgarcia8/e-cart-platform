@@ -6,7 +6,7 @@ import passport from "modules/auth/passport";
 //ROUTES
 import authRouter from 'modules/auth/auth.routes';
 //CUSTOM ERRORS
-import { PrismaError, AuthError, ExpressValError } from 'shared/errors/errors';
+import { AppError } from 'shared/errors/errors';
 
 const app = express();
 
@@ -50,16 +50,13 @@ if (process.env.NODE_ENV === "production") {
     app.use((err: any, req: Request, res: Response, next: NextFunction) => {
         console.error(err);
 
-        if (err instanceof PrismaError) {
-            return res.status(err.statusCode).json({ code: err.errCode, message: err.message, details: err.details });
-        }
-
-        if (err instanceof AuthError) {
-            return res.status(err.statusCode).json({ code: err.errCode, message: err.message, details: err.details });
-        }
-
-        if (err instanceof ExpressValError) {
-            return res.status(err.statusCode).json({ code: err.errCode, message: err.message, details: err.details });
+        if (err instanceof AppError) {
+            return res.status(Number(err.code)).json({
+                code: err.code,
+                success: false,
+                message: err.message,
+                errors: err.details
+            });
         }
 
         res.status(500).json({ message: "Internal Server Error" });

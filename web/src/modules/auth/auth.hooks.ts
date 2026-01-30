@@ -46,13 +46,9 @@ export function useSignup() {
                 navigate("/login");
             }
         } catch (err) {
-            
             if(err instanceof Error) {
-                
                 const message = err?.message || "Something went wrong";
                 setError(message);
-                //console.log(error);
-                //console.log(err);
                 throw err;
             }
         } finally {

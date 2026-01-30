@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { validationResult } from "express-validator";
+import { validationResult, FieldValidationError } from "express-validator";
 import bcrypt from 'bcryptjs';
+import { ExpressValError } from "shared/errors/errors";
+import type { ExpressValidationErrorDetails } from "shared/errors/errors.types";
 import * as authService from "./auth.services";
 import type { SignupRequestDTO } from "./auth.types";
 
@@ -9,14 +11,18 @@ export const signupLocalPost = async (req: Request, res: Response, next:NextFunc
         if (!validatorErrors.isEmpty()) {
             const errors = validatorErrors.array();
             const errorMessages = errors.map((entry) => `- ${entry.msg}`).join("\n");
+            const details = errors.filter((err): err is FieldValidationError => err.type === 'field')
+                .map(err => ({
+                    type: err.path,
+                    msg: err.msg
+                }));
 
-            res.status(400).json({
-                statusCode: 400,
-                success: false,
-                message: errorMessages,
-                errors: errors.map(e => e.msg)
-            });
-            return;
+            throw new ExpressValError<ExpressValidationErrorDetails>(
+                errorMessages,
+                '400',
+                "EXPRESS_VAL_ERROR",
+                details
+            );
         }
 
         const { email, firstname, lastname, username, password } = req.body as SignupRequestDTO;
@@ -39,14 +45,23 @@ export const signupLocalPost = async (req: Request, res: Response, next:NextFunc
         }
         try{
             const result = await authService.signup(userdata);
-            res.status(200).json(result);
+            res.status(200).json({
+                code: 200,
+                success: true,
+                message: 'User signup successful. Please verify email',
+                data: result
+            });
         } catch(err){
-            next(err)
+            next(err);
         }
 };
 
-export const verifyEmail = async (req: Request, res: Response):Promise<void> => {
+export const verifyEmail = async (req: Request, res: Response, next: NextFunction):Promise<void> => {
     const { token } = req.query;
-
-    const result = await authService.verifyEmail(token as string)
+    
+    try {
+        const result = await authService.verifyEmail(token as string);
+    } catch (err) {
+        next(err);
+    }
 }

@@ -18,4 +18,9 @@ export async function signup(data:UserCreateData) {
 export async function verifyEmail(token:string){
     const verification = await repo.findVerificationToken(token);
     
+    return {
+        user: verification.userId,
+        token: verification.token,
+        expiration: verification.expiresAt
+    }
 }

@@ -29,12 +29,6 @@ export const signupValidator = [
         }).withMessage('Password must be at least 8 characters and include uppercase, lowercase, and a symbol'),
     check('confirmpassword')
         .notEmpty().withMessage('Please confirm password!').bail()
-        .custom((value, { req }) => {
-            if (value !== req.body['password']) {
-                throw new ExpressValError("Password do not match", 400, "EXPRESS_VAL_ERROR_PASSWORD_NOT_MATCH", {
-                    detail: "Password during signup does not match!",
-                });
-            }
-            return true;
-        })
+        .custom((value, { req }) => value === req.body.password)
+        .withMessage('Passwords do not match')
 ];

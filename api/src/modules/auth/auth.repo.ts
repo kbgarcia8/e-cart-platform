@@ -1,7 +1,8 @@
 import "dotenv/config";
 import { PrismaPg } from '@prisma/adapter-pg';
-import { PrismaClient, Role, Providers } from "prisma/schema/generated/prisma/index";
-import { PrismaError, AuthError } from "shared/errors/errors";
+import { Prisma, PrismaClient, Role, Providers } from "prisma/schema/generated/prisma/index";
+import { AppError, PrismaError, AuthError } from "shared/errors/errors";
+import type { PrismaErrorDetails, ExpressValidationErrorDetails, AuthErrorDetails } from "shared/errors/errors.types";
 import type { UserCreateData, UserCreateDTO, FindVerificationToken } from "./auth.types";
 import crypto from 'crypto';
 import { sendVerificationEmail } from "./auth.utils";
@@ -53,22 +54,37 @@ export async function createUser(userdata:UserCreateData):Promise<UserCreateDTO>
 
     } catch (error){
         console.error("Prisma Database error in createUser:", error);
-        if (error instanceof Error) {
-            throw new PrismaError(
-            "Failed to create user in database",
-            409,
-            "PRISMA_CREATE_USER_FAILED",
-            { detail: { message: error.message } }
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            throw new PrismaError<PrismaErrorDetails>(
+                error.message,
+                error.code,
+                "PRISMA_CREATE_USER_FAILED",
+                {
+                    model: 'User',
+                    metaTarget: error.meta ? Array(String(error.meta.target)) : [],
+                    clientVersion: error.clientVersion
+                }
+            );
+        } else if (error instanceof Prisma.PrismaClientUnknownRequestError) {
+            throw new PrismaError<PrismaErrorDetails>(
+                error.message,
+                '1000',
+                "PRISMA_CREATE_USER_FAILED",
+                {
+                    model: 'User',
+                    clientVersion: error.clientVersion
+                }
+            );
+        } else if (error instanceof Error) {
+            throw new AppError<{cause:string}>(
+                "Unknown error occurred while creating user",
+                '500',
+                "UNKOWN_ERROR",
+                { cause: error?.message }
             );
         }
-
-        throw new PrismaError(
-            "Failed to create user in database",
-            409,
-            "PRISMA_CREATE_USER_FAILED",
-            { detail: { message: "Unknown error" } }
-        );
-    }   
+    }
+    throw new AppError("createUser failed without throwing an error", '500', "UNKNOWN_ERROR");
 };
 
 export async function sendVerificationToken(id:string, email:string) {
@@ -91,43 +107,62 @@ export async function sendVerificationToken(id:string, email:string) {
             console.error("Verification Token creation error in :", error);
 
             if (error instanceof Error) {
-                throw new AuthError(
+                throw new AuthError<AuthErrorDetails>(
                     "Failed to send verification token in email",
-                    409,
+                    '535',
                     "VERIFICATION_TOKEN_NOT_SENT",
-                    { detail: { message: error.message } }
+                    { reason: error.message }
+                );
+            } else {
+                throw new AppError<{cause:string}>(
+                    "Unknown error occurred while creating user",
+                    '500',
+                    "UNKOWN_ERROR",
+                    { cause: String(error) }
                 );
             }
-
-            throw new AuthError(
-                "Unknown error occurred while sending verification token",
-                409,
-                "UNKOWN_ERROR"
-            );
         }
 }
 
-export async function findVerificationToken(token: string):Promise<FindVerificationToken|null> {
+export async function findVerificationToken(token: string):Promise<FindVerificationToken> {
     try {
-        const verificationToken = await prisma.verificationToken.findUnique({
+        const verificationToken = await prisma.verificationToken.findUniqueOrThrow({
             where: { token: token as string },
             include: { user: true },
         });
-        return verificationToken
-    } catch (error) {
+        return verificationToken;
+        
+    } catch (error){
         console.error("Prisma Database error in findVerificationToken:", error);
-        if (error instanceof Error) {
-            throw new PrismaError(
-                "Failed to retrieve token it may not exist or is expired",
-                409,
-                "VERIFICATION_TOKEN_NOT_FOUND",
-                { detail: { message: error.message } }
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            throw new PrismaError<PrismaErrorDetails>(
+                error.message,
+                error.code,
+                "PRISMA_VERIFICATION_TOKEN_FAILED",
+                {
+                    model: 'User and VerificationToken',
+                    metaTarget: error.meta ? Array(String(error.meta.target)) : [],
+                    clientVersion: error.clientVersion
+                }
+            );
+        } else if (error instanceof Prisma.PrismaClientUnknownRequestError) {
+            throw new PrismaError<PrismaErrorDetails>(
+                error.message,
+                '1000',
+                "PRISMA_VERIFICATION_TOKEN_FAILED",
+                {
+                    model: 'User and VerificationToken',
+                    clientVersion: error.clientVersion
+                }
+            );
+        } else if (error instanceof Error) {
+            throw new AppError<{cause:string}>(
+                "Unknown error occurred while verifying user",
+                '500',
+                "UNKOWN_ERROR",
+                { cause: error?.message }
             );
         }
-        throw new PrismaError(
-            "Unknown error occurred while retrieving verification token",
-            500,
-            "UNKNOWN_ERROR"
-        );
     }
+    throw new AppError("createUser failed without throwing an error", '500', "UNKNOWN_ERROR");
 }

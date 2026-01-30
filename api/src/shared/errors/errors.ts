@@ -1,39 +1,41 @@
-export class AppError extends Error {
-    readonly statusCode: number;
-    readonly errCode: string;
-    readonly details: { detail: Record<string,string>|string|null} | null;
+import type { PrismaErrorDetails, AuthErrorDetails, ExpressValidationErrorDetails } from "./errors.types";
 
-    constructor(message:string, statusCode:number = 500, code:string="APP_ERROR", details:{ detail: Record<string,string>|string|null} | null=null) {
+export class AppError<T=unknown> extends Error {
+    readonly code: string;
+    readonly type: string;
+    readonly details: T | null;
+
+    constructor(message:string, code:string = '500', type:string="APP_ERROR", details:T | null=null) {
         super(message);
         this.name = this.constructor.name;
-        this.statusCode = statusCode;
-        this.errCode = code;
+        this.code = code;
+        this.type = type;
         this.details = details;
 
         if (Error.captureStackTrace) Error.captureStackTrace(this, this.constructor);
     }
 };
 //For query related errors
-export class PrismaError extends AppError {
-    constructor(message = "Database(Prisma) Error", statusCode = 500, code = "DB_PRISMA_ERROR", details: { detail: Record<string, string> | string | null } | null = null) {
-        super(message, statusCode, code, details);
+export class PrismaError<T = PrismaErrorDetails> extends AppError {
+    constructor(message = "Database(Prisma) Error", code = '1000', type = "DB_PRISMA_ERROR", details: T | null = null) {
+        super(message, code, type, details);
     }
 };
 //For authentication errors
-export class AuthError extends AppError {
-    constructor(message = "Authentication Error", statusCode = 500, code = "AUTH_ERROR", details: { detail: Record<string, string> | string | null } | null = null){
-        super(message, statusCode, code, details);
+export class AuthError<T = AuthErrorDetails> extends AppError {
+    constructor(message = "Authentication Error", code = '500', type = "AUTH_ERROR", details: T | null = null){
+        super(message, code, type, details);
     }
 }
 //For express validator errors
-export class ExpressValError extends AppError {
-    constructor(message = "Express Validator Error", statusCode = 400, code = "EXPRESS_VAL_ERROR", details: { detail: Record<string, string> | string | null } | null = null){
-        super(message, statusCode, code, details);
+export class ExpressValError<T = ExpressValidationErrorDetails> extends AppError {
+    constructor(message = "Express Validator Error", code = '400', type = "EXPRESS_VAL_ERROR", details: T | null = null){
+        super(message, code, type, details);
     }
 }
 //For multer file upload errors
-export class FileUploadError extends AppError {
-    constructor(message = "File Upload Error", statusCode = 400, code = "MULTER_FILE_UPLOAD_ERROR", details: { detail: Record<string, string> | string | null } | null = null){
-        super(message, statusCode, code, details);
+export class FileUploadError<T> extends AppError {
+    constructor(message = "File Upload Error", code = '400', type = "MULTER_FILE_UPLOAD_ERROR", details: T | null = null){
+        super(message, code, type, details);
     }
 }
