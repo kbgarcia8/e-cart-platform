@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { NextFunction, Request, Response } from "express";
 import { validationResult, FieldValidationError } from "express-validator";
 import bcrypt from 'bcryptjs';
@@ -58,9 +59,9 @@ export const signupLocalPost = async (req: Request, res: Response, next:NextFunc
 
 export const verifyEmail = async (req: Request, res: Response, next: NextFunction):Promise<void> => {
     const { token } = req.query;
-    
     try {
         const result = await authService.verifyEmail(token as string);
+        if(result.isVerified) res.redirect(`${process.env.CLIENT_BASE_URL}/login?verified=true`);
     } catch (err) {
         next(err);
     }

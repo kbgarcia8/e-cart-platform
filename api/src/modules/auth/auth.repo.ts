@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { PrismaPg } from '@prisma/adapter-pg';
-import { Prisma, PrismaClient, Role, Providers } from "prisma/schema/generated/prisma/index";
+import { Prisma, PrismaClient, Role, Providers, User } from "prisma/schema/generated/prisma/index";
 import { AppError, PrismaError, AuthError } from "shared/errors/errors";
 import type { PrismaErrorDetails, ExpressValidationErrorDetails, AuthErrorDetails } from "shared/errors/errors.types";
 import type { UserCreateData, UserCreateDTO, FindVerificationToken } from "./auth.types";
@@ -47,13 +47,10 @@ export async function createUser(userdata:UserCreateData):Promise<UserCreateDTO>
                 created_at: true,
             },
         });
-        console.log("User created successfully!");
-        //Generate token and call sendVerificationEmail
-        await sendVerificationToken(newUser.id, userdata.email)
         return newUser;
 
     } catch (error){
-        console.error("Prisma Database error in createUser:", error);
+        
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
             throw new PrismaError<PrismaErrorDetails>(
                 error.message,
@@ -102,10 +99,8 @@ export async function sendVerificationToken(id:string, email:string) {
 
         try {
             await sendVerificationEmail(email, token);
-            console.log("Email Verification send to Email");
+            
         } catch (error) {
-            console.error("Verification Token creation error in :", error);
-
             if (error instanceof Error) {
                 throw new AuthError<AuthErrorDetails>(
                     "Failed to send verification token in email",
@@ -122,18 +117,40 @@ export async function sendVerificationToken(id:string, email:string) {
                 );
             }
         }
-}
+};
 
-export async function findVerificationToken(token: string):Promise<FindVerificationToken> {
+export async function verifyEmail(token: string):Promise<User> {
     try {
         const verificationToken = await prisma.verificationToken.findUniqueOrThrow({
             where: { token: token as string },
             include: { user: true },
         });
-        return verificationToken;
         
+        // If token is expired
+        if (verificationToken.expiresAt < new Date()) {
+            await prisma.verificationToken.delete({ where: { id: verificationToken.id } });
+            throw new AuthError<AuthErrorDetails>(
+                "Failed to send verification token in email",
+                '401',
+                "VERIFICATION_TOKEN_EXPIRED",
+                { reason: 'Token expired. Please request a new verification email.' }
+            );
+        }
+        //! Add here a case where token is not expired yet still not verified to remind user to verify
+
+        // Update user status to verified
+        await prisma.user.update({
+            where: { id: verificationToken.userId },
+            data: { isVerified: true },
+        });
+
+        // Delete the used token from the database
+        await prisma.verificationToken.delete({ where: { id: verificationToken.id } });
+
+        const verifiedUser = verificationToken.user;
+
+        return verifiedUser;
     } catch (error){
-        console.error("Prisma Database error in findVerificationToken:", error);
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
             throw new PrismaError<PrismaErrorDetails>(
                 error.message,
@@ -145,7 +162,9 @@ export async function findVerificationToken(token: string):Promise<FindVerificat
                     clientVersion: error.clientVersion
                 }
             );
-        } else if (error instanceof Prisma.PrismaClientUnknownRequestError) {
+        }
+        
+        if (error instanceof Prisma.PrismaClientUnknownRequestError) {
             throw new PrismaError<PrismaErrorDetails>(
                 error.message,
                 '1000',
@@ -155,14 +174,11 @@ export async function findVerificationToken(token: string):Promise<FindVerificat
                     clientVersion: error.clientVersion
                 }
             );
-        } else if (error instanceof Error) {
-            throw new AppError<{cause:string}>(
-                "Unknown error occurred while verifying user",
-                '500',
-                "UNKOWN_ERROR",
-                { cause: error?.message }
-            );
+        } 
+        
+        if (error instanceof Error) {
+            throw error;
         }
     }
     throw new AppError("createUser failed without throwing an error", '500', "UNKNOWN_ERROR");
-}
+};
