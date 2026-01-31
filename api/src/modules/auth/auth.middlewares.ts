@@ -1,8 +1,13 @@
 import { check } from 'express-validator';
-import { ExpressValError } from 'shared/errors/errors';
+import { validate } from 'deep-email-validator';
+import { Request, Response, NextFunction } from 'express';
+import { DeepEmailValError } from 'shared/errors/errors';
+import type { DeepEmailValidationErrorDetails } from 'shared/errors/errors.types';
 
 export const signupValidator = [
     check('email')
+        .trim()
+        .notEmpty().withMessage('Email is required!').bail()
         .isEmail().withMessage('Please provide a valid email address!').bail()
         .normalizeEmail(),
     check('firstname')
@@ -32,3 +37,33 @@ export const signupValidator = [
         .custom((value, { req }) => value === req.body.password)
         .withMessage('Passwords do not match')
 ];
+
+export const deepEmailValidation = async (req:Request, res:Response, next:NextFunction) => {
+    try {
+        const { email } = req.body;
+
+        const result = await validate({
+        email,
+        validateTypo: true,
+        validateDisposable: true,
+        validateMx: true,
+        validateSMTP: false,
+        });
+
+        if (!result.valid) {
+            throw new DeepEmailValError<DeepEmailValidationErrorDetails>(
+                'Email not valid/deliverable/existent',
+                '400',
+                'EMAIL_NOT_DELIVERABLE',
+                {
+                    email,
+                    reason: result.reason || 'Email failed deliverability checks / Invalid email address',
+                }
+            );
+        }
+
+        next();
+    } catch (err) {
+        next(err);
+    }
+};

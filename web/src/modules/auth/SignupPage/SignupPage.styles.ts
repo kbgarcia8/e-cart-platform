@@ -17,6 +17,11 @@ export const SignupPageHeader =  styled.h2`
     text-align: center;
 `;
 
+export const VerifyEmailHeader =  styled.h4`
+    width: 100%;
+    text-align: center;
+`;
+
 export const FormSpace = styled.div`
     display: flex;
 `;

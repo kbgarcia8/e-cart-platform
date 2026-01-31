@@ -9,6 +9,11 @@ export type ExpressValidationErrorDetails = {
     msg: string;
 }[];
 
+export type DeepEmailValidationErrorDetails = {
+    reason: string;
+    email: string;
+};
+
 export type AuthErrorDetails = {
     reason: string; //usually error.message is passed
 };

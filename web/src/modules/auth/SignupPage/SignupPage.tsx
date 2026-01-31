@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
+import { BounceLoader } from "react-spinners";
 import { useSignup } from "../auth.hooks";
 import type { UserCreateData } from "../auth.types";
 import type {inputEntryShape, LabeledTextLike } from '@kbgarcia8/react-dynamic-form';
@@ -88,7 +89,7 @@ const signupFormInputArray:inputEntryShape<false,LabeledTextLike>[] = [
 
 const SignupPage =() => {
 
-    const { signup, loading, error } = useSignup();
+    const { signup, loading, successSignup, error } = useSignup();
     const initialFormValues = {
         email: '',
         firstname: '',
@@ -98,7 +99,7 @@ const SignupPage =() => {
         confirmpassword: ''
     };
 
-    //console.log(error)
+    console.log(error);
 
     const [signupFormValues, setSignupFormValues] = useState<UserCreateData>(initialFormValues);
 
@@ -133,26 +134,31 @@ const SignupPage =() => {
         }
     }, [signup, signupFormValues]);
     
-
     return(
         <Styled.SignupPageWrapper>
-            <Styled.SignupPageHeader>
-                Welcome to E-cart Platform! Signup to enjoy member perks.
-            </Styled.SignupPageHeader>
-            <Styled.FormSpace>
-                <Styled.SignupForm
-                    className={'without-fieldsets'}
-                    fieldsets={null}
-                    formInputs={signupFormInputs || []}
-                    id="signup"
-                    isExpandable={false}
-                    inputClass={'signup-form-input'}
-                    labelClass={'signup-form-label'}
-                    labelAndInputContainerClass={'signup-form-label-n-input-container'}
-                    submitText={'Signup with Email'}
-                    handleSubmitForm={handleSubmitForm}
-                />
-            </Styled.FormSpace>
+            {!loading
+            ? <React.Fragment>
+                <Styled.SignupPageHeader>
+                    Welcome to E-cart Platform! Signup to enjoy member perks.
+                </Styled.SignupPageHeader>
+                {successSignup ? <Styled.VerifyEmailHeader>Email Verification was sent to your email. Please verify to login!</Styled.VerifyEmailHeader> :null}
+                <Styled.FormSpace>
+                    <Styled.SignupForm
+                        className={'without-fieldsets'}
+                        fieldsets={null}
+                        formInputs={signupFormInputs || []}
+                        id="signup"
+                        isExpandable={false}
+                        inputClass={'signup-form-input'}
+                        labelClass={'signup-form-label'}
+                        labelAndInputContainerClass={'signup-form-label-n-input-container'}
+                        submitText={'Signup with Email'}
+                        handleSubmitForm={handleSubmitForm}
+                    />
+                </Styled.FormSpace>
+            </React.Fragment>
+            : <BounceLoader/>
+            }
             <Styled.LoginMessageSpace>
                 <Styled.LoginMessage>
                     Already signed up? Please login instead <Styled.LoginLink  to={`/login`}>{"Login"}</Styled.LoginLink> 

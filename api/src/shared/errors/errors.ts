@@ -1,4 +1,4 @@
-import type { PrismaErrorDetails, AuthErrorDetails, ExpressValidationErrorDetails } from "./errors.types";
+import type { PrismaErrorDetails, AuthErrorDetails, ExpressValidationErrorDetails, DeepEmailValidationErrorDetails } from "./errors.types";
 
 export class AppError<T=unknown> extends Error {
     readonly code: string;
@@ -30,6 +30,12 @@ export class AuthError<T = AuthErrorDetails> extends AppError {
 //For express validator errors
 export class ExpressValError<T = ExpressValidationErrorDetails> extends AppError {
     constructor(message = "Express Validator Error", code = '400', type = "EXPRESS_VAL_ERROR", details: T | null = null){
+        super(message, code, type, details);
+    }
+}
+//For deep email validation errors
+export class DeepEmailValError<T = DeepEmailValidationErrorDetails> extends AppError {
+    constructor(message = "Deep Email Validation Error", code = '400', type = "DEEP_EMAIL_VAL_ERROR", details: T | null = null){
         super(message, code, type, details);
     }
 }

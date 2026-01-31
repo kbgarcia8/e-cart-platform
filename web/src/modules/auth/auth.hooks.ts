@@ -33,17 +33,21 @@ export function useLogin() {
 
 export function useSignup() {
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState<string | null>(null)
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [successSignup, setSuccessSignup] = useState(false);
 
     const signup = useCallback(async (SignUpData: UserCreateData) => {
-        setLoading(true)
-        setError(null)
+        setLoading(true); //add a loader that pops when loading is true
+        setError(null);
+        setSuccessSignup(false);
+
         try {
             const response = await signupApi(SignUpData);
             console.log(response);
             if (response) {
-                navigate("/login");
+                navigate("/signup");
+                setSuccessSignup(true);
             }
         } catch (err) {
             if(err instanceof Error) {
@@ -56,5 +60,5 @@ export function useSignup() {
         }
     }, [navigate])
 
-    return { signup, loading, error }
+    return { signup, loading, successSignup, error }
 };
