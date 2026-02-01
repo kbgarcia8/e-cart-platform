@@ -45,22 +45,20 @@ if (process.env.NODE_ENV === "production") {
     app.get("*", (_req, res) => {
         res.sendFile(path.join(clientPath, "index.html"));
     });
-
-    //Global Error middleware
-    app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-        console.error(err);
-
-        if (err instanceof AppError) {
-            return res.status(Number(err.code)).json({
-                code: err.code,
-                success: false,
-                message: err.message,
-                errors: err.details
-            });
-        }
-
-        res.status(500).json({ message: "Internal Server Error" });
-    });
 }
+
+//Global Error middleware
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+    console.error(err);
+    if (err instanceof AppError) {
+        return res.status(Number(err.code) || 500).json({
+            code: err.code,
+            success: false,
+            message: err.message,
+            errors: err.details
+        });
+    }
+    res.status(500).json({ message: "Internal Server Error" });
+});
 
 export default app;

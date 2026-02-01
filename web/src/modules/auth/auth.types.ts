@@ -23,7 +23,7 @@ export type UserCreateData = {
     isVerified?: boolean;
 } & UserProfile
 
-export type UserCreateDTO = { 
+export type UserCreatedDTO = { 
     id: string; 
     email: string; 
     role: Role; 

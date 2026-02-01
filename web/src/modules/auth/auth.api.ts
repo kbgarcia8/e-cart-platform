@@ -1,7 +1,7 @@
-import type { LoginFormData, UserCreateData, UserCreateDTO } from "./auth.types";
+import type { LoginFormData, UserCreateData, UserCreatedDTO } from "./auth.types";
 import type { ApiResponse } from "shared/type/shared.types";
 
-export async function signupApi(SignUpData: UserCreateData): Promise<ApiResponse<UserCreateDTO>> {
+export async function signupApi(SignUpData: UserCreateData): Promise<ApiResponse<UserCreatedDTO>> {
     const response = await fetch(`${import.meta.env.VITE_DEV_API_URL}/auth/signup/local`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -9,11 +9,11 @@ export async function signupApi(SignUpData: UserCreateData): Promise<ApiResponse
         credentials: "include"
     });
     
-    const data = await response.json() as ApiResponse<UserCreateDTO>;
+    const data = await response.json() as ApiResponse<UserCreatedDTO>;
     console.log(data);
 
     if (!response.ok) {
-        //console.log(data);
+        console.log(data);
         throw new Error(data.message || "Signup failed");
     }
     return data;

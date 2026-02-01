@@ -61,7 +61,6 @@ export const deepEmailValidation = async (req:Request, res:Response, next:NextFu
                 }
             );
         }
-
         next();
     } catch (err) {
         next(err);

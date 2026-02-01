@@ -159,6 +159,7 @@ u {
         border-radius: ${v.borderRadius.small};
         padding: ${v.spacing.small};
         font-family: ${v.fonts.secondary}, ${v.fonts.fallback};
+        white-space: pre-wrap;
     }
     ${({ theme }) => 
         css`

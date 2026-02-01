@@ -11,7 +11,7 @@ export const signupLocalPost = async (req: Request, res: Response, next:NextFunc
         const validatorErrors = validationResult(req);
         if (!validatorErrors.isEmpty()) {
             const errors = validatorErrors.array();
-            const errorMessages = errors.map((entry) => `- ${entry.msg}`).join("\n");
+            const errorMessages = errors.map((entry) => `• ${entry.msg}`).join("\n");
             const details = errors.filter((err): err is FieldValidationError => err.type === 'field')
                 .map(err => ({
                     type: err.path,
