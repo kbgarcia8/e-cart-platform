@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { BounceLoader } from "react-spinners";
+import { VerifyPageWrapper } from "./VerifyPage.styles";
 
 const VerifyPage = () => {
     const { token } = useParams();
@@ -12,15 +13,20 @@ const VerifyPage = () => {
         fetch(`${import.meta.env.VITE_DEV_API_URL}/auth/verify?token=${token}`)
         .then(() => {
             toast.success("Email verified! You can now log in.");
+            setLoading(false)
             navigate("/login");
         })
         .catch(() => {
-            toast.error("Verification failed or expired.");
-            navigate("/login");
+            toast.error("Verification failed or token expired. Please click resend verify email in signup page");
+            navigate("/signup");
         });
     }, [navigate, token]);
 
-    return <BounceLoader />;
+    return (
+        <VerifyPageWrapper>
+            {loading ? <BounceLoader /> : null}
+        </VerifyPageWrapper>
+    );
 };
 
 export default VerifyPage;

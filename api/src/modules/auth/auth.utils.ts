@@ -4,7 +4,7 @@ const transporter = nodemailer.createTransport({
     service: 'gmail', // Use an email service like SendGrid, Mailtrap, or Gmail
     auth: {
         user: process.env.EMAIL_USER, // Your email address from .env
-        pass: process.env.EMAIL_PASS, // Your email password/API key from .env
+        pass: process.env.EMAIL_APP_PASS, // Your email password/API key from .env
     },
 });
 

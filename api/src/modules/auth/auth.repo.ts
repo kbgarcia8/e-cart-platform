@@ -3,7 +3,7 @@ import { PrismaPg } from '@prisma/adapter-pg';
 import { Prisma, PrismaClient, Role, Providers, User } from "prisma/schema/generated/prisma/index";
 import { AppError, PrismaError, AuthError } from "shared/errors/errors";
 import type { PrismaErrorDetails, ExpressValidationErrorDetails, AuthErrorDetails } from "shared/errors/errors.types";
-import type { UserCreateData, UserCreateDTO, FindVerificationToken } from "./auth.types";
+import type { UserCreateData, UserCreated, FindVerificationToken } from "./auth.types";
 import crypto from 'crypto';
 import { sendVerificationEmail } from "./auth.utils";
 
@@ -14,7 +14,7 @@ const adapter = new PrismaPg({
 
 const prisma = new PrismaClient({ adapter });
 
-export async function createUser(userdata:UserCreateData):Promise<UserCreateDTO> {
+export async function createUser(userdata:UserCreateData):Promise<UserCreated> {
     try {
         const data = {
             email: userdata.email,
@@ -130,7 +130,7 @@ export async function verifyEmail(token: string):Promise<User> {
         if (verificationToken.expiresAt < new Date()) {
             await prisma.verificationToken.delete({ where: { id: verificationToken.id } });
             throw new AuthError<AuthErrorDetails>(
-                "Failed to send verification token in email",
+                "Verification failed. Token is expired",
                 '401',
                 "VERIFICATION_TOKEN_EXPIRED",
                 { reason: 'Token expired. Please request a new verification email.' }

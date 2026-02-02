@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "npx tsx watch -r tsconfig-paths/register src/server.ts",
+    "port:public": "gh codespace ports visibility 4000:public",
     "build": "npx tsc",
     "start": "npx tsx -r tsconfig-paths/register dist/server.js",
     "prisma:setup": "npx prisma init --datasource-provider postgresql --output src/schema/generated/prisma",
