@@ -2,8 +2,9 @@ import "dotenv/config";
 import { PrismaPg } from '@prisma/adapter-pg';
 import { Prisma, PrismaClient, Role, Providers, User } from "prisma/schema/generated/prisma/index";
 import { AppError, PrismaError, AuthError } from "shared/errors/errors";
-import type { PrismaErrorDetails, ExpressValidationErrorDetails, AuthErrorDetails } from "shared/errors/errors.types";
-import type { UserCreateData, UserCreated, FindVerificationToken } from "./auth.types";
+import { prismaCodeToMessage } from "shared/errors/errors.codes";
+import type { PrismaErrorDetails, AuthErrorDetails } from "shared/errors/errors.types";
+import type { UserCreateData, UserCreated } from "./auth.types";
 import crypto from 'crypto';
 import { sendVerificationEmail } from "./auth.utils";
 
@@ -53,7 +54,7 @@ export async function createUser(userdata:UserCreateData):Promise<UserCreated> {
         
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
             throw new PrismaError<PrismaErrorDetails>(
-                error.message,
+                prismaCodeToMessage.createUser![`${error.code}`] ?? error.message,
                 error.code,
                 "PRISMA_CREATE_USER_FAILED",
                 {
@@ -65,7 +66,7 @@ export async function createUser(userdata:UserCreateData):Promise<UserCreated> {
         } else if (error instanceof Prisma.PrismaClientUnknownRequestError) {
             throw new PrismaError<PrismaErrorDetails>(
                 error.message,
-                '1000',
+                'P1001',
                 "PRISMA_CREATE_USER_FAILED",
                 {
                     model: 'User',
@@ -121,14 +122,23 @@ export async function sendVerificationToken(id:string, email:string) {
 
 export async function verifyEmail(token: string):Promise<User> {
     try {
-        const verificationToken = await prisma.verificationToken.findUniqueOrThrow({
+        const verificationToken = await prisma.verificationToken.findFirst({
             where: { token: token as string },
             include: { user: true },
         });
         
+        if (!verificationToken) {
+            throw new AuthError<AuthErrorDetails>(
+                "Verification failed. Invalid token",
+                '400',
+                "VERIFICATION_TOKEN_INVALID",
+                { reason: 'Token is invalid or non-existent.' }
+            );
+        }
+
         // If token is expired
         if (verificationToken.expiresAt < new Date()) {
-            await prisma.verificationToken.delete({ where: { id: verificationToken.id } });
+            await prisma.verificationToken.deleteMany({ where: { id: verificationToken.id } });
             throw new AuthError<AuthErrorDetails>(
                 "Verification failed. Token is expired",
                 '401',
@@ -139,21 +149,19 @@ export async function verifyEmail(token: string):Promise<User> {
         //! Add here a case where token is not expired yet still not verified to remind user to verify
 
         // Update user status to verified
-        await prisma.user.update({
+        const verifiedUser = await prisma.user.update({
             where: { id: verificationToken.userId },
             data: { isVerified: true },
         });
 
         // Delete the used token from the database
-        await prisma.verificationToken.delete({ where: { id: verificationToken.id } });
-
-        const verifiedUser = verificationToken.user;
+        await prisma.verificationToken.deleteMany({ where: { id: verificationToken.id } });
 
         return verifiedUser;
     } catch (error){
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
             throw new PrismaError<PrismaErrorDetails>(
-                error.message,
+                prismaCodeToMessage.verifyEmail![`${error.code}`] ?? error.message,
                 error.code,
                 "PRISMA_VERIFICATION_TOKEN_FAILED",
                 {
@@ -167,7 +175,7 @@ export async function verifyEmail(token: string):Promise<User> {
         if (error instanceof Prisma.PrismaClientUnknownRequestError) {
             throw new PrismaError<PrismaErrorDetails>(
                 error.message,
-                '1000',
+                'P1001',
                 "PRISMA_VERIFICATION_TOKEN_FAILED",
                 {
                     model: 'User and VerificationToken',

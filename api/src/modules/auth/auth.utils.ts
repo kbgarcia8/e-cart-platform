@@ -1,7 +1,10 @@
+import "dotenv/config";
 import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
-    service: 'gmail', // Use an email service like SendGrid, Mailtrap, or Gmail
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
     auth: {
         user: process.env.EMAIL_USER, // Your email address from .env
         pass: process.env.EMAIL_APP_PASS, // Your email password/API key from .env
@@ -11,7 +14,7 @@ const transporter = nodemailer.createTransport({
 export const sendVerificationEmail = async (email: string, token: string) => {
     //const verificationLink = `${process.env.API_BASE_URL}/auth/verify?token=${token}`; //? Your backend verification endpoint
     const verificationLink = `${process.env.CLIENT_BASE_URL}/auth/verify?token=${token}`; //? Your backend verification endpoint
-
+    console.log(verificationLink);
     const mailOptions = {
         from: process.env.EMAIL_USER,
         to: email,

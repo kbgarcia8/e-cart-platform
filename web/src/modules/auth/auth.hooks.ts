@@ -46,7 +46,7 @@ export function useSignup() {
             const response = await signupApi(SignUpData);
             console.log(response);
             if (response) {
-                navigate("/signup");
+                navigate("/auth/signup");
                 setSuccessSignup(true);
             }
         } catch (err) {

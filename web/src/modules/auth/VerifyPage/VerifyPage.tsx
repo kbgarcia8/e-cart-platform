@@ -14,11 +14,11 @@ const VerifyPage = () => {
         .then(() => {
             toast.success("Email verified! You can now log in.");
             setLoading(false)
-            navigate("/login");
+            navigate("/auth/login");
         })
         .catch(() => {
             toast.error("Verification failed or token expired. Please click resend verify email in signup page");
-            navigate("/signup");
+            navigate("/auth/signup");
         });
     }, [navigate, token]);
 
