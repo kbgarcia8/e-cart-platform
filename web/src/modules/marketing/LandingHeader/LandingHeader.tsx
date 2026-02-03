@@ -31,7 +31,7 @@ const LandingHeader = ():React.ReactNode => {
             "Login": "login",
         }       
         const buttonText = e.currentTarget.textContent
-        navigate(`/${textToLink[buttonText]}`)
+        navigate(`/auth/${textToLink[buttonText]}`)
     }
     
     return(

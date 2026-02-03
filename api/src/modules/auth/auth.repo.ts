@@ -122,20 +122,29 @@ export async function sendVerificationToken(id:string, email:string) {
 
 export async function verifyEmail(token: string):Promise<User> {
     try {
+        
         const verificationToken = await prisma.verificationToken.findFirst({
-            where: { token: token as string },
+            where: { token: token },
             include: { user: true },
         });
-        
+
         if (!verificationToken) {
-            throw new AuthError<AuthErrorDetails>(
+            const user = await prisma.user.findFirst({
+                where: { isVerified: true }
+            });
+
+            if (user) {
+                return user; // already verified → treat as success
+            }
+
+            throw new AuthError(
                 "Verification failed. Invalid token",
                 '400',
                 "VERIFICATION_TOKEN_INVALID",
                 { reason: 'Token is invalid or non-existent.' }
             );
         }
-
+        
         // If token is expired
         if (verificationToken.expiresAt < new Date()) {
             await prisma.verificationToken.deleteMany({ where: { id: verificationToken.id } });
@@ -146,7 +155,21 @@ export async function verifyEmail(token: string):Promise<User> {
                 { reason: 'Token expired. Please request a new verification email.' }
             );
         }
-        //! Add here a case where token is not expired yet still not verified to remind user to verify
+
+        // If user already verified
+        if (verificationToken.user.isVerified) {
+            await prisma.verificationToken.deleteMany({
+                where: { userId: verificationToken.userId },
+            });
+
+            throw new AuthError<AuthErrorDetails>(
+                "Email already verified",
+                '409',
+                "EMAIL_ALREADY_VERIFIED",
+                { reason: 'This email has already been verified.' }
+            );
+        }
+        //! Add in LOGIN a case where token is not expired yet still not verified to remind user to verify
 
         // Update user status to verified
         const verifiedUser = await prisma.user.update({

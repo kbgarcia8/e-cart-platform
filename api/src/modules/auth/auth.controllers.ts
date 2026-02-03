@@ -61,7 +61,12 @@ export const verifyEmail = async (req: Request, res: Response, next: NextFunctio
     const { token } = req.query;
     try {
         const result = await authService.verifyEmail(token as string);
-        //if(result.isVerified) res.redirect(`${process.env.CLIENT_BASE_URL}/login?verified=true`);
+        if(result.isVerified) res.status(200).json({
+            code: 200,
+            success: true,
+            message: "Email verified successfully. You can now login",
+            data: result
+        });
     } catch (err) {
         next(err);
     }

@@ -34,6 +34,6 @@ export async function verifyEmail(token: string) {
     return {
         id: user.id,
         email: user.email,
-        isVerified: true
+        isVerified: user.isVerified
     };
 }

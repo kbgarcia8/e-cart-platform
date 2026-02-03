@@ -14,9 +14,9 @@ const transporter = nodemailer.createTransport({
 export const sendVerificationEmail = async (email: string, token: string) => {
     //const verificationLink = `${process.env.API_BASE_URL}/auth/verify?token=${token}`; //? Your backend verification endpoint
     const verificationLink = `${process.env.CLIENT_BASE_URL}/auth/verify?token=${token}`; //? Your backend verification endpoint
-    console.log(verificationLink);
+    
     const mailOptions = {
-        from: process.env.EMAIL_USER,
+        from: 'no-reply@ecart.com',
         to: email,
         subject: 'Verify Your Email Address',
         html: `<p>Please click the link below to verify your email address to use E-cart Platform:<br><a href="${verificationLink}">Verify Email</a></p>`,
