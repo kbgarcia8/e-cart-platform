@@ -16,6 +16,7 @@
     "esModuleInterop": true,
     "baseUrl": "./src",
     "paths": {
+      "lib/*": ["lib/*"],
       "modules/*": ["modules/*"],
       "prisma/*": ["prisma/*"],
       "shared/*": ["shared/*"]

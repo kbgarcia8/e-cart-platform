@@ -8,7 +8,7 @@ import authRouter from 'modules/auth/auth.routes';
 //CUSTOM ERRORS
 import { AppError } from 'shared/errors/errors';
 
-const app = express();
+export const app = express();
 
 //Global middlewares
 // ? Block: It’s OK for requests coming from http://localhost:5173 to talk to this Express server.

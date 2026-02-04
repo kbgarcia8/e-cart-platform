@@ -11,9 +11,12 @@
     "prisma:setup": "npx prisma init --datasource-provider postgresql --output src/schema/generated/prisma",
     "prisma:merge": "npx prismerge -i src/prisma/prismerge.json",
     "prisma:migrate": "npx prisma migrate dev --schema=./src/prisma/schema/main.prisma",
+    "migrate:test": "DATABASE_URL=$(grep DATABASE_URL_TEST .env | cut -d '=' -f2-) npx prisma migrate deploy",
+    "test": "npm run migrate:test && vitest",
     "prisma:generate": "prisma generate --schema=./src/prisma/schema/main.prisma",
     "prisma:pull": "npx prisma db pull --schema=./src/prisma/schema/main.prisma",
-    "prisma:studio": "NODE_TLS_REJECT_UNAUTHORIZED=0 npx prisma studio \\ --url=\"$DATABASE_URL\""
+    "prisma:studio": "NODE_TLS_REJECT_UNAUTHORIZED=0 npx prisma studio \\ --url=\"$DATABASE_URL\"",
+    "studio:test": "DATABASE_URL=$(grep DATABASE_URL_TEST .env | cut -d '=' -f2-) NODE_TLS_REJECT_UNAUTHORIZED=0 npx prisma studio \\ --url=\"$DATABASE_URL\""
   },
   "keywords": [],
   "author": "",
@@ -32,6 +35,7 @@
     "@types/passport-local": "^1.0.38",
     "@types/react": "^19.2.9",
     "@types/react-dom": "^19.2.3",
+    "@types/supertest": "^6.0.3",
     "bcryptjs": "^3.0.3",
     "crypto": "^1.0.1",
     "deep-email-validator": "^0.1.21",
@@ -40,12 +44,14 @@
     "jsonwebtoken": "^9.0.3",
     "nodemailer": "^7.0.13",
     "nodemon": "^3.1.11",
+    "supertest": "^7.2.2",
     "ts-loader": "^9.5.4",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^4.2.0",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
   },
   "dependencies": {
     "@prisma-utils/prismerge": "^1.7.0",

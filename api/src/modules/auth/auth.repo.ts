@@ -1,19 +1,11 @@
-import "dotenv/config";
-import { PrismaPg } from '@prisma/adapter-pg';
-import { Prisma, PrismaClient, Role, Providers, User } from "prisma/schema/generated/prisma/index";
+import prisma from "lib/prisma";
+import { Prisma, Role, Providers, User } from "prisma/schema/generated/prisma/index";
 import { AppError, PrismaError, AuthError } from "shared/errors/errors";
 import { prismaCodeToMessage } from "shared/errors/errors.codes";
 import type { PrismaErrorDetails, AuthErrorDetails } from "shared/errors/errors.types";
 import type { UserCreateData, UserCreated } from "./auth.types";
 import crypto from 'crypto';
 import { sendVerificationEmail } from "./auth.utils";
-
-const adapter = new PrismaPg({
-    connectionString: process.env.DATABASE_URL!,
-    ssl: { rejectUnauthorized: false }, //for access denied error due to SSL/TSL
-});
-
-const prisma = new PrismaClient({ adapter });
 
 export async function createUser(userdata:UserCreateData):Promise<UserCreated> {
     try {
