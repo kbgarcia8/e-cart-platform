@@ -58,7 +58,7 @@ export async function createUser(userdata:UserCreateData):Promise<UserCreated> {
         } else if (error instanceof Prisma.PrismaClientUnknownRequestError) {
             throw new PrismaError<PrismaErrorDetails>(
                 error.message,
-                'P1001',
+                '500',
                 "PRISMA_CREATE_USER_FAILED",
                 {
                     model: 'User',

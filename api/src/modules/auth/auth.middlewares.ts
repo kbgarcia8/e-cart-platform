@@ -43,11 +43,11 @@ export const deepEmailValidation = async (req:Request, res:Response, next:NextFu
         const { email } = req.body;
 
         const result = await validate({
-        email,
-        validateTypo: true,
-        validateDisposable: true,
-        validateMx: true,
-        validateSMTP: false,
+            email,
+            validateTypo: true,
+            validateDisposable: true,
+            validateMx: true,
+            validateSMTP: false,
         });
 
         if (!result.valid) {
