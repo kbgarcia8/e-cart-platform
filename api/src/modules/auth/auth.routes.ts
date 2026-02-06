@@ -1,10 +1,11 @@
 import { Router } from "express";
-import { signupValidator, deepEmailValidation } from "./auth.middlewares";
+import * as authMiddleware from "./auth.middlewares";
 import * as authController from "./auth.controllers";
 
 const authRouter = Router();
 
-authRouter.post('/signup/local', signupValidator, deepEmailValidation, authController.signupLocalPost);
+authRouter.post('/signup/local', authMiddleware.signupValidator, authMiddleware.deepEmailValidation, authController.signupLocalPost);
 authRouter.get("/verify", authController.verifyEmail);
+authRouter.post("/login", authMiddleware.loginValidator, authController.loginPost);
 
 export default authRouter;

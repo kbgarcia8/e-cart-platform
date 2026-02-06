@@ -66,3 +66,13 @@ export const deepEmailValidation = async (req:Request, res:Response, next:NextFu
         next(err);
     }
 };
+
+export const loginValidator = [
+    check('email')
+        .trim()
+        .notEmpty().withMessage('Email is required!').bail()
+        .isEmail().withMessage('Please provide a valid email address!').bail()
+        .normalizeEmail(),
+    check('password')
+        .notEmpty().withMessage('Please provide a password!').bail()
+];

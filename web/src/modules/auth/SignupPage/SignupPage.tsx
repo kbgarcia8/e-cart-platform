@@ -99,7 +99,7 @@ const SignupPage =() => {
         confirmpassword: ''
     };
 
-    console.log(error);
+    console.error(error);
 
     const [signupFormValues, setSignupFormValues] = useState<UserCreateData>(initialFormValues);
 

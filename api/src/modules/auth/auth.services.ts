@@ -36,4 +36,10 @@ export async function verifyEmail(token: string) {
         email: user.email,
         isVerified: user.isVerified
     };
+};
+
+export async function login(email: string, password:string) {
+    const retrievedUser = await repo.findUserByEmail(email);
+
+    
 }

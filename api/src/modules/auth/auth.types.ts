@@ -1,10 +1,10 @@
-import { Role, Providers, User } from "prisma/schema/generated/prisma";
+import { Role } from "prisma/schema/generated/prisma";
 
 type UserProfile = {
     firstname: string;
     lastname: string;
     username?: string;
-}
+};
 
 export type SignupRequestDTO = {
     email: string;
@@ -41,15 +41,12 @@ export type UserCreated = {
     role: Role; 
     isVerified: boolean; 
     created_at: Date;
-}
+};
 
-export type FindVerificationToken = {
-    id: string; 
-    token: string; 
-    expiresAt: Date; 
-    userId: string;
-    user: User;
-}
+export type LoginRequestDTO = {
+    email: string;
+    password: string;
+};
 
 // ! Below this comment are yet to be edited
 

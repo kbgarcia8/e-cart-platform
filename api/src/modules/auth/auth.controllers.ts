@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs';
 import { ExpressValError } from "shared/errors/errors";
 import type { ExpressValidationErrorDetails } from "shared/errors/errors.types";
 import * as authService from "./auth.services";
-import type { SignupRequestDTO } from "./auth.types";
+import type { SignupRequestDTO, LoginRequestDTO } from "./auth.types";
 
 export const signupLocalPost = async (req: Request, res: Response, next:NextFunction):Promise<void> =>{
         const validatorErrors = validationResult(req);
@@ -69,5 +69,32 @@ export const verifyEmail = async (req: Request, res: Response, next: NextFunctio
         });
     } catch (err) {
         next(err);
+    }
+};
+
+export const loginPost = async (req:Request, res:Response, next:NextFunction) => {
+    const validatorErrors = validationResult(req);
+    if (!validatorErrors.isEmpty()) {
+        const errors = validatorErrors.array();
+        const errorMessages = errors.map((entry) => `• ${entry.msg}`).join("\n");
+        const details = errors.filter((err): err is FieldValidationError => err.type === 'field')
+            .map(err => ({
+                type: err.path,
+                msg: err.msg
+            }));
+
+        throw new ExpressValError<ExpressValidationErrorDetails>(
+            errorMessages,
+            '400',
+            "EXPRESS_VAL_ERROR",
+            details
+        );
+    }
+
+    try {
+        const { email, password } = req.body as LoginRequestDTO;
+        
+    } catch (error) {
+        
     }
 }

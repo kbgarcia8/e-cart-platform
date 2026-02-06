@@ -5,12 +5,7 @@ export const Role = {
 } as const;
 
 export type Role = typeof Role[keyof typeof Role];
-
-export type LoginFormData = {
-    email: string;
-    password: string;
-}
-
+//Signup
 type UserProfile = {
     firstname: string;
     lastname: string;
@@ -29,4 +24,13 @@ export type UserCreatedDTO = {
     role: Role; 
     isVerified: boolean; 
     created_at: Date;
+}
+//Login
+export type LoginFormData = {
+    email: string;
+    password: string;
+}
+//Placeholder
+export type LoggedUser = {
+    user: string;
 }

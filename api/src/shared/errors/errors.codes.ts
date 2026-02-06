@@ -14,5 +14,8 @@ export const prismaCodeToMessage:Record<string,Record<string,string>> = {
     },
     "verifyEmail": {
         ...generalPrismaCodes
-    }
+    },
+    "findUserByEmail": {
+        ...generalPrismaCodes
+    },
 }

@@ -17,11 +17,11 @@ export function useLogin() {
             if (response) {
                 navigate("/dashboard");
             }
-        } catch (error) {
-            if(error instanceof Error) {
-                const message = error?.message || "Something went wrong";
+        } catch (err) {
+            if(err instanceof Error) {
+                const message = err?.message || "Something went wrong";
                 setError(message);
-                throw error;
+                throw err;
             }
         } finally {
             setLoading(false)

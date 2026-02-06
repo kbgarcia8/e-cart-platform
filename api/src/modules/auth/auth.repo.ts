@@ -78,9 +78,26 @@ export async function createUser(userdata:UserCreateData):Promise<UserCreated> {
 };
 
 export async function sendVerificationToken(id:string, email:string) {
+    //For logging in unverfied email, check first if user has an existing unexpired token to avoid spam
+    const checkTokens = await prisma.verificationToken.findMany({
+        where: { userId: id}
+    });
+
+    const expirations = checkTokens.map((token) => token.expiresAt);
+    const timeNow = Date.now()
+    const activeTokens = expirations.filter(date => timeNow < Number(date))
+
+    if(activeTokens.length !==0) {
+        throw new AuthError<AuthErrorDetails>(
+            "Existing verification email, please check and verify",
+            '535',
+            "VERIFICATION_TOKEN_NOT_SENT",
+            { reason: 'There is/are still verification token available' }
+        );
+    }
+
     const token = crypto.randomBytes(32).toString('hex');
-        const expirationDate = new Date();
-        expirationDate.setHours(expirationDate.getHours() + 1); //? Token valid for 1 hour
+    const expirationDate = new Date(Date.now() + 60 * 60 * 1000); //? Token valid for 1 hour
 
         await prisma.verificationToken.create({
             data: {
@@ -114,7 +131,6 @@ export async function sendVerificationToken(id:string, email:string) {
 
 export async function verifyEmail(token: string):Promise<User> {
     try {
-        
         const verificationToken = await prisma.verificationToken.findFirst({
             where: { token: token },
             include: { user: true },
@@ -204,4 +220,51 @@ export async function verifyEmail(token: string):Promise<User> {
         }
     }
     throw new AppError("createUser failed without throwing an error", '500', "UNKNOWN_ERROR");
+};
+
+export async function findUserByEmail(email:string) {
+    try {
+        const user = await prisma.user.findUnique({
+            where: { email: email},
+            include: {
+                profile: true,
+                credentials: true
+            }
+        });
+        return user;
+    } catch (error){
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            throw new PrismaError<PrismaErrorDetails>(
+                prismaCodeToMessage.verifyEmail![`${error.code}`] ?? error.message,
+                error.code,
+                "PRISMA_FIND_USER_EMAIL_FAILED",
+                {
+                    model: 'User and UserCredentials',
+                    metaTarget: error.meta ? Array(String(error.meta.target)) : [],
+                    clientVersion: error.clientVersion
+                }
+            );
+        }
+        
+        if (error instanceof Prisma.PrismaClientUnknownRequestError) {
+            throw new PrismaError<PrismaErrorDetails>(
+                error.message,
+                'P1001',
+                "PRISMA_FIND_USER_EMAIL_FAILED",
+                {
+                    model: 'User and UserCredentials',
+                    clientVersion: error.clientVersion
+                }
+            );
+        } 
+        
+        if (error instanceof Error) {
+            throw error;
+        }
+    }
+    throw new AppError("createUser failed without throwing an error", '500', "UNKNOWN_ERROR");
+}
+
+export async function loginUser(email:string, password:string) {
+
 };

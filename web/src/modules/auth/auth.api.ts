@@ -1,4 +1,4 @@
-import type { LoginFormData, UserCreateData, UserCreatedDTO } from "./auth.types";
+import type { LoginFormData, UserCreateData, UserCreatedDTO, LoggedUser } from "./auth.types";
 import type { ApiResponse } from "shared/type/shared.types";
 
 export async function signupApi(SignUpData: UserCreateData): Promise<ApiResponse<UserCreatedDTO>> {
@@ -10,7 +10,6 @@ export async function signupApi(SignUpData: UserCreateData): Promise<ApiResponse
     });
     
     const data = await response.json() as ApiResponse<UserCreatedDTO>;
-    console.log(data);
 
     if (!response.ok) {
         console.log(data);
@@ -20,15 +19,20 @@ export async function signupApi(SignUpData: UserCreateData): Promise<ApiResponse
 }
 
 //! Any code below needs revision
-export async function loginApi(loginData: LoginFormData): Promise<ApiResponse<null>> {
+export async function loginApi(loginData: LoginFormData): Promise<ApiResponse<LoggedUser>> {
     const response = await fetch("/api/auth/login", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json"},
         body: JSON.stringify(loginData),
         credentials: "include"
-    })
+    });
 
-    if (!response.ok) throw new Error("Login failed");
+    const data = await response.json() as ApiResponse<LoggedUser>;
 
-    return response.json();
+    if (!response.ok) {
+        console.log(data);
+        throw new Error(data.message || "Login failed");
+    }
+
+    return data;
 };

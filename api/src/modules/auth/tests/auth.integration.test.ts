@@ -2,13 +2,12 @@ import request from "supertest";
 import { describe, it, expect } from "vitest";
 import { app } from "../../../app";
 import prisma from "lib/prisma";
-import { User } from "prisma/schema/generated/prisma";
 
-describe("Auth module", () => {
+describe("Auth module: Signup", () => {
     let token: string;
     let userId: string;
 
-    describe("Signup", () => {
+    describe("Signup user", () => {
         it("ERROR: should not allowed non-existent email", async () => {
             const res = await request(app)
             .post("/auth/signup/local")
@@ -209,14 +208,14 @@ describe("Auth module", () => {
         });
     });
 
-    describe("Verify", () => {
+    describe("Verify after signup", () => {
         it("SUCCESS: Verifies the email", async() => {
             const res = await request(app)
             .get("/auth/verify")
             .query({ token })
 
             expect(res.status).toBe(200);
-            expect(res.body.isVerified).toBe(true);
+            expect(res.body.data.isVerified).toBe(true);
         });
 
         it("ERROR: Token is expired", async() => {
@@ -233,7 +232,11 @@ describe("Auth module", () => {
                 .query({ token: expiredToken.token });
 
             expect(res.status).toBe(401);
-            expect(res.body.message).toContain("Token expired");
+            expect(res.body.message).toContain("Token is expired");
         });
-    })
-})
+    });
+});
+
+describe("Auth module: Login", () => {
+    
+});

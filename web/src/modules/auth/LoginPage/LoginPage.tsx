@@ -4,6 +4,7 @@ import { useLogin } from "../auth.hooks";
 import type { LoginFormData } from "../auth.types";
 import type {inputEntryShape, LabeledTextLike } from '@kbgarcia8/react-dynamic-form';
 import * as Styled from './LoginPage.styles';
+import { BounceLoader } from "react-spinners";
 
 const loginFormInputArray:inputEntryShape<false,LabeledTextLike>[] = [
     {
@@ -42,12 +43,6 @@ const LoginPage =() => {
         password: ''
     };
 
-    useEffect(() => {
-    if (error) {
-            toast.error(error);
-        }
-    }, [error]);
-
     const [loginFormValues, setLoginFormValues] = useState<LoginFormData>(initialFormValues);
 
     const handleLoginFormChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,7 +52,7 @@ const LoginPage =() => {
         setLoginFormValues((prevLoginFormValues) => ({
             ...prevLoginFormValues,
             [datakey]: value
-            }))
+        }))
     }, []);
     
     
@@ -78,23 +73,27 @@ const LoginPage =() => {
 
     return(
         <Styled.LoginPageWrapper>
-            <Styled.LoginPageHeader>
-                Welcome to E-cart Platform! Login your account to continue.
-            </Styled.LoginPageHeader>
-            <Styled.FormSpace>
-                <Styled.LoginForm
-                    className={'without-fieldsets'}
-                    fieldsets={null}
-                    formInputs={loginFormInputs || []}
-                    id="login"
-                    isExpandable={false}
-                    inputClass={'login-form-input'}
-                    labelClass={'login-form-label'}
-                    labelAndInputContainerClass={'login-form-label-n-input-container'}
-                    submitText={'Login'}
-                    handleSubmitForm={handleFormSubmit}
-                />
-            </Styled.FormSpace>
+            {!loading ?
+            <React.Fragment>
+                <Styled.LoginPageHeader>
+                    Welcome to E-cart Platform! Login your account to continue.
+                </Styled.LoginPageHeader>
+                <Styled.FormSpace>
+                    <Styled.LoginForm
+                        className={'without-fieldsets'}
+                        fieldsets={null}
+                        formInputs={loginFormInputs || []}
+                        id="login"
+                        isExpandable={false}
+                        inputClass={'login-form-input'}
+                        labelClass={'login-form-label'}
+                        labelAndInputContainerClass={'login-form-label-n-input-container'}
+                        submitText={'Login'}
+                        handleSubmitForm={handleFormSubmit}
+                    />
+                </Styled.FormSpace>
+            </React.Fragment>
+            : <BounceLoader/>}
             <Styled.SignUpMessageSpace>
                 <Styled.SignUpMessage>
                     Don't have an account yet? <Styled.SignUpLink  to={`/signup`}>{"Sign Up"}</Styled.SignUpLink> 
