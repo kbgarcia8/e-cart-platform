@@ -76,16 +76,19 @@ export const loginValidator = [
     check('password')
         .notEmpty().withMessage('Please provide a password!').bail()
 ];
-
+//TODO: substitute logic with passport.JWTVerify
 export const checkAuthentication = async(req:Request, res:Response, next:NextFunction) => {
     try{
         if(req.isAuthenticated && req.isAuthenticated()) {
             return next();
         }
-        throw new AuthError("Failed Authentication", '401', "AUTH_FAILED", {
-            reason: "You are not authenticated, please login!",
-        });
+        throw new AuthError(
+            "Failed Authentication",
+            '401',
+            "AUTH_FAILED", 
+            { reason: "You are not authenticated, please login!" }
+        );
     } catch(err){
-        next(err); //proceed to error handling middleware
+        next(err);
     }
 };

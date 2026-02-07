@@ -1,23 +1,24 @@
 {
     "app": {
         "inputs": [
-        "src/prisma/schema/schema.prisma",
-        "src/prisma/schema/models/cart-item.prisma",
-        "src/prisma/schema/models/cart.prisma",
-        "src/prisma/schema/models/inventory-status.prisma",
-        "src/prisma/schema/models/inventory.prisma",
-        "src/prisma/schema/models/order-status.prisma",
-        "src/prisma/schema/models/orders.prisma",
-        "src/prisma/schema/models/providers.prisma",
-        "src/prisma/schema/models/payment-method.prisma",
-        "src/prisma/schema/models/product.prisma",
-        "src/prisma/schema/models/roles.prisma",
-        "src/prisma/schema/models/session.prisma",
-        "src/prisma/schema/models/sizes.prisma",
-        "src/prisma/schema/models/user.prisma",
-        "src/prisma/schema/models/user-credentials.prisma",
-        "src/prisma/schema/models/user-profile.prisma",
-        "src/prisma/schema/models/verification-token.prisma"
+            "src/prisma/schema/schema.prisma",
+            "src/prisma/schema/models/cart-item.prisma",
+            "src/prisma/schema/models/cart.prisma",
+            "src/prisma/schema/models/inventory-status.prisma",
+            "src/prisma/schema/models/inventory.prisma",
+            "src/prisma/schema/models/order-status.prisma",
+            "src/prisma/schema/models/orders.prisma",
+            "src/prisma/schema/models/providers.prisma",
+            "src/prisma/schema/models/payment-method.prisma",
+            "src/prisma/schema/models/product.prisma",
+            "src/prisma/schema/models/roles.prisma",
+            "src/prisma/schema/models/session.prisma",
+            "src/prisma/schema/models/sizes.prisma",
+            "src/prisma/schema/models/user.prisma",
+            "src/prisma/schema/models/user-credentials.prisma",
+            "src/prisma/schema/models/user-profile.prisma",
+            "src/prisma/schema/models/refresh-token.prisma",
+            "src/prisma/schema/models/verification-token.prisma"
         ],
         "output": "src/prisma/schema/main.prisma"
     }

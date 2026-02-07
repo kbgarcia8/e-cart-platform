@@ -1,0 +1,11 @@
+model RefreshToken {
+    id        String    @id @default(uuid())
+    token     String    @unique
+    expiresAt DateTime
+
+    userId    String    @unique
+    user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    
+
+    @@schema("auth")
+}

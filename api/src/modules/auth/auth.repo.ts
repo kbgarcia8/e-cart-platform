@@ -264,7 +264,7 @@ export async function findUserByEmail(email:string) {
     }
     throw new AppError("createUser failed without throwing an error", '500', "UNKNOWN_ERROR");
 }
-
-export async function loginUser(email:string, password:string) {
+//TODO: do prisma logic for saveRefreshToken
+export async function saveRefreshToken(id:string, token:string) {
     
 };

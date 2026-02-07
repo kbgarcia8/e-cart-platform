@@ -79,17 +79,35 @@ export const loginPost = async (req:Request, res:Response, next:NextFunction) =>
         const user = req.user;
         passport.authenticate("local", {session: false}, async (err:any, user:AuthUser | false | null,  info?: { message?: string }) => {
             if(err || !user) {
-                throw new AuthError<AuthErrorDetails>(
+                return next (new AuthError<AuthErrorDetails>(
                     "Incorrect/Invalid Password",
                     '535',
                     "VERIFICATION_INCORRECT_PASSWORD",
                     { reason: 'Password does not match for user' }
-                );
+                ))
             }
-            const token = await authService.login(user);
-            res.json({token});
+            const { accessToken, refreshToken } = await authService.login(user);
+
+            res.cookie("access_token", accessToken, {
+                httpOnly: true,
+                maxAge: 15 * 60 * 1000
+            });
+
+            //TODO: New route for refreshToken to check when loggin in if access can still be refreshed
+            // Can do checking first if accessToken is valid then proceed with refreshToken
+            res.cookie("refresh_token", refreshToken, {
+                httpOnly: true,
+                maxAge: 7 * 24 * 60 * 60 * 1000
+            });
+
+            res.status(200).json({
+                code: 200,
+                success: true,
+                message: 'User login successful!',
+                data: user
+            });
         })(req, res, next);
     } catch (err) {
         next(err);
     }
-}
+};

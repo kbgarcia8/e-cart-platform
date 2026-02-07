@@ -9,6 +9,7 @@ model User {
     profile UserProfile?
     credentials UserCredentials[]
     verificationTokens VerificationToken[]
+    refreshToken RefreshToken?
 
     @@schema("auth")
 }

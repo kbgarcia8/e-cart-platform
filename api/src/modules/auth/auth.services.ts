@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs';
 import { AuthErrorDetails } from 'shared/errors/errors.types';
 import { User } from 'prisma/schema/generated/prisma';
 import jwt from 'jsonwebtoken';
+import { ref } from 'process';
 
 
 
@@ -64,7 +65,8 @@ export async function verifyEmail(token: string) {
 export async function login(user:User) {
     if(!user.isVerified) await repo.sendVerificationToken(user.id, user.email);
     
-    const accessToken = jwt.sign({ sub: user.id, email: user.email }, process.env.JWT_SECRET!, { expiresIn: '15m'});
-
-    return accessToken;
+    const accessToken = jwt.sign({ sub: user.id, email: user.email, role: user.role }, process.env.JWT_SECRET!, { expiresIn: '15m'});
+    const refreshToken = jwt.sign({ sub: user.id }, process.env.JWT_REFRESH_SECRET!, { expiresIn: "7d" });
+    //TODO: save refreshtoken in db
+    return {accessToken, refreshToken};
 }
