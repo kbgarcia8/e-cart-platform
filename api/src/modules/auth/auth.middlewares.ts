@@ -1,7 +1,7 @@
 import { check } from 'express-validator';
 import { validate } from 'deep-email-validator';
 import { Request, Response, NextFunction } from 'express';
-import { DeepEmailValError } from 'shared/errors/errors';
+import { DeepEmailValError, AuthError } from 'shared/errors/errors';
 import type { DeepEmailValidationErrorDetails } from 'shared/errors/errors.types';
 
 export const signupValidator = [
@@ -76,3 +76,16 @@ export const loginValidator = [
     check('password')
         .notEmpty().withMessage('Please provide a password!').bail()
 ];
+
+export const checkAuthentication = async(req:Request, res:Response, next:NextFunction) => {
+    try{
+        if(req.isAuthenticated && req.isAuthenticated()) {
+            return next();
+        }
+        throw new AuthError("Failed Authentication", '401', "AUTH_FAILED", {
+            reason: "You are not authenticated, please login!",
+        });
+    } catch(err){
+        next(err); //proceed to error handling middleware
+    }
+};

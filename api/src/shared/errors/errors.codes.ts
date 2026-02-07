@@ -16,6 +16,7 @@ export const prismaCodeToMessage:Record<string,Record<string,string>> = {
         ...generalPrismaCodes
     },
     "findUserByEmail": {
-        ...generalPrismaCodes
+        ...generalPrismaCodes,
+        "P2001": "Email is not yet registered. Please signup first"
     },
 }

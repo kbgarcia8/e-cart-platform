@@ -1,6 +1,6 @@
-import { Role } from "prisma/schema/generated/prisma";
+import type { Role, User, UserCredentials, UserProfile } from "prisma/schema/generated/prisma";
 
-type UserProfile = {
+type Profile = {
     firstname: string;
     lastname: string;
     username?: string;
@@ -27,13 +27,13 @@ type OAuthCredentials = {
     providerId: string;
 };
 
-type UserCredentials = LocalCredentials | OAuthCredentials;
+type Credentials = LocalCredentials | OAuthCredentials;
 
 export type UserCreateData = {
     email: string;
     role?: Role;
     isVerified?: boolean;
-} & UserProfile & UserCredentials
+} & Profile & Credentials
 
 export type UserCreated = { 
     id: string; 
@@ -48,14 +48,9 @@ export type LoginRequestDTO = {
     password: string;
 };
 
+export type AuthUser = User & UserCredentials & UserProfile;
+
 // ! Below this comment are yet to be edited
-
-export type AuthUser = {
-    id: string
-    email: string
-    fullName: string
-}
-
 
 export type AuthResponse = {
     user: AuthUser

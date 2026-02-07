@@ -1,8 +1,9 @@
 import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import cors from "cors";
-// PASSPORT
+// AUTH
 import passport from "modules/auth/passport";
+import cookieParser from 'cookie-parser';
 //ROUTES
 import authRouter from 'modules/auth/auth.routes';
 //CUSTOM ERRORS
@@ -25,6 +26,7 @@ app.use(express.json());
 
 //* Passport
 app.use(passport.initialize());
+app.use(cookieParser());
 
 //* Routes
 app.use("/auth", authRouter);

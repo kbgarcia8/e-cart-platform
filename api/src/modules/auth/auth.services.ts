@@ -1,10 +1,33 @@
 import * as repo from './auth.repo';
-import type { UserCreateData } from './auth.types';
+import type { SignupRequestDTO } from './auth.types';
 import { AuthError } from 'shared/errors/errors';
+import bcrypt from 'bcryptjs';
 import { AuthErrorDetails } from 'shared/errors/errors.types';
+import { User } from 'prisma/schema/generated/prisma';
+import jwt from 'jsonwebtoken';
 
-export async function signup(data:UserCreateData) {
-    const user = await repo.createUser(data);
+
+
+export async function signup(data:SignupRequestDTO) {
+    const { email, firstname, lastname, username, password } = data as SignupRequestDTO;
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const userCreateData = {
+        firstname:firstname,
+        lastname: lastname,
+        username: username,
+        email: email,
+        passwordHash: hashedPassword,
+        provider: "Local" as const,
+        providerId: null
+    }
+
+    const finalUsername = (username?.trim() || email.split('@')[0]) as string;
+    const userdata = {
+        ...userCreateData,
+        username: finalUsername
+    }
+    const user = await repo.createUser(userdata);
 
     await repo.sendVerificationToken(user.id, user.email);
     
@@ -38,8 +61,10 @@ export async function verifyEmail(token: string) {
     };
 };
 
-export async function login(email: string, password:string) {
-    const retrievedUser = await repo.findUserByEmail(email);
-
+export async function login(user:User) {
+    if(!user.isVerified) await repo.sendVerificationToken(user.id, user.email);
     
+    const accessToken = jwt.sign({ sub: user.id, email: user.email }, process.env.JWT_SECRET!, { expiresIn: '15m'});
+
+    return accessToken;
 }

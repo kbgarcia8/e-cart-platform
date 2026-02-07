@@ -1,11 +1,12 @@
 import "dotenv/config";
 import { NextFunction, Request, Response } from "express";
 import { validationResult, FieldValidationError } from "express-validator";
-import bcrypt from 'bcryptjs';
-import { ExpressValError } from "shared/errors/errors";
-import type { ExpressValidationErrorDetails } from "shared/errors/errors.types";
+import passport from "passport";
+import { ExpressValError, AuthError } from "shared/errors/errors";
+import type { ExpressValidationErrorDetails, AuthErrorDetails } from "shared/errors/errors.types";
 import * as authService from "./auth.services";
-import type { SignupRequestDTO, LoginRequestDTO } from "./auth.types";
+import type { SignupRequestDTO, LoginRequestDTO, AuthUser } from "./auth.types";
+
 
 export const signupLocalPost = async (req: Request, res: Response, next:NextFunction):Promise<void> =>{
         const validatorErrors = validationResult(req);
@@ -26,26 +27,9 @@ export const signupLocalPost = async (req: Request, res: Response, next:NextFunc
             );
         }
 
-        const { email, firstname, lastname, username, password } = req.body as SignupRequestDTO;
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        const userCreateData = {
-            firstname:firstname,
-            lastname: lastname,
-            username: username,
-            email: email,
-            passwordHash: hashedPassword,
-            provider: "Local" as const,
-            providerId: null
-        }
-
-        const finalUsername = (username?.trim() || email.split('@')[0]) as string;
-        const userdata = {
-            ...userCreateData,
-            username: finalUsername
-        }
+        const signupRequest = req.body as SignupRequestDTO
         try{
-            const result = await authService.signup(userdata);
+            const result = await authService.signup(signupRequest);
             res.status(200).json({
                 code: 200,
                 success: true,
@@ -92,9 +76,20 @@ export const loginPost = async (req:Request, res:Response, next:NextFunction) =>
     }
 
     try {
-        const { email, password } = req.body as LoginRequestDTO;
-        
-    } catch (error) {
-        
+        const user = req.user;
+        passport.authenticate("local", {session: false}, async (err:any, user:AuthUser | false | null,  info?: { message?: string }) => {
+            if(err || !user) {
+                throw new AuthError<AuthErrorDetails>(
+                    "Incorrect/Invalid Password",
+                    '535',
+                    "VERIFICATION_INCORRECT_PASSWORD",
+                    { reason: 'Password does not match for user' }
+                );
+            }
+            const token = await authService.login(user);
+            res.json({token});
+        })(req, res, next);
+    } catch (err) {
+        next(err);
     }
 }

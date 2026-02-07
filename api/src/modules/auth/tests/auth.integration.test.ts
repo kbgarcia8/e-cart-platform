@@ -2,6 +2,7 @@ import request from "supertest";
 import { describe, it, expect } from "vitest";
 import { app } from "../../../app";
 import prisma from "lib/prisma";
+import * as repo from "modules/auth/auth.repo"
 
 describe("Auth module: Signup", () => {
     let token: string;
@@ -238,5 +239,9 @@ describe("Auth module: Signup", () => {
 });
 
 describe("Auth module: Login", () => {
-    
+    it("findUserByEmail returns created user", async () =>{
+        const user = await repo.findUserByEmail('kbgarcia1513@gmail.com');
+        expect(user?.credentials).toBeDefined;
+        expect(user?.profile).toBeDefined;
+    });
 });
