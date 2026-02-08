@@ -4,6 +4,7 @@ import { Request, Response, NextFunction } from 'express';
 import passport from 'passport';
 import { DeepEmailValError, AuthError } from 'shared/errors/errors';
 import type { DeepEmailValidationErrorDetails } from 'shared/errors/errors.types';
+import type { JwtPayload, RefreshPayload } from './auth.types';
 import jwt from "jsonwebtoken";
 import * as repo from "modules/auth/auth.repo";
 
@@ -80,66 +81,83 @@ export const loginValidator = [
     check('password')
         .notEmpty().withMessage('Please provide a password!').bail()
 ];
+//TODO: Merge requireAth and refreshToken for server-driven refresh
+export const requireAuth = passport.authenticate("jwt", {session: false});
 
-interface JwtPayload {
-    sub: string;
-    email?: string;
-}
-
-//TODO: fix checkauthentication
-
-export const checkAuthentication = async (req: Request, res: Response, next: NextFunction) => {
+export const refreshToken = async (req:Request, res:Response, next:NextFunction) => {
     try {
-        const accessToken = req.cookies.access_token;
-
-        if (accessToken) {
-            try {
-                const decoded = jwt.verify(
-                    accessToken,
-                    process.env.JWT_SECRET!
-                ) as JwtPayload;
-
-                req.user = { id: decoded.sub, email: decoded.email };
-                return next();
-            } catch (err) {
-                // Token expired or invalid → fall through to refresh
-            }
-        }
-
-        // 2. Try refresh token
         const refreshToken = req.cookies.refresh_token;
         if (!refreshToken) {
-            throw new Error("No refresh token");
+            throw new AuthError(
+                "Session expired. Please login again.",
+                "401",
+                "AUTH_REFRESH_FAILED",
+                { reason: "Refresh Token not found" }
+            );
         }
 
+        const decoded = jwt.verify(
+            refreshToken,
+            process.env.JWT_REFRESH_SECRET!
+        ) as RefreshPayload;
+
+        // 2️⃣ Ensure token exists in DB
         const storedToken = await repo.findRefreshToken(refreshToken);
 
-        if (!storedToken || storedToken.expiresAt < new Date()) {
-            throw new Error("Refresh token expired");
+        if (storedToken.expiresAt < new Date()) {
+            throw new AuthError(
+                "Session expired. Please login again.",
+                "401",
+                "AUTH_REFRESH_EXPIRED",
+                { reason: "Refresh Token already Expired" }
+            );
         }
 
-        // 3. Issue new access token
-        const newAccessToken = jwt.sign({ sub: storedToken.userId }, process.env.JWT_SECRET!, { expiresIn: "15m" });
+        //? This is for continues renewal whenever user log in again before 7d expiration of current refreshtoken
+        await repo.deleteRefreshToken(refreshToken);
+
+        const newRefreshToken = jwt.sign(
+            { sub: decoded.sub },
+            process.env.JWT_REFRESH_SECRET!,
+            { expiresIn: "7d" }
+        );
+
+        const { exp } = jwt.decode(newRefreshToken) as RefreshPayload;
+
+        await repo.saveRefreshToken(decoded.sub, newRefreshToken, exp);
+
+        const user = await repo.findUserById(decoded.sub);
+
+        const newAccessToken = jwt.sign(
+            { sub: user?.id, email: user?.email, role: user?.role },
+            process.env.JWT_SECRET!,
+            { expiresIn: "15m" }
+        );
 
         res.cookie("access_token", newAccessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
-            maxAge: 15 * 60 * 1000,
-            path: "/"
+            maxAge: 15 * 60 * 1000
         });
 
-        req.user = { id: storedToken.userId };
-        return next();
+        res.cookie("refresh_token", newRefreshToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
+            maxAge: 7 * 24 * 60 * 60 * 1000
+        });
 
+        return res.status(200).json({ success: true });
     } catch (err) {
         return next(
-        new AuthError(
-            "Authentication required",
-            "401",
-            "AUTH_FAILED",
-            { reason: "Session expired. Please login again." }
-        )
+            err instanceof AuthError
+            ? err
+            : new AuthError(
+                "Session expired. Please login again.",
+                "401",
+                "AUTH_REFRESH_FAILED"
+            )
         );
     }
 };

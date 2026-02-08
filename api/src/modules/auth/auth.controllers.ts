@@ -75,14 +75,13 @@ export const loginPost = async (req:Request, res:Response, next:NextFunction) =>
         );
     }
     try {
-        const user = req.user;
         passport.authenticate("local", {session: false}, async (err:any, user:AuthUser | false | null,  info?: { message?: string }) => {
             if(err || !user) {
                 return next (new AuthError<AuthErrorDetails>(
                     "Incorrect/Invalid Password",
                     '535',
-                    "VERIFICATION_INCORRECT_PASSWORD",
-                    { reason: 'Password does not match for user' }
+                    "AUTH_FAILED",
+                    { reason: info?.message || "Invalid credentials" }
                 ))
             }
             const { accessToken, refreshToken } = await authService.login(user);
@@ -109,8 +108,4 @@ export const loginPost = async (req:Request, res:Response, next:NextFunction) =>
     } catch (err) {
         next(err);
     }
-};
-
-export const refreshAccess = async () => {
-
 };

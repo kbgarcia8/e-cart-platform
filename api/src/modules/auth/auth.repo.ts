@@ -235,7 +235,50 @@ export async function findUserByEmail(email:string) {
     } catch (error){
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
             throw new PrismaError<PrismaErrorDetails>(
-                prismaCodeToMessage.verifyEmail![`${error.code}`] ?? error.message,
+                prismaCodeToMessage.findUserByEmail![`${error.code}`] ?? error.message,
+                error.code,
+                "PRISMA_FIND_USER_EMAIL_FAILED",
+                {
+                    model: 'User and UserCredentials',
+                    metaTarget: error.meta ? Array(String(error.meta.target)) : [],
+                    clientVersion: error.clientVersion
+                }
+            );
+        }
+        
+        if (error instanceof Prisma.PrismaClientUnknownRequestError) {
+            throw new PrismaError<PrismaErrorDetails>(
+                error.message,
+                'P1001',
+                "PRISMA_FIND_USER_EMAIL_FAILED",
+                {
+                    model: 'User and UserCredentials',
+                    clientVersion: error.clientVersion
+                }
+            );
+        } 
+        
+        if (error instanceof Error) {
+            throw error;
+        }
+    }
+    throw new AppError("createUser failed without throwing an error", '500', "UNKNOWN_ERROR");
+}
+
+export async function findUserById(id:string) {
+    try {
+        const user = await prisma.user.findUnique({
+            where: { id: id },
+            include: {
+                profile: true,
+                credentials: true
+            }
+        });
+        return user;
+    } catch (error){
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            throw new PrismaError<PrismaErrorDetails>(
+                prismaCodeToMessage.findUserById![`${error.code}`] ?? error.message,
                 error.code,
                 "PRISMA_FIND_USER_EMAIL_FAILED",
                 {
@@ -316,4 +359,49 @@ export async function saveRefreshToken(id:string, token:string, expiration:numbe
     throw new AppError("createUser failed without throwing an error", '500', "UNKNOWN_ERROR");
 };
 
-export async function findRefreshToken(token:string) {}
+export async function findRefreshToken(token:string) {
+    try {
+        const refreshToken = await prisma.refreshToken.findFirstOrThrow({
+            where: {
+                token: token
+            }
+        });
+        return refreshToken
+    } catch (error) {
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            throw new PrismaError<PrismaErrorDetails>(
+                prismaCodeToMessage.findRefreshToken![`${error.code}`] ?? error.message,
+                error.code,
+                "PRISMA_FIND_USER_EMAIL_FAILED",
+                {
+                    model: 'User and UserCredentials',
+                    metaTarget: error.meta ? Array(String(error.meta.target)) : [],
+                    clientVersion: error.clientVersion
+                }
+            );
+        }
+        
+        if (error instanceof Prisma.PrismaClientUnknownRequestError) {
+            throw new PrismaError<PrismaErrorDetails>(
+                error.message,
+                'P1001',
+                "PRISMA_FIND_USER_EMAIL_FAILED",
+                {
+                    model: 'User and UserCredentials',
+                    clientVersion: error.clientVersion
+                }
+            );
+        } 
+        
+        if (error instanceof Error) {
+            throw error;
+        }
+    }
+    throw new AppError("createUser failed without throwing an error", '500', "UNKNOWN_ERROR");
+};
+
+export async function deleteRefreshToken(token: string) {
+    await prisma.refreshToken.deleteMany({
+        where: { token }
+    });
+}

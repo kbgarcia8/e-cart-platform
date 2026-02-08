@@ -73,4 +73,5 @@ export async function login(user:User) {
     await repo.saveRefreshToken(user.id, refreshToken, exp!);
 
     return {accessToken, refreshToken};
-}
+};
+

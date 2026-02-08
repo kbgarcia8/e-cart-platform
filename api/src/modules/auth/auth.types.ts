@@ -50,6 +50,17 @@ export type LoginRequestDTO = {
 
 export type AuthUser = User & UserCredentials & UserProfile;
 
+export interface JwtPayload {
+    sub: string;
+    email?: string;
+    role: Role;
+};
+
+export interface RefreshPayload {
+    sub: string;
+    exp: number;
+};
+
 // ! Below this comment are yet to be edited
 
 export type AuthResponse = {

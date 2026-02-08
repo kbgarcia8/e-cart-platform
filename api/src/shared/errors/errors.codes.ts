@@ -19,4 +19,12 @@ export const prismaCodeToMessage:Record<string,Record<string,string>> = {
         ...generalPrismaCodes,
         "P2001": "Email is not yet registered. Please signup first"
     },
+    "findUserById": {
+        ...generalPrismaCodes,
+        "P2001": "User is not yet registered. Please signup first"
+    },
+    "findRefreshToken": {
+        ...generalPrismaCodes,
+        "P2001": "Refresh token not found please login again"
+    }
 }

@@ -5,12 +5,21 @@ passport.use(
     new JwtStrategy(
         {
             jwtFromRequest: ExtractJwt.fromExtractors([
-            req => req?.cookies?.access_token
-        ]),
-            secretOrKey: process.env.JWT_SECRET!,
+                req => req?.cookies?.access_token
+            ]),
+            secretOrKey: process.env.JWT_SECRET!
         },
         async (payload, done) => {
-            return done(null, payload);
+            try {
+                return done(null, {
+                    id: payload.sub,
+                    email: payload.email,
+                    role: payload.role
+                });
+            } catch (err) {
+                return done(err, false);
+            }
         }
     )
 );
+
