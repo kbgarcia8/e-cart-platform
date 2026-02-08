@@ -74,7 +74,6 @@ export const loginPost = async (req:Request, res:Response, next:NextFunction) =>
             details
         );
     }
-
     try {
         const user = req.user;
         passport.authenticate("local", {session: false}, async (err:any, user:AuthUser | false | null,  info?: { message?: string }) => {
@@ -90,24 +89,28 @@ export const loginPost = async (req:Request, res:Response, next:NextFunction) =>
 
             res.cookie("access_token", accessToken, {
                 httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "strict",
                 maxAge: 15 * 60 * 1000
             });
 
-            //TODO: New route for refreshToken to check when loggin in if access can still be refreshed
-            // Can do checking first if accessToken is valid then proceed with refreshToken
             res.cookie("refresh_token", refreshToken, {
                 httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "strict",
                 maxAge: 7 * 24 * 60 * 60 * 1000
             });
 
             res.status(200).json({
-                code: 200,
                 success: true,
-                message: 'User login successful!',
-                data: user
+                message: "Login successful"
             });
         })(req, res, next);
     } catch (err) {
         next(err);
     }
+};
+
+export const refreshAccess = async () => {
+
 };

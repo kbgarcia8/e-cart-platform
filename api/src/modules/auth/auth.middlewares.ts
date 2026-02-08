@@ -1,8 +1,12 @@
 import { check } from 'express-validator';
 import { validate } from 'deep-email-validator';
 import { Request, Response, NextFunction } from 'express';
+import passport from 'passport';
 import { DeepEmailValError, AuthError } from 'shared/errors/errors';
 import type { DeepEmailValidationErrorDetails } from 'shared/errors/errors.types';
+import jwt from "jsonwebtoken";
+import * as repo from "modules/auth/auth.repo";
+
 
 export const signupValidator = [
     check('email')
@@ -76,19 +80,66 @@ export const loginValidator = [
     check('password')
         .notEmpty().withMessage('Please provide a password!').bail()
 ];
-//TODO: substitute logic with passport.JWTVerify
-export const checkAuthentication = async(req:Request, res:Response, next:NextFunction) => {
-    try{
-        if(req.isAuthenticated && req.isAuthenticated()) {
-            return next();
+
+interface JwtPayload {
+    sub: string;
+    email?: string;
+}
+
+//TODO: fix checkauthentication
+
+export const checkAuthentication = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const accessToken = req.cookies.access_token;
+
+        if (accessToken) {
+            try {
+                const decoded = jwt.verify(
+                    accessToken,
+                    process.env.JWT_SECRET!
+                ) as JwtPayload;
+
+                req.user = { id: decoded.sub, email: decoded.email };
+                return next();
+            } catch (err) {
+                // Token expired or invalid → fall through to refresh
+            }
         }
-        throw new AuthError(
-            "Failed Authentication",
-            '401',
-            "AUTH_FAILED", 
-            { reason: "You are not authenticated, please login!" }
+
+        // 2. Try refresh token
+        const refreshToken = req.cookies.refresh_token;
+        if (!refreshToken) {
+            throw new Error("No refresh token");
+        }
+
+        const storedToken = await repo.findRefreshToken(refreshToken);
+
+        if (!storedToken || storedToken.expiresAt < new Date()) {
+            throw new Error("Refresh token expired");
+        }
+
+        // 3. Issue new access token
+        const newAccessToken = jwt.sign({ sub: storedToken.userId }, process.env.JWT_SECRET!, { expiresIn: "15m" });
+
+        res.cookie("access_token", newAccessToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
+            maxAge: 15 * 60 * 1000,
+            path: "/"
+        });
+
+        req.user = { id: storedToken.userId };
+        return next();
+
+    } catch (err) {
+        return next(
+        new AuthError(
+            "Authentication required",
+            "401",
+            "AUTH_FAILED",
+            { reason: "Session expired. Please login again." }
+        )
         );
-    } catch(err){
-        next(err);
     }
 };

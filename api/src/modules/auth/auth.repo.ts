@@ -101,9 +101,9 @@ export async function sendVerificationToken(id:string, email:string) {
 
         await prisma.verificationToken.create({
             data: {
-            token,
-            userId: id,
-            expiresAt: expirationDate,
+                token,
+                userId: id,
+                expiresAt: expirationDate,
             },
         });
 
@@ -264,7 +264,56 @@ export async function findUserByEmail(email:string) {
     }
     throw new AppError("createUser failed without throwing an error", '500', "UNKNOWN_ERROR");
 }
-//TODO: do prisma logic for saveRefreshToken
-export async function saveRefreshToken(id:string, token:string) {
-    
+
+export async function saveRefreshToken(id:string, token:string, expiration:number) {
+    try {
+        const expirationDate = new Date(expiration * 1000) //expires in 7d
+        const tokendata = {
+            token: token,
+            expiresAt: expirationDate,
+            userId: id
+        }
+
+        const refreshToken = await prisma.refreshToken.create({
+            data: tokendata,
+            select: {
+                user: true,
+                token: true,
+                expiresAt: true
+            }
+        })
+
+        return refreshToken
+    } catch (error) {
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            throw new PrismaError<PrismaErrorDetails>(
+                prismaCodeToMessage.verifyEmail![`${error.code}`] ?? error.message,
+                error.code,
+                "PRISMA_FIND_USER_EMAIL_FAILED",
+                {
+                    model: 'User and UserCredentials',
+                    metaTarget: error.meta ? Array(String(error.meta.target)) : [],
+                    clientVersion: error.clientVersion
+                }
+            );
+        }
+        
+        if (error instanceof Prisma.PrismaClientUnknownRequestError) {
+            throw new PrismaError<PrismaErrorDetails>(
+                error.message,
+                'P1001',
+                "PRISMA_FIND_USER_EMAIL_FAILED",
+                {
+                    model: 'User and UserCredentials',
+                    clientVersion: error.clientVersion
+                }
+            );
+        } 
+        if (error instanceof Error) {
+            throw error;
+        }
+    }
+    throw new AppError("createUser failed without throwing an error", '500', "UNKNOWN_ERROR");
 };
+
+export async function findRefreshToken(token:string) {}
