@@ -2,7 +2,8 @@ import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import cors from "cors";
 // AUTH
-import passport from "modules/auth/passport";
+import passport from 'passport';
+import "modules/auth/passport";
 import cookieParser from 'cookie-parser';
 //ROUTES
 import authRouter from 'modules/auth/auth.routes';
@@ -51,9 +52,8 @@ if (process.env.NODE_ENV === "production") {
 
 //Global Error middleware
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-    //console.error(err);
+    console.error(err);
     if (err instanceof AppError) {
-        console.log(Number(err.code) || 500)
         return res.status(Number(err.code) || 500).json({
             code: err.code,
             success: false,

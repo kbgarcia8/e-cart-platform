@@ -81,10 +81,8 @@ export const loginValidator = [
     check('password')
         .notEmpty().withMessage('Please provide a password!').bail()
 ];
-//TODO: Merge requireAth and refreshToken for server-driven refresh
-export const requireAuth = passport.authenticate("jwt", {session: false});
 
-export const refreshToken = async (req:Request, res:Response, next:NextFunction) => {
+export const requireAuth = passport.authenticate("jwt", {session: false}, async (req:Request, res:Response, next:NextFunction) => {
     try {
         const refreshToken = req.cookies.refresh_token;
         if (!refreshToken) {
@@ -101,7 +99,6 @@ export const refreshToken = async (req:Request, res:Response, next:NextFunction)
             process.env.JWT_REFRESH_SECRET!
         ) as RefreshPayload;
 
-        // 2️⃣ Ensure token exists in DB
         const storedToken = await repo.findRefreshToken(refreshToken);
 
         if (storedToken.expiresAt < new Date()) {
@@ -160,4 +157,4 @@ export const refreshToken = async (req:Request, res:Response, next:NextFunction)
             )
         );
     }
-};
+});

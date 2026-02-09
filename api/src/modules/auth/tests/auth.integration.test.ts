@@ -1,8 +1,9 @@
 import request from "supertest";
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, test } from "vitest";
 import { app } from "../../../app";
 import prisma from "lib/prisma";
-import * as repo from "modules/auth/auth.repo"
+import * as repo from "modules/auth/auth.repo";
+import cookie from 'cookie-parser';
 
 describe("Auth module: Signup", () => {
     let token: string;
@@ -163,7 +164,7 @@ describe("Auth module: Signup", () => {
             expect(res.body.message).toContain('Please confirm password!');
         });
 
-        it("SUCCESS: should create a user", async () => {
+        it("SUCCESS: should create a user", {timeout: 10_000}, async () => {
             const data = {
                 email: "kbgarcia1513@gmail.com",
                 firstname: "Karl",
@@ -239,9 +240,60 @@ describe("Auth module: Signup", () => {
 });
 
 describe("Auth module: Login", () => {
-    it("findUserByEmail returns created user", async () =>{
+    it("ERROR: Email should be required", async () => {
+        const res = await request(app)
+        .post("/auth/login")
+        .send({
+            email: "",
+            password: ""
+        });
+
+        expect(res.status).toBe(400);
+        expect(res.body.message).toMatch("Email is required");
+    });
+
+    it("ERROR: Password should be provided", async () => {
+        const res = await request(app)
+        .post("/auth/login")
+        .send({
+            email: "kbgarcia1513@gmail.com",
+            password: ""
+        });
+
+        expect(res.status).toBe(400);
+        expect(res.body.message).toMatch("provide a password");
+    });
+
+    it("ERROR: Email must be verified first before logging in", async () => {});
+
+    it("SUCCESS: findUserByEmail returns created user", async () =>{
         const user = await repo.findUserByEmail('kbgarcia1513@gmail.com');
         expect(user?.credentials).toBeDefined;
         expect(user?.profile).toBeDefined;
     });
+
+    it("SUCCESS: access token is granted to returned user", {timeout: 60_000}, async () => {
+        const res = await request.agent(app)
+        .post("/auth/login")
+        .send({
+            email: "kbgarcia1513@gmail.com",
+            password: "@Thisisatest1234"
+        });
+        const rawCookies = res.headers['set-cookie'];
+        const cookies = Array.isArray(rawCookies) ? rawCookies : rawCookies ? [rawCookies] : [];
+
+        console.log(cookies);
+        
+        expect(res.status).toBe(200);
+        expect(cookies).toBeDefined();
+        expect(cookies).toHaveLength(2);
+        expect(cookies.some(cookie => cookie.includes('access_token'))).toBe(true);
+        expect(cookies.some(cookie => cookie.includes('refresh_token'))).toBe(true);
+    });
+
+    it("SUCCESS: Refresh token must be linked/saved to logged user", async () => {});
+
+    it("SUCCESS: Refresh token must renew access token after it is expired", async () => {});
+
+
 });

@@ -13,8 +13,10 @@ export default defineConfig({
         setupFiles: ["./src/tests/setup.ts"],
         env: {
             DATABASE_URL: process.env.DATABASE_URL_TEST,
+
             NODE_ENV: "test"
-        }
+        },
+        //testTimeout: 20000
     },
     resolve: {
         alias: {
