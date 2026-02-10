@@ -1,6 +1,6 @@
 model VerificationToken {
   id         String    @id @default(uuid())
-  userId     String
+  userId     String    @unique
   token      String    @unique
   expiresAt  DateTime
   user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)

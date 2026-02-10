@@ -79,72 +79,65 @@ export async function createUser(userdata:UserCreateData):Promise<UserCreated> {
 
 export async function sendVerificationToken(id:string, email:string) {
     //For logging in unverfied email, check first if user has an existing unexpired token to avoid spam
-    const checkTokens = await prisma.verificationToken.findMany({
+    const existingToken = await prisma.verificationToken.findUnique({
         where: { userId: id}
     });
 
-    const expirations = checkTokens.map((token) => token.expiresAt);
     const timeNow = Date.now()
-    const activeTokens = expirations.filter(date => timeNow < Number(date))
-
-    if(activeTokens.length !==0) {
+    if(existingToken && Number(existingToken.expiresAt) > timeNow) {
         throw new AuthError<AuthErrorDetails>(
             "Existing verification email, please check and verify",
-            '535',
+            '409',
             "VERIFICATION_TOKEN_NOT_SENT",
             { reason: 'There is/are still verification token available' }
         );
     }
 
+    if(existingToken && Number(existingToken.expiresAt) > timeNow) {
+        await prisma.verificationToken.delete({ where: {userId: id}})
+    }
+
     const token = crypto.randomBytes(32).toString('hex');
     const expirationDate = new Date(Date.now() + 60 * 60 * 1000); //? Token valid for 1 hour
 
-        await prisma.verificationToken.create({
-            data: {
-                token,
-                userId: id,
-                expiresAt: expirationDate,
-            },
-        });
+    await prisma.verificationToken.create({
+        data: {
+            token,
+            userId: id,
+            expiresAt: expirationDate,
+        },
+    });
 
-        try {
-            await sendVerificationEmail(email, token);
-            
-        } catch (error) {
-            if (error instanceof Error) {
-                throw new AuthError<AuthErrorDetails>(
-                    "Failed to send verification token in email",
-                    '535',
-                    "VERIFICATION_TOKEN_NOT_SENT",
-                    { reason: error.message }
-                );
-            } else {
-                throw new AppError<{cause:string}>(
-                    "Unknown error occurred while creating user",
-                    '500',
-                    "UNKOWN_ERROR",
-                    { cause: String(error) }
-                );
-            }
+    try {
+        await sendVerificationEmail(email, token);
+        
+    } catch (error) {
+        if (error instanceof Error) {
+            throw new AuthError<AuthErrorDetails>(
+                "Failed to send verification token in email",
+                '409',
+                "VERIFICATION_TOKEN_NOT_SENT",
+                { reason: error.message }
+            );
+        } else {
+            throw new AppError<{cause:string}>(
+                "Unknown error occurred while creating user",
+                '500',
+                "UNKOWN_ERROR",
+                { cause: String(error) }
+            );
         }
+    }
 };
 
 export async function verifyEmail(token: string):Promise<User> {
     try {
-        const verificationToken = await prisma.verificationToken.findFirst({
+        const verificationToken = await prisma.verificationToken.findUnique({
             where: { token: token },
             include: { user: true },
         });
 
         if (!verificationToken) {
-            const user = await prisma.user.findFirst({
-                where: { isVerified: true }
-            });
-
-            if (user) {
-                return user; // already verified → treat as success
-            }
-
             throw new AuthError(
                 "Verification failed. Invalid token",
                 '400',
@@ -154,19 +147,19 @@ export async function verifyEmail(token: string):Promise<User> {
         }
         
         // If token is expired
-        if (verificationToken.expiresAt < new Date()) {
-            await prisma.verificationToken.deleteMany({ where: { id: verificationToken.id } });
+        if (verificationToken.expiresAt <= new Date()) {
+            await prisma.verificationToken.delete({ where: { id: verificationToken.id } });
             throw new AuthError<AuthErrorDetails>(
-                "Verification failed. Token is expired",
+                "Verification email expired. Please try login for a new verification email to be sent",
                 '401',
                 "VERIFICATION_TOKEN_EXPIRED",
-                { reason: 'Token expired. Please request a new verification email.' }
+                { reason: 'Token expired. Please try to login for a new verification email to be sent.' }
             );
         }
 
         // If user already verified
         if (verificationToken.user.isVerified) {
-            await prisma.verificationToken.deleteMany({
+            await prisma.verificationToken.delete({
                 where: { userId: verificationToken.userId },
             });
 
@@ -177,7 +170,6 @@ export async function verifyEmail(token: string):Promise<User> {
                 { reason: 'This email has already been verified.' }
             );
         }
-        //! Add in LOGIN a case where token is not expired yet still not verified to remind user to verify
 
         // Update user status to verified
         const verifiedUser = await prisma.user.update({
@@ -186,7 +178,7 @@ export async function verifyEmail(token: string):Promise<User> {
         });
 
         // Delete the used token from the database
-        await prisma.verificationToken.deleteMany({ where: { id: verificationToken.id } });
+        await prisma.verificationToken.delete({ where: { id: verificationToken.id } });
 
         return verifiedUser;
     } catch (error){
@@ -219,7 +211,7 @@ export async function verifyEmail(token: string):Promise<User> {
             throw error;
         }
     }
-    throw new AppError("createUser failed without throwing an error", '500', "UNKNOWN_ERROR");
+    throw new AppError("verifyEmail failed without throwing an error", '500', "UNKNOWN_ERROR");
 };
 
 export async function findUserByEmail(email:string) {
@@ -263,7 +255,7 @@ export async function findUserByEmail(email:string) {
         }
     }
     throw new AppError("createUser failed without throwing an error", '500', "UNKNOWN_ERROR");
-}
+};
 
 export async function findUserById(id:string) {
     try {
@@ -306,7 +298,7 @@ export async function findUserById(id:string) {
         }
     }
     throw new AppError("createUser failed without throwing an error", '500', "UNKNOWN_ERROR");
-}
+};
 
 export async function saveRefreshToken(id:string, token:string, expiration:number) {
     try {
@@ -330,7 +322,7 @@ export async function saveRefreshToken(id:string, token:string, expiration:numbe
     } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
             throw new PrismaError<PrismaErrorDetails>(
-                prismaCodeToMessage.verifyEmail![`${error.code}`] ?? error.message,
+                prismaCodeToMessage.saveRefreshToken![`${error.code}`] ?? error.message,
                 error.code,
                 "PRISMA_FIND_USER_EMAIL_FAILED",
                 {
@@ -404,4 +396,4 @@ export async function deleteRefreshToken(token: string) {
     await prisma.refreshToken.deleteMany({
         where: { token }
     });
-}
+};

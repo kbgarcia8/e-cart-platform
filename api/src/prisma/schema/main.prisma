@@ -139,7 +139,7 @@ model User {
 
   profile            UserProfile?
   credentials        UserCredentials[]
-  verificationTokens VerificationToken[]
+  verificationTokens VerificationToken?
   refreshToken       RefreshToken?
   carts              Cart[]
 
@@ -181,7 +181,7 @@ model RefreshToken {
 
 model VerificationToken {
   id        String   @id @default(uuid())
-  userId    String
+  userId    String   @unique
   token     String   @unique
   expiresAt DateTime
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)

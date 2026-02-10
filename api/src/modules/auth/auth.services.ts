@@ -7,8 +7,6 @@ import { User } from 'prisma/schema/generated/prisma';
 import jwt from 'jsonwebtoken';
 import type { JwtPayload } from 'jsonwebtoken';
 
-
-
 export async function signup(data:SignupRequestDTO) {
     const { email, firstname, lastname, username, password } = data as SignupRequestDTO;
     const hashedPassword = await bcrypt.hash(password, 10);
