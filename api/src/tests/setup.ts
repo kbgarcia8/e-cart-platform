@@ -1,4 +1,4 @@
-import { beforeAll, afterAll } from 'vitest';
+import { beforeAll, afterAll, beforeEach } from 'vitest';
 import prisma from 'lib/prisma';
 
 beforeAll(async () => {
@@ -6,18 +6,18 @@ beforeAll(async () => {
         await prisma.$connect();
         console.log('Database test connected');
 
-        // test query
         await prisma.$queryRaw`SELECT 1`;
         console.log('Database query successful');
 
-        // clean up tables
-        await prisma.user.deleteMany();
-        await prisma.verificationToken.deleteMany();
     } catch (err) {
         console.error('Database connection failed:', err);
-        throw err; // fail the test immediately
+        throw err;
     }
 });
+
+beforeEach(async() => {
+    await prisma.user.deleteMany();
+})
 
 afterAll(async () => {
     await prisma.$disconnect();

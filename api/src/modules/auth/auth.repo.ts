@@ -93,7 +93,7 @@ export async function sendVerificationToken(id:string, email:string) {
         );
     }
 
-    if(existingToken && Number(existingToken.expiresAt) > timeNow) {
+    if(existingToken && Number(existingToken.expiresAt) < timeNow) {
         await prisma.verificationToken.delete({ where: {userId: id}})
     }
 
@@ -110,7 +110,6 @@ export async function sendVerificationToken(id:string, email:string) {
 
     try {
         await sendVerificationEmail(email, token);
-        
     } catch (error) {
         if (error instanceof Error) {
             throw new AuthError<AuthErrorDetails>(

@@ -6,9 +6,6 @@ import * as repo from "modules/auth/auth.repo";
 import * as utils from "modules/auth/auth.utils"
 
 describe("Auth module: Signup", () => {
-    let token: string;
-    let userId: string;
-
     describe("Signup user", () => {
         it("ERROR: should not allowed non-existent email", async () => {
             const res = await request(app)
@@ -187,18 +184,64 @@ describe("Auth module: Signup", () => {
                 where: { email: data.email},
                 include: {verificationTokens: true}
             });
-
-            token = user?.verificationTokens?.token!;
-            userId = user?.id!;
         });
 
-        //TODO: username must be unique, meaning if same firstname and lastname is taken user must provide username
+        //TODO: Find a way to explicitly determine if email or username is the one being duplicated
         it("ERROR: username must be unique", {timeout: 10_000}, async () => {
-            
+            const signupData = {
+                email: "kbgarcia1513@gmail.com",
+                firstname: "Karl",
+                lastname: "Garcia",
+                username: "",
+                password: "@Thisisatest1234",
+                confirmpassword: "@Thisisatest1234",
+            }
+
+            const signup = await request(app)
+            .post("/auth/signup/local")
+            .send(signupData);
+
+            expect(signup.status).toBe(200);
+            expect(signup.body.data.user.email).toBe("kbgarcia1513@gmail.com");
+            //In the event username becomes same due to same first and last name and no username is provided
+            const duplicateSignupData = {
+                email: "kbgarcia8@gmail.com",
+                firstname: "Karl",
+                lastname: "Garcia",
+                username: "",
+                password: "@Thisisatest1234",
+                confirmpassword: "@Thisisatest1234",
+            }
+
+            const duplicateSignup = await request(app)
+                .post("/auth/signup/local")
+                .send(duplicateSignupData);
+
+            expect(duplicateSignup.status).toBe(500);
+            expect(duplicateSignup.body.code).toBe("P2002");
+            //expect(duplicateSignup.body.message).toBe("Email/username already in use");
         })
 
-        it("ERROR: should not allow used email", async () => {
-            const res = await request(app)
+        it("ERROR: should not allow existing email", async () => {
+            const data = {
+                email: "kbgarcia1513@gmail.com",
+                firstname: "Karl",
+                lastname: "Garcia",
+                username: "",
+                password: "@Thisisatest1234",
+                confirmpassword: "@Thisisatest1234",
+            }
+
+            const signup = await request(app)
+            .post("/auth/signup/local")
+            .send(data);
+
+            expect(signup.status).toBe(200);
+            expect(signup.body.data.user.email).toBe("kbgarcia1513@gmail.com");
+            expect(signup.body.data.user.isVerified).toBe(false);
+            expect(signup.body.message).toBe('User signup successful. Please verify email');
+
+            const duplicate_signup = await request(app)
             .post("/auth/signup/local")
             .send({
                 email: "kbgarcia1513@gmail.com",
@@ -209,23 +252,72 @@ describe("Auth module: Signup", () => {
                 confirmpassword: "@Thisisatest1234",
             });
 
-            expect(res.status).toBe(500);
-            expect(res.body.code).toBe("P2002");
-            expect(res.body.message).toBe("Email/username already in use");
+            expect(duplicate_signup.status).toBe(500);
+            expect(duplicate_signup.body.code).toBe("P2002");
+            expect(duplicate_signup.body.message).toBe("Email/username already in use");
         });
     });
 
     describe("Verify after signup", () => {
         it("SUCCESS: Verifies the email", async() => {
-            const res = await request(app)
+            const data = {
+                email: "kbgarcia1513@gmail.com",
+                firstname: "Karl",
+                lastname: "Garcia",
+                username: "",
+                password: "@Thisisatest1234",
+                confirmpassword: "@Thisisatest1234",
+            }
+
+            const signup = await request(app)
+            .post("/auth/signup/local")
+            .send(data);
+
+            expect(signup.status).toBe(200);
+            expect(signup.body.data.user.email).toBe("kbgarcia1513@gmail.com");
+            expect(signup.body.data.user.isVerified).toBe(false);
+            expect(signup.body.message).toBe('User signup successful. Please verify email');
+
+            const user = await prisma.user.findUnique({
+                where: { email: data.email},
+                include: {verificationTokens: true}
+            });
+
+            const token = user?.verificationTokens?.token!;
+
+            const verify = await request(app)
             .get("/auth/verify")
             .query({ token })
 
-            expect(res.status).toBe(200);
-            expect(res.body.data.isVerified).toBe(true);
+            expect(verify.status).toBe(200);
+            expect(verify.body.data.isVerified).toBe(true);
         });
 
         it("ERROR: Token is expired", async() => {
+            const data = {
+                email: "kbgarcia1513@gmail.com",
+                firstname: "Karl",
+                lastname: "Garcia",
+                username: "",
+                password: "@Thisisatest1234",
+                confirmpassword: "@Thisisatest1234",
+            }
+
+            const signup = await request(app)
+            .post("/auth/signup/local")
+            .send(data);
+
+            expect(signup.status).toBe(200);
+            expect(signup.body.data.user.email).toBe("kbgarcia1513@gmail.com");
+            expect(signup.body.data.user.isVerified).toBe(false);
+            expect(signup.body.message).toBe('User signup successful. Please verify email');
+
+            const user = await prisma.user.findUnique({
+                where: { email: data.email},
+                include: {verificationTokens: true}
+            });
+
+            const userId = user?.id!;
             const expiredToken = await prisma.verificationToken.create({
                 data: {
                     token: "expired-token-123",
@@ -233,13 +325,12 @@ describe("Auth module: Signup", () => {
                     userId: userId
                 }
             });
-
-            const res = await request(app)
+            const verify = await request(app)
                 .get("/auth/verify")
                 .query({ token: expiredToken.token });
 
-            expect(res.status).toBe(401);
-            expect(res.body.message).toContain("Token is expired");
+            expect(verify.status).toBe(401);
+            expect(verify.body.message).toContain("Token is expired");
         });
     });
 });
@@ -269,86 +360,145 @@ describe("Auth module: Login", () => {
         expect(res.body.message).toMatch("provide a password");
     });
 
-    it("ERROR: Email must be verified first before logging in and If verification email still exists inform user", async () => {
-        const signup = await request(app)
-        .post("/auth/signup")
-        .send({
+    it("ERROR: Email must be verified first before logging in and if verification email still exists inform user", async () => {
+        const signupData = {
             email: "kbgarcia8@gmail.com",
             firstname: "Karl Brian",
             lastname: "Garcia",
             username: "notverified",
             password: "@Thisisatest1234",
             confirmpassword: "@Thisisatest1234",
-        });
+        }
+
+        const signup = await request(app)
+        .post("/auth/signup")
+        .send(signupData);
         expect(signup.status).toBe(200);
         expect(signup.body.data.user.email).toBe("kbgarcia8@gmail.com");
         expect(signup.body.data.user.isVerified).toBe(false);
 
         const loginData = {
-            email: "kbgarcia8@gmail.com",
-            password: "@Thisisatest1234"
+            email: signupData.email,
+            password: signupData.password
         }
 
         const login = await request(app)
         .post("/auth/login")
         .send(loginData)
-        //Since verification is just send and verify email still exists
+        
         expect(login.status).toBe(409);
         expect(login.body.message).toMatch("Existing verification email");
     });
 
-    it("If verification token is expired, a new verification token be sent when logging in unverified user", async () => {
-        let verificationToken: string;
-        let unverifiedUserId: string;
-
-        const loginData = {
+    it("ERROR: If verification token is expired, a new verification token be sent when logging in unverified user", async () => {
+        const signupData = {
             email: "kbgarcia8@gmail.com",
-            password: "@Thisisatest1234"
+            firstname: "Karl Brian",
+            lastname: "Garcia",
+            username: "notverified",
+            password: "@Thisisatest1234",
+            confirmpassword: "@Thisisatest1234",
         }
 
+        const signup = await request(app)
+        .post("/auth/signup")
+        .send(signupData);
+        expect(signup.status).toBe(200);
+        expect(signup.body.data.user.email).toBe("kbgarcia8@gmail.com");
+        expect(signup.body.data.user.isVerified).toBe(false);
+
         const currentUser = await prisma.user.findUnique({
-            where: { email: loginData.email},
+            where: { email: signupData.email},
             include: {verificationTokens: true}
         });
 
-        verificationToken = currentUser?.verificationTokens?.token!;
-        unverifiedUserId = currentUser?.id!;
+        const token = currentUser?.verificationTokens?.token!;
         
         //Force current token to expire and check if new token is sent
         const forceExpiration = new Date(Date.now() - 1000 * 60 * 60);
 
         await prisma.verificationToken.update({
-            where: { token: verificationToken },
+            where: { token: token },
             data: { expiresAt: forceExpiration}
         });
+
+        //Login expecting token is expired
+        const loginData = {
+            email: signupData.email,
+            password: signupData.password
+        }
 
         const login = await request(app)
         .post("/auth/login")
         .send(loginData)
+
+        const oldToken = await prisma.verificationToken.findUnique({where: { token: token }});
+        const newToken = await prisma.verificationToken.findFirst({where: {userId: currentUser?.id!}})
         //go to sendVerificationToken
-        //check if first token that is forced expired must be null
-        //check if a new token is existing/provided
+        //expected for old token to be deleted/undefined
+        expect(oldToken).toBeUndefined();
+        //expected new token to exist and to be not equal to previous token
+        expect(newToken).toBeDefined();
+        expect(newToken?.token!).not.toEqual(oldToken?.token)
     });
 
     it("SUCCESS: findUserByEmail returns created user", async () =>{
+        const signupData = {
+            email: "kbgarcia8@gmail.com",
+            firstname: "Karl Brian",
+            lastname: "Garcia",
+            username: "notverified",
+            password: "@Thisisatest1234",
+            confirmpassword: "@Thisisatest1234",
+        }
+
+        const signup = await request(app)
+        .post("/auth/signup")
+        .send(signupData);
+        expect(signup.status).toBe(200);
+        expect(signup.body.data.user.email).toBe("kbgarcia8@gmail.com");
+        expect(signup.body.data.user.isVerified).toBe(false);
+
         const user = await repo.findUserByEmail('kbgarcia1513@gmail.com');
         expect(user?.credentials).toBeDefined;
         expect(user?.profile).toBeDefined;
     });
 
     it("SUCCESS: access token is granted to returned user", {timeout: 60_000}, async () => {
-        const res = await request.agent(app)
+        const signupData = {
+            email: "kbgarcia8@gmail.com",
+            firstname: "Karl Brian",
+            lastname: "Garcia",
+            username: "notverified",
+            password: "@Thisisatest1234",
+            confirmpassword: "@Thisisatest1234",
+        }
+
+        const signup = await request(app)
+        .post("/auth/signup")
+        .send(signupData);
+        expect(signup.status).toBe(200);
+        expect(signup.body.data.user.email).toBe("kbgarcia8@gmail.com");
+        expect(signup.body.data.user.isVerified).toBe(false);
+
+        //force verify
+        await prisma.user.update({
+            where: { email: signupData.email },
+            data: { isVerified: true }
+        })
+
+        const login = await request.agent(app)
         .post("/auth/login")
         .send({
             email: "kbgarcia1513@gmail.com",
             password: "@Thisisatest1234"
         });
-        const rawCookies = res.headers['set-cookie'];
+        const rawCookies = login.headers['set-cookie'];
         const cookies = Array.isArray(rawCookies) ? rawCookies : rawCookies ? [rawCookies] : [];
 
         console.log(cookies);
         
-        expect(res.status).toBe(200);
+        expect(login.status).toBe(200);
         expect(cookies).toBeDefined();
         expect(cookies).toHaveLength(2);
         expect(cookies.some(cookie => cookie.includes('access_token'))).toBe(true);
