@@ -74,18 +74,17 @@ export const loginPost = async (req:Request, res:Response, next:NextFunction) =>
             details
         );
     }
-    try {
-        passport.authenticate("local", {session: false}, async (err:any, user:AuthUser | false | null,  info?: { message?: string }) => {
-            if(err || !user) {
-                return next (new AuthError<AuthErrorDetails>(
-                    "Incorrect/Invalid Password",
-                    '535',
-                    "AUTH_FAILED",
-                    { reason: info?.message || "Invalid credentials" }
-                ))
-            }
+    passport.authenticate("local", {session: false}, async (err:any, user:AuthUser | false | null,  info?: { message?: string }) => {
+        if(err || !user) {
+            return next (new AuthError<AuthErrorDetails>(
+                "Incorrect/Invalid Password",
+                '535',
+                "AUTH_FAILED",
+                { reason: info?.message || "Invalid credentials" }
+            ))
+        }
+        try {
             const { accessToken, refreshToken } = await authService.login(user);
-
             res.cookie("access_token", accessToken, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === "production",
@@ -104,8 +103,8 @@ export const loginPost = async (req:Request, res:Response, next:NextFunction) =>
                 success: true,
                 message: "Login successful"
             });
-        })(req, res, next);
-    } catch (err) {
-        next(err);
-    }
+        } catch (err) {
+            next(err);
+        }
+    })(req, res, next);
 };

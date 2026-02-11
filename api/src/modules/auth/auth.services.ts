@@ -20,8 +20,6 @@ export async function signup(data:SignupRequestDTO) {
         provider: "Local" as const,
         providerId: null
     }
-    console.log('YES')
-    console.log(username?.trim())
 
     const finalUsername = (username?.trim() || email.split('@')[0]) as string;
     const userdata = {
@@ -63,10 +61,22 @@ export async function verifyEmail(token: string) {
 };
 
 export async function login(user:User) {
-    if(!user.isVerified) await repo.sendVerificationToken(user.id, user.email);
-    
-    const accessToken = jwt.sign({ sub: user.id, email: user.email, role: user.role }, process.env.JWT_SECRET!, { expiresIn: '15m'});
-    const refreshToken = jwt.sign({ sub: user.id }, process.env.JWT_REFRESH_SECRET!, { expiresIn: "7d" });
+    if(!user.isVerified) {
+        try {
+            await repo.sendVerificationToken(user.id, user.email);
+        } catch (error) {
+            throw error;
+        }
+        throw new AuthError<AuthErrorDetails>(
+            "Verification email sent. Please verify before logging in.",
+            '409',
+            "EMAIL_NOT_VERIFIED",
+            { reason: "New verification email sent" }
+        );
+    }
+    //TODO: Need to check first if refreshToken is expired before isuing new tokens
+    const accessToken = jwt.sign({ sub: user.id, email: user.email, role: user.role }, process.env.JWT_SECRET!, { expiresIn: process.env.NODE_ENV === 'dev' || process.env.NODE_ENV === 'production' ? '15m' : '1ms'});
+    const refreshToken = jwt.sign({ sub: user.id }, process.env.JWT_REFRESH_SECRET!, { expiresIn: process.env.NODE_ENV === 'dev' || process.env.NODE_ENV === 'production' ? "7d" : "10s"});
 
     const { exp } = jwt.decode(refreshToken) as JwtPayload;
 

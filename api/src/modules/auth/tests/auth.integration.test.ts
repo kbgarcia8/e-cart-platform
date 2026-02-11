@@ -1,9 +1,9 @@
 import request from "supertest";
-import { describe, it, expect, test } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { app } from "../../../app";
 import prisma from "lib/prisma";
 import * as repo from "modules/auth/auth.repo";
-/*
+
 describe("Auth module: Signup", () => {
     describe("Signup user", () => {
         it("ERROR: should not allowed non-existent email", async () => {
@@ -333,7 +333,6 @@ describe("Auth module: Signup", () => {
         });
     });
 });
-*/
 
 describe("Auth module: Login", () => {
     it("ERROR: Email should be required", async () => {
@@ -359,8 +358,8 @@ describe("Auth module: Login", () => {
         expect(res.status).toBe(400);
         expect(res.body.message).toMatch("provide a password");
     });
-
-    it("ERROR: Email must be verified first before logging in and if verification email still exists inform user", { timeout: 60_000 }, async () => {
+    //TODO: Add login here, temporarilty remove it
+    it("ERROR: Email must be verified first before logging in and if verification email still exists inform user", { timeout: 10_000 }, async () => {
         const data = {
             email: "kbgarcia1513@gmail.com",
             firstname: "Karl",
@@ -374,13 +373,23 @@ describe("Auth module: Login", () => {
         .post("/auth/signup/local")
         .send(data);
 
-        console.log(signup.body);
-
         expect(signup.status).toBe(200);
         expect(signup.body.data.user.email).toBe("kbgarcia1513@gmail.com");
         expect(signup.body.data.user.isVerified).toBe(false);
+
+        const loginData = {
+            email: data.email,
+            password: data.password
+        };
+
+        const login = await request(app)
+        .post("/auth/login")
+        .send(loginData)
+
+        expect(login.status).toBe(409);
+        expect(login.body.message).toMatch("Existing verification email, please check and verify")
     });
-    //TODO: Fix login logic/flow
+    
     it("ERROR: If verification token is expired, a new verification token be sent when logging in unverified user", async () => {
         const signupData = {
             email: "kbgarcia1513@gmail.com",
@@ -392,7 +401,7 @@ describe("Auth module: Login", () => {
         }
 
         const signup = await request(app)
-        .post("/auth/signup")
+        .post("/auth/signup/local")
         .send(signupData);
         expect(signup.status).toBe(200);
         expect(signup.body.data.user.email).toBe("kbgarcia1513@gmail.com");
@@ -427,7 +436,7 @@ describe("Auth module: Login", () => {
         const newToken = await prisma.verificationToken.findFirst({where: {userId: currentUser?.id!}})
         //go to sendVerificationToken
         //expected for old token to be deleted/undefined
-        expect(oldToken).toBeUndefined();
+        expect(oldToken).toBeNull();
         //expected new token to exist and to be not equal to previous token
         expect(newToken).toBeDefined();
         expect(newToken?.token!).not.toEqual(oldToken?.token)
@@ -467,8 +476,9 @@ describe("Auth module: Login", () => {
         }
 
         const signup = await request(app)
-        .post("/auth/signup")
+        .post("/auth/signup/local")
         .send(signupData);
+
         expect(signup.status).toBe(200);
         expect(signup.body.data.user.email).toBe("kbgarcia1513@gmail.com");
         expect(signup.body.data.user.isVerified).toBe(false);
@@ -487,8 +497,6 @@ describe("Auth module: Login", () => {
         });
         const rawCookies = login.headers['set-cookie'];
         const cookies = Array.isArray(rawCookies) ? rawCookies : rawCookies ? [rawCookies] : [];
-
-        console.log(cookies);
         
         expect(login.status).toBe(200);
         expect(cookies).toBeDefined();
@@ -520,25 +528,131 @@ describe("Auth module: Login", () => {
             data: { isVerified: true }
         })
 
+        const loginData = {
+            email: signupData.email,
+            password: signupData.password
+        }
+
         const login = await request.agent(app)
         .post("/auth/login")
-        .send({
-            email: "kbgarcia1513@gmail.com",
-            password: "@Thisisatest1234"
-        });
+        .send(loginData);
+
         const rawCookies = login.headers['set-cookie'];
         const cookies = Array.isArray(rawCookies) ? rawCookies : rawCookies ? [rawCookies] : [];
+
+        const refreshToken = cookies.find(cookie => cookie.match('refresh')).split(' ')[0].split('=')[1].replace(';','')
+
+        const user = await prisma.user.findUnique({ where: {email: loginData.email}, include:{refreshToken: true}});
+
         
         expect(login.status).toBe(200);
         expect(cookies).toBeDefined();
         expect(cookies).toHaveLength(2);
-        expect(cookies.some(cookie => cookie.includes('access_token'))).toBe(true);
         expect(cookies.some(cookie => cookie.includes('refresh_token'))).toBe(true);
+        expect(refreshToken).toEqual(user?.refreshToken?.token);
+    });
+});
+
+describe("Auth module-shared: Dashboard/Protected Route", () => {
+    it("SUCCESS: Existing refresh token is renewed and must renew access token after it is expired", {timeout: 10_000}, async () => {
+        const agent = request.agent(app);
+        const signupData = {
+            email: "kbgarcia1513@gmail.com",
+            firstname: "Karl Brian",
+            lastname: "Garcia",
+            username: "notverified",
+            password: "@Thisisatest1234",
+            confirmpassword: "@Thisisatest1234",
+        }
+
+        const signup = await request(app)
+        .post("/auth/signup/local")
+        .send(signupData);
+
+        expect(signup.status).toBe(200);
+        expect(signup.body.data.user.email).toBe("kbgarcia1513@gmail.com");
+        expect(signup.body.data.user.isVerified).toBe(false);
+
+        //force verify
+        await prisma.user.update({
+            where: { email: signupData.email },
+            data: { isVerified: true }
+        })
+
+        const loginData = {
+            email: signupData.email,
+            password: signupData.password
+        }
+
+        const login = await agent
+        .post("/auth/login")
+        .send(loginData);
+
+        const rawCookies = login.headers['set-cookie'];
+        const cookies = Array.isArray(rawCookies) ? rawCookies : rawCookies ? [rawCookies] : [];
+        const initialAccessToken = cookies.find(cookie => cookie.match('access')).split(' ')[0].split('=')[1].replace(';','');
+        const initialRawRefreshToken = cookies.find(cookie => cookie.match('refresh')).split(' ')[0].split('=')[1].replace(';','');
+        const initialrefreshToken = (await repo.findRefreshToken(initialRawRefreshToken)).token;
+
+        expect(login.status).toBe(200);
+        expect(cookies).toBeDefined();
+        expect(cookies).toHaveLength(2);
+        expect(cookies.some(cookie => cookie.includes('access_token'))).toBe(true);
+
+        const dashboard = await agent
+        .get("/auth/dashboard")
+
+        const newRawCookies = dashboard.headers['set-cookie'];
+        const newCookies = Array.isArray(newRawCookies) ? newRawCookies : newRawCookies ? [newRawCookies] : [];
+        const newAccessToken = newCookies.find(cookie => cookie.match('access')).split(' ')[0].split('=')[1].replace(';','');
+        const newRawRefreshToken = newCookies.find(cookie => cookie.match('refresh')).split(' ')[0].split('=')[1].replace(';','');
+        const newrefreshToken = (await repo.findRefreshToken(newRawRefreshToken)).token;
+
+        expect(dashboard.status).toBe(200);
+        expect(newAccessToken).not.toEqual(initialAccessToken);
+        expect(newrefreshToken).not.toEqual(initialrefreshToken);
     });
 
-    it("SUCCESS: Refresh token must renew access token after it is expired", async () => {
+    it("ERROR: Expired refresh token must remind user to login again", {timeout: 12_000}, async () => {
+        const agent = request.agent(app);
+        const signupData = {
+            email: "kbgarcia1513@gmail.com",
+            firstname: "Karl Brian",
+            lastname: "Garcia",
+            username: "notverified",
+            password: "@Thisisatest1234",
+            confirmpassword: "@Thisisatest1234",
+        }
 
-    });
+        const signup = await request(app)
+        .post("/auth/signup/local")
+        .send(signupData);
 
+        expect(signup.status).toBe(200);
+        expect(signup.body.data.user.email).toBe("kbgarcia1513@gmail.com");
+        expect(signup.body.data.user.isVerified).toBe(false);
 
+        //force verify
+        await prisma.user.update({
+            where: { email: signupData.email },
+            data: { isVerified: true }
+        })
+
+        const loginData = {
+            email: signupData.email,
+            password: signupData.password
+        }
+
+        const login = await agent
+        .post("/auth/login")
+        .send(loginData);
+
+        await new Promise(r => setTimeout(r, 10100));
+
+        const dashboard = await agent
+        .get("/auth/dashboard")
+        
+        expect(dashboard.status).toBe(401);
+        expect(dashboard.body.message).toMatch("Session expired");
+    })
 });

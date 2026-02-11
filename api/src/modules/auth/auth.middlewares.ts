@@ -82,16 +82,16 @@ export const loginValidator = [
         .notEmpty().withMessage('Please provide a password!').bail()
 ];
 
-export const requireAuth = passport.authenticate("jwt", {session: false}, async (req:Request, res:Response, next:NextFunction) => {
+const tokenCheck = async (req:Request, res:Response, next:NextFunction) => {
     try {
         const refreshToken = req.cookies.refresh_token;
         if (!refreshToken) {
-            throw new AuthError(
+            return next (new AuthError(
                 "Session expired. Please login again.",
                 "401",
                 "AUTH_REFRESH_FAILED",
                 { reason: "Refresh Token not found" }
-            );
+            ));
         }
 
         const decoded = jwt.verify(
@@ -102,12 +102,12 @@ export const requireAuth = passport.authenticate("jwt", {session: false}, async 
         const storedToken = await repo.findRefreshToken(refreshToken);
 
         if (storedToken.expiresAt < new Date()) {
-            throw new AuthError(
+            return next(new AuthError(
                 "Session expired. Please login again.",
                 "401",
                 "AUTH_REFRESH_EXPIRED",
                 { reason: "Refresh Token already Expired" }
-            );
+            ));
         }
 
         //? This is for continues renewal whenever user log in again before 7d expiration of current refreshtoken
@@ -157,4 +157,18 @@ export const requireAuth = passport.authenticate("jwt", {session: false}, async 
             )
         );
     }
-});
+}
+
+export const requireAuth = async (req:Request, res:Response, next:NextFunction) => {
+    passport.authenticate("jwt", { session: false }, async (err:any, user:JwtPayload, info?: { message?: string }) => {
+        if (err) return next(err);
+
+        if (!user) {
+            await tokenCheck(req, res, next);
+            return; 
+        }
+
+        req.user = user;
+        next();
+    })(req, res, next);
+};

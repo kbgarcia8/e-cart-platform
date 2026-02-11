@@ -84,17 +84,18 @@ export async function sendVerificationToken(id:string, email:string) {
     });
 
     const timeNow = Date.now()
-    if(existingToken && Number(existingToken.expiresAt) > timeNow) {
-        throw new AuthError<AuthErrorDetails>(
-            "Existing verification email, please check and verify",
-            '409',
-            "VERIFICATION_TOKEN_NOT_SENT",
-            { reason: 'There is/are still verification token available' }
-        );
-    }
-
-    if(existingToken && Number(existingToken.expiresAt) < timeNow) {
-        await prisma.verificationToken.delete({ where: {userId: id}})
+    if(existingToken) {
+        const expiresAt = new Date(existingToken.expiresAt).getTime();
+        if(expiresAt > timeNow) {
+            throw new AuthError<AuthErrorDetails>(
+                "Existing verification email, please check and verify",
+                '409',
+                "VERIFICATION_TOKEN_NOT_SENT",
+                { reason: 'There is/are still verification token available' }
+            );
+        } else {
+            await prisma.verificationToken.delete({ where: {userId: id}})
+        }
     }
 
     const token = crypto.randomBytes(32).toString('hex');
@@ -107,7 +108,6 @@ export async function sendVerificationToken(id:string, email:string) {
             expiresAt: expirationDate,
         },
     });
-
     try {
         await sendVerificationEmail(email, token);
     } catch (error) {
@@ -230,7 +230,7 @@ export async function findUserByEmail(email:string) {
                 error.code,
                 "PRISMA_FIND_USER_EMAIL_FAILED",
                 {
-                    model: 'User and UserCredentials',
+                    model: 'User',
                     metaTarget: error.meta ? Array(String(error.meta.target)) : [],
                     clientVersion: error.clientVersion
                 }
@@ -243,7 +243,7 @@ export async function findUserByEmail(email:string) {
                 'P1001',
                 "PRISMA_FIND_USER_EMAIL_FAILED",
                 {
-                    model: 'User and UserCredentials',
+                    model: 'User',
                     clientVersion: error.clientVersion
                 }
             );
@@ -273,7 +273,7 @@ export async function findUserById(id:string) {
                 error.code,
                 "PRISMA_FIND_USER_EMAIL_FAILED",
                 {
-                    model: 'User and UserCredentials',
+                    model: 'User',
                     metaTarget: error.meta ? Array(String(error.meta.target)) : [],
                     clientVersion: error.clientVersion
                 }
@@ -286,7 +286,7 @@ export async function findUserById(id:string) {
                 'P1001',
                 "PRISMA_FIND_USER_EMAIL_FAILED",
                 {
-                    model: 'User and UserCredentials',
+                    model: 'User',
                     clientVersion: error.clientVersion
                 }
             );
@@ -325,7 +325,7 @@ export async function saveRefreshToken(id:string, token:string, expiration:numbe
                 error.code,
                 "PRISMA_FIND_USER_EMAIL_FAILED",
                 {
-                    model: 'User and UserCredentials',
+                    model: 'User and Refresh Token',
                     metaTarget: error.meta ? Array(String(error.meta.target)) : [],
                     clientVersion: error.clientVersion
                 }
@@ -338,7 +338,7 @@ export async function saveRefreshToken(id:string, token:string, expiration:numbe
                 'P1001',
                 "PRISMA_FIND_USER_EMAIL_FAILED",
                 {
-                    model: 'User and UserCredentials',
+                    model: 'User and Refresh Token',
                     clientVersion: error.clientVersion
                 }
             );
@@ -365,7 +365,7 @@ export async function findRefreshToken(token:string) {
                 error.code,
                 "PRISMA_FIND_USER_EMAIL_FAILED",
                 {
-                    model: 'User and UserCredentials',
+                    model: 'User and Refresh Token',
                     metaTarget: error.meta ? Array(String(error.meta.target)) : [],
                     clientVersion: error.clientVersion
                 }
@@ -378,7 +378,7 @@ export async function findRefreshToken(token:string) {
                 'P1001',
                 "PRISMA_FIND_USER_EMAIL_FAILED",
                 {
-                    model: 'User and UserCredentials',
+                    model: 'User and Refresh Token',
                     clientVersion: error.clientVersion
                 }
             );
