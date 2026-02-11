@@ -18,7 +18,7 @@ export const signupValidator = [
     check('firstname')
         .trim()
         .notEmpty().withMessage('First Name is required!').bail()
-        .isAlpha().withMessage('First Name must contain alphabetic characters only!'),
+        .isAlpha('en-US', { ignore: ' ' }).withMessage('First Name must contain alphabetic characters only!'),
     check('lastname')
         .trim()
         .notEmpty().withMessage('Last Name is required!').bail()

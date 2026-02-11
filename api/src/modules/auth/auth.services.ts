@@ -20,6 +20,8 @@ export async function signup(data:SignupRequestDTO) {
         provider: "Local" as const,
         providerId: null
     }
+    console.log('YES')
+    console.log(username?.trim())
 
     const finalUsername = (username?.trim() || email.split('@')[0]) as string;
     const userdata = {
