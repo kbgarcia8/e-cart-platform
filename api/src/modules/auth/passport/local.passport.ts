@@ -19,7 +19,7 @@ export default function localStrategy () {
                 
                 return done(null, retrievedUser);
             } catch (err) {
-                return done(err); //? throws from repo goes here
+                return done(err); 
             }
         }
     ))

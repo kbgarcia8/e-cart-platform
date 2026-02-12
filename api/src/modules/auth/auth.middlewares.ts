@@ -99,9 +99,9 @@ const tokenCheck = async (req:Request, res:Response, next:NextFunction) => {
             process.env.JWT_REFRESH_SECRET!
         ) as RefreshPayload;
 
-        const storedToken = await repo.findRefreshToken(refreshToken);
+        const storedRefreshToken = await repo.findRefreshToken(refreshToken);
 
-        if (storedToken.expiresAt < new Date()) {
+        if (storedRefreshToken.expiresAt < new Date()) {
             return next(new AuthError(
                 "Session expired. Please login again.",
                 "401",
@@ -125,11 +125,7 @@ const tokenCheck = async (req:Request, res:Response, next:NextFunction) => {
 
         const user = await repo.findUserById(decoded.sub);
 
-        const newAccessToken = jwt.sign(
-            { sub: user?.id, email: user?.email, role: user?.role },
-            process.env.JWT_SECRET!,
-            { expiresIn: "15m" }
-        );
+        const newAccessToken = jwt.sign({ sub: user?.id, email: user?.email, role: user?.role },process.env.JWT_SECRET!,{ expiresIn: "15m" });
 
         res.cookie("access_token", newAccessToken, {
             httpOnly: true,

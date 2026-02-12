@@ -43,6 +43,10 @@ const LoginPage =() => {
         password: ''
     };
 
+    useEffect(() => {
+        console.error(error);
+    }, [error]);
+
     const [loginFormValues, setLoginFormValues] = useState<LoginFormData>(initialFormValues);
 
     const handleLoginFormChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,7 +71,12 @@ const LoginPage =() => {
     ));
 
     const handleFormSubmit = useCallback( async () => {
-        await login(loginFormValues)
+        try {
+            await login(loginFormValues)
+            toast.success("User login successfully!");
+        } catch (error) {
+            toast.error(error instanceof Error ? error.message : "Something went wrong during login!");
+        }
     }, [login, loginFormValues]);
     
 

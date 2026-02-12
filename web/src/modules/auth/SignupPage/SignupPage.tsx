@@ -99,7 +99,9 @@ const SignupPage =() => {
         confirmpassword: ''
     };
 
-    console.error(error);
+    useEffect(() => {
+        console.error(error);
+    }, [error]);
 
     const [signupFormValues, setSignupFormValues] = useState<UserCreateData>(initialFormValues);
 
@@ -130,7 +132,7 @@ const SignupPage =() => {
             await signup(signupFormValues);
             toast.success("User created successfully!");
         } catch (error) {
-            toast.error(error instanceof Error ? error.message : "Something went wrong!");
+            toast.error(error instanceof Error ? error.message : "Something went wrong during signup!");
         }
     }, [signup, signupFormValues]);
     

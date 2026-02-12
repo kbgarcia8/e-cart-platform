@@ -16,7 +16,6 @@ export default defineConfig({
 
             NODE_ENV: "test"
         },
-        //testTimeout: 20000
     },
     resolve: {
         alias: {

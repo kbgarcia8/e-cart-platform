@@ -60,10 +60,3 @@ export interface RefreshPayload {
     sub: string;
     exp: number;
 };
-
-// ! Below this comment are yet to be edited
-
-export type AuthResponse = {
-    user: AuthUser
-    token: string
-}
