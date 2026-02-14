@@ -222,7 +222,7 @@ export async function findUserByEmail(email:string) {
                 credentials: true
             }
         });
-        return user;
+        if(user !== undefined && user !== null) return user;
     } catch (error){
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
             throw new PrismaError<PrismaErrorDetails>(
@@ -265,7 +265,7 @@ export async function findUserById(id:string) {
                 credentials: true
             }
         });
-        return user;
+        if(user !== undefined && user !== null) return user;
     } catch (error){
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
             throw new PrismaError<PrismaErrorDetails>(
@@ -296,7 +296,61 @@ export async function findUserById(id:string) {
             throw error;
         }
     }
-    throw new AppError("createUser failed without throwing an error", '500', "UNKNOWN_ERROR");
+    throw new AppError("findUserById failed without throwing an error", '500', "UNKNOWN_ERROR");
+};
+
+export async function findPublicUserById(id:string) {
+    try {
+        const user = await prisma.user.findUnique({
+            where: { id: id },
+            select: {
+                id: true,
+                email: true,
+                role: true,
+                isVerified: true,
+                created_at: true,
+                updated_at: true,
+                profile: {
+                    select: {
+                        username: true,
+                        firstName: true,
+                        lastName: true
+                    }
+                }
+            },
+        });
+        if(user !== undefined && user !== null) return user;
+    } catch (error){
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            throw new PrismaError<PrismaErrorDetails>(
+                prismaCodeToMessage.findPublicUserById![`${error.code}`] ?? error.message,
+                error.code,
+                "PRISMA_FIND_USER_EMAIL_FAILED",
+                {
+                    model: 'User',
+                    metaTarget: error.meta ? Array(String(error.meta.target)) : [],
+                    clientVersion: error.clientVersion
+                }
+            );
+        }
+        
+        if (error instanceof Prisma.PrismaClientUnknownRequestError) {
+            throw new PrismaError<PrismaErrorDetails>(
+                error.message,
+                'P1001',
+                "PRISMA_FIND_USER_EMAIL_FAILED",
+                {
+                    model: 'User',
+                    clientVersion: error.clientVersion
+                }
+            );
+        } 
+        
+        if (error instanceof Error) {
+            throw error;
+        }
+    }
+    throw new AppError("findPublicUserById failed without throwing an error", '500', "UNKNOWN_ERROR");
 };
 
 export async function saveRefreshToken(id:string, token:string, expiration:number) {

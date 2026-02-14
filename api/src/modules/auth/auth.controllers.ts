@@ -84,7 +84,7 @@ export const loginPost = async (req:Request, res:Response, next:NextFunction) =>
             ))
         }
         try {
-            const { accessToken, refreshToken } = await authService.login(user);
+            const { accessToken, refreshToken, userData } = await authService.login(user);
             res.cookie("access_token", accessToken, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === "production",
@@ -100,8 +100,10 @@ export const loginPost = async (req:Request, res:Response, next:NextFunction) =>
             });
 
             res.status(200).json({
+                code: 200,
                 success: true,
-                message: "Login successful"
+                message: "Login successful",
+                data: userData
             });
         } catch (err) {
             next(err);

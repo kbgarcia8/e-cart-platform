@@ -74,7 +74,7 @@ export async function login(user:User) {
             { reason: "New verification email sent" }
         );
     }
-    //TODO: Need to check first if refreshToken is expired before isuing new tokens
+    //? Checking of refresh token and access token expiration done in middleware
     const accessToken = jwt.sign({ sub: user.id, email: user.email, role: user.role }, process.env.JWT_SECRET!, { expiresIn: process.env.NODE_ENV === 'dev' || process.env.NODE_ENV === 'production' ? '15m' : '1ms'});
     const refreshToken = jwt.sign({ sub: user.id }, process.env.JWT_REFRESH_SECRET!, { expiresIn: process.env.NODE_ENV === 'dev' || process.env.NODE_ENV === 'production' ? "7d" : "10s"});
 
@@ -82,6 +82,7 @@ export async function login(user:User) {
 
     await repo.saveRefreshToken(user.id, refreshToken, exp!);
 
-    return {accessToken, refreshToken};
-};
+    const userData = await repo.findPublicUserById(user.id);
 
+    return {accessToken, refreshToken, userData};
+};

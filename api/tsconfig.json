@@ -4,6 +4,7 @@
     "target": "ES2022",
     "module": "CommonJS",
     "types": ["node"],
+    "typeRoots": ["./node_modules/@types", "./shared/global"],
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,

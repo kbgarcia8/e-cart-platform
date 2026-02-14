@@ -5,7 +5,7 @@ export type NavbarProps = {
     textColor?: keyof typeof TEXTCOLORS;
     textSize?: keyof typeof TEXTSIZES;
     $anchorTheme?: Theme;
-    isSigning: boolean;
+    isSigning?: boolean;
     isHashLinks?: boolean;
     links: Array<{
         name: string;

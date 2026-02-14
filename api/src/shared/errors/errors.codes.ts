@@ -23,6 +23,10 @@ export const prismaCodeToMessage:Record<string,Record<string,string>> = {
         ...generalPrismaCodes,
         "P2001": "User is not yet registered. Please signup first"
     },
+    "findPublicUserById": {
+        ...generalPrismaCodes,
+        "P2001": "User is not yet registered. Please signup first"
+    },
     "saveRefreshToken": {
         ...generalPrismaCodes,
     },

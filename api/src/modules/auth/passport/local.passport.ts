@@ -8,15 +8,17 @@ export default function localStrategy () {
         { usernameField: 'email', passwordField: 'password' },
         async (email, password, done) => {
             try {
-                const retrievedUser = await repo.findUserByEmail(email);
-                if (!retrievedUser) return done(null, false, { message: 'User not found' });
+                const user = await repo.findUserByEmail(email);
+                if (!user) return done(null, false, { message: 'User not found' });
 
-                const localProvider = retrievedUser.credentials.find(credential => credential.provider === "Local");
+                const localProvider = user.credentials.find(credential => credential.provider === "Local");
                 if (!localProvider) return done(null, false, { message: "Sign in with email is not enabled for this user" });
 
                 const isLocalPasswordMatch = await bcrypt.compare(password, localProvider?.passwordHash!);
                 if(!isLocalPasswordMatch) return done(null, false, { message: "Invalid credentials" });
                 
+                const retrievedUser = await repo.findPublicUserById(user.id);
+
                 return done(null, retrievedUser);
             } catch (err) {
                 return done(err); 

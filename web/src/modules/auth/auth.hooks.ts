@@ -9,8 +9,8 @@ export function useLogin() {
     const [error, setError] = useState<string | null>(null)
 
     const login = useCallback(async (payload: LoginFormData) => {
-        setLoading(true)
-        setError(null)
+        setLoading(true);
+        setError(null);
         try {
             const response = await loginApi(payload)
 
@@ -27,7 +27,6 @@ export function useLogin() {
             setLoading(false)
         }
     }, [navigate])
-
     return { login, loading, error }
 };
 

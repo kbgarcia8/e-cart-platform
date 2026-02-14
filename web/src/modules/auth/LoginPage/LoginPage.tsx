@@ -36,7 +36,6 @@ const loginFormInputArray:inputEntryShape<false,LabeledTextLike>[] = [
 ];
 
 const LoginPage =() => {
-
     const { login, loading, error } = useLogin();
     const initialFormValues = {
         email: '',
@@ -97,7 +96,7 @@ const LoginPage =() => {
                         inputClass={'login-form-input'}
                         labelClass={'login-form-label'}
                         labelAndInputContainerClass={'login-form-label-n-input-container'}
-                        submitText={'Login'}
+                        submitText={'Login with Email'}
                         handleSubmitForm={handleFormSubmit}
                     />
                 </Styled.FormSpace>
@@ -110,6 +109,6 @@ const LoginPage =() => {
             </Styled.SignUpMessageSpace>
         </Styled.LoginPageWrapper>
     )
-}
+};
 
 export default LoginPage;

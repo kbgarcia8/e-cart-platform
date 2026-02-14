@@ -48,7 +48,7 @@ export type LoginRequestDTO = {
     password: string;
 };
 
-export type AuthUser = User & UserCredentials & UserProfile;
+export type AuthUser = (User & Omit<UserProfile, 'userId'>) | null;
 
 export interface JwtPayload {
     sub: string;

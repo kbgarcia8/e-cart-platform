@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from 'express';
 import passport from 'passport';
 import { DeepEmailValError, AuthError } from 'shared/errors/errors';
 import type { DeepEmailValidationErrorDetails } from 'shared/errors/errors.types';
-import type { JwtPayload, RefreshPayload } from './auth.types';
+import type { JwtPayload, RefreshPayload, AuthUser } from './auth.types';
 import jwt from "jsonwebtoken";
 import * as repo from "modules/auth/auth.repo";
 
@@ -141,7 +141,15 @@ const tokenCheck = async (req:Request, res:Response, next:NextFunction) => {
             maxAge: 7 * 24 * 60 * 60 * 1000
         });
 
-        return res.status(200).json({ success: true });
+        const userData = await repo.findUserById(decoded.sub);
+
+        return res.status(200).json({ 
+            code: 200,
+            success: true,
+            message: 'User Verification successful',
+            data: userData
+        });
+
     } catch (err) {
         return next(
             err instanceof AuthError
@@ -164,7 +172,9 @@ export const requireAuth = async (req:Request, res:Response, next:NextFunction) 
             return; 
         }
 
-        req.user = user;
+        const userData = await repo.findPublicUserById(user.sub);
+
+        req.user = userData;
         next();
     })(req, res, next);
 };

@@ -17,13 +17,6 @@ const links = [
 
 const LandingHeader = ():React.ReactNode => {
     const navigate = useNavigate();
-    const [isSignedIn, setIsSignedIn] = React.useState<boolean>(false);
-
-    /*
-    const handleClick = () => {
-        setIsSignedIn(false);
-    }
-    */
 
     const handleButtonNavigate = (e:React.MouseEvent<HTMLButtonElement>) => { 
         const textToLink:Record<string, string> = {
@@ -40,7 +33,7 @@ const LandingHeader = ():React.ReactNode => {
                 <Styled.LandingHeaderLogo src={headerLogo} />
             </Styled.LandingHeaderLogoSpace> 
             <Styled.NavbarWrapper>
-                <Navbar textColor={"teritiary"} textSize={"smaller"} className={"public-header-navbar"} isSigning={isSignedIn} isHashLinks={true} links={links}/>
+                <Navbar textColor={"teritiary"} textSize={"smaller"} className={"public-header-navbar"} isHashLinks={true} links={links}/>
                 <Styled.ButtonWrapper>
                     <Button buttonType={"button"} text={"Sign Up"} onClick={handleButtonNavigate} color={"secondary"} radius={"roundedsquare"}/>
                     <Button buttonType={"button"} text={"Login"} onClick={handleButtonNavigate} radius={"roundedsquare"}/>
