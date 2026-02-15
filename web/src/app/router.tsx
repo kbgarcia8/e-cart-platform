@@ -14,7 +14,8 @@ const routes = [
     {path: "/", element: <VerticalHeaderMainFooter header={<LandingHeader/>} main={<LandingMain/>} footer={<LandingFooter/>}/>},
     {path: "/auth/signup", element: <VerticalHeaderMainFooter header={<AuthHeader/>} main={<SignupPage/>} footer={<AuthFooter/>}/>},
     {path: "/auth/login", element: <VerticalHeaderMainFooter header={<AuthHeader/>} main={<LoginPage/>} footer={<AuthFooter/>}/>},
-    {path: "/auth/verify", element: <VerticalHeaderMainFooter header={<AuthHeader/>} main={<VerifyPage/>} footer={<AuthFooter/>}/>}
+    {path: "/auth/verify", element: <VerticalHeaderMainFooter header={<AuthHeader/>} main={<VerifyPage/>} footer={<AuthFooter/>}/>},
+    {path: "/user/dashboard", element: <VerticalHeaderMainFooter header={<AuthHeader/>} main={<VerifyPage/>} footer={<AuthFooter/>}/>}
 ]
 
 export default routes;

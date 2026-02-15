@@ -337,7 +337,7 @@ describe("Auth module: Signup", () => {
 describe("Auth module: Login", () => {
     it("ERROR: Email should be required", async () => {
         const res = await request(app)
-        .post("/auth/login")
+        .post("/auth/login/local")
         .send({
             email: "",
             password: ""
@@ -349,7 +349,7 @@ describe("Auth module: Login", () => {
 
     it("ERROR: Password should be provided", async () => {
         const res = await request(app)
-        .post("/auth/login")
+        .post("/auth/login/local")
         .send({
             email: "kbgarcia1513@gmail.com",
             password: ""
@@ -383,7 +383,7 @@ describe("Auth module: Login", () => {
         };
 
         const login = await request(app)
-        .post("/auth/login")
+        .post("/auth/login/local")
         .send(loginData)
 
         expect(login.status).toBe(409);
@@ -422,14 +422,14 @@ describe("Auth module: Login", () => {
             data: { expiresAt: forceExpiration}
         });
 
-        //Login expecting token is expired
+        //login/local expecting token is expired
         const loginData = {
             email: signupData.email,
             password: signupData.password
         }
 
         const login = await request(app)
-        .post("/auth/login")
+        .post("/auth/login/local")
         .send(loginData)
 
         const oldToken = await prisma.verificationToken.findUnique({where: { token: token }});
@@ -490,7 +490,7 @@ describe("Auth module: Login", () => {
         })
 
         const login = await request.agent(app)
-        .post("/auth/login")
+        .post("/auth/login/local")
         .send({
             email: "kbgarcia1513@gmail.com",
             password: "@Thisisatest1234"
@@ -534,7 +534,7 @@ describe("Auth module: Login", () => {
         }
 
         const login = await request.agent(app)
-        .post("/auth/login")
+        .post("/auth/login/local")
         .send(loginData);
 
         const rawCookies = login.headers['set-cookie'];
@@ -585,7 +585,7 @@ describe("Auth module-shared: Dashboard/Protected Route", () => {
         }
 
         const login = await agent
-        .post("/auth/login")
+        .post("/auth/login/local")
         .send(loginData);
 
         const rawCookies = login.headers['set-cookie'];
@@ -644,7 +644,7 @@ describe("Auth module-shared: Dashboard/Protected Route", () => {
         }
 
         const login = await agent
-        .post("/auth/login")
+        .post("/auth/login/local")
         .send(loginData);
 
         await new Promise(r => setTimeout(r, 10100));
