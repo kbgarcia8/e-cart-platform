@@ -6,7 +6,6 @@ import * as userService from './user.service';
 
 export const dashboardGet = (req:Request, res:Response) => {
     const user = req.user;
-    console.log(user);
 
     if(!user) {
         throw new AuthError<AuthErrorDetails>(
@@ -23,4 +22,4 @@ export const dashboardGet = (req:Request, res:Response) => {
         message: `Welcome back ${user}`,
         data: user
     });
-}
+};
