@@ -104,7 +104,7 @@ const LoginPage =() => {
             : <BounceLoader/>}
             <Styled.SignUpMessageSpace>
                 <Styled.SignUpMessage>
-                    Don't have an account yet? <Styled.SignUpLink  to={`/signup`}>{"Sign Up"}</Styled.SignUpLink> 
+                    Don't have an account yet? <Styled.SignUpLink  to={`/auth/signup`}>{"Sign Up"}</Styled.SignUpLink> 
                 </Styled.SignUpMessage>
             </Styled.SignUpMessageSpace>
         </Styled.LoginPageWrapper>

@@ -75,14 +75,16 @@ export async function login(user:PublicUser) {
             { reason: "New verification email sent" }
         );
     }
+    
     //? Checking of refresh token and access token expiration done in middleware
+    
     const accessToken = jwt.sign({ sub: user.id, email: user.email, role: user.role }, process.env.JWT_SECRET!, { expiresIn: process.env.NODE_ENV === 'dev' || process.env.NODE_ENV === 'production' ? '15m' : '1ms'});
     const refreshToken = jwt.sign({ sub: user.id }, process.env.JWT_REFRESH_SECRET!, { expiresIn: process.env.NODE_ENV === 'dev' || process.env.NODE_ENV === 'production' ? "7d" : "10s"});
-
+    
     const { exp } = jwt.decode(refreshToken) as JwtPayload;
 
-    await repo.saveRefreshToken(user.id, refreshToken, exp!);
-
+    await repo.saveRefreshToken(user.id, refreshToken, exp!);   
+    
     const extractedUserData = await repo.findPublicUserById(user.id);
     const userData = mapToAuthUserDTO(extractedUserData);
 

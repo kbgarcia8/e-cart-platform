@@ -32,6 +32,7 @@ export const prismaCodeToMessage:Record<string,Record<string,string>> = {
     },
     "findRefreshToken": {
         ...generalPrismaCodes,
-        "P2001": "Refresh token not found please login again"
+        "P2001": "Refresh token not found please login again",
+        "P2025": "Refresh token not found please login again"
     }
 }

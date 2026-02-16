@@ -592,7 +592,7 @@ describe("Auth module-shared: Dashboard/Protected Route", () => {
         const cookies = Array.isArray(rawCookies) ? rawCookies : rawCookies ? [rawCookies] : [];
         const initialAccessToken = cookies.find(cookie => cookie.match('access')).split(' ')[0].split('=')[1].replace(';','');
         const initialRawRefreshToken = cookies.find(cookie => cookie.match('refresh')).split(' ')[0].split('=')[1].replace(';','');
-        const initialrefreshToken = (await repo.findRefreshToken(initialRawRefreshToken)).token;
+        const initialrefreshToken = (await repo.findRefreshToken(initialRawRefreshToken))!.token;
 
         expect(login.status).toBe(200);
         expect(cookies).toBeDefined();

@@ -85,7 +85,9 @@ export const loginValidator = [
 
 const tokenCheck = async (req:Request, res:Response, next:NextFunction) => {
     try {
+        console.log(req.cookies);
         const refreshToken = req.cookies.refresh_token;
+        console.log("refreshToken",refreshToken)
         if (!refreshToken) {
             return next (new AuthError(
                 "Session expired. Please login again.",
@@ -100,7 +102,18 @@ const tokenCheck = async (req:Request, res:Response, next:NextFunction) => {
             process.env.JWT_REFRESH_SECRET!
         ) as RefreshPayload;
 
-        const storedRefreshToken = await repo.findRefreshToken(refreshToken);
+        const storedRefreshToken = await repo.findRefreshToken(decoded.sub);
+
+        console.log("storedRefreshToken", storedRefreshToken)
+
+        if (!storedRefreshToken) {
+            return next(new AuthError(
+                "Session expired. Please login again.",
+                "401",
+                "AUTH_REFRESH_INVALID",
+                { reason: "Refresh token not found in database" }
+            ));
+        }
 
         if (storedRefreshToken.expiresAt < new Date()) {
             return next(new AuthError(
@@ -111,9 +124,6 @@ const tokenCheck = async (req:Request, res:Response, next:NextFunction) => {
             ));
         }
 
-        //? This is for continues renewal whenever user log in again before 7d expiration of current refreshtoken
-        await repo.deleteRefreshToken(refreshToken);
-
         const newRefreshToken = jwt.sign(
             { sub: decoded.sub },
             process.env.JWT_REFRESH_SECRET!,
@@ -121,10 +131,10 @@ const tokenCheck = async (req:Request, res:Response, next:NextFunction) => {
         );
 
         const { exp } = jwt.decode(newRefreshToken) as RefreshPayload;
-
+        //? This is for continues renewal whenever user log in again before 7d expiration of current refreshtoken
         await repo.saveRefreshToken(decoded.sub, newRefreshToken, exp);
 
-        const user = await repo.findUserById(decoded.sub);
+        const user = await repo.findPublicUserById(decoded.sub);
 
         const newAccessToken = jwt.sign({ sub: user?.id, email: user?.email, role: user?.role },process.env.JWT_SECRET!,{ expiresIn: "15m" });
 
@@ -145,12 +155,8 @@ const tokenCheck = async (req:Request, res:Response, next:NextFunction) => {
         const extractedUserData = await repo.findPublicUserById(decoded.sub);
         const userData = mapToAuthUserDTO(extractedUserData);
 
-        return res.status(200).json({ 
-            code: 200,
-            success: true,
-            message: 'User Verification successful',
-            data: userData
-        });
+        req.user = userData;
+        next();
 
     } catch (err) {
         return next(
@@ -163,7 +169,7 @@ const tokenCheck = async (req:Request, res:Response, next:NextFunction) => {
             )
         );
     }
-}
+};
 
 export const requireAuth = async (req:Request, res:Response, next:NextFunction) => {
     passport.authenticate("jwt", { session: false }, async (err:any, user:JwtPayload, info?: { message?: string }) => {

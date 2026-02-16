@@ -7,6 +7,7 @@ import "modules/auth/passport";
 import cookieParser from 'cookie-parser';
 //ROUTES
 import authRouter from 'modules/auth/auth.routes';
+import userRouter from 'modules/user/user.routes';
 //CUSTOM ERRORS
 import { AppError } from 'shared/errors/errors';
 
@@ -31,6 +32,7 @@ app.use(cookieParser());
 
 //* Routes
 app.use("/auth", authRouter);
+app.use("/user", userRouter);
 
 if (process.env.NODE_ENV === "production") {
     // Serve React build
@@ -52,7 +54,7 @@ if (process.env.NODE_ENV === "production") {
 
 //Global Error middleware
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-    //console.error(err);
+    console.error(err);
     if (err instanceof AppError) {
         return res.status(Number(err.code) || 500).json({
             code: err.code,

@@ -6,6 +6,7 @@ import type { PrismaErrorDetails, AuthErrorDetails } from "shared/errors/errors.
 import type { UserCreateData, UserCreated } from "./auth.types";
 import crypto from 'crypto';
 import { sendVerificationEmail } from "./auth.utils";
+import { ref } from "process";
 
 export async function createUser(userdata:UserCreateData):Promise<UserCreated> {
     try {
@@ -355,23 +356,27 @@ export async function findPublicUserById(id:string) {
 
 export async function saveRefreshToken(id:string, token:string, expiration:number) {
     try {
-        const expirationDate = new Date(expiration * 1000) //expires in 7d
-        const tokendata = {
-            token: token,
-            expiresAt: expirationDate,
-            userId: id
-        }
+        const expirationDate = new Date(expiration * 1000)
 
-        const refreshToken = await prisma.refreshToken.create({
-            data: tokendata,
+        return await prisma.refreshToken.upsert({
+            where: {
+                userId: id
+            },
+            update: {
+                token: token,
+                expiresAt: expirationDate,
+            },
+            create: {
+                userId: id,
+                token: token,
+                expiresAt: expirationDate,
+            },
             select: {
                 user: true,
                 token: true,
-                expiresAt: true
-            }
-        })
-
-        return refreshToken
+                expiresAt: true,
+            },
+        });
     } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
             throw new PrismaError<PrismaErrorDetails>(
@@ -404,13 +409,14 @@ export async function saveRefreshToken(id:string, token:string, expiration:numbe
     throw new AppError("createUser failed without throwing an error", '500', "UNKNOWN_ERROR");
 };
 
-export async function findRefreshToken(token:string) {
+export async function findRefreshToken(id:string) {
     try {
         const refreshToken = await prisma.refreshToken.findFirstOrThrow({
             where: {
-                token: token
+                userId: id
             }
         });
+
         return refreshToken
     } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {

@@ -13,12 +13,10 @@ const UserDashboard = () => {
     useEffect(() => {
         const initializeUser = async () => {
             try {
-                const res = await fetch(
-                    `${import.meta.env.VITE_DEV_API_URL}/user/dashboard`
-                );
+                const res = await fetch(`${import.meta.env.VITE_DEV_API_URL}/user/dashboard`,{credentials: "include"});
 
                 if (!res.ok) {
-                    throw new Error('Login failed');
+                    throw new Error('Authentication failed');
                 }
 
                 //? Remember that res.json holds the data returned by res
@@ -27,17 +25,18 @@ const UserDashboard = () => {
                 if (!json.data) {
                     throw new Error("No user data returned");
                 }
-                const user = json.data
+
+                const user = json.data;
                 setUser(user);
-                toast.success("Email verified! You can now log in.");
-            } catch {
+                toast.success(`Welcome back to your dashboard ${user.firstName}`);
+            } catch(err) {
+                console.log(err);
                 toast.error("Login failed or access expired. Please login again.");
                 navigate("/auth/login");
             } finally {
                 setLoading(false);
             }
         };
-
         initializeUser();
     }, [navigate]);
 
