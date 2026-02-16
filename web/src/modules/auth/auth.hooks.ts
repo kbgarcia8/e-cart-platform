@@ -15,7 +15,7 @@ export function useLogin() {
             const response = await loginApi(payload)
 
             if (response) {
-                navigate("/dashboard");
+                navigate("/user/dashboard");
             }
         } catch (err) {
             if(err instanceof Error) {

@@ -1,11 +1,12 @@
 import * as repo from './auth.repo';
-import type { SignupRequestDTO } from './auth.types';
+import type { SignupRequestDTO, PublicUser } from './auth.types';
 import { AuthError } from 'shared/errors/errors';
-import bcrypt from 'bcryptjs';
 import { AuthErrorDetails } from 'shared/errors/errors.types';
-import { User } from 'prisma/schema/generated/prisma';
+
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import type { JwtPayload } from 'jsonwebtoken';
+import { mapToAuthUserDTO } from './auth.utils';
 
 export async function signup(data:SignupRequestDTO) {
     const { email, firstname, lastname, username, password } = data as SignupRequestDTO;
@@ -60,7 +61,7 @@ export async function verifyEmail(token: string) {
     };
 };
 
-export async function login(user:User) {
+export async function login(user:PublicUser) {
     if(!user.isVerified) {
         try {
             await repo.sendVerificationToken(user.id, user.email);
@@ -82,7 +83,8 @@ export async function login(user:User) {
 
     await repo.saveRefreshToken(user.id, refreshToken, exp!);
 
-    const userData = await repo.findPublicUserById(user.id);
+    const extractedUserData = await repo.findPublicUserById(user.id);
+    const userData = mapToAuthUserDTO(extractedUserData);
 
     return {accessToken, refreshToken, userData};
 };

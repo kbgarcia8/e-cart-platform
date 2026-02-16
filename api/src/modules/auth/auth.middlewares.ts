@@ -4,9 +4,10 @@ import { Request, Response, NextFunction } from 'express';
 import passport from 'passport';
 import { DeepEmailValError, AuthError } from 'shared/errors/errors';
 import type { DeepEmailValidationErrorDetails } from 'shared/errors/errors.types';
-import type { JwtPayload, RefreshPayload, AuthUser } from './auth.types';
+import type { JwtPayload, RefreshPayload } from './auth.types';
 import jwt from "jsonwebtoken";
 import * as repo from "modules/auth/auth.repo";
+import { mapToAuthUserDTO } from './auth.utils';
 
 
 export const signupValidator = [
@@ -141,7 +142,8 @@ const tokenCheck = async (req:Request, res:Response, next:NextFunction) => {
             maxAge: 7 * 24 * 60 * 60 * 1000
         });
 
-        const userData = await repo.findUserById(decoded.sub);
+        const extractedUserData = await repo.findPublicUserById(decoded.sub);
+        const userData = mapToAuthUserDTO(extractedUserData);
 
         return res.status(200).json({ 
             code: 200,
@@ -172,7 +174,8 @@ export const requireAuth = async (req:Request, res:Response, next:NextFunction) 
             return; 
         }
 
-        const userData = await repo.findPublicUserById(user.sub);
+        const extractedUserData = await repo.findPublicUserById(user.sub);
+        const userData = mapToAuthUserDTO(extractedUserData);
 
         req.user = userData;
         next();

@@ -1,4 +1,5 @@
 import type { Role, User, UserCredentials, UserProfile } from "prisma/schema/generated/prisma";
+import { findPublicUserById } from "./auth.repo";
 
 type Profile = {
     firstname: string;
@@ -48,7 +49,20 @@ export type LoginRequestDTO = {
     password: string;
 };
 
-export type AuthUser = (User & Omit<UserProfile, 'userId'>) | null;
+//? To make use of return type from a Promise/await function
+export type PublicUser = Awaited<ReturnType<typeof findPublicUserById>>;
+
+export type AuthUser = {
+    id: string;
+    email: string;
+    role: Role;
+    isVerified: boolean;
+    created_at: string;
+    updated_at: string;
+    username?: string | null;
+    firstName: string;
+    lastName: string;
+};
 
 export interface JwtPayload {
     sub: string;

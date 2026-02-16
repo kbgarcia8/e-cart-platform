@@ -2,6 +2,7 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import bcrypt from 'bcryptjs';
 import * as repo from 'modules/auth/auth.repo';
+import {mapToAuthUserDTO} from 'modules/auth/auth.utils'
 
 export default function localStrategy () {
     passport.use(new LocalStrategy(
@@ -17,7 +18,8 @@ export default function localStrategy () {
                 const isLocalPasswordMatch = await bcrypt.compare(password, localProvider?.passwordHash!);
                 if(!isLocalPasswordMatch) return done(null, false, { message: "Invalid credentials" });
                 
-                const retrievedUser = await repo.findPublicUserById(user.id);
+                const extractedUser = await repo.findPublicUserById(user.id);
+                const retrievedUser = mapToAuthUserDTO(extractedUser);
 
                 return done(null, retrievedUser);
             } catch (err) {

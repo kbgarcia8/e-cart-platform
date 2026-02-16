@@ -20,6 +20,9 @@ export const SignupPageHeader =  styled.h2`
 export const VerifyEmailHeader =  styled.h4`
     width: 100%;
     text-align: center;
+    background-color: ${({theme}) => theme.colors.backgroundColor1};
+    color: ${({theme}) => theme.colors.textColor3};
+    padding: ${v.spacing.small};
 `;
 
 export const FormSpace = styled.div`

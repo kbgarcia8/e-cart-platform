@@ -1,5 +1,5 @@
-import type { LoginFormData, UserCreateData, UserCreatedDTO, LoggedUser } from "./auth.types";
-import type { ApiResponse } from "shared/type/shared.types";
+import type { LoginFormData, UserCreateData, UserCreatedDTO } from "./auth.types";
+import type { ApiResponse, AuthUserDTO } from "shared/type/shared.types";
 
 export async function signupApi(SignUpData: UserCreateData): Promise<ApiResponse<UserCreatedDTO>> {
     const response = await fetch(`${import.meta.env.VITE_DEV_API_URL}/auth/signup/local`, {
@@ -19,7 +19,7 @@ export async function signupApi(SignUpData: UserCreateData): Promise<ApiResponse
 }
 
 //! Any code below needs revision
-export async function loginApi(loginData: LoginFormData): Promise<ApiResponse<LoggedUser>> {
+export async function loginApi(loginData: LoginFormData): Promise<ApiResponse<AuthUserDTO>> {
     const response = await fetch(`${import.meta.env.VITE_DEV_API_URL}/auth/login/local`, {
         method: "POST",
         headers: { "Content-Type": "application/json"},
@@ -27,7 +27,7 @@ export async function loginApi(loginData: LoginFormData): Promise<ApiResponse<Lo
         credentials: "include"
     });
 
-    const data = await response.json() as ApiResponse<LoggedUser>;
+    const data:ApiResponse<AuthUserDTO> = await response.json();
 
     if (!response.ok) {
         console.log(data);

@@ -16,6 +16,8 @@ export type UserCreateData = {
     email: string;
     role?: Role;
     isVerified?: boolean;
+    password: string;
+    confirmpassword: string;
 } & UserProfile
 
 export type UserCreatedDTO = { 

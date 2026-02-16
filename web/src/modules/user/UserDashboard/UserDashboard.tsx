@@ -27,8 +27,8 @@ const UserDashboard = () => {
                 if (!json.data) {
                     throw new Error("No user data returned");
                 }
-
-                setUser(json.data);
+                const user = json.data
+                setUser(user);
                 toast.success("Email verified! You can now log in.");
             } catch {
                 toast.error("Login failed or access expired. Please login again.");
@@ -44,7 +44,7 @@ const UserDashboard = () => {
 
     return (
         <UserDashboardWrapper>
-            {loading ? <BounceLoader /> : <div>{`Welcome`}</div>}
+            {loading ? <BounceLoader /> : <div>{`Welcome ${user?.firstName}`}</div>}
         </UserDashboardWrapper>
     );
 };

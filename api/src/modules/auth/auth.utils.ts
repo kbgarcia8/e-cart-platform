@@ -1,5 +1,6 @@
 import "dotenv/config";
 import nodemailer from 'nodemailer';
+import type { PublicUser, AuthUser } from "./auth.types";
 
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -24,6 +25,24 @@ export const sendVerificationEmail = async (email: string, token: string) => {
         //Create tsx in shared same level as api and web
     };
 
-    //await transporter.sendMail(mailOptions);
-    console.log('Mock verification email sent');
+    await transporter.sendMail(mailOptions);
+    //console.log('Mock verification email sent');
 };
+
+export function mapToAuthUserDTO(user:PublicUser): AuthUser {
+    if (!user.profile) {
+        throw new Error("Profile is required");
+    }
+
+    return {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+        isVerified: user.isVerified,
+        created_at: user.created_at.toISOString(),
+        updated_at: user.updated_at.toISOString(),
+        username: user.profile.username,
+        firstName: user.profile.firstName,
+        lastName: user.profile.lastName,
+    };
+}

@@ -5,7 +5,7 @@ import passport from "passport";
 import { ExpressValError, AuthError } from "shared/errors/errors";
 import type { ExpressValidationErrorDetails, AuthErrorDetails } from "shared/errors/errors.types";
 import * as authService from "./auth.services";
-import type { SignupRequestDTO, LoginRequestDTO, AuthUser } from "./auth.types";
+import type { SignupRequestDTO, PublicUser } from "./auth.types";
 
 
 export const signupLocalPost = async (req: Request, res: Response, next:NextFunction):Promise<void> =>{
@@ -74,7 +74,7 @@ export const loginPost = async (req:Request, res:Response, next:NextFunction) =>
             details
         );
     }
-    passport.authenticate("local", {session: false}, async (err:any, user:AuthUser | false | null,  info?: { message?: string }) => {
+    passport.authenticate("local", {session: false}, async (err:any, user:PublicUser | false | null,  info?: { message?: string }) => {
         if(err || !user) {
             return next (new AuthError<AuthErrorDetails>(
                 "Incorrect/Invalid Password",

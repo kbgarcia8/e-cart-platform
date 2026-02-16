@@ -131,6 +131,14 @@ const SignupPage =() => {
         try {
             await signup(signupFormValues);
             toast.success("User created successfully!");
+            setSignupFormValues({
+                email: '',
+                firstname: '',
+                lastname: '',
+                password: '',
+                username: '',
+                confirmpassword: ''
+            });
         } catch (error) {
             toast.error(error instanceof Error ? error.message : "Something went wrong during signup!");
         }
@@ -163,7 +171,7 @@ const SignupPage =() => {
             }
             <Styled.LoginMessageSpace>
                 <Styled.LoginMessage>
-                    Already signed up? Please login instead <Styled.LoginLink  to={`/login`}>{"Login"}</Styled.LoginLink> 
+                    Already signed up? Please login instead <Styled.LoginLink  to={`/auth/login`}>{"Login"}</Styled.LoginLink> 
                 </Styled.LoginMessage>
             </Styled.LoginMessageSpace>
         </Styled.SignupPageWrapper>
