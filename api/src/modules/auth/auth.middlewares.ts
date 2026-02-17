@@ -181,8 +181,6 @@ export const requireAuth = async (req:Request, res:Response, next:NextFunction) 
             return; 
         }
 
-        //console.log("requireAuth", user); //user is logged proceed to dashboardGet
-        //console.log("requireAuth debug", user.id)
         const extractedUserData = await repo.findPublicUserById(user.sub); 
         const userData = mapToAuthUserDTO(extractedUserData);
 

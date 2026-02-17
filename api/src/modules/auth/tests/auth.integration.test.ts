@@ -185,13 +185,12 @@ describe("Auth module: Signup", () => {
             });
         });
 
-        //TODO: Find a way to explicitly determine if email or username is the one being duplicated
         it("ERROR: username must be unique", {timeout: 10_000}, async () => {
             const signupData = {
                 email: "kbgarcia1513@gmail.com",
                 firstname: "Karl",
                 lastname: "Garcia",
-                username: "",
+                username: "duplicateusername",
                 password: "@Thisisatest1234",
                 confirmpassword: "@Thisisatest1234",
             }
@@ -202,12 +201,12 @@ describe("Auth module: Signup", () => {
 
             expect(signup.status).toBe(200);
             expect(signup.body.data.user.email).toBe("kbgarcia1513@gmail.com");
-            //In the event username becomes same due to same first and last name and no username is provided
+            
             const duplicateSignupData = {
-                email: "kbgarcia1513@gmail.com",
+                email: "kbgarcia8@gmail.com",
                 firstname: "Karl",
                 lastname: "Garcia",
-                username: "",
+                username: "duplicateusername",
                 password: "@Thisisatest1234",
                 confirmpassword: "@Thisisatest1234",
             }
@@ -218,7 +217,7 @@ describe("Auth module: Signup", () => {
 
             expect(duplicateSignup.status).toBe(500);
             expect(duplicateSignup.body.code).toBe("P2002");
-            //expect(duplicateSignup.body.message).toBe("Email/username already in use");
+            expect(duplicateSignup.body.message).toBe("Username already in use");
         })
 
         it("ERROR: should not allow existing email", async () => {
@@ -253,7 +252,7 @@ describe("Auth module: Signup", () => {
 
             expect(duplicate_signup.status).toBe(500);
             expect(duplicate_signup.body.code).toBe("P2002");
-            expect(duplicate_signup.body.message).toBe("Email/username already in use");
+            expect(duplicate_signup.body.message).toBe("Email already in use");
         });
     });
 

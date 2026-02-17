@@ -9,8 +9,7 @@ const generalPrismaCodes = {
 
 export const prismaCodeToMessage:Record<string,Record<string,string>> = {
     "createUser": {
-        ...generalPrismaCodes,
-        "P2002": "Email/username already in use",
+        ...generalPrismaCodes
     },
     "verifyEmail": {
         ...generalPrismaCodes

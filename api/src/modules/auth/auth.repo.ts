@@ -6,7 +6,6 @@ import type { PrismaErrorDetails, AuthErrorDetails } from "shared/errors/errors.
 import type { UserCreateData, UserCreated } from "./auth.types";
 import crypto from 'crypto';
 import { sendVerificationEmail } from "./auth.utils";
-import { ref } from "process";
 
 export async function createUser(userdata:UserCreateData):Promise<UserCreated> {
     try {
@@ -44,18 +43,43 @@ export async function createUser(userdata:UserCreateData):Promise<UserCreated> {
         return newUser;
 
     } catch (error){
-        
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
-            throw new PrismaError<PrismaErrorDetails>(
-                prismaCodeToMessage.createUser![`${error.code}`] ?? error.message,
-                error.code,
-                "PRISMA_CREATE_USER_FAILED",
-                {
-                    model: 'User',
-                    metaTarget: error.meta ? Array(String(error.meta.target)) : [],
-                    clientVersion: error.clientVersion
+            if (error.code === "P2002") {
+                let field = "field";
+                const meta = error.meta as any;
+                //? Due to adapter-pg errors.meta.target is attained through
+                const originalMessage = meta?.driverAdapterError?.cause?.originalMessage;
+
+                if (originalMessage) {
+                    const match = originalMessage.match(/(.*?)_(.*?)_key/);
+                    if (match?.[2]) {
+                        field = match[2].charAt(0).toUpperCase() + match[2].slice(1);
+                    }
                 }
-            );
+
+                throw new PrismaError(
+                    `${field} already in use`,
+                    error.code,
+                    "PRISMA_CREATE_USER_FAILED",
+                    {
+                        model: "User",
+                        metaTarget: [field],
+                        clientVersion: error.clientVersion
+                    }
+                )
+        } else {
+                throw new PrismaError<PrismaErrorDetails>(
+                    prismaCodeToMessage.createUser![`${error.code}`] ?? error.message,
+                    error.code,
+                    "PRISMA_CREATE_USER_FAILED",
+                    {
+                        model: 'User',
+                        metaTarget: error.meta?.target as string[] || [],
+                        clientVersion: error.clientVersion
+                    }
+                );
+            }
+            
         } else if (error instanceof Prisma.PrismaClientUnknownRequestError) {
             throw new PrismaError<PrismaErrorDetails>(
                 error.message,
