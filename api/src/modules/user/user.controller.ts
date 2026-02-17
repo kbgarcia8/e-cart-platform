@@ -5,21 +5,27 @@ import { AuthErrorDetails } from "shared/errors/errors.types";
 import * as userService from './user.service';
 
 export const dashboardGet = (req:Request, res:Response) => {
-    const user = req.user;
+    try{
+        //ERROR here check this point
+        const user = req.user;
+        console.log("dashboardGet", user)
+        if(!user) {
+            throw new AuthError<AuthErrorDetails>(
+                "Credentials invalid or expired when accessing user dashboard.",
+                '403',
+                "CEREDENTIALS_INVALID",
+                { reason: "Credentials invalid or expired" }
+            );
+        }
 
-    if(!user) {
-        throw new AuthError<AuthErrorDetails>(
-            "Verification email sent. Please verify before logging in.",
-            '409',
-            "EMAIL_NOT_VERIFIED",
-            { reason: "New verification email sent" }
-        );
+        res.status(200).json({
+            code: 200,
+            success: true,
+            message: `Welcome back ${user}`,
+            data: user
+        });
+    } catch (err) {
+        console.error("dashboardGet error:", err);
+        res.status(500).json({ message: "Internal Server Error" });
     }
-
-    res.status(200).json({
-        code: 200,
-        success: true,
-        message: `Welcome back ${user}`,
-        data: user
-    });
 };

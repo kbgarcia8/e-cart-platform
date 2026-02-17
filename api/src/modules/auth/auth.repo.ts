@@ -354,6 +354,60 @@ export async function findPublicUserById(id:string) {
     throw new AppError("findPublicUserById failed without throwing an error", '500', "UNKNOWN_ERROR");
 };
 
+export async function findPublicUserByEmail(email:string) {
+    try {
+        const user = await prisma.user.findUnique({
+            where: { email: email },
+            select: {
+                id: true,
+                email: true,
+                role: true,
+                isVerified: true,
+                created_at: true,
+                updated_at: true,
+                profile: {
+                    select: {
+                        username: true,
+                        firstName: true,
+                        lastName: true
+                    }
+                }
+            },
+        });
+        if(user !== undefined && user !== null) return user;
+    } catch (error){
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            throw new PrismaError<PrismaErrorDetails>(
+                prismaCodeToMessage.findUserByEmail![`${error.code}`] ?? error.message,
+                error.code,
+                "PRISMA_FIND_USER_EMAIL_FAILED",
+                {
+                    model: 'User',
+                    metaTarget: error.meta ? Array(String(error.meta.target)) : [],
+                    clientVersion: error.clientVersion
+                }
+            );
+        }
+        
+        if (error instanceof Prisma.PrismaClientUnknownRequestError) {
+            throw new PrismaError<PrismaErrorDetails>(
+                error.message,
+                'P1001',
+                "PRISMA_FIND_USER_EMAIL_FAILED",
+                {
+                    model: 'User',
+                    clientVersion: error.clientVersion
+                }
+            );
+        } 
+        
+        if (error instanceof Error) {
+            throw error;
+        }
+    }
+    throw new AppError("createUser failed without throwing an error", '500', "UNKNOWN_ERROR");
+};
+
 export async function saveRefreshToken(id:string, token:string, expiration:number) {
     try {
         const expirationDate = new Date(expiration * 1000)
@@ -409,11 +463,11 @@ export async function saveRefreshToken(id:string, token:string, expiration:numbe
     throw new AppError("createUser failed without throwing an error", '500', "UNKNOWN_ERROR");
 };
 
-export async function findRefreshToken(id:string) {
+export async function findRefreshToken(userId:string) {
     try {
         const refreshToken = await prisma.refreshToken.findFirstOrThrow({
             where: {
-                userId: id
+                userId: userId
             }
         });
 

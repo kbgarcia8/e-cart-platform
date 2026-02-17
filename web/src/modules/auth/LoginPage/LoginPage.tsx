@@ -42,6 +42,8 @@ const LoginPage =() => {
         password: ''
     };
 
+    console.log(window.location.origin);
+
     useEffect(() => {
         console.error(error);
     }, [error]);
@@ -69,7 +71,7 @@ const LoginPage =() => {
         }
     ));
 
-    const handleFormSubmit = useCallback( async () => {
+    const handleFormSubmit = useCallback(async () => {
         try {
             await login(loginFormValues)
             toast.success("User login successfully!");

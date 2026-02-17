@@ -25,8 +25,8 @@ export const sendVerificationEmail = async (email: string, token: string) => {
         //Create tsx in shared same level as api and web
     };
 
-    await transporter.sendMail(mailOptions);
-    //console.log('Mock verification email sent');
+    //await transporter.sendMail(mailOptions);
+    console.log('Mock verification email sent');
 };
 
 export function mapToAuthUserDTO(user:PublicUser): AuthUser {

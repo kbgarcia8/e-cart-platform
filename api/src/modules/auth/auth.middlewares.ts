@@ -84,8 +84,9 @@ export const loginValidator = [
 ];
 
 const tokenCheck = async (req:Request, res:Response, next:NextFunction) => {
+    console.log('tokenCheck called')
     try {
-        console.log(req.cookies);
+        console.log(res.cookie);
         const refreshToken = req.cookies.refresh_token;
         console.log("refreshToken",refreshToken)
         if (!refreshToken) {
@@ -141,19 +142,18 @@ const tokenCheck = async (req:Request, res:Response, next:NextFunction) => {
         res.cookie("access_token", newAccessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: "strict",
+            sameSite: "lax",
             maxAge: 15 * 60 * 1000
         });
 
         res.cookie("refresh_token", newRefreshToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: "strict",
+            sameSite: "lax",
             maxAge: 7 * 24 * 60 * 60 * 1000
         });
 
-        const extractedUserData = await repo.findPublicUserById(decoded.sub);
-        const userData = mapToAuthUserDTO(extractedUserData);
+        const userData = mapToAuthUserDTO(user);
 
         req.user = userData;
         next();
@@ -170,8 +170,9 @@ const tokenCheck = async (req:Request, res:Response, next:NextFunction) => {
         );
     }
 };
-
+//! DEBUG: currently debugging in passport.authenticate "jwt"
 export const requireAuth = async (req:Request, res:Response, next:NextFunction) => {
+    console.log('requireAuth called')
     passport.authenticate("jwt", { session: false }, async (err:any, user:JwtPayload, info?: { message?: string }) => {
         if (err) return next(err);
 
@@ -180,7 +181,9 @@ export const requireAuth = async (req:Request, res:Response, next:NextFunction) 
             return; 
         }
 
-        const extractedUserData = await repo.findPublicUserById(user.sub);
+        //console.log("requireAuth", user); //user is logged proceed to dashboardGet
+        //console.log("requireAuth debug", user.id)
+        const extractedUserData = await repo.findPublicUserById(user.sub); 
         const userData = mapToAuthUserDTO(extractedUserData);
 
         req.user = userData;

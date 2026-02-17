@@ -23,8 +23,8 @@ export const FormSpace = styled.div`
 `;
 
 export const LoginForm = styled(DynamicForm)`
-    background-color: ${({theme})=> theme.colors.bg};
-    color: ${({theme})=> theme.colors.text};
+    background-color: ${({theme})=> theme.colors.backgroundColor1};
+    color: ${({theme})=> theme.colors.textColor3};
     
     &.without-fieldsets{
         height: auto;
@@ -49,6 +49,10 @@ export const LoginForm = styled(DynamicForm)`
         width: 75%;
         padding: 0.5rem;
         justify-content: space-between;
+    }
+
+    & label {
+        color: ${({theme})=> theme.colors.textColor3};
     }
 `;
 

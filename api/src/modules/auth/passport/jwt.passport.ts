@@ -5,14 +5,17 @@ passport.use(
     new JwtStrategy(
         {
             jwtFromRequest: ExtractJwt.fromExtractors([
-                req => req?.cookies?.access_token
+                req => {
+                    //console.log("Extracting JWT from cookie:", req.cookies?.access_token);
+                    return req.cookies?.access_token;
+                }
             ]),
             secretOrKey: process.env.JWT_SECRET!
         },
         async (payload, done) => {
             try {
                 return done(null, {
-                    id: payload.sub,
+                    sub: payload.sub,
                     email: payload.email,
                     role: payload.role
                 });

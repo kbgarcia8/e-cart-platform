@@ -554,7 +554,7 @@ describe("Auth module: Login", () => {
 });
 
 describe("Auth module-shared: Dashboard/Protected Route", () => {
-    it("SUCCESS: Existing refresh token is renewed and must renew access token after it is expired", {timeout: 10_000}, async () => {
+    it("SUCCESS: Existing refresh token is renewed and must renew access token after it is expired (1ms expiry in test environment)", {timeout: 10_000}, async () => {
         const agent = request.agent(app);
         const signupData = {
             email: "kbgarcia1513@gmail.com",
@@ -588,11 +588,12 @@ describe("Auth module-shared: Dashboard/Protected Route", () => {
         .post("/auth/login/local")
         .send(loginData);
 
+        const currentUser = await repo.findPublicUserByEmail(loginData.email);
+
         const rawCookies = login.headers['set-cookie'];
         const cookies = Array.isArray(rawCookies) ? rawCookies : rawCookies ? [rawCookies] : [];
         const initialAccessToken = cookies.find(cookie => cookie.match('access')).split(' ')[0].split('=')[1].replace(';','');
-        const initialRawRefreshToken = cookies.find(cookie => cookie.match('refresh')).split(' ')[0].split('=')[1].replace(';','');
-        const initialrefreshToken = (await repo.findRefreshToken(initialRawRefreshToken))!.token;
+        const initialrefreshToken = (await repo.findRefreshToken(currentUser.id)).token;
 
         expect(login.status).toBe(200);
         expect(cookies).toBeDefined();
@@ -600,13 +601,12 @@ describe("Auth module-shared: Dashboard/Protected Route", () => {
         expect(cookies.some(cookie => cookie.includes('access_token'))).toBe(true);
 
         const dashboard = await agent
-        .get("/auth/dashboard")
+        .get("/user/dashboard")
 
         const newRawCookies = dashboard.headers['set-cookie'];
         const newCookies = Array.isArray(newRawCookies) ? newRawCookies : newRawCookies ? [newRawCookies] : [];
         const newAccessToken = newCookies.find(cookie => cookie.match('access')).split(' ')[0].split('=')[1].replace(';','');
-        const newRawRefreshToken = newCookies.find(cookie => cookie.match('refresh')).split(' ')[0].split('=')[1].replace(';','');
-        const newrefreshToken = (await repo.findRefreshToken(newRawRefreshToken)).token;
+        const newrefreshToken = (await repo.findRefreshToken(currentUser.id)).token;
 
         expect(dashboard.status).toBe(200);
         expect(newAccessToken).not.toEqual(initialAccessToken);
@@ -650,7 +650,9 @@ describe("Auth module-shared: Dashboard/Protected Route", () => {
         await new Promise(r => setTimeout(r, 10100));
 
         const dashboard = await agent
-        .get("/auth/dashboard")
+        .get("/user/dashboard")
+
+        console.log(dashboard.body)
         
         expect(dashboard.status).toBe(401);
         expect(dashboard.body.message).toMatch("Session expired");

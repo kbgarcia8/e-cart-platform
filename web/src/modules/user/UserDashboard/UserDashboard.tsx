@@ -1,20 +1,24 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { toast } from "react-toastify";
 import { BounceLoader } from "react-spinners";
 import { UserDashboardWrapper } from "./UserDashboard.styles";
 import type { ApiResponse, AuthUserDTO } from "shared/type/shared.types";
 
 const UserDashboard = () => {
+    const isLoggedIn = useRef(false);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState<AuthUserDTO | null>(null);
 
     useEffect(() => {
+        if (isLoggedIn.current) return;
+        isLoggedIn.current = true;
         const initializeUser = async () => {
             try {
+                //! DEBUG: Not fetching as expected
                 const res = await fetch(`${import.meta.env.VITE_DEV_API_URL}/user/dashboard`,{credentials: "include"});
-
+                console.log(res)
                 if (!res.ok) {
                     throw new Error('Authentication failed');
                 }
