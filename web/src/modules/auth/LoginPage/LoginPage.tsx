@@ -6,6 +6,7 @@ import type {inputEntryShape, LabeledTextLike } from '@kbgarcia8/react-dynamic-f
 import * as Styled from './LoginPage.styles';
 import { BounceLoader } from "react-spinners";
 import { ImGoogle3 } from "react-icons/im";
+import { MdEmail } from "react-icons/md";
 import Button from "shared/ui/atoms/Button";
 
 const loginFormInputArray:inputEntryShape<false,LabeledTextLike>[] = [
@@ -99,6 +100,7 @@ const LoginPage =() => {
                         labelClass={'login-form-label'}
                         labelAndInputContainerClass={'login-form-label-n-input-container'}
                         submitText={'Login with Email'}
+                        submitIcon={<MdEmail size={"1.25rem"}/>}
                         handleSubmitForm={handleFormSubmit}
                     >
                         <Styled.AdditionalSigninOptionsSpace>
