@@ -84,11 +84,8 @@ export const loginValidator = [
 ];
 
 const tokenCheck = async (req:Request, res:Response, next:NextFunction) => {
-    console.log('tokenCheck called')
     try {
-        console.log(res.cookie);
         const refreshToken = req.cookies.refresh_token;
-        console.log("refreshToken",refreshToken)
         if (!refreshToken) {
             return next (new AuthError(
                 "Session expired. Please login again.",
@@ -105,7 +102,6 @@ const tokenCheck = async (req:Request, res:Response, next:NextFunction) => {
 
         const storedRefreshToken = await repo.findRefreshToken(decoded.sub);
 
-        console.log("storedRefreshToken", storedRefreshToken)
 
         if (!storedRefreshToken) {
             return next(new AuthError(
@@ -170,9 +166,8 @@ const tokenCheck = async (req:Request, res:Response, next:NextFunction) => {
         );
     }
 };
-//! DEBUG: currently debugging in passport.authenticate "jwt"
+
 export const requireAuth = async (req:Request, res:Response, next:NextFunction) => {
-    console.log('requireAuth called')
     passport.authenticate("jwt", { session: false }, async (err:any, user:JwtPayload, info?: { message?: string }) => {
         if (err) return next(err);
 

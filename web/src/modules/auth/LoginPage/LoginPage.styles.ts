@@ -54,6 +54,16 @@ export const LoginForm = styled(DynamicForm)`
     & label {
         color: ${({theme})=> theme.colors.textColor3};
     }
+
+    & .form-main-button-container button {
+        border-radius: ${v.borderRadius.small};
+        background-color: ${({theme}) => theme.colors.backgroundColor1};
+        color: ${({theme})=> theme.colors.textColor3};
+    }
+`;
+
+export const AdditionalSigninOptionsSpace = styled.div`
+    border: 2px solid red;
 `;
 
 export const SignUpMessageSpace = styled.div`
@@ -62,11 +72,13 @@ export const SignUpMessageSpace = styled.div`
     justify-content: center;
     display: flex;
 `;
+
 export const SignUpMessage = styled.span`
     font-size: ${v.fontSize.small};
     font-family: ${v.fonts.tertiary}, ${v.fonts.fallback};
     color: ${({theme}) => theme.colors.textColor1};
 `;
+
 export const SignUpLink = styled(Link)`
     text-decoration: none;
     color: ${({theme}) => theme.colors.backgroundColor1};

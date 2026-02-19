@@ -5,6 +5,8 @@ import type { LoginFormData } from "../auth.types";
 import type {inputEntryShape, LabeledTextLike } from '@kbgarcia8/react-dynamic-form';
 import * as Styled from './LoginPage.styles';
 import { BounceLoader } from "react-spinners";
+import { ImGoogle3 } from "react-icons/im";
+import Button from "shared/ui/atoms/Button";
 
 const loginFormInputArray:inputEntryShape<false,LabeledTextLike>[] = [
     {
@@ -41,8 +43,6 @@ const LoginPage =() => {
         email: '',
         password: ''
     };
-
-    console.log(window.location.origin);
 
     useEffect(() => {
         console.error(error);
@@ -100,7 +100,11 @@ const LoginPage =() => {
                         labelAndInputContainerClass={'login-form-label-n-input-container'}
                         submitText={'Login with Email'}
                         handleSubmitForm={handleFormSubmit}
-                    />
+                    >
+                        <Styled.AdditionalSigninOptionsSpace>
+                            <Button buttonType="button" text="Sign in with Google" svg={<ImGoogle3 size={"1.25rem"}/>} onClick={() => {console.log('Sign in with Google')}}/>
+                        </Styled.AdditionalSigninOptionsSpace>
+                    </Styled.LoginForm>
                 </Styled.FormSpace>
             </React.Fragment>
             : <BounceLoader/>}
