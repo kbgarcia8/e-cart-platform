@@ -117,6 +117,7 @@ export const DefaultButton = styled.button<{
         $color?: keyof typeof COLORS,
         $radius?: keyof typeof RADIUS,
     }>`
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;

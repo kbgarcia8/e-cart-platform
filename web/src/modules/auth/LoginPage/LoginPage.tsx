@@ -104,7 +104,7 @@ const LoginPage =() => {
                         handleSubmitForm={handleFormSubmit}
                     >
                         <Styled.AdditionalSigninOptionsSpace>
-                            <Button buttonType="button" text="Sign in with Google" svg={<ImGoogle3 size={"1.25rem"}/>} onClick={() => {console.log('Sign in with Google')}}/>
+                            <Button size="smaller" buttonType="button" text="Sign in with Google" svg={<ImGoogle3 size={"1.25rem"}/>} onClick={() => {console.log('Sign in with Google')}}/>
                         </Styled.AdditionalSigninOptionsSpace>
                     </Styled.LoginForm>
                 </Styled.FormSpace>

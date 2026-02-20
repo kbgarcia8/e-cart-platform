@@ -55,15 +55,21 @@ export const LoginForm = styled(DynamicForm)`
         color: ${({theme})=> theme.colors.textColor3};
     }
 
+    & .form-main-button-container {
+        width: 75%;
+    }
+
     & .form-main-button-container button {
-        border-radius: ${v.borderRadius.small};
+        width: 100%;
+        border-radius: ${v.borderRadius.xsmall};
         background-color: ${({theme}) => theme.colors.backgroundColor1};
         color: ${({theme})=> theme.colors.textColor3};
+        border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.textColor3};
     }
 `;
 
 export const AdditionalSigninOptionsSpace = styled.div`
-    border: 2px solid red;
+    width: 75%;
 `;
 
 export const SignUpMessageSpace = styled.div`
