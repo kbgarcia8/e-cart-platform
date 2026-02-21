@@ -18,7 +18,6 @@ export async function signupApi(SignUpData: UserCreateData): Promise<ApiResponse
     return data;
 }
 
-//! Any code below needs revision
 export async function loginApi(loginData: LoginFormData): Promise<ApiResponse<AuthUserDTO>> {
     const response = await fetch(`${import.meta.env.VITE_DEV_API_URL}/auth/login/local`, {
         method: "POST",

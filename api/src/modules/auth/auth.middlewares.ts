@@ -183,3 +183,17 @@ export const requireAuth = async (req:Request, res:Response, next:NextFunction) 
         next();
     })(req, res, next);
 };
+//? First to be executed via authRouter.get("/google", authMiddleware.googleAuth);
+export const googleAuth = passport.authenticate('google', {scope: ["profile", "email"]},  //? Requested information from Google
+    async (req:Request, res:Response) => {
+    res.send(200);
+});
+
+//? Second to execute via authRouter.get("google/oauth", authMiddleware.loginGoogle );
+export const loginGoogle = (req: Request, res: Response, next: NextFunction) => {
+    passport.authenticate("google", {
+        failureRedirect: `${process.env.CLIENT_BASE_URL}/auth/login`,
+        session: false
+    })(req, res, next);
+    //? Calls next on success and goes to failureRedirect on failure    
+};

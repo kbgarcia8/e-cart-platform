@@ -43,6 +43,7 @@
     "deep-email-validator": "^0.1.21",
     "express-async-handler": "^1.2.0",
     "express-validator": "^7.3.1",
+    "google-auth-library": "^10.5.0",
     "jsonwebtoken": "^9.0.3",
     "nodemailer": "^7.0.13",
     "nodemon": "^3.1.11",

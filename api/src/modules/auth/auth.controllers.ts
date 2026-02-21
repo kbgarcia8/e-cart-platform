@@ -56,7 +56,7 @@ export const verifyEmail = async (req: Request, res: Response, next: NextFunctio
     }
 };
 
-export const loginPost = async (req:Request, res:Response, next:NextFunction) => {
+export const loginLocalPost = async (req:Request, res:Response, next:NextFunction) => {
     const validatorErrors = validationResult(req);
     if (!validatorErrors.isEmpty()) {
         const errors = validatorErrors.array();
