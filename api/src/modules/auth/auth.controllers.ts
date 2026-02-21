@@ -112,3 +112,19 @@ export const loginLocalPost = async (req:Request, res:Response, next:NextFunctio
         }
     })(req, res, next);
 };
+
+//? Second to execute via authRouter.get("google/oauth", authMiddleware.loginGoogle );
+export const loginGoogle = (req: Request, res: Response, next: NextFunction) => {
+    passport.authenticate("google", {session: false}, async (err:any, user:PublicUser | false | null) => {
+        if(err || !user) {
+            return next (new AuthError<AuthErrorDetails>(
+                "Google Login Failed",
+                '535',
+                "AUTH_FAILED",
+                { reason: "Invalid Google credentials" }
+            ))
+        }
+        //TODO: Issue JWT
+    })(req, res, next);
+    //? Calls next on success and goes to failureRedirect on failure    
+};
