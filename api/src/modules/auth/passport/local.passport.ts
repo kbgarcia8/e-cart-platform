@@ -12,7 +12,8 @@ export default function localStrategy () {
             try {
                 const user = await repo.findUserByEmail(email);
                 if (!user) return done(null, false, { message: 'User not found' });
-
+                //TODO: Can implement later to enable Email Login in user settings to have a local credential to get past this check
+                //? Do not enable local credential creation via login, rather via settings
                 const localProvider = user.credentials.find(credential => credential.provider === "Local");
                 if (!localProvider) return done(null, false, { message: "Sign in with email is not enabled for this user" });
 
