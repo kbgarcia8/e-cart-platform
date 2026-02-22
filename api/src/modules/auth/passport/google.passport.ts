@@ -1,7 +1,8 @@
 import passport from "passport";
 import "dotenv/config";
-import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import { Strategy as GoogleStrategy, Profile, VerifyCallback } from "passport-google-oauth20";
 import prisma from "lib/prisma";
+import { ref } from "process";
 
 export default function googleStrategy () {
     passport.use(new GoogleStrategy({
@@ -9,8 +10,8 @@ export default function googleStrategy () {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
             callbackURL: 'http://localhost:4000/auth/google/oauth', //? Where will Google go after authentication
         },
-        async (accessToken, refreshToken, profile, done) => { //?accessToken and refreshToken here is of use for Google itself and must not be confused with issuance of JWT
-            //TODO: Create user and UserCredentials
+        async (accessToken, refreshToken, profile: Profile, done: VerifyCallback) => { //?accessToken and refreshToken here is of use for Google itself and must not be confused with issuance of JWT
+          //TODO: Create user and UserCredentials
             /*if(profile) {
               const userExists = await prisma.user.findUnique({ where: {
                 email: profile.emails?[0].value
@@ -25,33 +26,3 @@ export default function googleStrategy () {
         }
     ))
 };
-
-/*
-{
-  provider: 'google',                // identity provider name
-  id: 'xxxxxxxxxxxxxxxxxxxx',        // Google’s unique user ID
-  displayName: 'Full Name',          // User’s full name
-  name: {
-    familyName: 'Last',
-    givenName: 'First'
-  },
-  emails: [
-    { value: 'user@example.com' }    // Email address(es)
-  ],
-  photos: [
-    { value: 'https://photo.url...' } // Profile picture URL
-  ],
-  _raw: '…raw JSON string…',         // Raw response string
-  _json: {                           // Full Google JSON fields
-    id: 'xxxxxxxxxxxxxxxxxxxx',
-    email: 'user@example.com',
-    verified_email: true,
-    name: 'Full Name',
-    given_name: 'First',
-    family_name: 'Last',
-    picture: 'https://photo.url...',
-    locale: 'en',
-    …more fields from Google…
-  }
-}
-*/

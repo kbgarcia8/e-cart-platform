@@ -1,5 +1,5 @@
 import passport from 'passport';
-import { Strategy as LocalStrategy } from 'passport-local';
+import { Strategy as LocalStrategy, VerifyFunction } from 'passport-local';
 import bcrypt from 'bcryptjs';
 import * as repo from 'modules/auth/auth.repo';
 import {mapToAuthUserDTO} from 'modules/auth/auth.utils'
@@ -7,7 +7,7 @@ import {mapToAuthUserDTO} from 'modules/auth/auth.utils'
 export default function localStrategy () {
     passport.use(new LocalStrategy(
         { usernameField: 'email', passwordField: 'password' },
-        async (email, password, done) => {
+        async (email: string, password: string, done) => {
             try {
                 const user = await repo.findUserByEmail(email);
                 if (!user) return done(null, false, { message: 'User not found' });
