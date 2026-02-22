@@ -8,6 +8,7 @@ export default function localStrategy () {
     passport.use(new LocalStrategy(
         { usernameField: 'email', passwordField: 'password' },
         async (email: string, password: string, done) => {
+            //TODO: Add a check here to see if user already have either Gmail or Facebook credentials
             try {
                 const user = await repo.findUserByEmail(email);
                 if (!user) return done(null, false, { message: 'User not found' });

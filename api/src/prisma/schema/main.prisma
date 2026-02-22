@@ -84,7 +84,7 @@ model Orders {
 enum Providers {
   Local
   Facebook
-  Gmail
+  Google
 
   @@schema("auth")
 }

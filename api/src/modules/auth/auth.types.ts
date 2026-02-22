@@ -23,7 +23,7 @@ type LocalCredentials = {
 };
 
 type OAuthCredentials = {
-    provider: "Facebook" | "Gmail";
+    provider: "Facebook" | "Google";
     passwordHash: null;
     providerId: string;
 };
