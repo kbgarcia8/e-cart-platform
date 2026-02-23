@@ -84,8 +84,7 @@ export const loginLocalPost = async (req:Request, res:Response, next:NextFunctio
             ))
         }
         try {
-            //! Debug inside authService.login  
-            const { accessToken, refreshToken, userData } = await authService.login(user);
+            const { accessToken, refreshToken, userData } = await authService.login(user, "Local");
             
             res.cookie("access_token", accessToken, {
                 httpOnly: true,
@@ -104,7 +103,7 @@ export const loginLocalPost = async (req:Request, res:Response, next:NextFunctio
             res.status(200).json({
                 code: 200,
                 success: true,
-                message: "Login successful",
+                message: "Login via Email successful",
                 data: userData
             });
         } catch (err) {
@@ -113,18 +112,45 @@ export const loginLocalPost = async (req:Request, res:Response, next:NextFunctio
     })(req, res, next);
 };
 
-//? Second to execute via authRouter.get("google/oauth", authMiddleware.loginGoogle );
-export const loginGoogle = (req: Request, res: Response, next: NextFunction) => {
+// Google OAuth - OAuth callback handler.
+// Passport executes the GoogleStrategy verify function first.
+// After verify calls `done`, this custom callback receives (err, user).
+export const loginGoogleGet = (req: Request, res: Response, next: NextFunction) => {
     passport.authenticate("google", {session: false}, async (err:any, user:PublicUser | false | null) => {
         if(err || !user) {
             return next (new AuthError<AuthErrorDetails>(
                 "Google Login Failed",
-                '535',
+                '401',
                 "AUTH_FAILED",
                 { reason: "Invalid Google credentials" }
             ))
         }
         //TODO: Issue JWT
-    })(req, res, next);
-    //? Calls next on success and goes to failureRedirect on failure    
+        try {
+            const { accessToken, refreshToken, userData } = await authService.login(user, "Google");
+            
+            res.cookie("access_token", accessToken, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "lax",
+                maxAge: 15 * 60 * 1000
+            });
+
+            res.cookie("refresh_token", refreshToken, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "lax",
+                maxAge: 7 * 24 * 60 * 60 * 1000
+            });
+
+            res.status(200).json({
+                code: 200,
+                success: true,
+                message: "Login via Google successful",
+                data: userData
+            });
+        } catch (err) {
+            next(err);
+        }
+    })(req, res, next); 
 };

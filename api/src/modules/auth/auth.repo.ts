@@ -341,6 +341,11 @@ export async function findPublicUserById(id:string) {
                         firstName: true,
                         lastName: true
                     }
+                },
+                credentials: {
+                    select: {
+                        provider: true
+                    }
                 }
             },
         });

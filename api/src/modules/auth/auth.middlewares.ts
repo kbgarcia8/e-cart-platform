@@ -183,7 +183,7 @@ export const requireAuth = async (req:Request, res:Response, next:NextFunction) 
         next();
     })(req, res, next);
 };
-//? First to be executed via authRouter.get("/google", authMiddleware.googleAuth);
+//? Google OAuth - Only redirects to Google Sign-in screen
 export const googleAuth = passport.authenticate('google', {scope: ["profile", "email"]},  //? Requested information from Google
     async (req:Request, res:Response) => {
     res.send(200);

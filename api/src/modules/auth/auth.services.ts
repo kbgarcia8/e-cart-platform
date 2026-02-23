@@ -1,4 +1,5 @@
 import * as repo from './auth.repo';
+import { Providers } from 'prisma/schema/generated/prisma';
 import type { SignupRequestDTO, PublicUser } from './auth.types';
 import { AuthError } from 'shared/errors/errors';
 import { AuthErrorDetails } from 'shared/errors/errors.types';
@@ -61,8 +62,8 @@ export async function verifyEmail(token: string) {
     };
 };
 
-export async function login(user:PublicUser) {
-    if(!user.isVerified) {
+export async function login(user:PublicUser, provider:Providers) {
+    if(!user.isVerified && provider === "Local") {
         try {
             await repo.sendVerificationToken(user.id, user.email);
         } catch (error) {

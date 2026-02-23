@@ -2,13 +2,14 @@ import passport from "passport";
 import "dotenv/config";
 import { Strategy as GoogleStrategy, Profile, VerifyCallback } from "passport-google-oauth20";
 import prisma from "lib/prisma";
-import {mapToAuthUserDTO} from 'modules/auth/auth.utils'
+import {mapToAuthUserDTO} from 'modules/auth/auth.utils';
+import * as repo from 'modules/auth/auth.repo';
 
 export default function googleStrategy () {
     passport.use(new GoogleStrategy({
             clientID: process.env.GOOGLE_CLIENT_ID!,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-            callbackURL: 'http://localhost:4000/auth/google/oauth', //? Where will Google go after authentication
+            callbackURL: 'http://localhost:4000/auth/google/oauth', //? OAuth callback URL – Google redirects here after authentication
         },
         async (accessToken, refreshToken, profile: Profile, done: VerifyCallback) => { //?accessToken and refreshToken here is of use for Google itself and must not be confused with issuance of JWT
           try {
@@ -16,6 +17,11 @@ export default function googleStrategy () {
             if (!email) {
               return done(null, false, { message: "No email from Google" });
             }
+
+            if (!profile._json.email_verified) {
+              return done(null, false, { message: "Google email is not verified" });
+            }
+
             const username = email.split('@')[0]; 
             //? Finding a query with a relation, use select
             const existingUser = await prisma.user.findUnique({
@@ -32,6 +38,7 @@ export default function googleStrategy () {
                   where: { provider: 'Google'},
                   select: {
                     id: true,
+                    provider: true,
                     providerId: true
                   }
                 }
@@ -39,12 +46,18 @@ export default function googleStrategy () {
             });
             
             if(existingUser) {
-              //! All condition inside can be replaced with upsert for cleaner version
+              //? Using explicit check instead of replacing with prisma upsert for clearer branching logic
               const providers = existingUser.credentials.map(c => c.providerId)
               if(existingUser.credentials.length > 0 && providers.includes(profile.id)) {
+
                 const retrievedUser = mapToAuthUserDTO(existingUser)
                 return done(null, retrievedUser);
               } else {
+                //? Utilize upsert if you want to:
+                //
+                //1. Check if query exists
+                //2. Update (if applicable) if query exists - leave as update: {} if no update
+                //3. Create if query does not exist
                 await prisma.userCredentials.upsert({
                   where: {
                     provider_providerId: {
@@ -89,8 +102,9 @@ export default function googleStrategy () {
                   created_at: true,
                   updated_at: true,
                   profile: true,
+                  credentials: true
                 }
-              })
+              });
               const createdUserWithGoogle = mapToAuthUserDTO(createUserWithGoogle);
               return done(null, createdUserWithGoogle);
             }

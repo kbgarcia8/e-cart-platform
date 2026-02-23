@@ -1,4 +1,4 @@
-import type { Role, User, UserCredentials, UserProfile } from "prisma/schema/generated/prisma";
+import type { Role, User, UserCredentials, UserProfile, Providers } from "prisma/schema/generated/prisma";
 import { findPublicUserById } from "./auth.repo";
 
 type Profile = {
@@ -62,6 +62,7 @@ export type AuthUser = {
     username?: string | null;
     firstName: string;
     lastName: string;
+    providers: Providers[];
 };
 
 export interface JwtPayload {
