@@ -2,8 +2,7 @@ import passport from "passport";
 import "dotenv/config";
 import { Strategy as GoogleStrategy, Profile, VerifyCallback } from "passport-google-oauth20";
 import prisma from "lib/prisma";
-import {mapToAuthUserDTO} from 'modules/auth/auth.utils';
-import * as repo from 'modules/auth/auth.repo';
+import { mapToAuthUserDTO } from 'modules/auth/auth.utils';
 
 export default function googleStrategy () {
     passport.use(new GoogleStrategy({

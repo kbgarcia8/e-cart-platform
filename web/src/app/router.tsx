@@ -10,6 +10,8 @@ import AuthFooter from "modules/auth/AuthFooter";
 import VerifyPage from "modules/auth/VerifyPage";
 
 import UserDashboard from "modules/user/UserDashboard";
+import UserHeader from "modules/user/UserHeader/UserHeader";
+import UserFooter from "modules/user/UserFooter/UserFooter";
 
 
 const routes = [
@@ -17,7 +19,7 @@ const routes = [
     {path: "/auth/signup", element: <VerticalHeaderMainFooter header={<AuthHeader/>} main={<SignupPage/>} footer={<AuthFooter/>}/>},
     {path: "/auth/login", element: <VerticalHeaderMainFooter header={<AuthHeader/>} main={<LoginPage/>} footer={<AuthFooter/>}/>},
     {path: "/auth/verify", element: <VerticalHeaderMainFooter header={<AuthHeader/>} main={<VerifyPage/>} footer={<AuthFooter/>}/>},
-    {path: "/user/dashboard", element: <VerticalHeaderMainFooter header={<AuthHeader/>} main={<UserDashboard/>} footer={<AuthFooter/>}/>}
+    {path: "/user/dashboard", element: <VerticalHeaderMainFooter header={<UserHeader/>} main={<UserDashboard/>} footer={<UserFooter/>}/>}
 ]
 
 export default routes;

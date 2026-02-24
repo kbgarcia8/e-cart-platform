@@ -91,3 +91,11 @@ export async function login(user:PublicUser, provider:Providers) {
 
     return {accessToken, refreshToken, userData};
 };
+
+export async function logout(id:string) {
+    try {
+        await repo.deleteRefreshToken(id);
+    } catch (error) {
+        throw error;
+    }
+}

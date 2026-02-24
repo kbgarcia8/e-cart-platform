@@ -6,6 +6,8 @@ import { ExpressValError, AuthError } from "shared/errors/errors";
 import type { ExpressValidationErrorDetails, AuthErrorDetails } from "shared/errors/errors.types";
 import * as authService from "./auth.services";
 import type { SignupRequestDTO, PublicUser } from "./auth.types";
+import jwt from 'jsonwebtoken';
+import type { RefreshPayload } from "./auth.types";
 
 
 export const signupLocalPost = async (req: Request, res: Response, next:NextFunction):Promise<void> =>{
@@ -125,7 +127,6 @@ export const loginGoogleGet = (req: Request, res: Response, next: NextFunction) 
                 { reason: "Invalid Google credentials" }
             ))
         }
-        //TODO: Issue JWT
         try {
             const { accessToken, refreshToken, userData } = await authService.login(user, "Google");
             
@@ -142,15 +143,72 @@ export const loginGoogleGet = (req: Request, res: Response, next: NextFunction) 
                 sameSite: "lax",
                 maxAge: 7 * 24 * 60 * 60 * 1000
             });
-
+            /*
             res.status(200).json({
                 code: 200,
                 success: true,
                 message: "Login via Google successful",
                 data: userData
             });
+            */
+            res.redirect(`${process.env.CLIENT_BASE_URL}/user/dashboard`);
         } catch (err) {
             next(err);
         }
     })(req, res, next); 
 };
+
+export const logout = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        //! Needs requireAuth to access existing cookies
+        const currentRefreshToken = req.cookies.refresh_token;
+        const currentAccessToken = req.cookies.access_token;
+        if (!currentRefreshToken || !currentAccessToken) {
+            return next (new AuthError(
+                "Session already expired. User already logout or lacks access.",
+                "401",
+                "AUTH_REFRESH_FAILED",
+                { reason: "Refresh or Access Token not found" }
+            ));
+        }
+
+        const decoded = jwt.verify(
+            currentRefreshToken,
+            process.env.JWT_REFRESH_SECRET!
+        ) as RefreshPayload;
+
+        res.cookie("access_token", "", {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            maxAge: 0
+        });
+
+        res.cookie("refresh_token", "", {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            maxAge: 0
+        });
+
+        await authService.logout(decoded.sub);
+
+        res.status(200).json({
+            code: 200,
+            success: true,
+            message: "Logout User successful",
+            data: ''
+        });
+
+    } catch (err) {
+        return next(
+            err instanceof AuthError
+            ? err
+            : new AuthError(
+                "Session expired. Please login again.",
+                "401",
+                "AUTH_REFRESH_FAILED"
+            )
+        );
+    }
+}

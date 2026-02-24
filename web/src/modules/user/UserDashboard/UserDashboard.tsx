@@ -2,6 +2,9 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { toast } from "react-toastify";
 import { BounceLoader } from "react-spinners";
+
+import { useLogout } from "modules/auth/auth.hooks";
+
 import { UserDashboardWrapper } from "./UserDashboard.styles";
 import type { ApiResponse, AuthUserDTO } from "shared/type/shared.types";
 
@@ -9,6 +12,7 @@ const UserDashboard = () => {
     const isLoggedIn = useRef(false);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
+    const {logoutLoading} = useLogout();
     const [user, setUser] = useState<AuthUserDTO | null>(null);
 
     useEffect(() => {
@@ -47,7 +51,7 @@ const UserDashboard = () => {
 
     return (
         <UserDashboardWrapper>
-            {loading ? <BounceLoader /> : <div>{`Welcome ${user?.firstName}`}</div>}
+            {loading || logoutLoading ? <BounceLoader /> : <div>{`Welcome ${user?.firstName}`}</div>}
         </UserDashboardWrapper>
     );
 };

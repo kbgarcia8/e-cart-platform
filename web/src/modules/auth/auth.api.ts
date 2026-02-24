@@ -35,3 +35,17 @@ export async function loginApi(loginData: LoginFormData): Promise<ApiResponse<Au
 
     return data;
 };
+
+export async function logoutApi(): Promise<ApiResponse<''>> {
+    const response = await fetch(
+        `${import.meta.env.VITE_DEV_API_URL}/auth/logout`
+    );
+
+    const data:ApiResponse<''> = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.message || "Login failed");
+    }
+
+    return data;
+};

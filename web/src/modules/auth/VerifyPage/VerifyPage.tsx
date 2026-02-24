@@ -16,7 +16,6 @@ const VerifyPage = () => {
         hasVerified.current = true;
         const verify = async () => {
             try {
-                console.log(`${import.meta.env.VITE_DEV_API_URL}/auth/verify?token=${token}`)
                 const res = await fetch(
                     `${import.meta.env.VITE_DEV_API_URL}/auth/verify?token=${token}`
                 );

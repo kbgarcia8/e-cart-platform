@@ -534,8 +534,8 @@ export async function findRefreshToken(userId:string) {
     throw new AppError("createUser failed without throwing an error", '500', "UNKNOWN_ERROR");
 };
 
-export async function deleteRefreshToken(token: string) {
+export async function deleteRefreshToken(id: string) {
     await prisma.refreshToken.deleteMany({
-        where: { token }
+        where: { userId: id }
     });
 };

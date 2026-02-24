@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { v } from 'shared/constants/variables';
 import { media } from 'shared/utils/utility';
 
-export const AuthFooterWrapper = styled.div`
+export const UserFooterWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -14,7 +14,7 @@ export const AuthFooterWrapper = styled.div`
     padding: ${v.spacing.medium};
 `;
 
-export const AuthFooterMessage = styled.span`
+export const UserFooterMessage = styled.span`
     flex: 1;
     font-family: ${v.fonts.secondary}, ${v.fonts.fallback};
     width 100%;
