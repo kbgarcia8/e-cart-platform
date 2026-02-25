@@ -46,14 +46,14 @@ export default function googleStrategy () {
             
             if(existingUser) {
               //? Using explicit check instead of replacing with prisma upsert for clearer branching logic
+              // If user already has a Google credential
               const providers = existingUser.credentials.map(c => c.providerId)
               if(existingUser.credentials.length > 0 && providers.includes(profile.id)) {
-
                 const retrievedUser = mapToAuthUserDTO(existingUser)
                 return done(null, retrievedUser);
               } else {
                 //? Utilize upsert if you want to:
-                //
+                //If user exists but does not have Google credential
                 //1. Check if query exists
                 //2. Update (if applicable) if query exists - leave as update: {} if no update
                 //3. Create if query does not exist
