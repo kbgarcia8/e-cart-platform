@@ -190,3 +190,9 @@ export const googleAuth = passport.authenticate('google', {scope: ["profile", "e
     async (req:Request, res:Response) => {
     res.send(200);
 });
+
+//? Facebook Auth - Only redirects to Facebook Login screen
+export const facebookAuth = passport.authenticate('facebook',
+    async (req:Request, res:Response) => {
+    res.send(200);
+});

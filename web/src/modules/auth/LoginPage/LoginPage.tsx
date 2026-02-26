@@ -7,6 +7,7 @@ import * as Styled from './LoginPage.styles';
 import { BounceLoader } from "react-spinners";
 import { ImGoogle3 } from "react-icons/im";
 import { MdEmail } from "react-icons/md";
+import { FaFacebook } from "react-icons/fa";
 import Button from "shared/ui/atoms/Button";
 
 const loginFormInputArray:inputEntryShape<false,LabeledTextLike>[] = [
@@ -85,6 +86,10 @@ const LoginPage =() => {
         window.location.href = `${import.meta.env.VITE_DEV_API_URL}/auth/google`;
     }, []);
 
+    const handleFacebookSignIn = useCallback(() => {
+        window.location.href = `${import.meta.env.VITE_DEV_API_URL}/auth/facebook`;
+    }, []);
+
     return(
         <Styled.LoginPageWrapper>
             {!loading ?
@@ -108,6 +113,7 @@ const LoginPage =() => {
                     >
                         <Styled.AdditionalSigninOptionsSpace>
                             <Button size="smaller" buttonType="button" text="Sign in with Google" svg={<ImGoogle3 size={"1.25rem"}/>} onClick={handleGoogleSignIn}/>
+                            <Button size="smaller" buttonType="button" text="Sign in with Facebook" svg={<FaFacebook size={"1.25rem"}/>} onClick={handleFacebookSignIn}/>
                         </Styled.AdditionalSigninOptionsSpace>
                     </Styled.LoginForm>
                 </Styled.FormSpace>

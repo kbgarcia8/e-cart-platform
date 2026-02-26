@@ -56,7 +56,7 @@ export const LoginForm = styled(DynamicForm)`
     }
 
     & .form-main-button-container {
-        width: 75%;
+        width: 80%;
     }
 
     & .form-main-button-container button {
@@ -69,7 +69,7 @@ export const LoginForm = styled(DynamicForm)`
 `;
 
 export const AdditionalSigninOptionsSpace = styled.div`
-    width: 75%;
+    width: 80%;
 `;
 
 export const SignUpMessageSpace = styled.div`
