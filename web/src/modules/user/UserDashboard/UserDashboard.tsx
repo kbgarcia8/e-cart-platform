@@ -20,7 +20,6 @@ const UserDashboard = () => {
         isLoggedIn.current = true;
         const initializeUser = async () => {
             try {
-                //! DEBUG: Not fetching as expected
                 const res = await fetch(`${import.meta.env.VITE_DEV_API_URL}/user/dashboard`,{credentials: "include"});
                 
                 if (!res.ok) {
