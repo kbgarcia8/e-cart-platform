@@ -6,9 +6,7 @@ import * as userService from './user.service';
 
 export const dashboardGet = (req:Request, res:Response) => {
     try{
-        //ERROR here check this point
         const user = req.user;
-        console.log("dashboardGet", user)
         if(!user) {
             throw new AuthError<AuthErrorDetails>(
                 "Credentials invalid or expired when accessing user dashboard.",

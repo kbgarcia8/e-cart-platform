@@ -36,15 +36,18 @@ export async function loginApi(loginData: LoginFormData): Promise<ApiResponse<Au
     return data;
 };
 
-export async function logoutApi(): Promise<ApiResponse<''>> {
+export async function logoutApi(): Promise<ApiResponse<null>> {
     const response = await fetch(
-        `${import.meta.env.VITE_DEV_API_URL}/auth/logout`
+        `${import.meta.env.VITE_DEV_API_URL}/auth/logout`, {
+            method: "POST",
+            credentials: "include"
+        }
     );
 
-    const data:ApiResponse<''> = await response.json();
+    const data:ApiResponse<null> = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.message || "Login failed");
+        throw new Error(data.message || "Logout failed");
     }
 
     return data;

@@ -86,6 +86,8 @@ export const loginValidator = [
 const tokenCheck = async (req:Request, res:Response, next:NextFunction) => {
     try {
         const refreshToken = req.cookies.refresh_token;
+        console.log('tokenCheck')
+        console.log(req.cookies)
         if (!refreshToken) {
             return next (new AuthError(
                 "Session expired. Please login again.",

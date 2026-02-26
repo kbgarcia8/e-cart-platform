@@ -160,44 +160,23 @@ export const loginGoogleGet = (req: Request, res: Response, next: NextFunction) 
 
 export const logout = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        //! Needs requireAuth to access existing cookies
         const currentRefreshToken = req.cookies.refresh_token;
-        const currentAccessToken = req.cookies.access_token;
-        if (!currentRefreshToken || !currentAccessToken) {
-            return next (new AuthError(
-                "Session already expired. User already logout or lacks access.",
-                "401",
-                "AUTH_REFRESH_FAILED",
-                { reason: "Refresh or Access Token not found" }
-            ));
+        
+        if (currentRefreshToken) {
+            const decoded = jwt.decode(currentRefreshToken)  as RefreshPayload;
+            if (decoded?.sub) {
+                await authService.logout(decoded.sub);
+            }
         }
-
-        const decoded = jwt.verify(
-            currentRefreshToken,
-            process.env.JWT_REFRESH_SECRET!
-        ) as RefreshPayload;
-
-        res.cookie("access_token", "", {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "lax",
-            maxAge: 0
-        });
-
-        res.cookie("refresh_token", "", {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "lax",
-            maxAge: 0
-        });
-
-        await authService.logout(decoded.sub);
+        
+        res.clearCookie("access_token");
+        res.clearCookie("refresh_token");
 
         res.status(200).json({
             code: 200,
             success: true,
             message: "Logout User successful",
-            data: ''
+            data: null
         });
 
     } catch (err) {
@@ -211,4 +190,4 @@ export const logout = async (req: Request, res: Response, next: NextFunction) =>
             )
         );
     }
-}
+};
