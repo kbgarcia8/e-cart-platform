@@ -143,14 +143,41 @@ export const loginGoogleGet = (req: Request, res: Response, next: NextFunction) 
                 sameSite: "lax",
                 maxAge: 7 * 24 * 60 * 60 * 1000
             });
-            /*
-            res.status(200).json({
-                code: 200,
-                success: true,
-                message: "Login via Google successful",
-                data: userData
+
+            res.redirect(`${process.env.CLIENT_BASE_URL}/user/dashboard`);
+        } catch (err) {
+            next(err);
+        }
+    })(req, res, next); 
+};
+
+export const loginFacebookGet = (req: Request, res: Response, next: NextFunction) => {
+    passport.authenticate("facebook", {session: false}, async (err:any, user:PublicUser | false | null) => {
+        if(err || !user) {
+            return next (new AuthError<AuthErrorDetails>(
+                "Facebook Login Failed",
+                '401',
+                "AUTH_FAILED",
+                { reason: "Invalid Facebook credentials" }
+            ))
+        }
+        try {
+            const { accessToken, refreshToken, userData } = await authService.login(user, "Facebook");
+            
+            res.cookie("access_token", accessToken, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "lax",
+                maxAge: 15 * 60 * 1000
             });
-            */
+
+            res.cookie("refresh_token", refreshToken, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "lax",
+                maxAge: 7 * 24 * 60 * 60 * 1000
+            });
+            
             res.redirect(`${process.env.CLIENT_BASE_URL}/user/dashboard`);
         } catch (err) {
             next(err);

@@ -62,7 +62,6 @@ const LoginPage =() => {
         }))
     }, []);
     
-    
     const loginFormInputs = loginFormInputArray.map((input) => (
         {...input,
             value: loginFormValues[input.name as keyof LoginFormData],
@@ -112,8 +111,8 @@ const LoginPage =() => {
                         handleSubmitForm={handleFormSubmit}
                     >
                         <Styled.AdditionalSigninOptionsSpace>
-                            <Button size="smaller" buttonType="button" text="Sign in with Google" svg={<ImGoogle3 size={"1.25rem"}/>} onClick={handleGoogleSignIn}/>
-                            <Button size="smaller" buttonType="button" text="Sign in with Facebook" svg={<FaFacebook size={"1.25rem"}/>} onClick={handleFacebookSignIn}/>
+                            <Button size="smaller" buttonType="button" text="Sign in with Google" startIcon={<ImGoogle3 size={"1.25rem"}/>} onClick={handleGoogleSignIn}/>
+                            <Button size="smaller" buttonType="button" text="Sign in with Facebook" startIcon={<FaFacebook size={"1.25rem"}/>} onClick={handleFacebookSignIn}/>
                         </Styled.AdditionalSigninOptionsSpace>
                     </Styled.LoginForm>
                 </Styled.FormSpace>

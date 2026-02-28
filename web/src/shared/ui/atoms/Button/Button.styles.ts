@@ -72,6 +72,12 @@ export const COLORS = {
 };
 
 export const  SIZES = {
+    smallest: css`
+        ${media.mobile`
+            font-size: ${v.fontSize.xxsmall};
+            font-weight: ${v.fontWeight.regular};
+        `}
+    `,
     smaller: css`
         ${media.mobile`
             font-size: ${v.fontSize.xsmall};
@@ -121,7 +127,7 @@ export const DefaultButton = styled.button<{
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: ${v.spacing.xxxsmall} ${v.spacing.small};
+    padding: ${v.spacing.xxxsmall} ${v.spacing.xxsmall};
     flex: 1;
     cursor: pointer;
     transition: background-color 0.2s ease, border-color 0.2s ease;
@@ -129,10 +135,9 @@ export const DefaultButton = styled.button<{
     ${({ $radius }) => RADIUS[$radius || 'square']}
     
     & .button-icon-text-space svg {
-        max-width: 100%;
         height: auto;
         max-height: 100%;
-        margin-inline: ${v.spacing.xsmall};
+        max-width: 20%;
     }
 
     &:disabled {
@@ -146,7 +151,7 @@ export const ButtonTextAndIconSpace = styled.div<{ $hasIcon: boolean; $hasText: 
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
 
     ${({ $hasIcon, $hasText }) =>
         $hasIcon && $hasText
@@ -158,11 +163,6 @@ export const ButtonTextAndIconSpace = styled.div<{ $hasIcon: boolean; $hasText: 
             `}
 `;
 
-export const ButtonIcon = styled.img`
-    flex: 1;
-    max-width: 100%;
-`;
-
 export const ButtonText = styled.span<{ $size?: keyof typeof SIZES }>`
     flex: 2;
     ${({ $size }) => SIZES[$size || 'small']}
@@ -170,5 +170,5 @@ export const ButtonText = styled.span<{ $size?: keyof typeof SIZES }>`
     display: flex;
     align-items: center;
     justify-content: center;
-    max-width: 100%;
+    max-width: 80%;
 `;

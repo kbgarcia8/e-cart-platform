@@ -6,9 +6,8 @@ const Button = ({
     onClick,
     id,
     buttonType="button",
-    source,
-    svg,
-    alt = "alt-button-icon", 
+    startIcon,
+    endIcon,
     text = "",
     className = "",
     dataAttributes = {},
@@ -26,9 +25,10 @@ const Button = ({
                 $color={color}
                 $radius={radius}
             >
-                <Styled.ButtonTextAndIconSpace className={"button-icon-text-space"} $hasIcon={Boolean(source || svg)} $hasText={Boolean(text)}>
-                    {source ? <Styled.ButtonIcon src={source} alt={alt} /> : svg ? svg : null}
+                <Styled.ButtonTextAndIconSpace className={"button-icon-text-space"} $hasIcon={Boolean(startIcon || endIcon)} $hasText={Boolean(text)}>
+                    {startIcon ? startIcon : ''}
                     {text && <Styled.ButtonText $size={size} id={id} >{text}</Styled.ButtonText>}
+                    {endIcon ? endIcon : ''}
                 </Styled.ButtonTextAndIconSpace>
             </Styled.DefaultButton>
         )
@@ -44,9 +44,10 @@ const Button = ({
             $color={color}
             $radius={radius}
         >
-            <Styled.ButtonTextAndIconSpace className={"button-icon-text-space"} $hasIcon={Boolean(source || svg)} $hasText={Boolean(text)}>
-                {source ? <Styled.ButtonIcon src={source} alt={alt} /> : svg ? svg : null}
+            <Styled.ButtonTextAndIconSpace className={"button-icon-text-space"} $hasIcon={Boolean(startIcon || endIcon)} $hasText={Boolean(text)}>
+                {startIcon ? startIcon : ''}
                 {text && <Styled.ButtonText $size={size} id={id} >{text}</Styled.ButtonText>}
+                {endIcon ? endIcon : ''}
             </Styled.ButtonTextAndIconSpace>
         </Styled.DefaultButton>
     )

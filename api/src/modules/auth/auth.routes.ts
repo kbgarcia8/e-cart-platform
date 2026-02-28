@@ -10,6 +10,7 @@ authRouter.post("/login/local", authMiddleware.loginValidator, authController.lo
 authRouter.get("/google", authMiddleware.googleAuth); //? Redirects to Google's official login
 authRouter.get("/google/oauth", authController.loginGoogleGet); // Verification and issuance of JWT
 authRouter.get("/facebook", authMiddleware.facebookAuth); //? Redirects to Facebook's official login
+authRouter.get("/facebook/access", authController.loginFacebookGet);
 authRouter.post("/logout", authController.logout);
 
 export default authRouter;
