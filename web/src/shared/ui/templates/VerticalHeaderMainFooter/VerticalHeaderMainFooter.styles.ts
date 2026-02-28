@@ -23,7 +23,7 @@ export const Header = styled.header`
     background-color: ${({ theme }) => theme.colors.backgroundColor1};
     
     ${media.mobile`
-        min-height: 10svh;
+        min-height: 7.5svh;
     `}
     ${media.desktop`
         min-height: 5svh;

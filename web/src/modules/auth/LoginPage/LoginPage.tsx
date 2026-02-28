@@ -86,6 +86,7 @@ const LoginPage =() => {
     }, []);
 
     const handleFacebookSignIn = useCallback(() => {
+        console.log('Facebook');
         window.location.href = `${import.meta.env.VITE_DEV_API_URL}/auth/facebook`;
     }, []);
 
