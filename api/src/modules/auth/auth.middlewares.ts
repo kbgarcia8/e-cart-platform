@@ -186,13 +186,7 @@ export const requireAuth = async (req:Request, res:Response, next:NextFunction) 
     })(req, res, next);
 };
 //? Google OAuth - Only redirects to Google Sign-in screen
-export const googleAuth = passport.authenticate('google', {scope: ["profile", "email"]},  //? Requested information from Google
-    async (req:Request, res:Response) => {
-    res.send(200);
-});
+export const googleAuth = passport.authenticate('google', {scope: ["profile", "email"]}); //? Requested information from Google);
 
 //? Facebook Auth - Only redirects to Facebook Login screen
-export const facebookAuth = passport.authenticate('facebook',
-    async (req:Request, res:Response) => {
-    res.send(200);
-});
+export const facebookAuth = passport.authenticate('facebook', {scope: ["email", "public_profile"]});

@@ -50,7 +50,7 @@ const UserDashboard = () => {
 
     return (
         <UserDashboardWrapper>
-            {loading || logoutLoading ? <BounceLoader /> : <div>{`Welcome ${user?.firstName}`}</div>}
+            {loading || logoutLoading ? <BounceLoader /> : <div>{`Welcome ${user?.firstName}. This your temporary dashboard`}</div>}
         </UserDashboardWrapper>
     );
 };

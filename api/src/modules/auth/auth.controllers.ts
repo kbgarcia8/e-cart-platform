@@ -154,6 +154,7 @@ export const loginGoogleGet = (req: Request, res: Response, next: NextFunction) 
 export const loginFacebookGet = (req: Request, res: Response, next: NextFunction) => {
     passport.authenticate("facebook", {session: false}, async (err:any, user:PublicUser | false | null) => {
         if(err || !user) {
+            console.log(err)
             return next (new AuthError<AuthErrorDetails>(
                 "Facebook Login Failed",
                 '401',

@@ -9,13 +9,15 @@ export default function facebookStrategy () {
             clientID: process.env.FACEBOOK_APP_ID!,
             clientSecret: process.env.FACEBOOK_APP_SECRET!,
             callbackURL: `${process.env.API_BASE_URL}/auth/facebook/access`,
-            profileFields: ["id", "emails", "last_name", "first_name", "username", "profile_pic"]
+            profileFields: ["id", "displayName", "name", "emails", "photos"]
         },
         async (accessToken, refreshToken, profile: Profile, done) => { //?accessToken and refreshToken here is of use for Facebook itself and must not be confused with issuance of JWT
             try {
-                const email = profile.emails?.[0]?.value || '';
+                const email = profile.emails?.[0]?.value;
                 if (!email) {
-                    return done(null, false, { message: "No email from Facebook" });
+                    return done(
+                        new Error("Facebook account does not have a verified email")
+                    );
                 }
 
                 const username = email.split('@')[0]; 
