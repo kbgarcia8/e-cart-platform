@@ -154,6 +154,9 @@ const SignupPage =() => {
                 {successSignup ? <Styled.VerifyEmailHeader>Email Verification was sent to your email. Please verify to login!</Styled.VerifyEmailHeader> :null}
                 <Styled.FormSpace>
                     <Styled.SignupForm
+                        formActionButtonColor="primary"
+                        formActionButtonSize="small"
+                        formActionButtonRadius="squircle"
                         className={'without-fieldsets'}
                         fieldsets={null}
                         formInputs={signupFormInputs || []}

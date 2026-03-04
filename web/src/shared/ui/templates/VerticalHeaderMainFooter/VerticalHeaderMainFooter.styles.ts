@@ -46,7 +46,7 @@ export const Footer = styled.footer`
     border-top: 2px solid ${({ theme }) => theme.colors.border};
     
     ${media.mobile`
-        min-height: 10svh;
+        min-height: 5svh;
     `}
     ${media.desktop`
         min-height: 5svh;

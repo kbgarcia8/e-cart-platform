@@ -99,6 +99,9 @@ const LoginPage =() => {
                 </Styled.LoginPageHeader>
                 <Styled.FormSpace>
                     <Styled.LoginForm
+                        formActionButtonColor="primary"
+                        formActionButtonSize="smaller"
+                        formActionButtonRadius="square"
                         className={'without-fieldsets'}
                         fieldsets={null}
                         formInputs={loginFormInputs || []}

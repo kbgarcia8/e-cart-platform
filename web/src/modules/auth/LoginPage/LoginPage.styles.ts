@@ -31,11 +31,6 @@ export const LoginForm = styled(DynamicForm)`
         padding: 1.25rem;
     }
 
-    & .address-fieldset-wrapper{
-        display: flex;
-        flex-direction: column;
-    }
-
     & fieldset{
         flex: 1;
         padding: 1rem;
@@ -56,20 +51,21 @@ export const LoginForm = styled(DynamicForm)`
     }
 
     & .form-main-button-container {
-        width: 80%;
+        width: 82.5%;
     }
 
     & .form-main-button-container button {
         width: 100%;
-        border-radius: ${v.borderRadius.xsmall};
-        background-color: ${({theme}) => theme.colors.backgroundColor1};
-        color: ${({theme})=> theme.colors.textColor3};
-        border: ${v.borderThickness.light} solid ${({theme})=> theme.colors.textColor3};
+        margin-block: ${v.spacing.xxsmall};
     }
 `;
 
 export const AdditionalSigninOptionsSpace = styled.div`
     width: 80%;
+    
+    & button {
+        margin-block: ${v.spacing.xxsmall};
+    }
 `;
 
 export const SignUpMessageSpace = styled.div`
