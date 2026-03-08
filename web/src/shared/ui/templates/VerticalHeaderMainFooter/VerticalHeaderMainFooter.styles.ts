@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { media } from "shared/utils/utility";
-import { v } from "shared/constants/variables";
 
 export const PublicMainLayout = styled.div`
     display: grid;
@@ -17,10 +16,11 @@ export const PublicMainLayout = styled.div`
     `}
 `;
 
-export const Header = styled.header`
+export const Header = styled.header<{$headerHeight?: string;}>`
     display: flex;
     grid-area: header;
     background-color: ${({ theme }) => theme.colors.backgroundColor1};
+    height: ${({$headerHeight}) => $headerHeight};
     
     ${media.mobile`
         min-height: 7.5svh;
@@ -39,11 +39,12 @@ export const Main = styled.main`
     overflow-y: auto;
 `;
 
-export const Footer = styled.footer`
+export const Footer = styled.footer<{$footerHeight?: string;}>`
     display: flex;
     grid-area: footer;
     background-color: ${({ theme }) => theme.colors.backgroundColor2};
     border-top: 2px solid ${({ theme }) => theme.colors.border};
+    height: ${({$footerHeight}) => $footerHeight};
     
     ${media.mobile`
         min-height: 5svh;

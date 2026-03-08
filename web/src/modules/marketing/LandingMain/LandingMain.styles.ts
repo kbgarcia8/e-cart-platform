@@ -16,7 +16,8 @@ export const MainSectionWrapper = styled.div`
     display: flex;
     background-color: ${({theme}) => theme.colors.backgroundColor3};
     width: 100%;
-    padding-block: calc(${v.spacing.large} + 0.1rem);
+    padding-bottom: ${v.spacing.largest};
+    padding-top: ${v.spacing.large};
 `;
 
 export const ExploreMenuButtonWrapper = styled.div`

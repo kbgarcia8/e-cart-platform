@@ -1,21 +1,22 @@
-import React from "react";
 import * as Styled from "./VerticalHeaderMainFooter.styles";
-import type { AllNodeProps } from "shared/type/generalTypes";
+import type { VerticalHeaderMainFooterProps } from "../VerticalHeaderMainFooter.types";
 import { Outlet } from "react-router-dom";
 
 const VerticalHeaderMainFooter = ({
     header,
+    headerHeight,
     main,
-    footer
-}:AllNodeProps<React.ReactNode>) => {
+    footer,
+    footerHeight
+}:VerticalHeaderMainFooterProps) => {
     return(
         <Styled.PublicMainLayout>
-            <Styled.Header>{header}</Styled.Header>
+            <Styled.Header $headerHeight={headerHeight}>{header}</Styled.Header>
             <Styled.Main>
                 {main}
                 <Outlet />
             </Styled.Main>
-            <Styled.Footer>{footer}</Styled.Footer>
+            <Styled.Footer $footerHeight={footerHeight}>{footer}</Styled.Footer>
         </Styled.PublicMainLayout>
     )
 };

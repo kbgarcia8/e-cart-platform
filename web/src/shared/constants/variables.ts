@@ -41,6 +41,7 @@ export const v:Record<string, Record<string, string|number>> = {
         xlarge: '3.25rem',
         xxlarge: '5.25rem',
         xxxlarge: '8.5rem',
+        largest: '9rem',
     },
     borderRadius: {
         xsmall: '0.125rem',

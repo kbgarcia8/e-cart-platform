@@ -24,8 +24,8 @@ export const LandingHeaderLogoSpace = styled(HashLink)`
     overflow: hidden;
 
     ${media.mobile`
-        flex: 0 0 12.5%;
-        max-width: 12.5%;
+        flex: 0 0 15%;
+        max-width: 15%;
     `}
     ${media.desktop`
         flex: 0 0 10%;
@@ -36,7 +36,6 @@ export const LandingHeaderLogoSpace = styled(HashLink)`
 export const LandingHeaderLogo = styled.img`
     width: 100%;
     height: auto;
-    
 `;
 
 export const NavbarWrapper = styled.div`
@@ -44,10 +43,13 @@ export const NavbarWrapper = styled.div`
     flex-direction: column;
     justify-content: space-evenly;
     color: ${({theme}) => theme.colors.screenColor};
+    min-height: 50%;
+    max-height: 100%;
+    height: 75%;
     
     ${media.mobile`
-        flex: 0 0 87.5%;
-        max-width: 87.5%;
+        flex: 0 0 85%;
+        max-width: 85%;
     `}
     ${media.desktop`
         flex: 0 0 90%;
@@ -63,11 +65,12 @@ export const ButtonWrapper = styled.div`
     flex: 2;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     height: 100%;
     margin: 0;
     padding-top: ${v.spacing.xsmall};
-    padding-inline: ${v.spacing.xxlarge};
+    padding-inline: ${v.spacing.xlarge};
+    gap: ${v.spacing.medium};
 
     & > button {
         flex: 1;
