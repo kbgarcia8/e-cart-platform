@@ -2,28 +2,31 @@ import useTheme from "shared/hooks/useTheme";
 import * as Styled from "./Navbar.styles";
 import type { NavbarProps } from "./Navbar.types";
 
-const Navbar =({textColor, textSize, $anchorTheme, isSigning, isHashLinks, links, className}:NavbarProps) => {
+const Navbar =({textColor, textSize, $anchorTheme, isVisible, isHashLinks=false, links, className}:NavbarProps) => {
     const { currentTheme } = useTheme();
 
     return(
         <>
-        {!isSigning && 
+        {!isVisible && 
             <Styled.Navbar className={className}>
                 <Styled.NavbarLinks>
                     {links.map((link,index) => 
                         <Styled.NavbarLink key={`${link}-${index}`} $textSize={textSize}>
-                            {isHashLinks ? 
-                            <Styled.StyledHashLink
+                            {isHashLinks
+                            ? <Styled.StyledHashLink
                                 smooth
                                 to={link.path}
                                 $anchorTheme={$anchorTheme ? $anchorTheme : currentTheme}
                                 $textColor={textColor}
                             >{link.name}</Styled.StyledHashLink>
-                            :<Styled.StyledLink
+                            : <Styled.StyledLink
                                 to={link.path}
                                 $anchorTheme={$anchorTheme ? $anchorTheme : currentTheme}
                                 $textColor={textColor}
-                            >{link.name}</Styled.StyledLink>
+                            >
+                                {link.icon && <Styled.LinkIconSpace>{link.icon}</Styled.LinkIconSpace>}
+                                {link.name}
+                            </Styled.StyledLink>
                             }
                         </Styled.NavbarLink>
                     )}

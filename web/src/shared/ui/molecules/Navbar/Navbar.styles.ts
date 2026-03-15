@@ -98,10 +98,10 @@ export const StyledLink = styled(Link)<Pick<NavbarProps, "$anchorTheme"> & {$tex
         ${({$textColor})=> TEXTCOLORS[$textColor || 'primary']}
     }
     &:hover{
-        color: ${({$anchorTheme}) => $anchorTheme?.anchorTheme.hover};
+        color: ${({$anchorTheme}) => $anchorTheme?.hover};
     }
     &:active{
-        color: ${({$anchorTheme}) => $anchorTheme?.anchorTheme.active};
+        color: ${({$anchorTheme}) => $anchorTheme?.active};
     }
 `;
 
@@ -115,9 +115,17 @@ export const StyledHashLink = styled(HashLink)<Pick<NavbarProps, "$anchorTheme">
         ${({$textColor})=> TEXTCOLORS[$textColor || 'primary']}
     }
     &:hover{
-        color: ${({$anchorTheme}) => $anchorTheme?.anchorTheme.hover};
+        color: ${({$anchorTheme}) => $anchorTheme?.hover};
     }
     &:active{
-        color: ${({$anchorTheme}) => $anchorTheme?.anchorTheme.active};
+        color: ${({$anchorTheme}) => $anchorTheme?.active};
     }
+`;
+
+export const LinkIconSpace = styled.p`
+    border: 2px solid red;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
