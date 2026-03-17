@@ -16,6 +16,16 @@ export interface themeContextValue {
     toggleTheme: () => void;
 };
 
+export interface mediaQueryContextValue {
+    currentBreakpoints: {
+        isMobile: boolean;
+        isTablet: boolean;
+        isLaptop: boolean;
+        isDesktop: boolean;
+        isLargeDesktop: boolean;
+    }
+}
+
 export type dataAttributesType = Record<string, string | number | boolean | undefined> | undefined;
 
 export type AllNodeProps<T extends React.ReactNode> = {

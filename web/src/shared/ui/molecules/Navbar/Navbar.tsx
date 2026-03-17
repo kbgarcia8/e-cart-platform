@@ -18,13 +18,16 @@ const Navbar =({textColor, textSize, $anchorTheme, isVisible, isHashLinks=false,
                                 to={link.path}
                                 $anchorTheme={$anchorTheme ? $anchorTheme : currentTheme}
                                 $textColor={textColor}
-                            >{link.name}</Styled.StyledHashLink>
+                            >
+                                {link.icon && <Styled.LinkIconSpace $textColor={textColor}>{link.icon}</Styled.LinkIconSpace>}
+                                {link.name}
+                            </Styled.StyledHashLink>
                             : <Styled.StyledLink
                                 to={link.path}
                                 $anchorTheme={$anchorTheme ? $anchorTheme : currentTheme}
                                 $textColor={textColor}
                             >
-                                {link.icon && <Styled.LinkIconSpace>{link.icon}</Styled.LinkIconSpace>}
+                                {link.icon && <Styled.LinkIconSpace $textColor={textColor}>{link.icon}</Styled.LinkIconSpace>}
                                 {link.name}
                             </Styled.StyledLink>
                             }

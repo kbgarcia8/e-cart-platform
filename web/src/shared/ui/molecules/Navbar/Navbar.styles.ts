@@ -88,7 +88,12 @@ export const NavbarLink = styled.li<{ $textSize?: keyof typeof TEXTSIZES }>`
 `;
 
 export const StyledLink = styled(Link)<Pick<NavbarProps, "$anchorTheme"> & {$textColor?: keyof typeof TEXTCOLORS}>`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     text-decoration: none;
+    
     ${({$textColor})=> TEXTCOLORS[$textColor || 'primary']}
 
     &:link{
@@ -122,8 +127,8 @@ export const StyledHashLink = styled(HashLink)<Pick<NavbarProps, "$anchorTheme">
     }
 `;
 
-export const LinkIconSpace = styled.p`
-    border: 2px solid red;
+export const LinkIconSpace = styled.p<Pick<NavbarProps, "$anchorTheme"> & {$textColor?: keyof typeof TEXTCOLORS}>`
+    ${({$textColor})=> TEXTCOLORS[$textColor || 'primary']}
     margin: 0;
     display: flex;
     justify-content: center;
