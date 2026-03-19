@@ -1,8 +1,10 @@
 import * as Styled from "./UserFooter.styles";
 import Navbar from "shared/ui/molecules/Navbar";
+import useMediaQuery from "shared/hooks/useMediaQuery";
 import { RiAccountCircleFill, RiHome5Fill, RiPriceTag3Fill, RiShoppingCartFill  } from "react-icons/ri";
 
 const UserFooter =() => {
+    const { currentBreakpoints } = useMediaQuery();
 
     const links = [
         {name: "Home", path: `${import.meta.env.VITE_DEV_API_URL}/user/dashboard`, icon: <RiHome5Fill size={'2.5rem'}/>},
@@ -12,9 +14,13 @@ const UserFooter =() => {
     ];
     
     return(
-        <Styled.UserFooterWrapper>
-            <Navbar links={links} textColor={"teritiary"} />
-        </Styled.UserFooterWrapper>
+        <>
+        {currentBreakpoints.isMobile && 
+            <Styled.UserFooterWrapper>
+                <Navbar links={links} textColor={"teritiary"} />
+            </Styled.UserFooterWrapper>
+        }
+        </>
     )
 }
 

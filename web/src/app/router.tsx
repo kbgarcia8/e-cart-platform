@@ -13,7 +13,6 @@ import UserDashboard from "modules/user/UserDashboard";
 import UserHeader from "modules/user/UserHeader/UserHeader";
 import UserFooter from "modules/user/UserFooter/UserFooter";
 
-
 const routes = [
     {path: "/", element: <VerticalHeaderMainFooter headerHeight={"12svh"} header={<LandingHeader/>} main={<LandingMain/>} footer={<LandingFooter/>}/>},
     {path: "/auth/signup", element: <VerticalHeaderMainFooter headerHeight={"7.5svh"} header={<AuthHeader/>} main={<SignupPage/>} footer={<AuthFooter/>}/>},

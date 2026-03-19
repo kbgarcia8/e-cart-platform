@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import ThemeContext from "shared/context/ThemeContext";
+import MediaQueryContext from "shared/context/MediaQueryContext";
 
-const useTheme = () => {return useContext(ThemeContext)}
+const useMediaQuery = () => {return useContext(MediaQueryContext)}
 
-export default useTheme;
+export default useMediaQuery;

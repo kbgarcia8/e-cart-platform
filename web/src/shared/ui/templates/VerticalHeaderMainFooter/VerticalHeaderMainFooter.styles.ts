@@ -19,7 +19,7 @@ export const PublicMainLayout = styled.div`
 export const Header = styled.header<{$headerHeight?: string;}>`
     display: flex;
     grid-area: header;
-    background-color: ${({ theme }) => theme.colors.backgroundColor1};
+    background-color: ${({ theme }) => theme.colors.screenColor};
     height: ${({$headerHeight}) => $headerHeight};
     
     ${media.mobile`
@@ -42,8 +42,7 @@ export const Main = styled.main`
 export const Footer = styled.footer<{$footerHeight?: string;}>`
     display: flex;
     grid-area: footer;
-    background-color: ${({ theme }) => theme.colors.backgroundColor2};
-    border-top: 2px solid ${({ theme }) => theme.colors.border};
+    background-color: ${({ theme }) => theme.colors.screenColor};
     height: ${({$footerHeight}) => $footerHeight};
     
     ${media.mobile`
