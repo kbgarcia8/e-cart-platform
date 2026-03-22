@@ -4,13 +4,22 @@ import { AuthError } from "shared/errors/errors";
 import { AuthErrorDetails } from "shared/errors/errors.types";
 import * as userService from './user.service';
 
+export const loggedUser = async (req:Request, res:Response, next:NextFunction) => {
+        res.status(200).json({
+            code: 200,
+            success: true,
+            message: `${req.user} logged`,
+            data: req.user
+        });
+};
+
 export const dashboardGet = (req:Request, res:Response) => {
     try{
         const user = req.user;
         if(!user) {
             throw new AuthError<AuthErrorDetails>(
                 "Credentials invalid or expired when accessing user dashboard.",
-                '403',
+                '401',
                 "CEREDENTIALS_INVALID",
                 { reason: "Credentials invalid or expired" }
             );
@@ -24,6 +33,78 @@ export const dashboardGet = (req:Request, res:Response) => {
         });
     } catch (err) {
         console.error("dashboardGet error:", err);
+        res.status((err as { code: number }).code || 500).json({ message: "Internal Server Error" });
+    }
+};
+
+export const userProfileGet = (req:Request, res:Response) => {
+    try{
+        const user = req.user;
+        if(!user) {
+            throw new AuthError<AuthErrorDetails>(
+                "Credentials invalid or expired when accessing user user profile.",
+                '403',
+                "CEREDENTIALS_INVALID",
+                { reason: "Credentials invalid or expired" }
+            );
+        }
+
+        res.status(200).json({
+            code: 200,
+            success: true,
+            message: `Welcome back ${user} to your profile`,
+            data: user
+        });
+    } catch (err) {
+        console.error("userProfileGet error:", err);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+
+export const userSettingsGet = (req:Request, res:Response) => {
+    try{
+        const user = req.user;
+        if(!user) {
+            throw new AuthError<AuthErrorDetails>(
+                "Credentials invalid or expired when accessing user user settings.",
+                '403',
+                "CEREDENTIALS_INVALID",
+                { reason: "Credentials invalid or expired" }
+            );
+        }
+
+        res.status(200).json({
+            code: 200,
+            success: true,
+            message: `Welcome back ${user} to your profile settings`,
+            data: user
+        });
+    } catch (err) {
+        console.error("userSettingsGet error:", err);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+
+export const userDetailsGet = (req:Request, res:Response) => {
+    try{
+        const user = req.user;
+        if(!user) {
+            throw new AuthError<AuthErrorDetails>(
+                "Credentials invalid or expired when accessing user user details.",
+                '403',
+                "CEREDENTIALS_INVALID",
+                { reason: "Credentials invalid or expired" }
+            );
+        }
+
+        res.status(200).json({
+            code: 200,
+            success: true,
+            message: `Welcome back ${user} to your profile details`,
+            data: user
+        });
+    } catch (err) {
+        console.error("userDetailsGet error:", err);
         res.status(500).json({ message: "Internal Server Error" });
     }
 };

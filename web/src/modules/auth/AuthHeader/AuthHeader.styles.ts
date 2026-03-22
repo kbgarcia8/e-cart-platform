@@ -10,6 +10,7 @@ export const AuthHeaderWrapper = styled.div`
     width: 100%;
     height: 100%;
     border-bottom: ${v.borderThickness.light} solid ${({theme}) => theme.colors.borderColor1};
+    background-color: ${({ theme }) => theme.colors.backgroundColor1};
     padding-inline: ${v.spacing.small};
 `;
 

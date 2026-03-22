@@ -1,3 +1,5 @@
+import type { AuthUserDTO } from "./shared.types";
+
 export type ColorString = string & { __brand: 'color' };
 
 export interface GeneralTheme {
@@ -24,6 +26,14 @@ export interface mediaQueryContextValue {
         isDesktop: boolean;
         isLargeDesktop: boolean;
     }
+}
+
+export interface authContextValue {
+    user: AuthUserDTO | null;
+    checkLoggedUser: () => Promise<AuthUserDTO|null>;
+    refreshUser: () => Promise<AuthUserDTO|null>;
+    authLoading: boolean;
+    authError: string|null;
 }
 
 export type dataAttributesType = Record<string, string | number | boolean | undefined> | undefined;

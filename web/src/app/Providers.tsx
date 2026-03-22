@@ -1,6 +1,7 @@
 import React from 'react';
 import { ThemeContextProvider } from 'shared/context/ThemeContextWrapper';
 import { MediaQueryContextProvider } from 'shared/context/MediaQueryContextWrapper';
+import { AuthContextProvider } from 'shared/context/AuthContextWrapper';
 import GlobalStyle from 'shared/styles/globalStyles';
 import { RouterProvider } from 'react-router-dom';
 import { createBrowserRouter } from 'react-router-dom';
@@ -22,6 +23,7 @@ export function Providers({ children }: ProvidersProps) {
   return (
     <ThemeContextProvider>
       <MediaQueryContextProvider>
+      <AuthContextProvider>
       <GlobalStyle />
       <RouterProvider router={router} />
       <ToastContainer 
@@ -51,6 +53,7 @@ export function Providers({ children }: ProvidersProps) {
           }}
       />
       {children}
+      </AuthContextProvider>
       </MediaQueryContextProvider>
     </ThemeContextProvider>
   );
