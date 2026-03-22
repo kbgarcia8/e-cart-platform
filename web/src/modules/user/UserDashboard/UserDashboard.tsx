@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
-import { toast } from "react-toastify";
 import { BounceLoader } from "react-spinners";
 
 import { useLogout } from "modules/auth/auth.hooks";
@@ -14,7 +13,11 @@ const UserDashboard = () => {
     const { user, authLoading } = useAuth();
 
     if(authLoading || logoutLoading) {
-        return <BounceLoader />;
+        return (
+            <UserDashboardWrapper>
+                <BounceLoader />
+            </UserDashboardWrapper>
+        );
     }
 
     if (!user) {

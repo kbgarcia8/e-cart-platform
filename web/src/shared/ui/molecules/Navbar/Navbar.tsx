@@ -14,17 +14,19 @@ const Navbar =({textColor, textSize, $anchorTheme, isVisible, isHashLinks=false,
                         <Styled.NavbarLink key={`${link}-${index}`} $textSize={textSize}>
                             {isHashLinks
                             ? <Styled.StyledHashLink
+                                replace
                                 smooth
                                 to={link.path}
-                                $anchorTheme={$anchorTheme ? $anchorTheme : currentTheme}
+                                $anchorTheme={$anchorTheme ? $anchorTheme : currentTheme.anchorTheme}
                                 $textColor={textColor}
                             >
                                 {link.icon && <Styled.LinkIconSpace $textColor={textColor}>{link.icon}</Styled.LinkIconSpace>}
                                 {link.name}
                             </Styled.StyledHashLink>
                             : <Styled.StyledLink
+                                replace
                                 to={link.path}
-                                $anchorTheme={$anchorTheme ? $anchorTheme : currentTheme}
+                                $anchorTheme={$anchorTheme ? $anchorTheme : currentTheme.anchorTheme}
                                 $textColor={textColor}
                             >
                                 {link.icon && <Styled.LinkIconSpace $textColor={textColor}>{link.icon}</Styled.LinkIconSpace>}
