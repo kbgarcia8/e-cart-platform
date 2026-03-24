@@ -1,15 +1,12 @@
 import React from "react";
 import GenericListItem from "./ListItem.styles";
-
-type ListItemProps = {
-    id?: string;
-    dataAttributes?: Record<string, string | number | boolean>;
-    className?: string;
-}
+import type { ListItemProps } from "./ListItem.types";
 
 export const ListItem = ({
     id,
     dataAttributes,
+    flexDirection,
+    justifyContent,
     className,
     children
 }:React.PropsWithChildren<ListItemProps>) => {
@@ -19,6 +16,8 @@ export const ListItem = ({
                 id={id}
                 {...dataAttributes}
                 className={className}
+                $flexDirection={flexDirection}
+                $justifyContent={justifyContent}
             >{children}</GenericListItem>
         </>
     )
