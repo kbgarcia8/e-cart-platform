@@ -2,6 +2,7 @@ model UserProfile {
     firstName   String  @db.VarChar(50)
     lastName    String  @db.VarChar(100)
     username    String? @unique @db.VarChar(30)
+    profilePicture String? @unique
 
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId String

@@ -11,8 +11,10 @@ import VerifyPage from "modules/auth/VerifyPage";
 
 import UserDashboard from "modules/user/UserDashboard";
 import UserProfile from "modules/user/UserProfile";
+
 import UserHeader from "modules/user/UserHeader/UserHeader";
 import UserFooter from "modules/user/UserFooter/UserFooter";
+import UserDetails from "modules/user/UserDetails";
 
 const routes = [
     {path: "/", element: <VerticalHeaderMainFooter headerHeight={"12svh"} header={<LandingHeader/>} main={<LandingMain/>} footer={<LandingFooter/>}/>},
@@ -20,7 +22,9 @@ const routes = [
     {path: "/auth/login", element: <VerticalHeaderMainFooter headerHeight={"7.5svh"} header={<AuthHeader/>} main={<LoginPage/>} footer={<AuthFooter/>}/>},
     {path: "/auth/verify", element: <VerticalHeaderMainFooter header={<AuthHeader/>} main={<VerifyPage/>} footer={<AuthFooter/>}/>},
     {path: "/user/dashboard", element: <VerticalHeaderMainFooter header={<UserHeader/>} main={<UserDashboard/>} footer={<UserFooter/>}/>},
-    {path: "/user/profile", element: <VerticalHeaderMainFooter header={<UserHeader/>} main={<UserProfile/>} footer={<UserFooter/>}/>}
+    {path: "/user/profile", element: <VerticalHeaderMainFooter header={<UserHeader/>} main={<UserProfile/>} footer={<UserFooter/>}/>},
+    {path: "/user/profile/details", element: <VerticalHeaderMainFooter header={<UserHeader/>} main={<UserDetails/>} footer={<UserFooter/>}/>}
+    
 ]
 
 export default routes;

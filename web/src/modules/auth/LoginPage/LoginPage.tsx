@@ -39,7 +39,7 @@ const loginFormInputArray:inputEntryShape<false,LabeledTextLike>[] = [
     }
 ];
 
-const LoginPage =() => {
+const LoginPage = () => {
     const { login, loading, error } = useLogin();
     const initialFormValues = {
         email: '',

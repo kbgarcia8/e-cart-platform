@@ -1,5 +1,12 @@
 import type { ApiErrorDetails } from "./errors.types";
 
+export type UserProfile = {
+    firstname: string;
+    lastname: string;
+    username?: string;
+    profilePicture?: string;
+}
+
 type Role = "Member" | "Guest" | "Admin"
 
 export type ApiResponse<T> = {
@@ -20,4 +27,5 @@ export interface AuthUserDTO {
     username?: string | null;
     firstName: string;
     lastName: string;
+    profilePicture?: string;
 };

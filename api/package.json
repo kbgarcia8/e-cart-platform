@@ -15,7 +15,7 @@
     "test": "npm run migrate:test && vitest",
     "prisma:generate": "prisma generate --schema=./src/prisma/schema/main.prisma",
     "prisma:pull": "npx prisma db pull --schema=./src/prisma/schema/main.prisma",
-    "prisma:studio": "NODE_TLS_REJECT_UNAUTHORIZED=0 npx prisma studio \\ --url=\"$DATABASE_URL\"",
+    "prisma:studio": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 npx prisma studio",
     "studio:test": "DATABASE_URL=$(grep DATABASE_URL_TEST .env | cut -d '=' -f2-) NODE_TLS_REJECT_UNAUTHORIZED=0 npx prisma studio \\ --url=\"$DATABASE_URL\""
   },
   "keywords": [],
@@ -39,6 +39,7 @@
     "@types/react-dom": "^19.2.3",
     "@types/supertest": "^6.0.3",
     "bcryptjs": "^3.0.3",
+    "cross-env": "^10.1.0",
     "crypto": "^1.0.1",
     "deep-email-validator": "^0.1.21",
     "express-async-handler": "^1.2.0",

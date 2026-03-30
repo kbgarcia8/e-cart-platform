@@ -5,6 +5,7 @@ type Profile = {
     firstname: string;
     lastname: string;
     username?: string;
+    profilePicture?: string;
 };
 
 export type SignupRequestDTO = {
@@ -62,6 +63,7 @@ export type AuthUser = {
     username?: string | null;
     firstName: string;
     lastName: string;
+    profilePicture?: string;
     providers: Providers[];
 };
 

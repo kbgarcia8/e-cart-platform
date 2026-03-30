@@ -9,3 +9,10 @@ export const UserProfileWrapper = styled.div`
     justify-content: space-evenly;
     width: 100%;
 `;
+
+export const UserFullName = styled.h1`
+    font-family: ${v.fonts.tertiary};
+    font-size: ${v.fontSize.xxlarge};
+    font-weight: ${v.fontWeight.bolder};
+    color: ${({theme}) => theme.colors.textColor1};
+`;

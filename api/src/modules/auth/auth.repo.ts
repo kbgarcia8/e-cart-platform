@@ -17,7 +17,8 @@ export async function createUser(userdata:UserCreateData):Promise<UserCreated> {
                 create: {
                     firstName: userdata.firstname ?? '',
                     lastName: userdata.lastname ?? '',
-                    username: userdata.username as string
+                    username: userdata.username as string,
+                    profilePicture: userdata.profilePicture ?? null
                 }
             },
             credentials: {
@@ -339,7 +340,8 @@ export async function findPublicUserById(id:string) {
                     select: {
                         username: true,
                         firstName: true,
-                        lastName: true
+                        lastName: true,
+                        profilePicture: true
                     }
                 },
                 credentials: {
@@ -398,7 +400,8 @@ export async function findPublicUserByEmail(email:string) {
                     select: {
                         username: true,
                         firstName: true,
-                        lastName: true
+                        lastName: true,
+                        profilePicture: true
                     }
                 }
             },

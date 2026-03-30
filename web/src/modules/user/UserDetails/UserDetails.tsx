@@ -1,57 +1,160 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
-import { toast } from "react-toastify";
+import { useEffect, useState, useCallback } from "react";
+import { DynamicForm, type inputEntryShape, type LabeledTextLike} from "@kbgarcia8/react-dynamic-form";
+import Button from "shared/ui/atoms/Button";
+import type { UserProfile } from "shared/type/shared.types";
 import { BounceLoader } from "react-spinners";
+import { FaRegEdit } from "react-icons/fa";
+import * as Styled from "./UserDetails.styles";
+import useAuth from "shared/hooks/useAuth";
 
-import { useLogout } from "modules/auth/auth.hooks";
-
-import { UserDetailsWrapper } from "./UserDetails.styles";
-import type { ApiResponse, AuthUserDTO } from "shared/type/shared.types";
+const detailsFormInitialValues = {
+    firstname: '',
+    lastname: '',
+    username: '',
+    profilePicture: ''
+}
 
 const UserDetails = () => {
-    const isLoggedIn = useRef(false);
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(true);
-    const {logoutLoading} = useLogout();
-    const [user, setUser] = useState<AuthUserDTO | null>(null);
+    const { user, authLoading } = useAuth();
+
+    const userDetailsFormInputArray:inputEntryShape<false, LabeledTextLike>[] = [
+        {
+            type: "text" as const,
+            id: "details-firstname",
+            isRequired: true,
+            disabled: true,
+            name: "firstname",
+            value: user?.firstName ?? '',
+            $labelFlexDirection: "column" as const,
+            labelClass: "detailsform-label",
+            inputClass: "detailsform-input",
+            isEditable: false as const,
+            textLabel: 'First Name'
+        },
+        {
+            type: "text" as const,
+            id: "details-lastname",
+            isRequired: true,
+            disabled: true,
+            name: "lastname",
+            value: user?.lastName ?? '',
+            $labelFlexDirection: "column" as const,
+            labelClass: "detailsform-label",
+            inputClass: "detailsform-input",
+            isEditable: false as const,
+            textLabel: 'Last Name'
+        },
+        {
+            type: "text" as const,
+            id: "details-username",
+            isRequired: true,
+            disabled: true,
+            name: "username",
+            value: user?.username ?? '',
+            $labelFlexDirection: "column" as const,
+            labelClass: "detailsform-label",
+            inputClass: "detailsform-input",
+            isEditable: false as const,
+            textLabel: 'Username'
+        },
+        {
+            type: "email" as const,
+            id: "details-email",
+            isRequired: true,
+            disabled: true,
+            name: "email",
+            value: user?.email ?? '',
+            $labelFlexDirection: "column" as const,
+            labelClass: "detailsform-label",
+            inputClass: "detailsform-input",
+            isEditable: false as const,
+            textLabel: 'Email'
+        }
+    ]
 
     useEffect(() => {
-        if (isLoggedIn.current) return;
-        isLoggedIn.current = true;
-        const initializeUser = async () => {
-            try {
-                const res = await fetch(`${import.meta.env.VITE_DEV_API_URL}/user/dashboard`,{credentials: "include"});
-                
-                if (!res.ok) {
-                    throw new Error('Authentication failed');
+        Object.keys(detailsFormInitialValues).map((key) => (
+            userDetailsFormInputArray.map((input) => {
+                if(input.name == key && input.name !== 'email') {
+                    detailsFormInitialValues[key as keyof UserProfile] = input.value
                 }
+            })
+        ))
+    }, [])
 
-                //? Remember that res.json holds the data returned by res
-                const json: ApiResponse<AuthUserDTO> = await res.json();
+    const [detailsFormValues, setDetailsFormValues] = useState<UserProfile>(detailsFormInitialValues)
 
-                if (!json.data) {
-                    throw new Error("No user data returned");
-                }
+    if(authLoading) {
+        return (
+            <Styled.UserDetailsWrapper>
+                <BounceLoader />
+            </Styled.UserDetailsWrapper>
+        );
+    }
 
-                const user = json.data;
-                setUser(user);
-                toast.success(`Welcome back to your dashboard ${user.firstName}`);
-            } catch(err) {
-                console.log(err);
-                toast.error("Login failed or access expired. Please login again.");
-                navigate("/auth/login");
-            } finally {
-                setLoading(false);
+    if (!user) {
+        navigate("/auth/login");
+    }
+
+    const handleUserDetailsFormChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const datakey = e.currentTarget.dataset.key as keyof UserProfile;
+        const value = e.currentTarget.value;
+        
+        setDetailsFormValues((prevDetailsFormValues) => ({
+            ...prevDetailsFormValues,
+            [datakey]: value
+        }))
+    }, []);
+
+    const userDetailsFormInputs = userDetailsFormInputArray.map((input) => (
+        {...input,
+            //value: String(signupFormValues[input.name as keyof UserCreateData]),
+            onChange: handleUserDetailsFormChange,
+            dataAttributes: {
+                "data-key": `${input.name}`
             }
-        };
-        initializeUser();
-    }, [navigate]);
+        }
+    ));
 
+    const onClickEditButton = () => {}
+
+    const handleSubmitForm = useCallback((e:React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log('User details update form submitted')
+        console.log(detailsFormValues)
+    },[]);
 
     return (
-        <UserDetailsWrapper>
-            {loading || logoutLoading ? <BounceLoader /> : <div>{`Welcome ${user?.firstName}. This your temporary dashboard`}</div>}
-        </UserDetailsWrapper>
+        <Styled.UserDetailsWrapper>
+            <Styled.UserProfilePictureSpace>
+                <Styled.UserProfilePicture src={""} />
+            </Styled.UserProfilePictureSpace>
+            <Styled.Username>{`${user?.username}`}</Styled.Username>
+            <Button
+                onClick={onClickEditButton}
+                buttonType="button"
+                startIcon={<FaRegEdit/>}
+            />
+            <Styled.UserDetailsFormWrapper>
+                <DynamicForm
+                    formActionButtonColor="secondary"
+                    formActionButtonSize="medium"
+                    formActionButtonRadius="square"
+                    className={'user-details-form'}
+                    fieldsets={null}
+                    formInputs={userDetailsFormInputs}
+                    id="user-details"
+                    isExpandable={false}
+                    inputClass={'user-details-form-input'}
+                    labelClass={'user-details-form-label'}
+                    labelAndInputContainerClass={'user-details-form-label-n-input-container'}
+                    submitText={'Update'}
+                    handleSubmitForm={handleSubmitForm}
+                />
+            </Styled.UserDetailsFormWrapper>
+        </Styled.UserDetailsWrapper>
     );
 };
 

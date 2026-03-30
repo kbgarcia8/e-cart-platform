@@ -12,11 +12,12 @@ import { mapToAuthUserDTO } from './auth.utils';
 export async function signup(data:SignupRequestDTO) {
     const { email, firstname, lastname, username, password } = data as SignupRequestDTO;
     const hashedPassword = await bcrypt.hash(password, 10);
-
+    
     const userCreateData = {
         firstname:firstname,
         lastname: lastname,
         username: username,
+        profilePicture: 'https://images.unsplash.com/vector-1742875355318-00d715aec3e8?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         email: email,
         passwordHash: hashedPassword,
         provider: "Local" as const,

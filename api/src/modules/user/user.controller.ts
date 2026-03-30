@@ -5,6 +5,7 @@ import { AuthErrorDetails } from "shared/errors/errors.types";
 import * as userService from './user.service';
 
 export const loggedUser = async (req:Request, res:Response, next:NextFunction) => {
+    //console.log(req.user)
     res.status(200).json({
         code: 200,
         success: true,
@@ -17,7 +18,7 @@ export const dashboardGet = (req:Request, res:Response) => {
     res.status(200).json({
         code: 200,
         success: true,
-        message: `${req.user} logged`,
+        message: `${req.user}'s dashboard`,
         data: req.user,
         redirectUrl: `${process.env.CLIENT_BASE_URL}/user/dashboard`
     });
@@ -52,31 +53,15 @@ export const userSettingsGet = (req:Request, res:Response) => {
             data: user
         });
     } catch (err) {
-        console.error("userSettingsGet error:", err);
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
 
 export const userDetailsGet = (req:Request, res:Response) => {
-    try{
-        const user = req.user;
-        if(!user) {
-            throw new AuthError<AuthErrorDetails>(
-                "Credentials invalid or expired when accessing user user details.",
-                '403',
-                "CEREDENTIALS_INVALID",
-                { reason: "Credentials invalid or expired" }
-            );
-        }
-
-        res.status(200).json({
-            code: 200,
-            success: true,
-            message: `Welcome back ${user} to your profile details`,
-            data: user
-        });
-    } catch (err) {
-        console.error("userDetailsGet error:", err);
-        res.status(500).json({ message: "Internal Server Error" });
-    }
+    res.status(200).json({
+        code: 200,
+        success: true,
+        message: `${req.user}'s profile details`,
+        data: req.user
+    });
 };

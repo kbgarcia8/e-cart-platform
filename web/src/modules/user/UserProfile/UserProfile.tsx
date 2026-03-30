@@ -5,21 +5,20 @@ import { BounceLoader } from "react-spinners";
 import { useLogout } from "modules/auth/auth.hooks";
 import useAuth from "shared/hooks/useAuth";
 
-import { UserProfileWrapper } from "./UserProfile.styles";
+import * as Styled from "./UserProfile.styles";
 
 import ProfileMenuList from "../molecules/ProfileMenuList";
 
 const UserProfile = () => {
-    console.log('UserProfile rendered');
     const navigate = useNavigate();
     const {logoutLoading} = useLogout();
     const { user, authLoading } = useAuth();
 
     if(authLoading || logoutLoading) {
         return (
-            <UserProfileWrapper>
+            <Styled.UserProfileWrapper>
                 <BounceLoader />
-            </UserProfileWrapper>
+            </Styled.UserProfileWrapper>
         );
     }
 
@@ -28,12 +27,12 @@ const UserProfile = () => {
     }
 
     return (
-        <UserProfileWrapper>
-            <div>
-                {`Welcome ${user?.firstName}. This your temporary profile page`}
-            </div>
+        <Styled.UserProfileWrapper>
+            <Styled.UserFullName>
+                {`${user?.firstName} ${user?.lastName}`}
+            </Styled.UserFullName>
             <ProfileMenuList/>
-        </UserProfileWrapper>
+        </Styled.UserProfileWrapper>
     );
 };
 

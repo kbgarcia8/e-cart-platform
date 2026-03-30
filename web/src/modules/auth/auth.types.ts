@@ -1,3 +1,5 @@
+import type { UserProfile } from "shared/type/shared.types";
+
 export const Role = {
     Member: "Member",
     Admin: "Admin",
@@ -5,12 +7,6 @@ export const Role = {
 } as const;
 
 export type Role = typeof Role[keyof typeof Role];
-//Signup
-type UserProfile = {
-    firstname: string;
-    lastname: string;
-    username?: string;
-}
 
 export type UserCreateData = {
     email: string;

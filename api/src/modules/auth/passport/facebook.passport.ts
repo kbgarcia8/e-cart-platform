@@ -67,9 +67,10 @@ export default function facebookStrategy () {
                     isVerified: true, //? Facebook only returns verified email
                     profile: {
                         create: {
-                        firstName: profile.name?.givenName ?? '',
-                        lastName: profile.name?.familyName ?? '',
-                        username: username ?? ''
+                            firstName: profile.name?.givenName ?? '',
+                            lastName: profile.name?.familyName ?? '',
+                            username: username ?? '',
+                            profilePicture: profile.photos?.[0]?.value ?? 'https://images.unsplash.com/vector-1742875355318-00d715aec3e8?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
                         }
                     },
                     credentials: {
