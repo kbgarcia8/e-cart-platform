@@ -136,8 +136,7 @@ export const DefaultButton = styled.button<{
     
     & .button-icon-text-space svg {
         height: auto;
-        max-height: 100%;
-        max-width: 20%;
+        
     }
 
     &:disabled {

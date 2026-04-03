@@ -1,8 +1,10 @@
 import "dotenv/config";
 import { NextFunction, Response, Request } from "express";
-import { AuthError } from "shared/errors/errors";
-import { AuthErrorDetails } from "shared/errors/errors.types";
+import { ExpressValError, AuthError } from "shared/errors/errors";
+import { AuthErrorDetails, ExpressValidationErrorDetails } from "shared/errors/errors.types";
 import * as userService from './user.service';
+import { validationResult, FieldValidationError } from "express-validator";
+import type { UserProfileFormDataDTO } from "./user.types";
 
 export const loggedUser = async (req:Request, res:Response, next:NextFunction) => {
     //console.log(req.user)
@@ -14,24 +16,38 @@ export const loggedUser = async (req:Request, res:Response, next:NextFunction) =
     });
 };
 
-export const dashboardGet = (req:Request, res:Response) => {
-    res.status(200).json({
-        code: 200,
-        success: true,
-        message: `${req.user}'s dashboard`,
-        data: req.user,
-        redirectUrl: `${process.env.CLIENT_BASE_URL}/user/dashboard`
-    });
-};
+export const updateUserDetailsPost = async (req:Request, res:Response, next:NextFunction) => {
+    const validatorErrors = validationResult(req);
+    if (!validatorErrors.isEmpty()) {
+        const errors = validatorErrors.array();
+        const errorMessages = errors.map((entry) => `• ${entry.msg}`).join("\n");
+        const details = errors.filter((err): err is FieldValidationError => err.type === 'field')
+            .map(err => ({
+                type: err.path,
+                msg: err.msg
+            }));
 
-export const userProfileGet = (req:Request, res:Response) => {
-    res.status(200).json({
-        code: 200,
-        success: true,
-        message: `${req.user} logged`,
-        data: req.user,
-        redirectUrl: `${process.env.CLIENT_BASE_URL}/user/profile`
-    });
+        throw new ExpressValError<ExpressValidationErrorDetails>(
+            errorMessages,
+            '400',
+            "EXPRESS_VAL_ERROR",
+            details
+        );
+    }
+
+    const userDetailsUpdate = req.body as UserProfileFormDataDTO;
+    try {
+        const result = await userService.updateUserDetails(userDetailsUpdate);
+
+        res.status(200).json({
+            code: 200,
+            success: true,
+            message: 'User details updated successfully',
+            data: result
+        });
+    } catch(err){
+        next(err);
+    }
 };
 
 export const userSettingsGet = (req:Request, res:Response) => {
@@ -55,13 +71,4 @@ export const userSettingsGet = (req:Request, res:Response) => {
     } catch (err) {
         res.status(500).json({ message: "Internal Server Error" });
     }
-};
-
-export const userDetailsGet = (req:Request, res:Response) => {
-    res.status(200).json({
-        code: 200,
-        success: true,
-        message: `${req.user}'s profile details`,
-        data: req.user
-    });
 };

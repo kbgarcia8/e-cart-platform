@@ -33,5 +33,9 @@ export const prismaCodeToMessage:Record<string,Record<string,string>> = {
         ...generalPrismaCodes,
         "P2001": "Refresh token not found please login again",
         "P2025": "Refresh token not found please login again"
+    },
+    "updateUserDetails": {
+        ...generalPrismaCodes,
+        "P2002": "Username already taken please try a different entry."
     }
 }
