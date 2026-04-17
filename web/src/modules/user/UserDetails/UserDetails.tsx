@@ -17,6 +17,7 @@ const detailsFormInitialValues = {
     firstname: '',
     lastname: '',
     username: '',
+    email: '',
     profilePicture: ''
 }
 
@@ -26,6 +27,8 @@ const UserDetails = () => {
     const [detailsFormValues, setDetailsFormValues] = useState<UserProfileFormData>(detailsFormInitialValues);
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const { updateProfile } = useProfileUpdate();
+
+    console.log(user?.profilePicture)
 
     const userDetailsFormInputArray:inputEntryShape<false, LabeledTextLike>[] = [
         {
@@ -78,19 +81,19 @@ const UserDetails = () => {
             textLabel: 'Email'
         }
     ];
-
+    
+    //? Needed to use useEffect to initialize non-empty initial values
     useEffect(() => {
         if(!user) return
 
-        Object.keys(detailsFormInitialValues).map((key) => (
-            key === 'userId' ? detailsFormInitialValues[key as keyof UserProfile] = user.id
-            : userDetailsFormInputArray.map((input) => {
-                if(input.name == key && input.name !== 'email') {
-                    detailsFormInitialValues[key as keyof UserProfile] = input.value
-                }
-            })
-        ))
-        setDetailsFormValues(detailsFormInitialValues)
+        setDetailsFormValues({
+            userId: user.id,
+            firstname: user.firstName ?? '',
+            lastname: user.lastName ?? '',
+            username: user.username ?? '',
+            email: user.email ?? '',
+            profilePicture: user.profilePicture ?? ''
+        });
     }, [user]);
 
     const handleUserDetailsFormChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,11 +104,12 @@ const UserDetails = () => {
             ...prevDetailsFormValues,
             [datakey]: value
         }))
-    }, []);
+    }, [detailsFormValues]);
 
     const userDetailsFormInputs = userDetailsFormInputArray.map((input) => (
         {...input,
-            disabled: input.name !== 'email' ? isEditing : input.disabled,
+            value: String(detailsFormValues[input.name as keyof UserProfile] ?? ''),
+            disabled: input.name !== 'email' ? !isEditing : input.disabled,
             onChange: handleUserDetailsFormChange,
             dataAttributes: {
                 "data-key": `${input.name}`

@@ -63,7 +63,7 @@ export type AuthUser = {
     username?: string | null;
     firstName: string;
     lastName: string;
-    profilePicture?: string;
+    profilePicture?: string | null;
     providers: Providers[];
 };
 

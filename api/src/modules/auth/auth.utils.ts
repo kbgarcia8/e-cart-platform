@@ -44,6 +44,7 @@ export function mapToAuthUserDTO(user:PublicUser): AuthUser {
         username: user.profile.username,
         firstName: user.profile.firstName,
         lastName: user.profile.lastName,
+        profilePicture: user.profile.profilePicture,
         providers: user.credentials.map(p => p.provider)
     };
 }

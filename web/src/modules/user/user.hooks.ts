@@ -14,7 +14,6 @@ export function useProfileUpdate() {
         try {
             const response = await updateUserProfileApi(payload)
             if (response) {
-                navigate("/user/dashboard");
                 return response;
             }
         } catch (err) {

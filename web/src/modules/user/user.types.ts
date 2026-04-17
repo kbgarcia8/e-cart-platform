@@ -3,6 +3,7 @@ export interface UserProfileFormData {
     firstname: string;
     lastname: string;
     username: string;
+    email: string;
     profilePicture: string;
 };
 
