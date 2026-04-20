@@ -23,7 +23,7 @@ const routes = [
     {path: "/auth/verify", element: <VerticalHeaderMainFooter header={<AuthHeader/>} main={<VerifyPage/>} footer={<AuthFooter/>}/>},
     {path: "/user/dashboard", element: <VerticalHeaderMainFooter header={<UserHeader/>} main={<UserDashboard/>} footer={<UserFooter/>}/>},
     {path: "/user/profile", element: <VerticalHeaderMainFooter header={<UserHeader/>} main={<UserProfile/>} footer={<UserFooter/>}/>},
-    {path: "/user/profile/details", element: <VerticalHeaderMainFooter header={<UserHeader/>} main={<UserDetails/>} footer={<UserFooter/>}/>}
+    {path: "/user/profile/details", element: <VerticalHeaderMainFooter layoutHeight={"100svh"} header={<UserHeader/>} main={<UserDetails/>} footer={<UserFooter/>}/>}
     
 ]
 

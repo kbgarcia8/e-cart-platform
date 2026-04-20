@@ -1,9 +1,14 @@
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import { media } from "shared/utils/utility";
 
-export const PublicMainLayout = styled.div`
+export const PublicMainLayout = styled.div<{$layoutHeight?: string;}>`
     display: grid;
     min-height: 100svh;   /* modern viewport-safe */
+    ${({ $layoutHeight }) =>
+        $layoutHeight &&
+        css`
+            height: ${$layoutHeight};
+        `}
     width: 100%;
 
     ${media.mobile`

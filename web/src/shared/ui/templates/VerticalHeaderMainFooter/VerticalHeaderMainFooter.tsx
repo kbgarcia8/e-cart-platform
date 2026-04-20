@@ -3,6 +3,7 @@ import type { VerticalHeaderMainFooterProps } from "../VerticalHeaderMainFooter.
 import { Outlet } from "react-router-dom";
 
 const VerticalHeaderMainFooter = ({
+    layoutHeight,
     header,
     headerHeight,
     main,
@@ -10,7 +11,7 @@ const VerticalHeaderMainFooter = ({
     footerHeight
 }:VerticalHeaderMainFooterProps) => {
     return(
-        <Styled.PublicMainLayout>
+        <Styled.PublicMainLayout $layoutHeight={layoutHeight}>
             <Styled.Header $headerHeight={headerHeight}>{header}</Styled.Header>
             <Styled.Main>
                 {main}

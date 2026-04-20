@@ -4,8 +4,8 @@ export type UserDetailsUpdateData = Omit<UserProfile, "email">;
 
 export interface UserProfileFormDataDTO {
     userId: string;
-    firstName: string;
-    lastName: string;
+    firstname: string;
+    lastname: string;
     username: string;
     profilePicture: string;
 }

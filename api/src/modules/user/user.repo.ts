@@ -7,19 +7,19 @@ import type { UserProfileFormDataDTO } from "./user.types";
 
 export async function updateUserProfile(userDetailsData:UserProfileFormDataDTO):Promise<string> {
     try {
-        const updateUserDetails = await prisma.user.update({
-            where: { id: userDetailsData.userId},
+        const updateUserDetails = await prisma.userProfile.update({
+            where: { userId: userDetailsData.userId},
             data: {
-                firstname: userDetailsData.firstName,
-                lastname: userDetailsData.lastName,
+                firstName: userDetailsData.firstname,
+                lastName: userDetailsData.lastname,
                 profilePicture: userDetailsData.profilePicture,
                 username: userDetailsData.username
             },
             select: {
-                id: true
+                userId: true
             }
         })
-        return updateUserDetails.id;
+        return updateUserDetails.userId;
         
     } catch (error){
             if (error instanceof Prisma.PrismaClientKnownRequestError) {

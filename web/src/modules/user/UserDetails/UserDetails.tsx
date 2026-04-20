@@ -26,9 +26,9 @@ const UserDetails = () => {
     const { user, authLoading } = useAuth();
     const [detailsFormValues, setDetailsFormValues] = useState<UserProfileFormData>(detailsFormInitialValues);
     const [isEditing, setIsEditing] = useState<boolean>(false);
-    const { updateProfile } = useProfileUpdate();
+    const { updateProfile, profileUpdateLoading } = useProfileUpdate();
 
-    console.log(user?.profilePicture)
+    //console.log(user?.profilePicture)
 
     const userDetailsFormInputArray:inputEntryShape<false, LabeledTextLike>[] = [
         {
@@ -132,13 +132,14 @@ const UserDetails = () => {
         try {
             const api = await updateProfile(detailsFormValues);
             toast.success(`${api?.message}` || 'User Profile updated successfully');
-            
         } catch (error) {
             toast.error(error instanceof Error ? error.message : "Something went wrong during user details update!");
+        } finally {
+            setIsEditing(false)
         }
     },[updateProfile, detailsFormValues]);
 
-    if(authLoading) {
+    if(authLoading || profileUpdateLoading) {
         return (
             <Styled.UserDetailsWrapper>
                 <BounceLoader />
