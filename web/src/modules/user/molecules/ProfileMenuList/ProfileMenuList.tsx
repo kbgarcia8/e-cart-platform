@@ -27,7 +27,7 @@ const ProfileMenuList = () => {
                     <MdArrowRight size={"2rem"}/>
                 </ListItem>
             </Styled.ProfileMenuListItemContainer>
-            <Styled.ProfileMenuListItemContainer to='/user/settings'>
+            <Styled.ProfileMenuListItemContainer to='/user/profile/settings'>
                 <ListItem justifyContent="space-around">
                     <IoIosSettings size={"2rem"}/>
                     <Styled.ProfileMenuListItemText>Settings</Styled.ProfileMenuListItemText>

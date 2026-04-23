@@ -136,7 +136,6 @@ export const DefaultButton = styled.button<{
     
     & .button-icon-text-space svg {
         height: auto;
-        
     }
 
     &:disabled {
@@ -146,7 +145,7 @@ export const DefaultButton = styled.button<{
 `;
 
 export const ButtonTextAndIconSpace = styled.div<{ $hasIcon: boolean; $hasText: boolean }>`
-    width: 100%;
+    width: auto;
     display: flex;
     flex-direction: row;
     align-items: center;
