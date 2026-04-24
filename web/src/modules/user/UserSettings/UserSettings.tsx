@@ -21,15 +21,18 @@ const UserSettings = () => {
     const {logoutLoading} = useLogout();
     const [user, setUser] = useState<AuthUserDTO | null>(null);
 
-    console.log(currentTheme.name)
-
 
     return (
         <Styled.UserSettingsWrapper>
             <Styled.ThemeToggleContainer>
                 <Styled.ThemeToggleText>{currentTheme.name == 'light' ? 'Switch to Dark Theme' : 'Switch to Light Theme'}</Styled.ThemeToggleText>
                 <Styled.ThemeToggleButtonContainer>
-                    <Button radius={"circle"} onClick={() => (toggleTheme())} buttonType={"button"} startIcon={currentTheme.name !== 'light' ? <FaSun size={'2rem'}/> : <FaMoon size={'2rem'}/>}/>
+                    <Styled.ToggleSwitchWrapper className="switch">
+                        <Styled.ToggleSwitchInput type="checkbox" onClick={() => (toggleTheme())}></Styled.ToggleSwitchInput>
+                        <Styled.ToggleSwitchSlider className="slider-round">
+                            {currentTheme.name !== 'light' ? <FaSun size={'1.75rem'}/> : <FaMoon size={'1.75rem'}/>}
+                        </Styled.ToggleSwitchSlider>
+                    </Styled.ToggleSwitchWrapper>
                 </Styled.ThemeToggleButtonContainer>
             </Styled.ThemeToggleContainer>
         </Styled.UserSettingsWrapper>
