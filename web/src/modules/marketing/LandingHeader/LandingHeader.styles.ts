@@ -72,9 +72,14 @@ export const ButtonWrapper = styled.div`
     padding-top: ${v.spacing.xsmall};
     padding-inline: ${v.spacing.xlarge};
     gap: ${v.spacing.medium};
+    
 
     & > button {
         flex: 1;
         margin-inline: 0.25rem;
+    }
+    
+    & button .button-icon-text-space {
+        width: 100%;
     }
 `;

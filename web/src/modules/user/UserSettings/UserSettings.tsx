@@ -3,6 +3,9 @@ import { useEffect, useState, useRef } from "react";
 import { toast } from "react-toastify";
 import { BounceLoader } from "react-spinners";
 import { FaMoon, FaSun } from "react-icons/fa";
+import { FaArrowUpRightFromSquare } from "react-icons/fa6";
+import { PiPaintBucketFill } from "react-icons/pi";
+import { MdPayments } from "react-icons/md";
 import Button from "shared/ui/atoms/Button";
 
 
@@ -15,16 +18,23 @@ import useTheme from "shared/hooks/useTheme";
 
 
 const UserSettings = () => {
-    const isLoggedIn = useRef(false);
     const navigate = useNavigate();
     const { currentTheme, toggleTheme } = useTheme();
     const {logoutLoading} = useLogout();
     const [user, setUser] = useState<AuthUserDTO | null>(null);
+    
+    const handlePaymentMethodClick = () => {
+        navigate('/user/profile/settings/payment-methods');
+    }
 
 
     return (
         <Styled.UserSettingsWrapper>
+            <Styled.UserSettingsHeader>{'User Settings/Preferences'}</Styled.UserSettingsHeader>
             <Styled.ThemeToggleContainer>
+                <Styled.ThemeToggleIconContainer>
+                    <PiPaintBucketFill size={'2rem'}/>
+                </Styled.ThemeToggleIconContainer>
                 <Styled.ThemeToggleText>{currentTheme.name == 'light' ? 'Switch to Dark Theme' : 'Switch to Light Theme'}</Styled.ThemeToggleText>
                 <Styled.ThemeToggleButtonContainer>
                     <Styled.ToggleSwitchWrapper className="switch">
@@ -35,6 +45,15 @@ const UserSettings = () => {
                     </Styled.ToggleSwitchWrapper>
                 </Styled.ThemeToggleButtonContainer>
             </Styled.ThemeToggleContainer>
+            <Styled.PaymentMethodsContainer>
+                <Styled.PaymentMethodsIconContainer>
+                    <MdPayments size={'2rem'}/>
+                </Styled.PaymentMethodsIconContainer>
+                <Styled.PaymentMethodsText>{'Payment Methods'}</Styled.PaymentMethodsText>
+                <Styled.RightArrowContainer>
+                    <Button buttonType="button" startIcon={<FaArrowUpRightFromSquare size={'2rem'}/>} onClick={handlePaymentMethodClick}></Button>
+                </Styled.RightArrowContainer>
+            </Styled.PaymentMethodsContainer>
         </Styled.UserSettingsWrapper>
     );
 };

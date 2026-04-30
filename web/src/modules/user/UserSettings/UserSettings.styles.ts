@@ -8,6 +8,12 @@ export const UserSettingsWrapper = styled.div`
     align-items: center;
     justify-content: center;
     width: 100%;
+    gap: ${v.spacing.medium};
+`;
+
+export const UserSettingsHeader = styled.h2`
+    bottom: 10%;
+    position: relative;
 `;
 
 export const ThemeToggleContainer = styled.div`
@@ -19,13 +25,19 @@ export const ThemeToggleContainer = styled.div`
     border: 2px solid red;
 `;
 
+export const ThemeToggleIconContainer = styled.div`
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
 export const ThemeToggleButtonContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 25%;
+    width: 20%;
     height: 100%;
-    border: 2px solid red;
 `;
 
 export const ThemeToggleText = styled.span`
@@ -37,7 +49,7 @@ export const ThemeToggleText = styled.span`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 75%;
+    width: 70%;
     height: 100%;
     border: 2px solid red;
 `;
@@ -53,9 +65,10 @@ export const ToggleSwitchInput = styled.input`
     opacity: 0;
     width: 0;
     height: 0;
+    
 
     &:checked + .slider-round {
-        background-color: ${({theme}) => theme.colors.backgroundColor2};
+        background-color: ${({theme}) => theme.colors.backgroundColor3};
     }
 
     &:checked + .slider-round>svg {
@@ -86,7 +99,8 @@ export const ToggleSwitchSlider = styled.span`
     -webkit-transition: .4s;
     transition: .4s;
     padding-inline: ${v.spacing.xxsmall};
-    color: ${({theme}) => theme.colors.textColor1};
+    background-color: ${({theme})=> theme.colors.backgroundColor1};
+    color: ${({theme})=> theme.colors.textColor3};
 
     &:before {
         position: absolute;
@@ -115,4 +129,42 @@ export const ToggleSwitchSlider = styled.span`
     &.slider-round:before {
         border-radius: 50%;
     }
+`;
+
+export const PaymentMethodsContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 10%;
+    border: 2px solid red;
+`;
+
+export const PaymentMethodsIconContainer = styled.div`
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
+export const PaymentMethodsText = styled.span`
+    color: ${({theme}) => theme.colors.textColor1};
+    font-size: ${v.fontSize.medium};
+    font-weight: ${v.fontWeight.bolder};
+    font-family: ${v.fonts.secondary};
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    height: 100%;
+    border: 2px solid red;
+`;
+
+export const RightArrowContainer = styled.span`
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 `;

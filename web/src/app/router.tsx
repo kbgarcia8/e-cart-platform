@@ -1,21 +1,23 @@
+/* Landing/Marketing */
 import VerticalHeaderMainFooter from "shared/ui/templates/VerticalHeaderMainFooter";
 import LandingHeader from "modules/marketing/LandingHeader";
 import LandingFooter from "modules/marketing/LandingFooter";
 import LandingMain from "modules/marketing/LandingMain";
-
+/* Auth */
 import AuthHeader from "modules/auth/AuthHeader";
 import LoginPage from "modules/auth/LoginPage";
 import SignupPage from "modules/auth/SignupPage";
 import AuthFooter from "modules/auth/AuthFooter";
 import VerifyPage from "modules/auth/VerifyPage";
-
+/* Dashboard */
 import UserDashboard from "modules/user/UserDashboard";
 import UserProfile from "modules/user/UserProfile";
-
+/* User */
 import UserHeader from "modules/user/UserHeader/UserHeader";
 import UserFooter from "modules/user/UserFooter/UserFooter";
 import UserDetails from "modules/user/UserDetails";
 import UserSettings from "modules/user/UserSettings";
+import UserPaymentMethods from "modules/user/UserPaymentMethods";
 
 const routes = [
     {path: "/", element: <VerticalHeaderMainFooter headerHeight={"12svh"} header={<LandingHeader/>} main={<LandingMain/>} footer={<LandingFooter/>}/>},
@@ -25,7 +27,8 @@ const routes = [
     {path: "/user/dashboard", element: <VerticalHeaderMainFooter header={<UserHeader/>} main={<UserDashboard/>} footer={<UserFooter/>}/>},
     {path: "/user/profile", element: <VerticalHeaderMainFooter header={<UserHeader/>} main={<UserProfile/>} footer={<UserFooter/>}/>},
     {path: "/user/profile/details", element: <VerticalHeaderMainFooter layoutHeight={"100svh"} header={<UserHeader/>} main={<UserDetails/>} footer={<UserFooter/>}/>},
-    {path: "/user/profile/settings", element: <VerticalHeaderMainFooter layoutHeight={"100svh"} header={<UserHeader/>} main={<UserSettings/>} footer={<UserFooter/>}/>}
+    {path: "/user/profile/settings", element: <VerticalHeaderMainFooter layoutHeight={"100svh"} header={<UserHeader/>} main={<UserSettings/>} footer={<UserFooter/>}/>},
+    {path: "user/profile/settings/payment-methods", element: <VerticalHeaderMainFooter layoutHeight={"100svh"} header={<UserHeader/>} main={<UserPaymentMethods/>} footer={<UserFooter/>}/>}
 ]
 
 export default routes;

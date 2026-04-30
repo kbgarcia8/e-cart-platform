@@ -10,3 +10,13 @@ export interface UserProfileFormData {
 export interface userProfileUpdatedDTO {
     userId: string;
 }
+
+export const PaymentMethods = {
+    COD: "COD",
+    GCash: "GCash",
+    PayMaya: "PayMaya",
+    Bank_Transfer: "Bank_Transfer",
+    Creadit_Card: "Creadit_Card"
+} as const;
+
+export type PaymentMethods = typeof PaymentMethods[keyof typeof PaymentMethods];

@@ -1,0 +1,26 @@
+model PaymentMethods {
+    id String @id @default(uuid())
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId String
+    type Methods
+
+    provider String    
+    providerMethodId String?  
+
+    walletProvider String?
+    walletNumber String?
+
+    bankName String?
+    accountName String?
+    accountNumber String?
+
+    label String?
+    isDefault Boolean @default(false)
+    isActive Boolean @default(true)
+
+    created_at DateTime @default(now())
+    updated_at DateTime @default(now())
+    deleted_at DateTime? @default(now())
+
+    @@schema("auth")
+}

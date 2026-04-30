@@ -8,6 +8,7 @@ model User {
 
     profile UserProfile?
     credentials UserCredentials[]
+    paymentMethods PaymentMethods[]
     verificationTokens VerificationToken?
     refreshToken RefreshToken?
 
