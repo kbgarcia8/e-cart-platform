@@ -11,12 +11,12 @@ export interface userProfileUpdatedDTO {
     userId: string;
 }
 
-export const PaymentMethods = {
-    COD: "COD",
-    GCash: "GCash",
+export const Methods = {
+    COD: "Cash-on-Delivery",
+    GCash: "G-Cash",
     PayMaya: "PayMaya",
-    Bank_Transfer: "Bank_Transfer",
-    Creadit_Card: "Creadit_Card"
+    Bank_Transfer: "Bank Transfer",
+    Credit_Card: "Credit Card"
 } as const;
 
-export type PaymentMethods = typeof PaymentMethods[keyof typeof PaymentMethods];
+export type PaymentMethods = typeof Methods[keyof typeof Methods];
