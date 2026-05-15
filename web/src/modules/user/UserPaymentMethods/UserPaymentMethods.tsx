@@ -1,116 +1,24 @@
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
+import { useMemo, useState } from "react";
 import { toast } from "react-toastify";
-import { BounceLoader } from "react-spinners";
+import {DynamicForm} from "@kbgarcia8/react-dynamic-form";
+
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 
 import Button from "shared/ui/atoms/Button";
-import {DynamicForm} from "@kbgarcia8/react-dynamic-form";
 
-
-import { useLogout } from "modules/auth/auth.hooks";
 
 import * as Styled from "./UserPaymentMethods.styles";
-import type { ApiResponse, AuthUserDTO } from "shared/type/shared.types";
+import type { AuthUserDTO } from "shared/type/shared.types";
 import type { inputEntryShape, LabeledCheckboxOrRadio } from "@kbgarcia8/react-dynamic-form";
 import { type PaymentMethods, Methods } from "../user.types";
 
 //TODO: Establish a type for every type of payment methods
 /*
-    1. Create an add-payment workflow state
-    - Use either:
-            a. isSelecting:boolean
-        OR
-            b. addPaymentFlow: "idle" | "selecting"
-    - Purpose:
-            Controls whether user is currently choosing a payment type.
-
-    2. Create selectedPaymentMethod state
-    - Stores currently selected payment method type.
-    - Example values:
-            "cod"
-            "gcash"
-            "credit-card"
-
-    3. Create PaymentMethod type in user.types
-    - Use union type or extracted const object.
-    - Example:
-            export type PaymentMethod =
-                | "cod"
-                | "gcash"
-                | "credit-card";
-
-    4. Create paymentMethodTemplates object
-    - Purpose:
-            Centralized schema/config for each payment method input structure.
-    - Each key corresponds to a PaymentMethod.
-    - Each value contains:
-            DynamicForm-compatible input structure.
-
-    5. Refactor paymentMethodsFormInputArray
-    - Keep only default/preloaded payment methods.
-    - Newly added methods should come from paymentMethodTemplates.
-
-    6. When "Add Payment Method" button is clicked:
-    - Set addPaymentFlow/isSelecting state.
-    - Render select tag conditionally.
-
-    7. Render select tag conditionally
-    - Render only while selecting payment type.
-    - Options should come from PaymentMethod type/source.
-    - Store selected value inside selectedPaymentMethod state.
-
-    8. Watch selectedPaymentMethod changes
-    - Use:
-            useEffect
-        OR
-            dedicated handler function.
-    - If valid selection:
-            a. get matching template
-            b. append template into displayDisplayFormInputs
-            c. optionally append DTO structure into paymentOptions
-            d. close selection state
-
-    9. Separate DTO state from UI state
-    - paymentOptions:
-            backend payload source of truth
-    - displayDisplayFormInputs:
-            UI-only DynamicForm representation
-
-    10. Ensure unique IDs for dynamically added inputs
-        - Avoid duplicated:
-            id
-            data-index
-            data-key
-        - Generate unique identifier per added payment method.
-
-    11. Add duplicate-payment prevention
-        - Prevent adding same payment method multiple times
-        if business logic requires uniqueness.
-
-    12. Add cancel/reset logic
-        - Reset:
-            selectedPaymentMethod
-        - Close:
-            addPaymentFlow/isSelecting
-        - Trigger when:
-            cancel button clicked
-            modal/select closed
-            successful addition completed
-
-    13. Add edit-state compatibility
-        - Ensure newly added entries also support:
-            editing
-            editableInformation
-            onClickEdit
-            dataAttributes
-
-    14. Optional future improvements
-        - Move payment templates into separate config file.
-        - Convert payment templates into factory functions.
-        - Persist dynamic additions from backend response.
-        - Support payment-method-specific validation.
+handlers of NestedEditableOption
+1. onClickSave
+2. onClickCancel
+3. onClickDelete
 */
 
 const paymentMethodsFormInputArray:inputEntryShape<true,LabeledCheckboxOrRadio>[] = [
@@ -140,89 +48,281 @@ const paymentMethodsFormInputArray:inputEntryShape<true,LabeledCheckboxOrRadio>[
             },
             {
                 name: 'COD Contact Person',
-                info: '09123456789',
+                info: 'Juan Dela Cruz',
+                type: 'text' as const
+            },
+            {
+                name: 'COD Contact Number',
+                info: '0912345678',
                 type: 'text' as const
             }
         ],
     },
 ];
 
+const inputTemplate = {
+    type: "checkbox" as const,
+    id: "payment-method",
+    isRequired: true,
+    disabled: false,
+    name: "payment-options",
+    checked: false,
+    $labelFlexDirection: "column" as const,
+    labelClass: "payment-option-form-label",
+    inputClass: "payment-option-form-input",
+    editing: true,
+    isEditable: true as const,
+    editableButtonSize: "small" as const,
+    editableButtonColor: "primary" as const,
+    editableButtonRadius: "roundedsquare" as const,
+    editIcon: <FaEdit/>,
+    deleteIcon: <MdDelete/>,
+}
+
 const UserPaymentMethods = () => {
-    const initialized = useRef(false);
-    const navigate = useNavigate();
-    const {logoutLoading} = useLogout();
     const [user, setUser] = useState<AuthUserDTO | null>(null);
-    //*For addingPaymentMethod
+    //*For adding adn editing payment method
     const [isSelecting, setIsSelecting] = useState<boolean>(false);
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentMethods|null>(null)
-    const [inputIndex, setInputIndex] = useState<Number|null>(null); //! Need to update this in react-dynamic form
-
+    const [inputId, setInputId] = useState<string|null>(null); //! Need to update this in react-dynamic form
     //*DTO Values for Backend
     const [paymentOptions, setPaymentOptions] = useState(null);
-    
+    //* Handler for handling edit of editableInformation of editable option input
     const handlePaymentMethodFormChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         const currentEditableInformationIndex = Number(e.currentTarget.dataset.index);
         const currentValue = e.currentTarget.value;
+
         //? Update draft state only since autosave is not implemented
         setDisplayFormInputs((prevDisplayFormInputs) => (
-            prevDisplayFormInputs?.map((input,idx) => ({
-                ...input,
-                editableInformation: 
-                idx === inputIndex
-                ? input.editableInformation.map((editable, editableIdx) => ({
-                    ...editable,
-                    info: editableIdx === currentEditableInformationIndex ? currentValue : editable.info
-                }))
-                : input.editableInformation
-            }))
+            prevDisplayFormInputs?.map((input) => {
+            const currentInputId = input.dataAttributes!['data-id']
+                return {
+                    ...input,
+                    editableInformation: 
+                    currentInputId == inputId
+                    ? input.editableInformation.map((editable, editableIdx) => ({
+                        ...editable,
+                        info: editableIdx === currentEditableInformationIndex ? currentValue : editable.info
+                    }))
+                    : input.editableInformation
+                }}
+            )
         ) as typeof prevDisplayFormInputs)
     }
-
+    //* Handler for when editable option is being edited
     const editPaymentOption = (e: React.MouseEvent<HTMLButtonElement>) => {
-        const currentIndex = Number(e.currentTarget.dataset.index);
-        
-        setInputIndex((prevInputIndex) =>
-            prevInputIndex === currentIndex
-                ? null
-                : currentIndex
-        );
+        const currentInputId = e.currentTarget.dataset.id || null;
+
+        const nextInputId = inputId === currentInputId ? null : currentInputId;
+        setInputId(nextInputId);
         
         setDisplayFormInputs((prevDisplayFormInputs) => (
-            prevDisplayFormInputs?.map((input, idx) => ({
+            prevDisplayFormInputs?.map((input) => ({
                 ...input,
-                editing: idx === currentIndex && input.editing === false ? true : false 
+                editing: nextInputId === currentInputId && input.editing === false ? true : false 
             }))
         ) as typeof prevDisplayFormInputs)
     }
-    
-    //*Draft Values for UI
-    const [displayDisplayFormInputs, setDisplayFormInputs] = useState<inputEntryShape<true,LabeledCheckboxOrRadio>[] | null>(() => (
-        paymentMethodsFormInputArray.map((input, index) => (
-            {...input,
-                additionalInfo: input.editableInformation[0]['info'], //acts as option text/label of editable option
-                onChange: () => {}, //This is for when option is checked
-                onClickEdit: editPaymentOption,
-                dataAttributes: {
-                    "data-key": `${input.name}`,
-                    "data-index": index
-                }
+    //*Payment editable option input builder
+    const paymentInputBuilder = (input:inputEntryShape<true,LabeledCheckboxOrRadio>, id:string) => (
+        {...input,
+            onChange: () => {}, //This is for when option is checked
+            onClickEdit: editPaymentOption,
+            dataAttributes: {
+                "data-id": id
             }
-        ))
+        }
+    )
+    
+    //*Draft Values of paymentFormInput for UI
+    const [displayFormInputs, setDisplayFormInputs] = useState<inputEntryShape<true,LabeledCheckboxOrRadio>[]>(() => (
+        paymentMethodsFormInputArray.map((input) => paymentInputBuilder(input, crypto.randomUUID()))
     ))
+    //*Derive additionalInfo on render but since has save feature, dependency only updates on save
+    const additionalInfoDerivation = useMemo(() => {
+        return displayFormInputs.map((input, index) => ({
+            ...input,
+            additionalInfo: input.editableInformation?.[0]?.['info'],
+            dataAttributes: {
+                ...input.dataAttributes,
+                "data-key": `${input.name}-${index}`,
+            }
+        }));
+    }, [displayFormInputs])
+
+    //*Saved Values of paymentInput
+    const [savedFormInputs, setSavedFormInputs] = useState<inputEntryShape<true,LabeledCheckboxOrRadio>[]|null>(null)
+    
+    const handlePaymentSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const currentSelection = e.currentTarget.value as keyof typeof Methods;
+        setSelectedPaymentMethod(Methods[currentSelection])
+    }
+
+    const addPaymentMethodInputTemplate = (selected: PaymentMethods|null):inputEntryShape<true,LabeledCheckboxOrRadio> => {
+        switch(selected) {
+            case "Cash-on-Delivery":
+                return {
+                    ...inputTemplate,
+                    textLabel: selected.toString(),
+                    editableInformation: [ 
+                        {
+                            name: 'COD Address',
+                            info: '',
+                            type: 'text' as const
+                        },
+                        {
+                            name: 'COD Contact Person',
+                            info: '',
+                            type: 'text' as const
+                        },
+                        {
+                            name: 'COD Contact Number',
+                            info: '',
+                            type: 'text' as const
+                        }
+                    ],
+                }
+            case "G-Cash":
+                return {
+                    ...inputTemplate,
+                    textLabel: selected.toString(),
+                    editableInformation: [ 
+                        {
+                            name: 'Account Name',
+                            info: '',
+                            type: 'text' as const
+                        },
+                        {
+                            name: 'Account Number',
+                            info: '',
+                            type: 'text' as const
+                        }
+                    ],
+                }
+            case "PayMaya":
+                return {
+                    ...inputTemplate,
+                    textLabel: selected.toString(),
+                    editableInformation: [ 
+                        {
+                            name: 'Account Name',
+                            info: '',
+                            type: 'text' as const
+                        },
+                        {
+                            name: 'Account Number',
+                            info: '',
+                            type: 'text' as const
+                        }
+                    ],
+                }
+            case "Bank Transfer":
+                return {
+                    ...inputTemplate,
+                    textLabel: selected.toString(),
+                    editableInformation: [ 
+                        {
+                            name: 'Bank name',
+                            info: '',
+                            type: 'text' as const
+                        },
+                        {
+                            name: 'Account Name',
+                            info: '',
+                            type: 'text' as const
+                        },
+                        {
+                            name: 'Account Number',
+                            info: '',
+                            type: 'text' as const
+                        }
+                    ],
+                }
+            case "Credit Card":
+                return {
+                    ...inputTemplate,
+                    textLabel: selected.toString(),
+                    editableInformation: [ 
+                        {
+                            name: 'Bank name',
+                            info: '',
+                            type: 'text' as const
+                        },
+                        {
+                            name: 'Account Name',
+                            info: '',
+                            type: 'text' as const
+                        },
+                        {
+                            name: 'Account Number',
+                            info: '',
+                            type: 'text' as const
+                        },
+                        {
+                            name: 'Expiration',
+                            info: '',
+                            type: 'text' as const
+                        },
+                        {
+                            name: 'CVV',
+                            info: '',
+                            type: 'password' as const
+                        }
+                    ],
+                }
+            default:
+                return {
+                    ...inputTemplate,
+                    textLabel: "Cash-on-Delivery",
+                    editableInformation: [ 
+                        {
+                            name: 'COD Address',
+                            info: '',
+                            type: 'text' as const
+                        },
+                        {
+                            name: 'COD Contact Person',
+                            info: '',
+                            type: 'text' as const
+                        },
+                        {
+                            name: 'COD Contact Number',
+                            info: '',
+                            type: 'text' as const
+                        }
+                    ],
+                }
+        }
+    }
 
     const handleAddPaymentMethod = () => {
-        console.log('add payment method')
-        setIsSelecting(true)
+        if (isSelecting === false) {
+            setIsSelecting(true)
+        } else if (isSelecting === true) {
+            setIsSelecting(false)
+            setDisplayFormInputs((prevDisplayFormInputs) => {
+                const newEntryId = crypto.randomUUID()
+                setInputId(newEntryId)
+                return [
+                    ...prevDisplayFormInputs,
+                    paymentInputBuilder(addPaymentMethodInputTemplate(selectedPaymentMethod), newEntryId)
+                ]
+            })
+            
+        }
     }
 
     const addPaymentMethodComponent = () => {
         return(
             <Styled.PaymentSelectionContainer>
-                <Styled.PaymentMethodSelection>
-                    {Object.entries(Methods).map(([key,value]) => (
-                        <Styled.PaymentMethodSelectionOption value={key}>{`${value}`}</Styled.PaymentMethodSelectionOption>
+                <Styled.PaymentMethodSelection name="payment-select" onChange={handlePaymentSelectChange}>
+                    {Object.entries(Methods).map(([key,value], id) => (
+                        <Styled.PaymentMethodSelectionOption key={`payment-${id}`} value={key}>{`${value}`}</Styled.PaymentMethodSelectionOption>
                     ))}
                 </Styled.PaymentMethodSelection>
+                <Styled.AddPaymentMethodButtonContainer>
+                    <Button buttonType={"button"} text={"Add"} onClick={() => {handleAddPaymentMethod()}}/>
+                </Styled.AddPaymentMethodButtonContainer>
             </Styled.PaymentSelectionContainer>
         )
     }
@@ -242,7 +342,7 @@ const UserPaymentMethods = () => {
                     className={'payment-methods-form'}
                     legendText={'Payment Methods'}
                     fieldsets={null}
-                    formInputs={displayDisplayFormInputs || []}
+                    formInputs={additionalInfoDerivation || []}
                     id="payment-methods"
                     isExpandable={true}
                     handleAddingInputEntry={handleAddPaymentMethod}

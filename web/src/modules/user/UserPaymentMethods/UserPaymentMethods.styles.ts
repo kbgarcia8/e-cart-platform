@@ -52,10 +52,13 @@ export const FormSpace = styled.div`
 export const PaymentSelectionContainer = styled.div`
     border: 2px solid red;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 `;
 
 export const PaymentMethodSelection = styled.select`
-    width: 100%;
+    width: 75%;
     padding: 0.75rem 1rem;
     border: 1px solid #cfcfcf;
     border-radius: 0.5rem;
@@ -77,4 +80,8 @@ export const PaymentMethodSelectionOption = styled.option`
     padding: 0.5rem;
     background-color: #ffffff;
     color: #222222;
+`;
+
+export const AddPaymentMethodButtonContainer = styled.div`
+    width: 12.5%;
 `;
