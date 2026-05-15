@@ -19,6 +19,8 @@ handlers of NestedEditableOption
 1. onClickSave
 2. onClickCancel
 3. onClickDelete
+4. Main onChange for formInputs when checked
+5. Handle submit -> push through backend
 */
 
 const paymentMethodsFormInputArray:inputEntryShape<true,LabeledCheckboxOrRadio>[] = [
@@ -123,23 +125,35 @@ const UserPaymentMethods = () => {
             }))
         ) as typeof prevDisplayFormInputs)
     }
+    //*Handler for cancelling changes made in payment options
+    const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+        const target = e.currentTarget as HTMLElement
+        if (confirm('Any unsaved changes will be gone, Proceed cancel?')) {
+            window.location.reload()
+        }
+    }
+    //* Handler for saving new entry or edited entry of payment options
+    const handleSaveOfEditedPaymentOption = () => {
+
+    }
     //*Payment editable option input builder
     const paymentInputBuilder = (input:inputEntryShape<true,LabeledCheckboxOrRadio>, id:string) => (
         {...input,
             onChange: () => {}, //This is for when option is checked
             onClickEdit: editPaymentOption,
+            onClickCancel: handleCancel,
+            onClickSave: handleSaveOfEditedPaymentOption,
             dataAttributes: {
                 "data-id": id
             }
         }
     )
-    
     //*Draft Values of paymentFormInput for UI
     const [displayFormInputs, setDisplayFormInputs] = useState<inputEntryShape<true,LabeledCheckboxOrRadio>[]>(() => (
         paymentMethodsFormInputArray.map((input) => paymentInputBuilder(input, crypto.randomUUID()))
     ))
     //*Derive additionalInfo on render but since has save feature, dependency only updates on save
-    const additionalInfoDerivation = useMemo(() => {
+    const finalDisplayInputForms = useMemo(() => {
         return displayFormInputs.map((input, index) => ({
             ...input,
             additionalInfo: input.editableInformation?.[0]?.['info'],
@@ -149,15 +163,15 @@ const UserPaymentMethods = () => {
             }
         }));
     }, [displayFormInputs])
-
+    console.log(finalDisplayInputForms)
     //*Saved Values of paymentInput
     const [savedFormInputs, setSavedFormInputs] = useState<inputEntryShape<true,LabeledCheckboxOrRadio>[]|null>(null)
-    
+    //*For selection of added payment method
     const handlePaymentSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const currentSelection = e.currentTarget.value as keyof typeof Methods;
         setSelectedPaymentMethod(Methods[currentSelection])
     }
-
+    //*Input template for payment method addition
     const addPaymentMethodInputTemplate = (selected: PaymentMethods|null):inputEntryShape<true,LabeledCheckboxOrRadio> => {
         switch(selected) {
             case "Cash-on-Delivery":
@@ -294,7 +308,7 @@ const UserPaymentMethods = () => {
                 }
         }
     }
-
+    //*Handler for adding payment method
     const handleAddPaymentMethod = () => {
         if (isSelecting === false) {
             setIsSelecting(true)
@@ -311,7 +325,7 @@ const UserPaymentMethods = () => {
             
         }
     }
-
+    //*Conditionally renedered component for select tag when adding payment method
     const addPaymentMethodComponent = () => {
         return(
             <Styled.PaymentSelectionContainer>
@@ -342,7 +356,7 @@ const UserPaymentMethods = () => {
                     className={'payment-methods-form'}
                     legendText={'Payment Methods'}
                     fieldsets={null}
-                    formInputs={additionalInfoDerivation || []}
+                    formInputs={finalDisplayInputForms || []}
                     id="payment-methods"
                     isExpandable={true}
                     handleAddingInputEntry={handleAddPaymentMethod}
