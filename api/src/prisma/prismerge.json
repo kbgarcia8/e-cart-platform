@@ -6,7 +6,6 @@
             "src/prisma/schema/models/cart.prisma",
             "src/prisma/schema/models/inventory-status.prisma",
             "src/prisma/schema/models/inventory.prisma",
-            "src/prisma/schema/models/methods.prisma",
             "src/prisma/schema/models/order-status.prisma",
             "src/prisma/schema/models/orders.prisma",
             "src/prisma/schema/models/payment-methods.prisma",
@@ -19,6 +18,7 @@
             "src/prisma/schema/models/sizes.prisma",
             "src/prisma/schema/models/user.prisma",
             "src/prisma/schema/models/user-credentials.prisma",
+            "src/prisma/schema/models/user-payment-methods.prisma",
             "src/prisma/schema/models/user-profile.prisma",
             "src/prisma/schema/models/refresh-token.prisma",
             "src/prisma/schema/models/verification-token.prisma"

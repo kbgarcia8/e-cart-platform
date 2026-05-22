@@ -17,3 +17,7 @@ export async function updateUserProfileApi(UserProfileDetails: UserProfileFormDa
 
     return data;
 }
+
+export async function updateUserPaymentMethods() {
+    
+}

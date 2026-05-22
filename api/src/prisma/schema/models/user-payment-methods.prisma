@@ -1,22 +1,28 @@
-model PaymentMethods {
+model UserPaymentMethods {
     id String @id @default(uuid())
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId String
-    type Methods
+    type PaymentMethods
+    label String? //Equivalent name of payment method type
 
-    provider String    
-    providerMethodId String?  
+    //COD
+    address String?
+    contactPerson String?
+    contactNumber String?
 
-    walletProvider String?
-    walletNumber String?
+    //GCash and PayMaya
+    eWalletAccountName String?  
+    eWalletAccountNumber String?
 
+    //Bank Debit or Credit
     bankName String?
     accountName String?
     accountNumber String?
+    expiry String?
+    cvv String?
 
-    label String?
     isDefault Boolean @default(false)
-    isActive Boolean @default(true)
+    isSelected Boolean @default(false)
 
     created_at DateTime @default(now())
     updated_at DateTime @default(now())

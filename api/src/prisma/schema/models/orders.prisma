@@ -1,6 +1,6 @@
 model Orders {
     id Int @id @default(autoincrement())
-    payment PaymentMethod @default(Cash)
+    payment UserPaymentMethods
     
     cart    Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
     cartId Int

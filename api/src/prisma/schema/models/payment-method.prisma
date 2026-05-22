@@ -1,7 +1,9 @@
-enum PaymentMethod {
-    Cash
-    E_Wallet
-    Debit_Or_Credit
+enum PaymentMethods {
+    COD
+    GCash
+    PayMaya
+    Bank_Transfer
+    Credit_Card
 
     @@schema("orders")
 }

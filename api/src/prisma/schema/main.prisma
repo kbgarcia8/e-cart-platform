@@ -59,15 +59,6 @@ model Inventory {
 
   @@schema("inventory")
 }
-enum Methods {
-  COD
-  GCash
-  PayMaya
-  Bank_Transfer
-  Credit_Card
-
-  @@schema("orders")
-}
 enum OrderStatus {
   Confirming_Order
   Preparing
@@ -79,42 +70,17 @@ enum OrderStatus {
   @@schema("orders")
 }
 model Orders {
-  id      Int           @id @default(autoincrement())
-  payment PaymentMethod @default(Cash)
+  id      Int                @id @default(autoincrement())
+  payment UserPaymentMethods @relation(fields: [userPaymentMethodsId], references: [id])
 
   cart   Cart @relation(fields: [cartId], references: [id], onDelete: Cascade)
   cartId Int
 
-  checkoutTime DateTime    @default(now())
-  status       OrderStatus
+  checkoutTime         DateTime    @default(now())
+  status               OrderStatus
+  userPaymentMethodsId String
 
   @@schema("orders")
-}
-model PaymentMethods {
-  id     String  @id @default(uuid())
-  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
-  type   Methods
-
-  provider         String
-  providerMethodId String?
-
-  walletProvider String?
-  walletNumber   String?
-
-  bankName      String?
-  accountName   String?
-  accountNumber String?
-
-  label     String?
-  isDefault Boolean @default(false)
-  isActive  Boolean @default(true)
-
-  created_at DateTime  @default(now())
-  updated_at DateTime  @default(now())
-  deleted_at DateTime? @default(now())
-
-  @@schema("auth")
 }
 enum Providers {
   Local
@@ -123,10 +89,12 @@ enum Providers {
 
   @@schema("auth")
 }
-enum PaymentMethod {
-  Cash
-  E_Wallet
-  Debit_Or_Credit
+enum PaymentMethods {
+  COD
+  GCash
+  PayMaya
+  Bank_Transfer
+  Credit_Card
 
   @@schema("orders")
 }
@@ -174,7 +142,7 @@ model User {
 
   profile            UserProfile?
   credentials        UserCredentials[]
-  paymentMethods     PaymentMethods[]
+  paymentMethods     UserPaymentMethods[]
   verificationTokens VerificationToken?
   refreshToken       RefreshToken?
   carts              Cart[]
@@ -191,6 +159,39 @@ model UserCredentials {
   userId String
 
   @@unique([provider, providerId])
+  @@schema("auth")
+}
+model UserPaymentMethods {
+  id     String         @id @default(uuid())
+  user   User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  type   PaymentMethods
+  label  String? //Equivalent name of payment method type
+
+  //COD
+  address       String?
+  contactPerson String?
+  contactNumber String?
+
+  //GCash and PayMaya
+  eWalletAccountName   String?
+  eWalletAccountNumber String?
+
+  //Bank Debit or Credit
+  bankName      String?
+  accountName   String?
+  accountNumber String?
+  expiry        String?
+  cvv           String?
+
+  isDefault  Boolean @default(false)
+  isSelected Boolean @default(false)
+
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now())
+  deleted_at DateTime? @default(now())
+  orders     Orders[]
+
   @@schema("auth")
 }
 model UserProfile {

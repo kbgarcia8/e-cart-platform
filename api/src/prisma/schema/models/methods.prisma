@@ -1,9 +1,0 @@
-enum Methods {
-    COD
-    GCash
-    PayMaya
-    Bank_Transfer
-    Credit_Card
-
-    @@schema("orders")
-}

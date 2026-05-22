@@ -29,8 +29,8 @@ export type PaymentMethod<T extends PaymentMethods> = {
         contact_person: string;
         contact_number: string;
     } : T extends "G-Cash"|"PayMaya" ? {
-        account_name: string;
-        account_number: string;
+        ewallet_account_name: string;
+        ewallet_number: string;
     }: T extends "Bank Transfer" ? {
         bank_name: string;
         account_name: string;

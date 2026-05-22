@@ -115,16 +115,20 @@ const UserPaymentMethods = () => {
     const editPaymentOption = (e: React.MouseEvent<HTMLButtonElement>) => {
         const currentInputId = e.currentTarget.dataset.id || null;
 
-        const nextInputId = inputId === currentInputId ? null : currentInputId;
-        setInputId(nextInputId);
-        
-        setDisplayFormInputs((prevDisplayFormInputs) => (
-            prevDisplayFormInputs?.map((input) => ({
-                ...input,
-                editing: nextInputId === currentInputId && input.editing === false ? true : false 
-            }))
-        ) as typeof prevDisplayFormInputs)
-    }
+        setInputId((prevInputId) => {
+            const nextInputId =
+                prevInputId === currentInputId ? null : currentInputId;
+
+            setDisplayFormInputs((prevDisplayFormInputs) =>
+                prevDisplayFormInputs?.map((input) => ({
+                    ...input,
+                    editing: input.dataAttributes?.['data-id'] === nextInputId
+                }))
+            );
+
+            return nextInputId;
+        });
+    };
     //*Handler for cancelling changes made in payment options
     const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
         const target = e.currentTarget as HTMLElement
@@ -133,8 +137,30 @@ const UserPaymentMethods = () => {
         }
     }
     //* Handler for saving new entry or edited entry of payment options
-    const handleSaveOfEditedPaymentOption = () => {
+    const handleSaveOfEditedPaymentOption = (e: React.MouseEvent<HTMLButtonElement>) => {
+        const currentInputPosition = Number(e.currentTarget.dataset.index)
+        const currentEntryInformations = displayFormInputs.map((input, index) => currentInputPosition == index ? input.editableInformation : null)
+        //TODO: Need to check baket kapag nag add ng bagong payment method [null] yung editableInformation dito pero pag console.log(displayFormInputs) okay naman
+        //* Check if all editable information needed is filled out - this is like a pseudo required submit form behavior
+        const allInfoFilledOut = currentEntryInformations.flat().every((information) => information?.info !== "")
+        console.log(currentEntryInformations)
+        console.log(allInfoFilledOut)
 
+        if(allInfoFilledOut) {
+            console.log('filled')
+            /*
+            setInputId(null);
+            setDisplayFormInputs((prevDisplayFormInputs) =>
+                prevDisplayFormInputs?.map((input) => ({
+                    ...input,
+                    editing: false
+                }))
+            );
+             */
+        } else {
+            toast.error('Please fill out all information on the editing or adding Payment Method')
+            return
+        }
     }
     //*Payment editable option input builder
     const paymentInputBuilder = (input:inputEntryShape<true,LabeledCheckboxOrRadio>, id:string) => (
@@ -163,7 +189,7 @@ const UserPaymentMethods = () => {
             }
         }));
     }, [displayFormInputs])
-    console.log(finalDisplayInputForms)
+
     //*Saved Values of paymentInput
     const [savedFormInputs, setSavedFormInputs] = useState<inputEntryShape<true,LabeledCheckboxOrRadio>[]|null>(null)
     //*For selection of added payment method
@@ -325,6 +351,7 @@ const UserPaymentMethods = () => {
             
         }
     }
+    console.log(displayFormInputs)
     //*Conditionally renedered component for select tag when adding payment method
     const addPaymentMethodComponent = () => {
         return(
