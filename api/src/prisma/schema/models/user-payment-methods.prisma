@@ -21,7 +21,6 @@ model UserPaymentMethods {
     expiry String?
     cvv String?
 
-    isDefault Boolean @default(false)
     isSelected Boolean @default(false)
 
     created_at DateTime @default(now())

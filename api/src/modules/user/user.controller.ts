@@ -4,7 +4,7 @@ import { ExpressValError, AuthError } from "shared/errors/errors";
 import { AuthErrorDetails, ExpressValidationErrorDetails } from "shared/errors/errors.types";
 import * as userService from './user.service';
 import { validationResult, FieldValidationError } from "express-validator";
-import type { UserProfileFormDataDTO } from "./user.types";
+import type { UserProfileFormDataDTO, userPaymentMethodsDetails } from "./user.types";
 
 export const loggedUser = async (req:Request, res:Response, next:NextFunction) => {
     //console.log(req.user)
@@ -70,5 +70,21 @@ export const userSettingsGet = (req:Request, res:Response) => {
         });
     } catch (err) {
         res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+
+export const userPaymentMethodsPost = async (req:Request, res:Response, next:NextFunction) => {
+    const userPaymentMethodsUpdate = req.body as userPaymentMethodsDetails;
+    try {
+        const result = await userService.updateUserPaymentMethods(userPaymentMethodsUpdate);
+
+        res.status(200).json({
+            code: 200,
+            success: true,
+            message: 'User payment methods information/s updated successfully',
+            data: result
+        });
+    } catch(err){
+        next(err);
     }
 };
