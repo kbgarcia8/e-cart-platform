@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useCallback } from "react";
-import { DynamicForm, type inputEntryShape, type LabeledTextLike} from "@kbgarcia8/react-dynamic-form";
+import { DynamicForm, type InputEntry } from "@kbgarcia8/react-dynamic-form";
 import Button from "shared/ui/atoms/Button";
 import type { UserProfile } from "shared/type/shared.types";
 import type { UserProfileFormData } from "../user.types";
@@ -29,8 +29,8 @@ const UserDetails = () => {
     const { updateProfile, profileUpdateLoading } = useProfileUpdate();
 
     //console.log(user?.profilePicture)
-
-    const userDetailsFormInputArray:inputEntryShape<false, LabeledTextLike>[] = [
+    //! Check if need tanggalin since hindi ata nagawan ng 'GET' process tong userDetails
+    const userDetailsFormInputArray:InputEntry[] = [
         {
             type: "text" as const,
             id: "details-firstname",
@@ -112,7 +112,8 @@ const UserDetails = () => {
             disabled: input.name !== 'email' ? !isEditing : input.disabled,
             onChange: handleUserDetailsFormChange,
             dataAttributes: {
-                "data-key": `${input.name}`
+                "data-key": `${input.name}`,
+                "data-inputId": crypto.randomUUID()
             }
         }
     ));

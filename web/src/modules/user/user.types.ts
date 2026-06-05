@@ -58,6 +58,9 @@ export type userPaymentMethodsDetails = {
     methods: PaymentMethod[]
 }
 
-export interface userUpdatePaymentMethodsDTO {
-    
+export type userPaymentMethodsDetailsDTO = PaymentMethod & {
+    id: string;
+    isSelected: boolean
+    created_at: Date
+    updated_at: Date
 }

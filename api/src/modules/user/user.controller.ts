@@ -73,6 +73,30 @@ export const userSettingsGet = (req:Request, res:Response) => {
     }
 };
 
+export const userPaymentMethodsGet = async (req:Request, res:Response, next:NextFunction) => {
+    try{
+        const user = req.user;
+        if(!user) {
+            throw new AuthError<AuthErrorDetails>(
+                "Credentials invalid or expired when accessing user user settings.",
+                '403',
+                "CEREDENTIALS_INVALID",
+                { reason: "Credentials invalid or expired" }
+            );
+        }
+
+        const result = await userService.getUserPaymentMethods(user.id)
+        res.status(200).json({
+            code: 200,
+            success: true,
+            message: 'User payment methods information/s retrieved successfully',
+            data: result
+        }); 
+    } catch(err) {
+        next(err)
+    }
+}
+
 export const userPaymentMethodsPost = async (req:Request, res:Response, next:NextFunction) => {
     const userPaymentMethodsUpdate = req.body as userPaymentMethodsDetails;
     try {
@@ -83,7 +107,7 @@ export const userPaymentMethodsPost = async (req:Request, res:Response, next:Nex
             success: true,
             message: 'User payment methods information/s updated successfully',
             data: result
-        });
+        }); 
     } catch(err){
         next(err);
     }

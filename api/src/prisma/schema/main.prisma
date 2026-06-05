@@ -177,7 +177,7 @@ model UserPaymentMethods {
   eWalletAccountName   String?
   eWalletAccountNumber String?
 
-  //Bank Debit or Credit
+  //Bank Transfer or Credit
   bankName      String?
   accountName   String?
   accountNumber String?
@@ -186,9 +186,8 @@ model UserPaymentMethods {
 
   isSelected Boolean @default(false)
 
-  created_at DateTime  @default(now())
-  updated_at DateTime  @default(now())
-  deleted_at DateTime? @default(now())
+  created_at DateTime
+  updated_at DateTime?
   orders     Orders[]
 
   @@schema("auth")

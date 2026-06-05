@@ -47,6 +47,15 @@ export const FormSpace = styled.div`
     input.editable-option{
         width: 100%;
     }
+
+    .form-main-button-container{
+        width: 50%;
+    }
+
+    .add-input-button-space {
+        width: 25%;
+        transform: translateX(150%)
+    }
 `;
 
 export const PaymentSelectionContainer = styled.div`

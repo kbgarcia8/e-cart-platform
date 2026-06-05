@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useLogin } from "../auth.hooks";
 import type { LoginFormData } from "../auth.types";
-import type {inputEntryShape, LabeledTextLike } from '@kbgarcia8/react-dynamic-form';
+import type {InputEntry } from '@kbgarcia8/react-dynamic-form';
 import * as Styled from './LoginPage.styles';
 import { BounceLoader } from "react-spinners";
 import { ImGoogle3 } from "react-icons/im";
@@ -10,7 +10,7 @@ import { MdEmail } from "react-icons/md";
 import { FaFacebook } from "react-icons/fa";
 import Button from "shared/ui/atoms/Button";
 
-const loginFormInputArray:inputEntryShape<false,LabeledTextLike>[] = [
+const loginFormInputArray:InputEntry[] = [
     {
         type: "email" as const,
         id: "login-username-email",
@@ -22,7 +22,7 @@ const loginFormInputArray:inputEntryShape<false,LabeledTextLike>[] = [
         labelClass: "loginform-label",
         inputClass: "loginform-input",
         isEditable: false as const,
-        textLabel: 'Email'
+        textLabel: 'Email',
     },
     {
         type: "password" as const,
@@ -67,7 +67,8 @@ const LoginPage = () => {
             value: loginFormValues[input.name as keyof LoginFormData],
             onChange: handleLoginFormChange,
             dataAttributes: {
-                "data-key": `${input.name}`
+                "data-key": `${input.name}`,
+                "data-inputId": crypto.randomUUID()
             }
         }
     ));
@@ -89,6 +90,15 @@ const LoginPage = () => {
         console.log('Facebook');
         window.location.href = `${import.meta.env.VITE_DEV_API_URL}/auth/facebook`;
     }, []);
+
+    const additionalLoginComponent = () => {
+        return (
+            <Styled.AdditionalSigninOptionsSpace>
+                <Button size="smaller" buttonType="button" text="Sign in with Google" startIcon={<ImGoogle3 size={"1.25rem"}/>} onClick={handleGoogleSignIn}/>
+                <Button size="smaller" buttonType="button" text="Sign in with Facebook" startIcon={<FaFacebook size={"1.25rem"}/>} onClick={handleFacebookSignIn}/>
+            </Styled.AdditionalSigninOptionsSpace>
+        )
+    }
 
     return(
         <Styled.LoginPageWrapper>
@@ -113,12 +123,8 @@ const LoginPage = () => {
                         submitText={'Login with Email'}
                         submitIcon={<MdEmail size={"1.25rem"}/>}
                         handleSubmitForm={handleFormSubmit}
-                    >
-                        <Styled.AdditionalSigninOptionsSpace>
-                            <Button size="smaller" buttonType="button" text="Sign in with Google" startIcon={<ImGoogle3 size={"1.25rem"}/>} onClick={handleGoogleSignIn}/>
-                            <Button size="smaller" buttonType="button" text="Sign in with Facebook" startIcon={<FaFacebook size={"1.25rem"}/>} onClick={handleFacebookSignIn}/>
-                        </Styled.AdditionalSigninOptionsSpace>
-                    </Styled.LoginForm>
+                        childrenBefore={additionalLoginComponent()}
+                    />
                 </Styled.FormSpace>
             </React.Fragment>
             : <BounceLoader/>}

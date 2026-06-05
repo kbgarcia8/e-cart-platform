@@ -3,10 +3,10 @@ import { toast } from "react-toastify";
 import { BounceLoader } from "react-spinners";
 import { useSignup } from "../auth.hooks";
 import type { UserCreateData } from "../auth.types";
-import type {inputEntryShape, LabeledTextLike } from '@kbgarcia8/react-dynamic-form';
+import type { InputEntry } from '@kbgarcia8/react-dynamic-form';
 import * as Styled from './SignupPage.styles';
 
-const signupFormInputArray:inputEntryShape<false,LabeledTextLike>[] = [
+const signupFormInputArray:InputEntry[] = [
     {
         type: "email" as const,
         id: "signup-email",
@@ -121,7 +121,8 @@ const SignupPage =() => {
             value: String(signupFormValues[input.name as keyof UserCreateData]),
             onChange: handleSignupFormChange,
             dataAttributes: {
-                "data-key": `${input.name}`
+                "data-key": `${input.name}`,
+                "data-inputId": crypto.randomUUID()
             }
         }
     ));

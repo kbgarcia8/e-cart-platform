@@ -10,10 +10,20 @@ export async function updateUserDetails(data:UserProfileFormDataDTO) {
     }
 }
 
+export async function getUserPaymentMethods(id:string) {
+    try{
+        const paymentMethods = await repo.pullPaymentMethods(id);
+        return paymentMethods;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export async function updateUserPaymentMethods(data:userPaymentMethodsDetails) {
     try {
         const userPaymentMethods = await repo.updateUserPaymentMethods(data)
+        return userPaymentMethods
     } catch (error) {
-        
+        throw error;
     }
 }

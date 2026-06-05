@@ -28,7 +28,7 @@ const routes = [
     {path: "/user/profile", element: <VerticalHeaderMainFooter header={<UserHeader/>} main={<UserProfile/>} footer={<UserFooter/>}/>},
     {path: "/user/profile/details", element: <VerticalHeaderMainFooter layoutHeight={"100svh"} header={<UserHeader/>} main={<UserDetails/>} footer={<UserFooter/>}/>},
     {path: "/user/profile/settings", element: <VerticalHeaderMainFooter layoutHeight={"100svh"} header={<UserHeader/>} main={<UserSettings/>} footer={<UserFooter/>}/>},
-    {path: "user/profile/settings/payment-methods", element: <VerticalHeaderMainFooter layoutHeight={"100svh"} header={<UserHeader/>} main={<UserPaymentMethods/>} footer={<UserFooter/>}/>}
+    {path: "/user/profile/settings/payment-methods", element: <VerticalHeaderMainFooter layoutHeight={"100svh"} header={<UserHeader/>} main={<UserPaymentMethods/>} footer={<UserFooter/>}/>}
 ]
 
 export default routes;

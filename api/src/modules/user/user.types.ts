@@ -56,3 +56,10 @@ export type userPaymentMethodsDetails = {
     userId: string;
     methods: PaymentMethod[]
 }
+
+export type userPaymentMethodsDetailsDTO = PaymentMethod & {
+    id: string;
+    isSelected: boolean
+    created_at: Date
+    updated_at: Date
+}
